@@ -53,3 +53,31 @@ MBPP-Dev development artifacts**:
 These quantized MacBook runs support development and methodological validation
 only. Dissertation-reported benchmark numbers must come from the planned
 full-precision GPU runs.
+
+## Complementary-failure case studies
+
+MBPP/446 was a clean refinement-only success: its first solution returned a
+frequency dictionary instead of the required total, failed `0/3` tests, and was
+classified as `logic`; feedback showed each dictionary beside the expected
+integer and advised reconsidering the core algorithm, after which one
+regeneration summed the counts and passed `3/3`, while all five best-of-5
+samples retained the same return-shape misconception. MBPP/597 was a `runtime`
+failure: the recursive kth-element algorithm raised `RecursionError`, feedback
+reported only "maximum recursion depth exceeded," and refinement regenerated
+identical code, triggering oscillation at iteration 2; best-of-5 instead
+sampled valid partition-based algorithms at seeds 43, 44, and 46. MBPP/734 was
+messier: the initial sum-not-product algorithm passed `1/3` and was classified
+as `edge_case`; feedback supplied both failing actual/expected pairs, but the
+next solution changed to another incorrect weighted-sum method, regressed to
+`0/3` (`logic`), repeated unchanged, and stopped by oscillation at iteration 3.
+Best-of-5 solved it only at seed 45 by sampling the correct contiguous-subarray
+product loop. Together, these cases show refinement working well for an
+explicit output-shape error, but struggling when generic runtime feedback or
+misleading partial correctness does not expose the underlying algorithmic
+misconception.
+
+The MBPP/734 convergence record confirms that the `1/3` to `0/3` regression was
+not mistaken for stagnation: iteration 2 had a new pass rate, code hash, and
+error hash and therefore returned `continue`. Iteration 3 exactly repeated
+iteration 2's code hash (`fa3cd4...`) and error hash (`cca748...`), so the final
+`oscillation` decision was a genuine code repeat.
