@@ -49,6 +49,7 @@ class ExecutionConfig:
     timeout_seconds: float = 10.0
     memory_limit_mb: int | None = 512
     python_executable: str = "python3"
+    collect_trace: bool = False
 
 
 @dataclass(frozen=True)
@@ -62,6 +63,7 @@ class ExperimentConfig:
     stagnation_patience: int = 2
     oscillation_window: int = 3
     samples_per_problem: int = 5
+    feedback_strategy: Literal["template", "trace", "hybrid"] = "template"
 
 
 @dataclass(frozen=True)
@@ -167,6 +169,10 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
         )
 
     experiment = _construct(ExperimentConfig, raw["experiment"])
+    if experiment.feedback_strategy not in {"template", "trace", "hybrid"}:
+        raise ValueError(
+            "experiment.feedback_strategy must be 'template', 'trace', or 'hybrid'"
+        )
     if (
         min(
             experiment.max_iterations,

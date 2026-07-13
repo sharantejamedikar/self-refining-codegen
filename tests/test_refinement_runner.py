@@ -6,9 +6,15 @@ import csv
 import json
 from pathlib import Path
 
+import pytest
+
 from data.schema import Problem
 from execution import SubprocessExecutor
-from feedback import TemplateFeedbackGenerator
+from feedback import (
+    HybridFeedbackGenerator,
+    TemplateFeedbackGenerator,
+    TraceFeedbackGenerator,
+)
 from generation import GenerationOutput, GenerationRequest, Generator
 from generation.prompts import build_prompt
 from loop import RefinementRunner
@@ -77,11 +83,25 @@ def _config(output_dir: Path) -> AppConfig:
     )
 
 
-def test_three_problem_full_refinement_integration(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "feedback_generator",
+    [
+        TemplateFeedbackGenerator(),
+        TraceFeedbackGenerator(),
+        HybridFeedbackGenerator(),
+    ],
+    ids=["template", "trace", "hybrid"],
+)
+def test_three_problem_full_refinement_integration(
+    tmp_path: Path,
+    feedback_generator: (
+        TemplateFeedbackGenerator | TraceFeedbackGenerator | HybridFeedbackGenerator
+    ),
+) -> None:
     destination = RefinementRunner(
         FeedbackAwareMockGenerator(),
-        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
-        TemplateFeedbackGenerator(),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None, collect_trace=True),
+        feedback_generator,
         _config(tmp_path),
     ).run(_problems(), tmp_path / "refinement-run")
     records = {
@@ -95,6 +115,10 @@ def test_three_problem_full_refinement_integration(tmp_path: Path) -> None:
     assert not records["Integration_2"]["passed"]
     assert records["Integration_2"]["convergence_reason"] == "oscillation"
     assert records["Integration_2"]["iterations"][0]["feedback"]
+    assert records["Integration_2"]["iterations"][0]["feedback_strategy"] in {
+        "template",
+        "trace",
+    }
     persisted_request = records["Integration_1"]["iterations"][1]["generation"][
         "request_payload"
     ]

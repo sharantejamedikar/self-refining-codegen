@@ -8,6 +8,24 @@ from typing import Any
 
 
 @dataclass(frozen=True)
+class TraceEvent:
+    """One recently executed candidate-code line captured in the sandbox."""
+
+    line_number: int
+    function: str
+    source: str
+
+
+@dataclass(frozen=True)
+class ExecutionTrace:
+    """Bounded candidate execution evidence collected by a sandbox tracer."""
+
+    recent_events: tuple[TraceEvent, ...]
+    max_call_depth: int
+    deepest_function: str | None
+
+
+@dataclass(frozen=True)
 class TestResult:
     """Outcome of one isolated test case."""
 
@@ -23,6 +41,7 @@ class TestResult:
     assertion_expression: str | None = None
     actual_value: str | None = None
     expected_value: str | None = None
+    trace: ExecutionTrace | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serializable representation."""

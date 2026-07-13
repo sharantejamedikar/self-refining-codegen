@@ -39,6 +39,8 @@ def test_load_config_auto_detection_and_profile(
     assert cluster.device.accelerator == "cuda"
     assert cluster.device.profile == "cluster"
     assert automatic.experiment.seed == 7
+    assert automatic.experiment.feedback_strategy == "template"
+    assert not automatic.execution.collect_trace
 
 
 def test_load_config_rejects_invalid_content(tmp_path: Path) -> None:
@@ -103,4 +105,17 @@ def test_load_config_validates_generation_options(
     )
     path.write_text(text, encoding="utf-8")
     with pytest.raises(ValueError, match=message):
+        load_config(path)
+
+
+def test_load_config_validates_feedback_strategy(tmp_path: Path) -> None:
+    path = tmp_path / "config.yaml"
+    _write_config(path)
+    text = path.read_text(encoding="utf-8").replace(
+        "experiment: {name: test, seed: 7, output_dir: runs}",
+        "experiment: {name: test, seed: 7, output_dir: runs, "
+        "feedback_strategy: unknown}",
+    )
+    path.write_text(text, encoding="utf-8")
+    with pytest.raises(ValueError, match="feedback_strategy"):
         load_config(path)

@@ -1,0 +1,45 @@
+model:
+  name: Qwen/Qwen2.5-Coder-7B-Instruct
+  backend: ollama
+  revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+  backend_model: qwen2.5-coder:7b-instruct-q4_K_M
+  artifact_digest: dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364
+  quantization: Q4_K_M
+  endpoint: http://127.0.0.1:11434
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.2
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval
+  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  data_dir: data
+  split: dev
+  path: data/dev/humaneval_dev.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+  collect_trace: true
+experiment:
+  name: m5_qwen_ollama_template_refinement_humaneval_dev
+  seed: 42
+  output_dir: experiments/results
+  max_iterations: 5
+  stagnation_patience: 2
+  oscillation_window: 3
+  feedback_strategy: template
+device:
+  profile: mac
+  accelerator: auto
+profiles:
+  mac:
+    device: {accelerator: auto}
+  cluster:
+    device: {accelerator: cuda}
+  colab:
+    device: {accelerator: cuda}

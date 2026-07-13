@@ -15,8 +15,11 @@ from execution import TestResult as ExecutionTestResult
 from feedback import (
     Classification,
     ErrorCategory,
+    HybridFeedbackGenerator,
     TemplateFeedbackGenerator,
+    TraceFeedbackGenerator,
     classify_execution,
+    create_feedback_generator,
 )
 
 
@@ -171,6 +174,70 @@ def test_exception_feedback_defensive_fallbacks() -> None:
     assert generator.generate(runtime, _execution(unknown)) == (
         "Execution reported a runtime exception. unknown exception"
     )
+
+
+def test_trace_feedback_identifies_candidate_operation() -> None:
+    execution = SubprocessExecutor(
+        timeout_seconds=1, memory_limit_mb=None, collect_trace=True
+    ).execute(
+        "def candidate(value):\n    doubled = value * 2\n    return doubled + 1",
+        ["assert candidate(3) == 6"],
+    )
+    feedback = TraceFeedbackGenerator().generate(
+        classify_execution(execution), execution
+    )
+    assert "Observed divergence" in feedback
+    assert "actual: 7" in feedback and "expected: 6" in feedback
+    assert "return doubled + 1" in feedback
+    assert "candidate" in feedback
+
+
+def test_trace_feedback_reports_recursion_depth_and_restructuring_hint() -> None:
+    execution = SubprocessExecutor(
+        timeout_seconds=1, memory_limit_mb=None, collect_trace=True
+    ).execute(
+        "def candidate(value):\n    return candidate(value + 1)",
+        ["candidate(0)"],
+    )
+    feedback = TraceFeedbackGenerator().generate(
+        classify_execution(execution), execution
+    )
+    assert "RecursionError" in feedback
+    assert "candidate call depth" in feedback
+    assert "restructuring" in feedback
+
+
+@pytest.mark.parametrize(
+    ("category", "expected_strategy"),
+    [
+        (ErrorCategory.SYNTAX, "template"),
+        (ErrorCategory.RUNTIME, "template"),
+        (ErrorCategory.LOGIC, "trace"),
+        (ErrorCategory.EDGE_CASE, "trace"),
+        (ErrorCategory.TIMEOUT, "template"),
+        (ErrorCategory.SUCCESS, "template"),
+    ],
+)
+def test_hybrid_feedback_selector(
+    category: ErrorCategory, expected_strategy: str
+) -> None:
+    generator = HybridFeedbackGenerator()
+    classification = Classification(category, 0, 1)
+    assert generator.strategy_for(classification) == expected_strategy
+
+
+def test_hybrid_routes_recursion_as_complex_runtime() -> None:
+    execution = _execution(_test_result(exception_type="RecursionError"))
+    classification = classify_execution(execution)
+    assert HybridFeedbackGenerator().strategy_for(classification, execution) == "trace"
+
+
+def test_feedback_factory() -> None:
+    assert isinstance(create_feedback_generator("template"), TemplateFeedbackGenerator)
+    assert isinstance(create_feedback_generator("trace"), TraceFeedbackGenerator)
+    assert isinstance(create_feedback_generator("hybrid"), HybridFeedbackGenerator)
+    with pytest.raises(ValueError, match="Unsupported feedback strategy"):
+        create_feedback_generator("unknown")
 
 
 def _record(
