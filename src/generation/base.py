@@ -13,19 +13,24 @@ class GenerationRequest:
 
     problem_prompt: str
     seed: int
+    previous_code: str | None = None
+    feedback: str | None = None
 
 
 @dataclass(frozen=True)
 class GenerationOutput:
-    """Extracted candidate, raw response, and backend-neutral accounting."""
+    """Extracted candidate, request audit data, and backend-neutral accounting."""
 
     code: str
     raw_text: str
+    rendered_system_prompt: str
+    rendered_user_prompt: str
     prompt_tokens: int | None = None
     completion_tokens: int | None = None
     finish_reason: str | None = None
     extraction_method: str = "unchanged"
     syntax_valid: bool = True
+    request_payload: dict[str, Any] | None = None
     backend_metadata: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:

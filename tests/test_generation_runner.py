@@ -70,6 +70,14 @@ def test_three_problem_mock_integration(tmp_path: Path) -> None:
     result_files = sorted((destination / "problems").glob("*.json"))
     assert len(result_files) == 3
     assert all(json.loads(path.read_text())["passed"] for path in result_files)
+    persisted_generation = json.loads(result_files[0].read_text())["iterations"][0][
+        "generation"
+    ]
+    assert (
+        "Python code generation system"
+        in persisted_generation["rendered_system_prompt"]
+    )
+    assert problems[0].prompt in persisted_generation["rendered_user_prompt"]
     assert (destination / "config.yaml").exists()
     assert json.loads((destination / "seeds.json").read_text()) == {
         "generation_seed": 123

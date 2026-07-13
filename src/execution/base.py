@@ -20,6 +20,9 @@ class TestResult:
     stderr: str
     duration_seconds: float
     timed_out: bool = False
+    assertion_expression: str | None = None
+    actual_value: str | None = None
+    expected_value: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serializable representation."""

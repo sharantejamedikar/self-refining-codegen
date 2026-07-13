@@ -58,6 +58,9 @@ class ExperimentConfig:
     name: str = "m1_mock_single_pass"
     seed: int = 42
     output_dir: str = "experiments/results"
+    max_iterations: int = 5
+    stagnation_patience: int = 2
+    oscillation_window: int = 3
 
 
 @dataclass(frozen=True)
@@ -162,10 +165,21 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
             "non-mock model.revision must be a full 40-character commit hash"
         )
 
+    experiment = _construct(ExperimentConfig, raw["experiment"])
+    if (
+        min(
+            experiment.max_iterations,
+            experiment.stagnation_patience,
+            experiment.oscillation_window,
+        )
+        <= 0
+    ):
+        raise ValueError("experiment convergence settings must be positive")
+
     return AppConfig(
         model=model,
         dataset=_construct(DatasetConfig, raw["dataset"]),
         execution=_construct(ExecutionConfig, raw["execution"]),
-        experiment=_construct(ExperimentConfig, raw["experiment"]),
+        experiment=experiment,
         device=_construct(DeviceConfig, device_values),
     )

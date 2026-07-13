@@ -6,6 +6,7 @@ from collections.abc import Iterable, Mapping
 
 from data.schema import Problem
 from generation.base import GenerationOutput, GenerationRequest, Generator
+from generation.prompts import build_prompt
 
 
 class MockGenerator(Generator):
@@ -26,7 +27,17 @@ class MockGenerator(Generator):
             code = self._default_output
         else:
             raise KeyError("No canned MockGenerator output for this prompt")
-        return GenerationOutput(code=code, raw_text=code)
+        rendered = build_prompt(
+            request.problem_prompt,
+            previous_code=request.previous_code,
+            feedback=request.feedback,
+        )
+        return GenerationOutput(
+            code=code,
+            raw_text=code,
+            rendered_system_prompt=rendered.system,
+            rendered_user_prompt=rendered.user,
+        )
 
     @classmethod
     def canned_correct(cls, problems: Iterable[Problem]) -> MockGenerator:

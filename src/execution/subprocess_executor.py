@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import os
 import re
 import shutil
@@ -40,6 +41,8 @@ _sandbox_os.system = _network_denied
 if hasattr(_sandbox_os, "fork"):
     _sandbox_os.fork = _network_denied
 """
+
+_ASSERTION_MARKER = "__SRCG_ASSERTION_VALUES__"
 
 
 class SubprocessExecutor(Executor):
@@ -89,8 +92,11 @@ class SubprocessExecutor(Executor):
         with tempfile.TemporaryDirectory(prefix="srcg-") as directory:
             temp_dir = Path(directory)
             program = temp_dir / "program.py"
+            instrumented_test, assertion_expression = self._instrument_assertion(
+                test_case
+            )
             program.write_text(
-                f"{_NETWORK_GUARD}\n{code.rstrip()}\n\n{test_case.rstrip()}\n",
+                f"{_NETWORK_GUARD}\n{code.rstrip()}\n\n{instrumented_test.rstrip()}\n",
                 encoding="utf-8",
             )
             command = self._sandbox_command(program)
@@ -128,6 +134,12 @@ class SubprocessExecutor(Executor):
                 )
 
         exception_type, exception_message = self._parse_exception(completed.stderr)
+        actual_value, expected_value = self._parse_assertion_values(exception_message)
+        if actual_value is not None:
+            exception_message = (
+                f"assertion comparison failed: actual={actual_value}; "
+                f"expected={expected_value}"
+            )
         return TestResult(
             test_case=test_case,
             passed=completed.returncode == 0,
@@ -137,6 +149,9 @@ class SubprocessExecutor(Executor):
             stdout=completed.stdout,
             stderr=completed.stderr,
             duration_seconds=time.monotonic() - started,
+            assertion_expression=assertion_expression,
+            actual_value=actual_value,
+            expected_value=expected_value,
         )
 
     def _budget_exhausted(
@@ -219,3 +234,97 @@ class SubprocessExecutor(Executor):
         if stream is None:
             return ""
         return stream.decode(errors="replace") if isinstance(stream, bytes) else stream
+
+    @staticmethod
+    def _instrument_assertion(test_case: str) -> tuple[str, str | None]:
+        """Capture operands for a simple comparison without evaluating either twice."""
+
+        try:
+            module = ast.parse(test_case)
+        except SyntaxError:
+            return test_case, None
+        assertions = [node for node in ast.walk(module) if isinstance(node, ast.Assert)]
+        if len(assertions) != 1:
+            return test_case, None
+        assertion = assertions[0]
+        expression = ast.unparse(assertion.test)
+        comparison = assertion.test
+        if not isinstance(comparison, ast.Compare) or len(comparison.ops) != 1:
+            return test_case, expression
+        if len(comparison.comparators) != 1:
+            return test_case, expression
+
+        actual_name = "__srcg_assertion_actual_7f31"
+        expected_name = "__srcg_assertion_expected_7f31"
+        assignment_actual = ast.Assign(
+            targets=[ast.Name(actual_name, ast.Store())], value=comparison.left
+        )
+        assignment_expected = ast.Assign(
+            targets=[ast.Name(expected_name, ast.Store())],
+            value=comparison.comparators[0],
+        )
+        message = ast.BinOp(
+            left=ast.Constant(_ASSERTION_MARKER),
+            op=ast.Add(),
+            right=ast.Call(
+                func=ast.Name("repr", ast.Load()),
+                args=[
+                    ast.Tuple(
+                        elts=[
+                            ast.Call(
+                                func=ast.Name("repr", ast.Load()),
+                                args=[ast.Name(actual_name, ast.Load())],
+                                keywords=[],
+                            ),
+                            ast.Call(
+                                func=ast.Name("repr", ast.Load()),
+                                args=[ast.Name(expected_name, ast.Load())],
+                                keywords=[],
+                            ),
+                        ],
+                        ctx=ast.Load(),
+                    )
+                ],
+                keywords=[],
+            ),
+        )
+        replacement = ast.Assert(
+            test=ast.Compare(
+                left=ast.Name(actual_name, ast.Load()),
+                ops=comparison.ops,
+                comparators=[ast.Name(expected_name, ast.Load())],
+            ),
+            msg=message,
+        )
+        for node in [module, *ast.walk(module)]:
+            if (
+                isinstance(node, ast.Module | ast.FunctionDef)
+                and assertion in node.body
+            ):
+                index = node.body.index(assertion)
+                node.body[index : index + 1] = [
+                    assignment_actual,
+                    assignment_expected,
+                    replacement,
+                ]
+                return ast.unparse(ast.fix_missing_locations(module)), expression
+        return test_case, expression
+
+    @staticmethod
+    def _parse_assertion_values(
+        exception_message: str | None,
+    ) -> tuple[str | None, str | None]:
+        if not exception_message or not exception_message.startswith(_ASSERTION_MARKER):
+            return None, None
+        payload = exception_message[len(_ASSERTION_MARKER) :]
+        try:
+            values = ast.literal_eval(payload)
+        except (SyntaxError, ValueError):
+            return None, None
+        if not (
+            isinstance(values, tuple)
+            and len(values) == 2
+            and all(isinstance(value, str) for value in values)
+        ):
+            return None, None
+        return values

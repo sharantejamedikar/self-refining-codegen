@@ -32,6 +32,8 @@ class OllamaGenerator(Generator):
             request.problem_prompt,
             strategy=self.config.prompt_strategy,
             few_shot_examples=self.config.few_shot_examples,
+            previous_code=request.previous_code,
+            feedback=request.feedback,
         )
         payload = {
             "model": self.config.backend_model,
@@ -59,6 +61,9 @@ class OllamaGenerator(Generator):
             finish_reason=_optional_string(response.get("done_reason")),
             extraction_method=extraction.method,
             syntax_valid=extraction.syntax_valid,
+            rendered_system_prompt=rendered.system,
+            rendered_user_prompt=rendered.user,
+            request_payload=payload,
             backend_metadata={
                 "backend": "ollama",
                 "canonical_model": self.config.name,

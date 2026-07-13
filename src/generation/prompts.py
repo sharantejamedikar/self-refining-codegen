@@ -54,6 +54,8 @@ def build_prompt(
     problem_prompt: str,
     strategy: Literal["zero_shot", "few_shot"] = "zero_shot",
     few_shot_examples: int = 2,
+    previous_code: str | None = None,
+    feedback: str | None = None,
 ) -> RenderedPrompt:
     """Render a zero-shot or synthetic few-shot prompt without model-specific text."""
 
@@ -71,5 +73,14 @@ def build_prompt(
                 f"Example problem:\n{example_prompt}\n\n"
                 f"Example solution:\n{example_solution}"
             )
-    sections.append(f"Problem:\n{problem_prompt.rstrip()}\n\nSolution:")
+    problem_section = f"Problem:\n{problem_prompt.rstrip()}"
+    if feedback is not None:
+        if previous_code is None:
+            raise ValueError("previous_code is required when feedback is provided")
+        problem_section += (
+            f"\n\nPrevious solution:\n{previous_code.rstrip()}"
+            f"\n\nExecution feedback:\n{feedback.rstrip()}"
+            "\n\nReturn a corrected complete solution."
+        )
+    sections.append(f"{problem_section}\n\nSolution:")
     return RenderedPrompt(system=_SYSTEM_PROMPT, user="\n\n".join(sections))

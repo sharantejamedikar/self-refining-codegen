@@ -33,6 +33,18 @@ def test_prompt_builder_rejects_invalid_options() -> None:
         build_prompt(PROBLEM, "few_shot", 4)
 
 
+def test_refinement_prompt_includes_previous_code_and_feedback() -> None:
+    rendered = build_prompt(
+        "def answer(): pass",
+        previous_code="def answer(): return 0",
+        feedback="Expected 1, got 0.",
+    )
+    assert "Previous solution:\ndef answer(): return 0" in rendered.user
+    assert "Execution feedback:\nExpected 1, got 0." in rendered.user
+    with pytest.raises(ValueError, match="previous_code"):
+        build_prompt("def answer(): pass", feedback="broken")
+
+
 def test_extracts_markdown_and_unclosed_fences() -> None:
     fenced = extract_python(
         "Here is the answer:\n```python\n"
