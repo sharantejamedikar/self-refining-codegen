@@ -72,6 +72,10 @@ def test_ollama_generation_is_config_driven(
     assert output.raw_text.startswith("```python")
     assert output.prompt_tokens == 21 and output.completion_tokens == 9
     assert output.backend_metadata and output.backend_metadata["backend"] == "ollama"
+    assert output.rendered_system_prompt == captured["payload"]["system"]
+    assert output.rendered_user_prompt == captured["payload"]["prompt"]
+    assert output.request_payload == captured["payload"]
+    assert output.to_dict()["request_payload"] == captured["payload"]
     assert captured["url"].endswith("/api/generate")
     assert captured["payload"]["model"] == "generic-code:7b-q4"
     assert captured["payload"]["options"] == {
