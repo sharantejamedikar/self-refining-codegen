@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import gzip
 import json
 import logging
@@ -148,11 +149,52 @@ def _normalize_mbpp(record: dict[str, Any]) -> Problem:
     assertions = [str(item) for item in record["test_list"]]
     assertions += [str(item) for item in record.get("challenge_test_list", [])]
     tests = ["\n".join([*imports, assertion]) for assertion in assertions]
+    signature = _extract_mbpp_entry_point_signature(
+        str(record["code"]), assertions, str(record["task_id"])
+    )
+    prompt = (
+        f"{str(record['prompt']).rstrip()}\n\n"
+        f"Required function signature:\n{signature}"
+    )
     return Problem(
         task_id=f"MBPP/{record['task_id']}",
-        prompt=str(record["prompt"]),
+        prompt=prompt,
         canonical_solution=str(record["code"]),
         test_cases=tuple(tests),
         difficulty="unspecified",
         tags=("mbpp", "sanitized"),
+    )
+
+
+def _extract_mbpp_entry_point_signature(
+    canonical_solution: str, assertions: list[str], task_id: str
+) -> str:
+    """Derive one tested top-level function signature from sanitized MBPP fields."""
+
+    solution_tree = ast.parse(canonical_solution)
+    functions = {
+        node.name: node
+        for node in solution_tree.body
+        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef)
+    }
+    called_names = {
+        node.func.id
+        for assertion in assertions
+        for node in ast.walk(ast.parse(assertion))
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    entry_points = sorted(functions.keys() & called_names)
+    if len(entry_points) != 1:
+        raise ValueError(
+            f"MBPP task {task_id} must have exactly one tested top-level function; "
+            f"found {entry_points}"
+        )
+    function = functions[entry_points[0]]
+    prefix = "async def" if isinstance(function, ast.AsyncFunctionDef) else "def"
+    return_annotation = (
+        f" -> {ast.unparse(function.returns)}" if function.returns is not None else ""
+    )
+    return (
+        f"{prefix} {function.name}({ast.unparse(function.args)})"
+        f"{return_annotation}:"
     )
