@@ -81,3 +81,26 @@ def test_detect_accelerator_without_torch(monkeypatch: pytest.MonkeyPatch) -> No
 
     monkeypatch.setattr("builtins.__import__", blocked_import)
     assert config_module.detect_accelerator() == "cpu"
+
+
+@pytest.mark.parametrize(
+    ("replacement", "message"),
+    [
+        ("prompt_strategy: invalid", "prompt_strategy"),
+        ("few_shot_examples: 4", "few_shot_examples"),
+        ("request_timeout_seconds: 0", "request_timeout_seconds"),
+        ("backend: ollama", "revision"),
+    ],
+)
+def test_load_config_validates_generation_options(
+    tmp_path: Path, replacement: str, message: str
+) -> None:
+    path = tmp_path / "config.yaml"
+    _write_config(path)
+    text = path.read_text(encoding="utf-8").replace(
+        "model: {name: mock, backend: mock, revision: fixture-v1}",
+        f"model: {{name: mock, backend: mock, revision: fixture-v1, {replacement}}}",
+    )
+    path.write_text(text, encoding="utf-8")
+    with pytest.raises(ValueError, match=message):
+        load_config(path)

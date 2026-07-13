@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, fields, is_dataclass
 from pathlib import Path
-from typing import Any, TypeVar, cast
+from typing import Any, Literal, TypeVar, cast
 
 import yaml
 
@@ -16,6 +17,13 @@ class ModelConfig:
     name: str
     backend: str
     revision: str
+    backend_model: str | None = None
+    artifact_digest: str | None = None
+    quantization: str | None = None
+    endpoint: str | None = None
+    request_timeout_seconds: float = 300.0
+    prompt_strategy: Literal["zero_shot", "few_shot"] = "zero_shot"
+    few_shot_examples: int = 2
     temperature: float = 0.2
     top_p: float = 0.95
     max_new_tokens: int = 512
@@ -30,6 +38,7 @@ class DatasetConfig:
     source_url: str
     data_dir: str = "data"
     split: str = "dev"
+    path: str | None = None
 
 
 @dataclass(frozen=True)
@@ -138,8 +147,23 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
     if device_values.get("accelerator", "auto") == "auto":
         device_values["accelerator"] = detect_accelerator()
 
+    model = _construct(ModelConfig, raw["model"])
+    if model.prompt_strategy not in {"zero_shot", "few_shot"}:
+        raise ValueError("model.prompt_strategy must be 'zero_shot' or 'few_shot'")
+    if not 0 <= model.few_shot_examples <= 3:
+        raise ValueError("model.few_shot_examples must be between 0 and 3")
+    if model.request_timeout_seconds <= 0:
+        raise ValueError("model.request_timeout_seconds must be positive")
+    if (
+        model.backend != "mock"
+        and re.fullmatch(r"[0-9a-f]{40}", model.revision) is None
+    ):
+        raise ValueError(
+            "non-mock model.revision must be a full 40-character commit hash"
+        )
+
     return AppConfig(
-        model=_construct(ModelConfig, raw["model"]),
+        model=model,
         dataset=_construct(DatasetConfig, raw["dataset"]),
         execution=_construct(ExecutionConfig, raw["execution"]),
         experiment=_construct(ExperimentConfig, raw["experiment"]),

@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 
 from data.schema import Problem
-from generation.base import GenerationOutput, Generator
+from generation.base import GenerationOutput, GenerationRequest, Generator
 
 
 class MockGenerator(Generator):
@@ -17,17 +17,16 @@ class MockGenerator(Generator):
         self._outputs = dict(outputs)
         self._default_output = default_output
 
-    def generate(self, prompt: str, seed: int) -> GenerationOutput:
-        """Return the configured output; seed is accepted for interface parity."""
+    def generate(self, request: GenerationRequest) -> GenerationOutput:
+        """Return the configured output for a model-neutral request."""
 
-        del seed
-        if prompt in self._outputs:
-            code = self._outputs[prompt]
+        if request.problem_prompt in self._outputs:
+            code = self._outputs[request.problem_prompt]
         elif self._default_output is not None:
             code = self._default_output
         else:
             raise KeyError("No canned MockGenerator output for this prompt")
-        return GenerationOutput(code=code)
+        return GenerationOutput(code=code, raw_text=code)
 
     @classmethod
     def canned_correct(cls, problems: Iterable[Problem]) -> MockGenerator:

@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 
 from execution import SubprocessExecutor
+from execution import subprocess_executor as executor_module
 
 
 def test_executor_reports_pass_fail_and_streams() -> None:
@@ -42,3 +43,46 @@ def test_executor_syntax_empty_tests_and_constructor_validation() -> None:
         SubprocessExecutor(timeout_seconds=0)
     with pytest.raises(ValueError, match="memory"):
         SubprocessExecutor(memory_limit_mb=0)
+
+
+def test_executor_builds_resource_limit_callback(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[tuple[int, tuple[int, int]]] = []
+
+    class FakeResource:
+        RLIMIT_AS = 1
+        RLIMIT_CPU = 2
+
+        @staticmethod
+        def setrlimit(kind: int, limits: tuple[int, int]) -> None:
+            calls.append((kind, limits))
+
+    monkeypatch.setattr(executor_module, "resource", FakeResource)
+    callback = SubprocessExecutor(
+        timeout_seconds=1.5, memory_limit_mb=256
+    )._limit_resources()
+    assert callback is not None
+    callback()
+    assert calls == [
+        (FakeResource.RLIMIT_AS, (256 * 1024 * 1024, 256 * 1024 * 1024)),
+        (FakeResource.RLIMIT_CPU, (2, 2)),
+    ]
+
+
+def test_executor_ignores_unsupported_resource_limits(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class UnsupportedResource:
+        RLIMIT_AS = 1
+        RLIMIT_CPU = 2
+
+        @staticmethod
+        def setrlimit(kind: int, limits: tuple[int, int]) -> None:
+            del kind, limits
+            raise OSError("unsupported")
+
+    monkeypatch.setattr(executor_module, "resource", UnsupportedResource)
+    callback = SubprocessExecutor(memory_limit_mb=128)._limit_resources()
+    assert callback is not None
+    callback()

@@ -8,12 +8,25 @@ from typing import Any
 
 
 @dataclass(frozen=True)
+class GenerationRequest:
+    """Model-neutral input for one candidate generation."""
+
+    problem_prompt: str
+    seed: int
+
+
+@dataclass(frozen=True)
 class GenerationOutput:
-    """Text and accounting returned by a generation backend."""
+    """Extracted candidate, raw response, and backend-neutral accounting."""
 
     code: str
+    raw_text: str
     prompt_tokens: int | None = None
     completion_tokens: int | None = None
+    finish_reason: str | None = None
+    extraction_method: str = "unchanged"
+    syntax_valid: bool = True
+    backend_metadata: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Return a JSON-serializable representation."""
@@ -25,5 +38,5 @@ class Generator(ABC):
     """Abstract code-generation backend."""
 
     @abstractmethod
-    def generate(self, prompt: str, seed: int) -> GenerationOutput:
-        """Generate one candidate for a prompt and deterministic seed."""
+    def generate(self, request: GenerationRequest) -> GenerationOutput:
+        """Generate one candidate without exposing backend details to callers."""
