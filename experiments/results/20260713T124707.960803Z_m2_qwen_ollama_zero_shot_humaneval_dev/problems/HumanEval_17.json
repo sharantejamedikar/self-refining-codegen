@@ -1,0 +1,60 @@
+{
+  "duration_seconds": 4.665644708002219,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.05575266700179782,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "duration_seconds": 0.0557309999858262,
+            "exception_message": null,
+            "exception_type": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n\ncheck(parse_music)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T12:47:19.487206Z",
+          "eval_duration_ns": 4087529000,
+          "load_duration_ns": 118348958,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 398767000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 4606723916
+        },
+        "code": "from typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    return [note_map[note] for note in music_string.split()]",
+        "completion_tokens": 209,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 213,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    return [note_map[note] for note in music_string.split()]\n```",
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.05575266700179782,
+        "generation_seconds": 4.609851833985886
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/17"
+}

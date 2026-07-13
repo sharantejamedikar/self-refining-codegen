@@ -1,0 +1,55 @@
+{
+  "duration_seconds": 2.3858783329924336,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.05823183299798984,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "duration_seconds": 0.05820345800020732,
+            "exception_message": null,
+            "exception_type": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "backend": "ollama",
+          "created_at": "2026-07-13T11:23:53.644554Z",
+          "eval_duration_ns": 2157854000,
+          "load_duration_ns": 129019334,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 36767000,
+          "total_duration_ns": 2325124792
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "completion_tokens": 108,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result\n```",
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.05823183299798984,
+        "generation_seconds": 2.327593000009074
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/1"
+}
