@@ -1,0 +1,36 @@
+model:
+  name: mock
+  backend: mock
+  revision: m1-canned-v1
+  temperature: 0.2
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval
+  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  data_dir: data
+  split: dev
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+experiment:
+  name: m1_mock_single_pass
+  seed: 42
+  output_dir: experiments/results
+device:
+  profile: mac
+  accelerator: auto
+profiles:
+  mac:
+    device:
+      accelerator: auto
+  cluster:
+    device:
+      accelerator: cuda
+  colab:
+    device:
+      accelerator: cuda
+
