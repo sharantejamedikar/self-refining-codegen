@@ -1,0 +1,586 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "cdc2f5eddcde5b5451180026db9ed621475658cdeb46e671aa0d10e3a143c479",
+      "execution": {
+        "duration_seconds": 0.18989837499975692,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "duration_seconds": 0.08664233300078195,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "duration_seconds": 0.03473658300936222,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()(())((())))') == ['(()(())((())))']",
+            "duration_seconds": 0.034114708003471605,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()(())((())))') == ['(()(())((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']",
+            "duration_seconds": 0.03431279200594872,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T19:30:43.476131Z",
+          "eval_duration_ns": 2171497000,
+          "load_duration_ns": 130896000,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 31129000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2337276875
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "completion_tokens": 103,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.18989837499975692,
+        "generation_seconds": 2.3405357909941813
+      }
+    },
+    {
+      "code_hash": "b5df2ca4b186cb70a140b454a3279a6a6bacf313e46062d1ba4e73fe781fe944",
+      "execution": {
+        "duration_seconds": 0.16233462499803863,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "duration_seconds": 0.05664454199722968,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "duration_seconds": 0.037548124993918464,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()(())((())))') == ['(()(())((())))']",
+            "duration_seconds": 0.03418779099592939,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()(())((())))') == ['(()(())((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']",
+            "duration_seconds": 0.033873959007905796,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T19:30:46.221348Z",
+          "eval_duration_ns": 2388249000,
+          "load_duration_ns": 138674792,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 23260000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2551915917
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "completion_tokens": 105,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 43,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.16233462499803863,
+        "generation_seconds": 2.5549830829986604
+      }
+    },
+    {
+      "code_hash": "8d7838fc6d6b40f82b9de2a7a5e2fd9ef98c0977dbf0cc0da9f6e2c27ef45166",
+      "execution": {
+        "duration_seconds": 0.16629387500870507,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "duration_seconds": 0.05945812498976011,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "duration_seconds": 0.03749429099843837,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()(())((())))') == ['(()(())((())))']",
+            "duration_seconds": 0.034610624992637895,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()(())((())))') == ['(()(())((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']",
+            "duration_seconds": 0.034646917003556155,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T19:30:48.995747Z",
+          "eval_duration_ns": 2452300000,
+          "load_duration_ns": 133764875,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 21220000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2608837209
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        if depth > 0:\n            current_group.append(char)\n        if char == ')':\n            depth -= 1\n            if depth == 0:\n                result.append(''.join(current_group))\n                current_group = []\n\n    return result",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        if depth > 0:\n            current_group.append(char)\n        if char == ')':\n            depth -= 1\n            if depth == 0:\n                result.append(''.join(current_group))\n                current_group = []\n\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 44,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.16629387500870507,
+        "generation_seconds": 2.611501833991497
+      }
+    },
+    {
+      "code_hash": "da927c867c6e3567c9d64c462a43af08ba4accf924a952cc1a216fff02da16e2",
+      "execution": {
+        "duration_seconds": 0.1639572499989299,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "duration_seconds": 0.055568416995811276,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "duration_seconds": 0.03853399999206886,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()(())((())))') == ['(()(())((())))']",
+            "duration_seconds": 0.03495995799312368,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()(())((())))') == ['(()(())((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']",
+            "duration_seconds": 0.034827334005967714,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T19:30:51.668725Z",
+          "eval_duration_ns": 2352962000,
+          "load_duration_ns": 127252458,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 22201000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2503885291
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "completion_tokens": 108,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    depth = 0\n\n    for char in paren_string.replace(' ', ''):\n        if char == '(':\n            depth += 1\n        elif char == ')':\n            depth -= 1\n        current_group.append(char)\n\n        if depth == 0 and current_group:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 45,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.1639572499989299,
+        "generation_seconds": 2.5061944170010975
+      }
+    },
+    {
+      "code_hash": "bfe434e12aad70e7fe073781116a6a349611485a75fd17188c0faed24741f347",
+      "execution": {
+        "duration_seconds": 0.16592454200144857,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "duration_seconds": 0.05762749999121297,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "duration_seconds": 0.037487291992874816,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('(()(())((())))') == ['(()(())((())))']",
+            "duration_seconds": 0.03542829200159758,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('(()(())((())))') == ['(()(())((())))']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']",
+            "duration_seconds": 0.03530733300431166,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\nMETADATA = {'author': 'jt', 'dataset': 'test'}\n\ndef check(candidate):\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\ncheck(separate_paren_groups)",
+            "timed_out": false,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-13T19:30:54.253408Z",
+          "eval_duration_ns": 2263665000,
+          "load_duration_ns": 130976875,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 22136000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2418306500
+        },
+        "code": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    balance = 0\n\n    for char in paren_string.replace(\" \", \"\"):\n        if char == '(':\n            balance += 1\n        elif char == ')':\n            balance -= 1\n\n        current_group.append(char)\n\n        if balance == 0:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result",
+        "completion_tokens": 105,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 156,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    current_group = []\n    balance = 0\n\n    for char in paren_string.replace(\" \", \"\"):\n        if char == '(':\n            balance += 1\n        elif char == ')':\n            balance -= 1\n\n        current_group.append(char)\n\n        if balance == 0:\n            result.append(''.join(current_group))\n            current_group = []\n\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 46,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.16592454200144857,
+        "generation_seconds": 2.4207105000095908
+      }
+    }
+  ],
+  "duration_seconds": 13.28276425000513,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "HumanEval/1",
+  "unique_code_count": 5
+}
