@@ -4,12 +4,22 @@ from __future__ import annotations
 
 import gzip
 import json
+import logging
 import urllib.request
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
+from data.humaneval import (
+    AtomicSplitReport,
+    HarnessSplitFailure,
+    HumanEvalAtomicSplitError,
+    UnsafeHumanEvalHarnessError,
+    split_humaneval_harness,
+)
 from data.schema import Problem
+
+LOGGER = logging.getLogger(__name__)
 
 HUMANEVAL_URL = (
     "https://raw.githubusercontent.com/openai/human-eval/master/data/"
@@ -38,11 +48,50 @@ def download_file(url: str, destination: str | Path) -> Path:
 
 
 def load_humaneval(path: str | Path) -> list[Problem]:
-    """Load official HumanEval JSONL.GZ and normalize it."""
+    """Load HumanEval with strict atomic tests, raising if any harness is unsafe."""
+
+    problems, report = load_humaneval_with_report(path)
+    if report.failed:
+        raise HumanEvalAtomicSplitError(report)
+    return problems
+
+
+def load_humaneval_with_report(
+    path: str | Path,
+) -> tuple[list[Problem], AtomicSplitReport]:
+    """Normalize safe harnesses and return an explicit split/failure report."""
 
     with gzip.open(path, mode="rt", encoding="utf-8") as handle:
         records = [json.loads(line) for line in handle if line.strip()]
-    return [_normalize_humaneval(record) for record in records]
+    problems: list[Problem] = []
+    failures: list[HarnessSplitFailure] = []
+    assertion_count = 0
+    for record in records:
+        task_id = str(record.get("task_id", "<missing-task-id>"))
+        try:
+            problem = _normalize_humaneval(record)
+        except UnsafeHumanEvalHarnessError as error:
+            failures.append(HarnessSplitFailure(task_id, str(error)))
+            LOGGER.error("HumanEval atomic split failed for %s: %s", task_id, error)
+        else:
+            problems.append(problem)
+            assertion_count += len(problem.test_cases)
+    report = AtomicSplitReport(
+        total_harnesses=len(records),
+        atomically_split=len(problems),
+        failed=len(failures),
+        total_assertions=assertion_count,
+        failures=tuple(failures),
+    )
+    LOGGER.info(
+        "HumanEval atomic split: %d/%d split, %d/%d failed, %d assertions",
+        report.atomically_split,
+        report.total_harnesses,
+        report.failed,
+        report.total_harnesses,
+        report.total_assertions,
+    )
+    return problems, report
 
 
 def load_mbpp_sanitized(path: str | Path) -> list[Problem]:
@@ -79,14 +128,14 @@ def _normalize_humaneval(record: dict[str, Any]) -> Problem:
     if missing:
         raise ValueError(f"HumanEval record is missing {sorted(missing)}")
     code = f"{record['prompt']}{record['canonical_solution']}"
-    test = f"{record['test']}\ncheck({record['entry_point']})"
+    tests = split_humaneval_harness(str(record["test"]), str(record["entry_point"]))
     return Problem(
         task_id=str(record["task_id"]),
         prompt=str(record["prompt"]),
         canonical_solution=code,
-        test_cases=(test,),
+        test_cases=tests,
         difficulty="unspecified",
-        tags=("humaneval",),
+        tags=("humaneval", "atomic-assertions"),
     )
 
 

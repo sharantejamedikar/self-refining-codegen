@@ -34,6 +34,22 @@ def test_executor_timeout_and_network_denial() -> None:
     assert "disabled" in (network.exception_message or "")
 
 
+def test_executor_shares_one_timeout_budget_across_tests() -> None:
+    executor = SubprocessExecutor(timeout_seconds=0.15, memory_limit_mb=None)
+    result = executor.execute(
+        "import time\ndef slow():\n    time.sleep(0.08)\n    return True",
+        ["assert slow()", "assert slow()", "assert slow()"],
+    )
+    assert result.passed_tests == 1
+    assert result.total_tests == 3
+    assert result.tests[1].timed_out
+    assert result.tests[2].timed_out
+    assert result.duration_seconds < 0.35
+    assert all(
+        "per-problem" in (test.exception_message or "") for test in result.tests[1:]
+    )
+
+
 def test_executor_syntax_empty_tests_and_constructor_validation() -> None:
     executor = SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None)
     syntax = executor.execute("def broken(:", ["assert True"])

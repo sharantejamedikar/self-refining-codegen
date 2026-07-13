@@ -60,17 +60,31 @@ class SubprocessExecutor(Executor):
         self.python_executable = python_executable
 
     def execute(self, code: str, test_cases: list[str]) -> ExecutionResult:
-        """Execute candidate plus each test in separate sandboxed subprocesses."""
+        """Execute isolated tests under one shared per-problem wall-clock budget."""
 
         started = time.monotonic()
-        outcomes = tuple(self._run_test(code, test_case) for test_case in test_cases)
+        deadline = started + self.timeout_seconds
+        outcomes: list[TestResult] = []
+        for index, test_case in enumerate(test_cases):
+            if time.monotonic() >= deadline:
+                outcomes.extend(
+                    self._budget_exhausted(case) for case in test_cases[index:]
+                )
+                break
+            outcome = self._run_test(code, test_case, deadline)
+            outcomes.append(outcome)
+            if outcome.timed_out:
+                outcomes.extend(
+                    self._budget_exhausted(case) for case in test_cases[index + 1 :]
+                )
+                break
         return ExecutionResult(
             passed=bool(outcomes) and all(outcome.passed for outcome in outcomes),
-            tests=outcomes,
+            tests=tuple(outcomes),
             duration_seconds=time.monotonic() - started,
         )
 
-    def _run_test(self, code: str, test_case: str) -> TestResult:
+    def _run_test(self, code: str, test_case: str, deadline: float) -> TestResult:
         started = time.monotonic()
         with tempfile.TemporaryDirectory(prefix="srcg-") as directory:
             temp_dir = Path(directory)
@@ -80,13 +94,18 @@ class SubprocessExecutor(Executor):
                 encoding="utf-8",
             )
             command = self._sandbox_command(program)
+            remaining_seconds = deadline - time.monotonic()
+            if remaining_seconds <= 0:
+                return self._budget_exhausted(
+                    test_case, duration_seconds=time.monotonic() - started
+                )
             try:
                 completed = subprocess.run(
                     command,
                     cwd=temp_dir,
                     capture_output=True,
                     text=True,
-                    timeout=self.timeout_seconds,
+                    timeout=remaining_seconds,
                     env=self._minimal_environment(),
                     preexec_fn=self._limit_resources(),
                     check=False,
@@ -98,7 +117,8 @@ class SubprocessExecutor(Executor):
                     passed=False,
                     exception_type="TimeoutError",
                     exception_message=(
-                        f"Exceeded {self.timeout_seconds:g}s wall-clock limit"
+                        f"Exceeded {self.timeout_seconds:g}s per-problem "
+                        "wall-clock limit"
                     ),
                     traceback=None,
                     stdout=self._decode_timeout_stream(error.stdout),
@@ -117,6 +137,23 @@ class SubprocessExecutor(Executor):
             stdout=completed.stdout,
             stderr=completed.stderr,
             duration_seconds=time.monotonic() - started,
+        )
+
+    def _budget_exhausted(
+        self, test_case: str, duration_seconds: float = 0.0
+    ) -> TestResult:
+        return TestResult(
+            test_case=test_case,
+            passed=False,
+            exception_type="TimeoutError",
+            exception_message=(
+                f"Exceeded {self.timeout_seconds:g}s per-problem wall-clock limit"
+            ),
+            traceback=None,
+            stdout="",
+            stderr="",
+            duration_seconds=duration_seconds,
+            timed_out=True,
         )
 
     def _sandbox_command(self, program: Path) -> list[str]:

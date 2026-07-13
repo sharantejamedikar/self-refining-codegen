@@ -8,9 +8,17 @@ from pathlib import Path
 
 import pytest
 
+from data.humaneval import (
+    AtomicSplitReport,
+    HarnessSplitFailure,
+    HumanEvalAtomicSplitError,
+    split_humaneval_harness,
+    write_atomic_split_report,
+)
 from data.loaders import (
     download_file,
     load_humaneval,
+    load_humaneval_with_report,
     load_jsonl,
     load_mbpp_sanitized,
     write_jsonl,
@@ -31,14 +39,22 @@ def test_humaneval_loader_and_jsonl_round_trip(tmp_path: Path) -> None:
         "task_id": "HumanEval/0",
         "prompt": "def add(a, b):\n",
         "canonical_solution": "    return a + b\n",
-        "test": "def check(candidate):\n    assert candidate(1, 2) == 3",
+        "test": (
+            "def check(candidate):\n"
+            "    assert candidate(1, 2) == 3\n"
+            "    assert candidate(-1, 1) == 0"
+        ),
         "entry_point": "add",
     }
     with gzip.open(source, "wt", encoding="utf-8") as handle:
         handle.write(json.dumps(record) + "\n")
     problems = load_humaneval(source)
     assert problems[0].canonical_solution == "def add(a, b):\n    return a + b\n"
-    assert problems[0].test_cases[0].endswith("check(add)")
+    assert len(problems[0].test_cases) == 2
+    assert all(case.endswith("check(add)") for case in problems[0].test_cases)
+    assert "candidate(1, 2)" in problems[0].test_cases[0]
+    assert "candidate(-1, 1)" in problems[0].test_cases[1]
+    assert problems[0].tags == ("humaneval", "atomic-assertions")
     normalized = write_jsonl(problems, tmp_path / "normalized.jsonl")
     assert load_jsonl(normalized) == problems
 
@@ -64,6 +80,117 @@ def test_mbpp_loader_repeats_imports_for_each_test(tmp_path: Path) -> None:
     assert problem.task_id == "MBPP/2"
     assert problem.tags == ("mbpp", "sanitized")
     assert all(case.startswith("import math\n") for case in problem.test_cases)
+
+
+def test_humaneval_split_preserves_imports_helpers_metadata_and_entry_point() -> None:
+    harness = """
+import math
+METADATA = {"source": "fixture"}
+
+def approximately_equal(value, expected):
+    return math.isclose(value, expected)
+
+def check(candidate):
+    assert approximately_equal(candidate(1), 1.5)
+    assert approximately_equal(candidate(2), 2.5)
+"""
+    tests = split_humaneval_harness(harness, "solve")
+    assert len(tests) == 2
+    assert all("import math" in test for test in tests)
+    assert all("METADATA" in test for test in tests)
+    assert all("def approximately_equal" in test for test in tests)
+    assert all(test.endswith("check(solve)") for test in tests)
+
+
+@pytest.mark.parametrize(
+    ("harness", "reason"),
+    [
+        (
+            "CASES = []\ndef check(candidate):\n    assert candidate(CASES)",
+            "shared mutable",
+        ),
+        (
+            "CASES = ([1],)\ndef check(candidate):\n    assert candidate(CASES)",
+            "shared mutable",
+        ),
+        (
+            "def check(candidate):\n    value = candidate(1)\n    assert value == 1",
+            "non-assert",
+        ),
+        (
+            "import random\ndef check(candidate):\n"
+            "    assert candidate(random.randint(1, 10))",
+            "dynamic data",
+        ),
+        (
+            "print('setup')\ndef check(candidate):\n    assert candidate(1)",
+            "module-level",
+        ),
+    ],
+)
+def test_humaneval_split_fails_loudly_for_unsafe_harnesses(
+    harness: str, reason: str
+) -> None:
+    with pytest.raises(ValueError, match=reason):
+        split_humaneval_harness(harness, "solve")
+
+
+def test_humaneval_loader_reports_all_split_failures(tmp_path: Path) -> None:
+    source = tmp_path / "humaneval.jsonl.gz"
+    safe = {
+        "task_id": "HumanEval/safe",
+        "prompt": "def solve(x):\n",
+        "canonical_solution": "    return x\n",
+        "test": "def check(candidate):\n    assert candidate(1) == 1",
+        "entry_point": "solve",
+    }
+    unsafe = {
+        **safe,
+        "task_id": "HumanEval/unsafe",
+        "test": (
+            "def check(candidate):\n"
+            "    value = candidate(1)\n"
+            "    assert value == 1"
+        ),
+    }
+    with gzip.open(source, "wt", encoding="utf-8") as handle:
+        handle.write(json.dumps(safe) + "\n")
+        handle.write(json.dumps(unsafe) + "\n")
+
+    problems, report = load_humaneval_with_report(source)
+    assert len(problems) == 1
+    assert report.to_dict() == {
+        "total_harnesses": 2,
+        "atomically_split": 1,
+        "failed": 1,
+        "total_assertions": 1,
+        "failures": [
+            {
+                "task_id": "HumanEval/unsafe",
+                "reason": "check() contains non-assert statements: ['Assign']",
+            }
+        ],
+    }
+    with pytest.raises(HumanEvalAtomicSplitError) as error:
+        load_humaneval(source)
+    assert error.value.report == report
+
+
+def test_write_atomic_split_report_creates_parent_and_stable_json(
+    tmp_path: Path,
+) -> None:
+    report = AtomicSplitReport(
+        total_harnesses=2,
+        atomically_split=1,
+        failed=1,
+        total_assertions=3,
+        failures=(HarnessSplitFailure("HumanEval/unsafe", "unsafe fixture"),),
+    )
+    destination = write_atomic_split_report(
+        report, tmp_path / "docs" / "validation" / "report.json"
+    )
+    assert json.loads(destination.read_text(encoding="utf-8")) == report.to_dict()
+    assert destination.read_text(encoding="utf-8").endswith("\n")
 
 
 def test_loaders_reject_missing_or_wrong_shapes(tmp_path: Path) -> None:
