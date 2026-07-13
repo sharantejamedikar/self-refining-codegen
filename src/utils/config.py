@@ -61,6 +61,7 @@ class ExperimentConfig:
     max_iterations: int = 5
     stagnation_patience: int = 2
     oscillation_window: int = 3
+    samples_per_problem: int = 5
 
 
 @dataclass(frozen=True)
@@ -171,6 +172,7 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
             experiment.max_iterations,
             experiment.stagnation_patience,
             experiment.oscillation_window,
+            experiment.samples_per_problem,
         )
         <= 0
     ):
