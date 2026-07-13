@@ -2,8 +2,8 @@
 
 ## Setup (one-time)
 
-1. Create an empty repo folder, drop `CLAUDE.md` in the root.
-   - Claude Code reads `CLAUDE.md` automatically.
+1. Create an empty repo folder, drop `AGENTS.md` in the root.
+   - Claude Code reads `AGENTS.md` automatically.
    - For Codex, duplicate it as `AGENTS.md` (same content) — Codex reads that file.
 2. Start the agent inside the repo folder.
 
@@ -12,12 +12,12 @@
 ## KICKOFF PROMPT (first session — paste exactly)
 
 ```
-Read CLAUDE.md in full before doing anything. Confirm you've read it by listing
+Read AGENTS.md in full before doing anything. Confirm you've read it by listing
 the three guardrails you consider most binding on your behavior, in one line each.
 
 Then execute Milestone M1 only:
 
-1. Scaffold the repository exactly per section 4 of CLAUDE.md, with pyproject.toml,
+1. Scaffold the repository exactly per section 4 of AGENTS.md, with pyproject.toml,
    pinned requirements, .gitignore (exclude data/, results/, models), and a Makefile
    or justfile with targets: test, lint, format.
 2. Implement the typed config system (YAML → dataclass) with device auto-detection
@@ -45,7 +45,7 @@ through generate → execute → pass/fail with the mock backend.
 
 Work incrementally: after each numbered step, give me a one-line status before
 moving on. Do not start M2. Do not download any model weights this session.
-Finish with the end-of-session summary required by CLAUDE.md section 7.
+Finish with the end-of-session summary required by AGENTS.md section 7.
 ```
 
 ---
@@ -53,7 +53,7 @@ Finish with the end-of-session summary required by CLAUDE.md section 7.
 ## PER-SESSION PROMPT TEMPLATE (every later session)
 
 ```
-Read CLAUDE.md first.
+Read AGENTS.md first.
 
 Current state: [what exists, last milestone completed, anything broken]
 Last results: [paste latest dev-set numbers or "none yet"]
@@ -64,7 +64,7 @@ Before writing code: tell me in ≤5 bullets your plan and anything in my reques
 you think is a mistake. Then proceed.
 
 Run the test suite before you finish and paste the real output. End with the
-CLAUDE.md section-7 summary.
+AGENTS.md section-7 summary.
 ```
 
 ---
@@ -72,7 +72,7 @@ CLAUDE.md section-7 summary.
 ## RESULTS-REVIEW PROMPT (after every experiment run)
 
 ```
-Read CLAUDE.md. Here are results from [experiment name]: [paste summary CSV / JSON].
+Read AGENTS.md. Here are results from [experiment name]: [paste summary CSV / JSON].
 
 Act as a skeptical dissertation examiner. Answer:
 1. What would you challenge about these numbers or the methodology behind them?
