@@ -10,7 +10,7 @@ import pytest
 
 from data.schema import Problem
 from execution import SubprocessExecutor
-from generation import MockGenerator
+from generation import GenerationRequest, MockGenerator
 from loop import SinglePassRunner
 from utils.config import (
     AppConfig,
@@ -48,19 +48,13 @@ def _config(output_dir: Path) -> AppConfig:
 
 def test_mock_generator_modes_and_missing_prompt() -> None:
     problems = _problems()
-    assert (
-        "return 0"
-        in MockGenerator.canned_correct(problems).generate(problems[0].prompt, 1).code
-    )
-    assert (
-        "AssertionError"
-        in MockGenerator.canned_buggy(problems).generate(problems[0].prompt, 1).code
-    )
-    assert (
-        MockGenerator({}, default_output="x = 1").generate("missing", 1).code == "x = 1"
-    )
+    first = GenerationRequest(problems[0].prompt, 1)
+    assert "return 0" in MockGenerator.canned_correct(problems).generate(first).code
+    assert "AssertionError" in MockGenerator.canned_buggy(problems).generate(first).code
+    missing = GenerationRequest("missing", 1)
+    assert MockGenerator({}, default_output="x = 1").generate(missing).code == "x = 1"
     with pytest.raises(KeyError, match="No canned"):
-        MockGenerator({}).generate("missing", 1)
+        MockGenerator({}).generate(missing)
 
 
 def test_three_problem_mock_integration(tmp_path: Path) -> None:

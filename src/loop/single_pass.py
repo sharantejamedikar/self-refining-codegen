@@ -16,7 +16,7 @@ import yaml
 
 from data.schema import Problem
 from execution.base import Executor
-from generation.base import Generator
+from generation.base import GenerationRequest, Generator
 from utils.config import AppConfig
 
 
@@ -55,7 +55,11 @@ class SinglePassRunner:
     def _run_problem(self, problem: Problem) -> dict[str, Any]:
         started = time.monotonic()
         generation_started = time.monotonic()
-        generated = self.generator.generate(problem.prompt, self.config.experiment.seed)
+        generated = self.generator.generate(
+            GenerationRequest(
+                problem_prompt=problem.prompt, seed=self.config.experiment.seed
+            )
+        )
         generation_duration = time.monotonic() - generation_started
         execution = self.executor.execute(generated.code, list(problem.test_cases))
         return {
@@ -111,12 +115,28 @@ class SinglePassRunner:
     def _write_summary(destination: Path, records: list[dict[str, Any]]) -> None:
         solved = sum(bool(record["passed"]) for record in records)
         total_duration = sum(float(record["duration_seconds"]) for record in records)
+        prompt_tokens = sum(
+            int(record["iterations"][0]["generation"]["prompt_tokens"] or 0)
+            for record in records
+        )
+        completion_tokens = sum(
+            int(record["iterations"][0]["generation"]["completion_tokens"] or 0)
+            for record in records
+        )
         with (destination / "summary.csv").open(
             "w", encoding="utf-8", newline=""
         ) as handle:
             writer = csv.DictWriter(
                 handle,
-                fieldnames=["metric", "solved", "total", "value", "wall_clock_seconds"],
+                fieldnames=[
+                    "metric",
+                    "solved",
+                    "total",
+                    "value",
+                    "wall_clock_seconds",
+                    "prompt_tokens",
+                    "completion_tokens",
+                ],
             )
             writer.writeheader()
             writer.writerow(
@@ -126,5 +146,7 @@ class SinglePassRunner:
                     "total": len(records),
                     "value": solved / len(records),
                     "wall_clock_seconds": total_duration,
+                    "prompt_tokens": prompt_tokens,
+                    "completion_tokens": completion_tokens,
                 }
             )
