@@ -47,4 +47,3 @@ class Problem:
             difficulty=str(data["difficulty"]),
             tags=tuple(str(tag) for tag in data["tags"]),
         )
-

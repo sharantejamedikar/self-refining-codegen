@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import urllib.error
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -11,7 +12,7 @@ import pytest
 from generation import GenerationRequest, OllamaGenerator, create_generator
 from generation.factory import register_generator_backend
 from generation.mock import MockGenerator
-from utils.config import ModelConfig
+from utils.config import ModelConfig, load_config
 
 
 def _config(**overrides: Any) -> ModelConfig:
@@ -134,3 +135,18 @@ def test_backend_factory_is_extensible_without_calling_code_changes() -> None:
     assert isinstance(created, MockGenerator)
     with pytest.raises(ValueError, match="Unsupported generator backend"):
         create_generator(_config(backend="not_registered"))
+
+
+def test_codellama_config_uses_unchanged_ollama_factory() -> None:
+    config = load_config(
+        Path("configs/m2_5_codellama_ollama_zero_shot.yaml"), profile="cluster"
+    )
+    generator = create_generator(config.model)
+    assert isinstance(generator, OllamaGenerator)
+    assert config.model.name == "codellama/CodeLlama-13b-Instruct-hf"
+    assert config.model.backend_model == "codellama:13b-instruct-q4_K_M"
+    assert config.model.revision == "745795438019e47e4dad1347a0093e11deee4c68"
+    assert config.model.artifact_digest == (
+        "96b64dad9259e4c60425bc881d5dca59c948e484d4ac8c014c4d424a401971e7"
+    )
+    assert config.experiment.name.startswith("m2_5_local_sanity_only")

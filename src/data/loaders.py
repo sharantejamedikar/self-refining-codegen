@@ -5,8 +5,9 @@ from __future__ import annotations
 import gzip
 import json
 import urllib.request
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from data.schema import Problem
 
@@ -27,7 +28,9 @@ def download_file(url: str, destination: str | Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         return path
-    request = urllib.request.Request(url, headers={"User-Agent": "self-refining-codegen/0.1"})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "self-refining-codegen/0.1"}
+    )
     with urllib.request.urlopen(request, timeout=60) as response:  # noqa: S310
         content = response.read()
     path.write_bytes(content)

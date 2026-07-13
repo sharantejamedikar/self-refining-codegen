@@ -5,9 +5,9 @@ from __future__ import annotations
 import ast
 import json
 import logging
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 from data.schema import Problem
 from execution.base import Executor
@@ -42,7 +42,9 @@ def validate_problems(
                 "exception_message": str(error),
             }
         if reason is None:
-            result = executor.execute(problem.canonical_solution, list(problem.test_cases))
+            result = executor.execute(
+                problem.canonical_solution, list(problem.test_cases)
+            )
             if not result.passed:
                 reason = {"stage": "execution", "execution": result.to_dict()}
         if reason is None:
@@ -59,4 +61,3 @@ def validate_problems(
         for record in records:
             handle.write(json.dumps(record, sort_keys=True) + "\n")
     return ValidationSummary(tuple(valid), tuple(quarantined))
-

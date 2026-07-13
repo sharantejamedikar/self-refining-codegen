@@ -5,8 +5,8 @@ from __future__ import annotations
 import json
 import random
 from collections import defaultdict
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from data.loaders import write_jsonl
 from data.schema import Problem
@@ -54,7 +54,9 @@ def create_stratified_dev_split(
         "seed": seed,
         "size": size,
         "source_size": len(pool),
-        "stratification": "task_id_rank_quartile" if use_quartiles else "difficulty_tags",
+        "stratification": (
+            "task_id_rank_quartile" if use_quartiles else "difficulty_tags"
+        ),
         "strata_selected": selected_counts,
         "task_ids": [problem.task_id for problem in selected],
     }
