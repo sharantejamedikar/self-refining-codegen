@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import json
 import os
 import re
 import shutil
@@ -14,7 +15,13 @@ from collections.abc import Callable
 from contextlib import suppress
 from pathlib import Path
 
-from execution.base import ExecutionResult, Executor, TestResult
+from execution.base import (
+    ExecutionResult,
+    ExecutionTrace,
+    Executor,
+    TestResult,
+    TraceEvent,
+)
 
 try:
     import resource
@@ -43,6 +50,7 @@ if hasattr(_sandbox_os, "fork"):
 """
 
 _ASSERTION_MARKER = "__SRCG_ASSERTION_VALUES__"
+_TRACE_MARKER = "__SRCG_TRACE__"
 
 
 class SubprocessExecutor(Executor):
@@ -53,6 +61,7 @@ class SubprocessExecutor(Executor):
         timeout_seconds: float = 10.0,
         memory_limit_mb: int | None = 512,
         python_executable: str = sys.executable,
+        collect_trace: bool = False,
     ) -> None:
         if timeout_seconds <= 0:
             raise ValueError("timeout_seconds must be positive")
@@ -61,6 +70,7 @@ class SubprocessExecutor(Executor):
         self.timeout_seconds = timeout_seconds
         self.memory_limit_mb = memory_limit_mb
         self.python_executable = python_executable
+        self.collect_trace = collect_trace
 
     def execute(self, code: str, test_cases: list[str]) -> ExecutionResult:
         """Execute isolated tests under one shared per-problem wall-clock budget."""
@@ -96,8 +106,7 @@ class SubprocessExecutor(Executor):
                 test_case
             )
             program.write_text(
-                f"{_NETWORK_GUARD}\n{code.rstrip()}\n\n{instrumented_test.rstrip()}\n",
-                encoding="utf-8",
+                self._build_program(code, instrumented_test), encoding="utf-8"
             )
             command = self._sandbox_command(program)
             remaining_seconds = deadline - time.monotonic()
@@ -133,7 +142,8 @@ class SubprocessExecutor(Executor):
                     timed_out=True,
                 )
 
-        exception_type, exception_message = self._parse_exception(completed.stderr)
+        trace, stderr = self._parse_trace(completed.stderr)
+        exception_type, exception_message = self._parse_exception(stderr)
         actual_value, expected_value = self._parse_assertion_values(exception_message)
         if actual_value is not None:
             exception_message = (
@@ -145,14 +155,134 @@ class SubprocessExecutor(Executor):
             passed=completed.returncode == 0,
             exception_type=exception_type,
             exception_message=exception_message,
-            traceback=completed.stderr if completed.returncode else None,
+            traceback=stderr if completed.returncode else None,
             stdout=completed.stdout,
-            stderr=completed.stderr,
+            stderr=stderr,
             duration_seconds=time.monotonic() - started,
             assertion_expression=assertion_expression,
             actual_value=actual_value,
             expected_value=expected_value,
+            trace=trace,
         )
+
+    def _build_program(self, code: str, test_case: str) -> str:
+        candidate = code.rstrip()
+        prefix = f"{_NETWORK_GUARD}\n"
+        if not self.collect_trace:
+            return f"{prefix}{candidate}\n\n{test_case.rstrip()}\n"
+
+        candidate_start = prefix.count("\n") + 1
+        candidate_lines = candidate.splitlines()
+        candidate_end = candidate_start + len(candidate_lines) - 1
+        sources = {
+            candidate_start + offset: line.strip()
+            for offset, line in enumerate(candidate_lines)
+        }
+        indented_test = "\n".join(
+            f"    {line}" if line else "    "
+            for line in test_case.rstrip().splitlines()
+        )
+        tracer = f"""\
+import json as __srcg_json_7f31
+import sys as __srcg_sys_7f31
+__srcg_trace_start_7f31 = {candidate_start}
+__srcg_trace_end_7f31 = {candidate_end}
+__srcg_trace_sources_7f31 = {sources!r}
+__srcg_trace_events_7f31 = []
+__srcg_trace_max_depth_7f31 = 0
+__srcg_trace_deepest_7f31 = None
+def __srcg_trace_7f31(frame, event, arg):
+    global __srcg_trace_max_depth_7f31, __srcg_trace_deepest_7f31
+    line_number = frame.f_lineno
+    is_candidate = (
+        frame.f_code.co_filename == __file__
+        and __srcg_trace_start_7f31 <= line_number <= __srcg_trace_end_7f31
+    )
+    if is_candidate:
+        depth = 0
+        cursor = frame
+        while cursor is not None:
+            if (
+                cursor.f_code.co_filename == __file__
+                and __srcg_trace_start_7f31
+                <= cursor.f_lineno
+                <= __srcg_trace_end_7f31
+            ):
+                depth += 1
+            cursor = cursor.f_back
+        if depth > __srcg_trace_max_depth_7f31:
+            __srcg_trace_max_depth_7f31 = depth
+            __srcg_trace_deepest_7f31 = frame.f_code.co_name
+        if event == "line":
+            item = {{
+                "line_number": line_number - __srcg_trace_start_7f31 + 1,
+                "function": frame.f_code.co_name,
+                "source": __srcg_trace_sources_7f31.get(line_number, ""),
+            }}
+            if not __srcg_trace_events_7f31 or item != __srcg_trace_events_7f31[-1]:
+                __srcg_trace_events_7f31.append(item)
+                del __srcg_trace_events_7f31[:-12]
+    return __srcg_trace_7f31
+__srcg_sys_7f31.settrace(__srcg_trace_7f31)
+try:
+{indented_test}
+finally:
+    __srcg_sys_7f31.settrace(None)
+    __srcg_payload_7f31 = {{
+        "recent_events": __srcg_trace_events_7f31,
+        "max_call_depth": __srcg_trace_max_depth_7f31,
+        "deepest_function": __srcg_trace_deepest_7f31,
+    }}
+    print(
+        "{_TRACE_MARKER}" + __srcg_json_7f31.dumps(__srcg_payload_7f31),
+        file=__srcg_sys_7f31.stderr,
+    )
+"""
+        return f"{prefix}{candidate}\n\n{tracer}"
+
+    @staticmethod
+    def _parse_trace(stderr: str) -> tuple[ExecutionTrace | None, str]:
+        payload: dict[str, object] | None = None
+        retained: list[str] = []
+        for line in stderr.splitlines(keepends=True):
+            stripped = line.rstrip("\r\n")
+            if stripped.startswith(_TRACE_MARKER):
+                try:
+                    decoded = json.loads(stripped[len(_TRACE_MARKER) :])
+                except json.JSONDecodeError:
+                    retained.append(line)
+                else:
+                    if isinstance(decoded, dict):
+                        payload = decoded
+                continue
+            retained.append(line)
+        if payload is None:
+            return None, "".join(retained)
+        raw_events = payload.get("recent_events", [])
+        if not isinstance(raw_events, list):
+            return None, "".join(retained)
+        try:
+            events = tuple(
+                TraceEvent(
+                    line_number=int(item["line_number"]),
+                    function=str(item["function"]),
+                    source=str(item["source"]),
+                )
+                for item in raw_events
+                if isinstance(item, dict)
+            )
+            trace = ExecutionTrace(
+                recent_events=events,
+                max_call_depth=int(payload.get("max_call_depth", 0)),
+                deepest_function=(
+                    str(payload["deepest_function"])
+                    if payload.get("deepest_function") is not None
+                    else None
+                ),
+            )
+        except (KeyError, TypeError, ValueError):
+            return None, "".join(retained)
+        return trace, "".join(retained)
 
     def _budget_exhausted(
         self, test_case: str, duration_seconds: float = 0.0

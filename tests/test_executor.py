@@ -102,3 +102,29 @@ def test_executor_ignores_unsupported_resource_limits(
     callback = SubprocessExecutor(memory_limit_mb=128)._limit_resources()
     assert callback is not None
     callback()
+
+
+def test_executor_collects_candidate_line_trace_and_recursion_depth() -> None:
+    executor = SubprocessExecutor(
+        timeout_seconds=1, memory_limit_mb=None, collect_trace=True
+    )
+    logic = executor.execute(
+        "def candidate(value):\n    doubled = value * 2\n    return doubled + 1",
+        ["assert candidate(3) == 6"],
+    ).tests[0]
+    assert logic.trace is not None
+    assert logic.trace.max_call_depth == 1
+    assert any(
+        event.function == "candidate" and event.source == "return doubled + 1"
+        for event in logic.trace.recent_events
+    )
+    assert "__SRCG_TRACE__" not in logic.stderr
+
+    recursion = executor.execute(
+        "def candidate(value):\n    return candidate(value + 1)",
+        ["candidate(0)"],
+    ).tests[0]
+    assert recursion.exception_type == "RecursionError"
+    assert recursion.trace is not None
+    assert recursion.trace.max_call_depth >= 900
+    assert recursion.trace.deepest_function == "candidate"

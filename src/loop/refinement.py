@@ -23,7 +23,7 @@ from convergence import (
 )
 from data.schema import Problem
 from execution.base import ExecutionResult, Executor
-from feedback import TemplateFeedbackGenerator, classify_execution
+from feedback import FeedbackGenerator, classify_execution
 from generation.base import GenerationRequest, Generator
 from utils.config import AppConfig
 
@@ -35,7 +35,7 @@ class RefinementRunner:
         self,
         generator: Generator,
         executor: Executor,
-        feedback_generator: TemplateFeedbackGenerator,
+        feedback_generator: FeedbackGenerator,
         config: AppConfig,
     ) -> None:
         self.generator = generator
@@ -117,6 +117,9 @@ class RefinementRunner:
                         "assertion_pass_rate_diagnostic": classification.pass_rate,
                     },
                     "feedback": rendered_feedback,
+                    "feedback_strategy": self.feedback_generator.strategy_for(
+                        classification, execution
+                    ),
                     "convergence_decision": decision.value,
                     "convergence_state": asdict(convergence_records[-1]),
                     "timing": {

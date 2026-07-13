@@ -45,6 +45,15 @@ class TemplateFeedbackGenerator:
         )
 
     @staticmethod
+    def strategy_for(
+        classification: Classification, execution: ExecutionResult | None = None
+    ) -> str:
+        """Return the effective strategy label persisted with an iteration."""
+
+        del classification, execution
+        return "template"
+
+    @staticmethod
     def _assertion_detail(index: int, test: TestResult) -> str:
         expression = test.assertion_expression or _assertion_line(test.test_case)
         detail = f"{index}. {expression}"

@@ -1,4 +1,4 @@
-"""Run a configured template-feedback refinement development experiment."""
+"""Run a configured refinement development experiment."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from pathlib import Path
 
 from data import load_jsonl
 from execution import SubprocessExecutor
-from feedback import TemplateFeedbackGenerator
+from feedback import create_feedback_generator
 from generation import OllamaGenerator, create_generator
 from loop import RefinementRunner
 from utils.config import load_config
@@ -48,9 +48,13 @@ def main() -> None:
         timeout_seconds=config.execution.timeout_seconds,
         memory_limit_mb=config.execution.memory_limit_mb,
         python_executable=config.execution.python_executable,
+        collect_trace=config.execution.collect_trace,
     )
     destination = RefinementRunner(
-        generator, executor, TemplateFeedbackGenerator(), config
+        generator,
+        executor,
+        create_feedback_generator(config.experiment.feedback_strategy),
+        config,
     ).run(problems, run_dir=args.run_dir)
     print(destination)
 
