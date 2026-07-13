@@ -79,7 +79,28 @@ def test_mbpp_loader_repeats_imports_for_each_test(tmp_path: Path) -> None:
     problem = load_mbpp_sanitized(source)[0]
     assert problem.task_id == "MBPP/2"
     assert problem.tags == ("mbpp", "sanitized")
+    assert "Required function signature:\ndef value():" in problem.prompt
     assert all(case.startswith("import math\n") for case in problem.test_cases)
+
+
+def test_mbpp_loader_rejects_missing_tested_entry_point(tmp_path: Path) -> None:
+    source = tmp_path / "mbpp.json"
+    source.write_text(
+        json.dumps(
+            [
+                {
+                    "task_id": 9,
+                    "prompt": "Return one.",
+                    "code": "def answer(): return 1",
+                    "test_imports": [],
+                    "test_list": ["assert missing() == 1"],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="exactly one tested top-level function"):
+        load_mbpp_sanitized(source)
 
 
 def test_humaneval_split_preserves_imports_helpers_metadata_and_entry_point() -> None:
