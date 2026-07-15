@@ -17,6 +17,7 @@ import yaml
 from data.schema import Problem
 from execution.base import Executor
 from generation.base import GenerationRequest, Generator
+from loop.persistence import write_problem_record
 from utils.config import AppConfig
 
 
@@ -43,12 +44,11 @@ class SinglePassRunner:
         problem_dir = destination / "problems"
         problem_dir.mkdir()
 
-        records = [self._run_problem(problem) for problem in problem_list]
-        for record in records:
-            filename = str(record["task_id"]).replace("/", "_") + ".json"
-            (problem_dir / filename).write_text(
-                json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-            )
+        records: list[dict[str, Any]] = []
+        for problem in problem_list:
+            record = self._run_problem(problem)
+            write_problem_record(problem_dir, record)
+            records.append(record)
         self._write_summary(destination, records)
         return destination
 

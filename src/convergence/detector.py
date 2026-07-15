@@ -15,6 +15,7 @@ class ConvergenceReason(str, Enum):
     MAX_ITERATIONS = "max_iterations"
     STAGNATION = "stagnation"
     OSCILLATION = "oscillation"
+    FIXED_ITERATIONS_COMPLETE = "fixed_iterations_complete"
 
 
 @dataclass(frozen=True)

@@ -57,6 +57,29 @@ class FeedbackAwareMockGenerator(Generator):
         )
 
 
+class RegressingFixedModeMockGenerator(Generator):
+    """Pass once, then regress, to exercise fixed-mode aggregation."""
+
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def generate(self, request: GenerationRequest) -> GenerationOutput:
+        self.calls += 1
+        value = 0 if self.calls == 1 else 99
+        code = f"def value(): return {value}"
+        rendered = build_prompt(
+            request.problem_prompt,
+            previous_code=request.previous_code,
+            feedback=request.feedback,
+        )
+        return GenerationOutput(
+            code=code,
+            raw_text=code,
+            rendered_system_prompt=rendered.system,
+            rendered_user_prompt=rendered.user,
+        )
+
+
 def _problems() -> list[Problem]:
     return [
         Problem(
@@ -134,3 +157,43 @@ def test_three_problem_full_refinement_integration(
     assert summary["solved"] == "2" and summary["total"] == "3"
     diagnostic = json.loads((destination / "run_summary.json").read_text())
     assert diagnostic["convergence_reasons"] == {"oscillation": 1, "success": 2}
+
+
+def test_fixed_mode_runs_all_five_iterations_and_preserves_any_success(
+    tmp_path: Path,
+) -> None:
+    config = _config(tmp_path)
+    config = AppConfig(
+        model=config.model,
+        dataset=config.dataset,
+        execution=config.execution,
+        experiment=ExperimentConfig(
+            name=config.experiment.name,
+            seed=config.experiment.seed,
+            output_dir=config.experiment.output_dir,
+            max_iterations=5,
+            convergence_mode="fixed",
+        ),
+        device=config.device,
+    )
+    generator = RegressingFixedModeMockGenerator()
+    destination = RefinementRunner(
+        generator,
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        TemplateFeedbackGenerator(),
+        config,
+    ).run([_problems()[0]], tmp_path / "fixed-run")
+
+    record = json.loads((destination / "problems" / "Integration_0.json").read_text())
+    assert len(record["iterations"]) == 5
+    assert generator.calls == 5
+    assert record["passed"] is True
+    assert record["iterations"][-1]["classification"]["category"] != "success"
+    assert record["convergence_reason"] == "fixed_iterations_complete"
+    assert [item["convergence_decision"] for item in record["iterations"]] == [
+        "continue",
+        "continue",
+        "continue",
+        "continue",
+        "fixed_iterations_complete",
+    ]
