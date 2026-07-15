@@ -64,6 +64,7 @@ class ExperimentConfig:
     oscillation_window: int = 3
     samples_per_problem: int = 5
     feedback_strategy: Literal["template", "trace", "hybrid"] = "template"
+    convergence_mode: Literal["adaptive", "fixed"] = "adaptive"
 
 
 @dataclass(frozen=True)
@@ -173,6 +174,8 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
         raise ValueError(
             "experiment.feedback_strategy must be 'template', 'trace', or 'hybrid'"
         )
+    if experiment.convergence_mode not in {"adaptive", "fixed"}:
+        raise ValueError("experiment.convergence_mode must be 'adaptive' or 'fixed'")
     if (
         min(
             experiment.max_iterations,

@@ -25,6 +25,7 @@ from data.schema import Problem
 from execution.base import ExecutionResult, Executor
 from feedback import FeedbackGenerator, classify_execution
 from generation.base import GenerationRequest, Generator
+from loop.persistence import write_problem_record
 from utils.config import AppConfig
 
 
@@ -61,12 +62,11 @@ class RefinementRunner:
         self._write_run_metadata(destination)
         problem_dir = destination / "problems"
         problem_dir.mkdir()
-        records = [self._run_problem(problem) for problem in problem_list]
-        for record in records:
-            filename = str(record["task_id"]).replace("/", "_") + ".json"
-            (problem_dir / filename).write_text(
-                json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-            )
+        records: list[dict[str, Any]] = []
+        for problem in problem_list:
+            record = self._run_problem(problem)
+            write_problem_record(problem_dir, record)
+            records.append(record)
         self._write_summary(destination, records)
         return destination
 
@@ -103,7 +103,14 @@ class RefinementRunner:
                     success=classification.category.value == "success",
                 )
             )
-            decision = self.detector.decide(convergence_records)
+            if self.config.experiment.convergence_mode == "fixed":
+                decision = (
+                    ConvergenceReason.FIXED_ITERATIONS_COMPLETE
+                    if iteration == self.config.experiment.max_iterations
+                    else ConvergenceReason.CONTINUE
+                )
+            else:
+                decision = self.detector.decide(convergence_records)
             iterations.append(
                 {
                     "iteration": iteration,
@@ -136,7 +143,9 @@ class RefinementRunner:
         return {
             "task_id": problem.task_id,
             "seed": self.config.experiment.seed,
-            "passed": iterations[-1]["classification"]["category"] == "success",
+            "passed": any(
+                item["classification"]["category"] == "success" for item in iterations
+            ),
             "metric": "pass@1_refined",
             "iterations": iterations,
             "convergence_reason": iterations[-1]["convergence_decision"],
