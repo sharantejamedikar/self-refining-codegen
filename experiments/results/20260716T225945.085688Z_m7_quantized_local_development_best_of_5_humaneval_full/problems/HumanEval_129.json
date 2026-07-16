@@ -1,0 +1,378 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "8f6da2db0117061472ac1c22e41af7fbb86f753135e10a294307538fb72c149f",
+      "execution": {
+        "duration_seconds": 4.042905625003186,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 4.042870709003182,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    print\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n    assert candidate([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 1) == [1]\n    assert candidate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], 4) == [1, 2, 1, 2]\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n    assert candidate([[8, 14, 9, 2], [6, 4, 13, 15], [5, 7, 1, 12], [3, 10, 11, 16]], 5) == [1, 7, 1, 7, 1]\n    assert candidate([[11, 8, 7, 2], [5, 16, 14, 4], [9, 3, 15, 6], [12, 13, 10, 1]], 9) == [1, 6, 1, 6, 1, 6, 1, 6, 1]\n    assert candidate([[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4], [11, 8, 7, 2]], 12) == [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6]\n    assert candidate([[2, 7, 4], [3, 1, 5], [6, 8, 9]], 8) == [1, 3, 1, 3, 1, 3, 1, 3]\n    assert candidate([[6, 1, 5], [3, 8, 9], [2, 7, 4]], 8) == [1, 5, 1, 5, 1, 5, 1, 5]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([[1, 2], [3, 4]], 10) == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]\n    assert candidate([[1, 3], [3, 2]], 10) == [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]\n\n\ncheck(minPath)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:22:01.924891Z",
+          "eval_duration_ns": 4242332999,
+          "load_duration_ns": 121310875,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 1240048000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 5606598958
+        },
+        "code": "from typing import List\n\ndef minPath(grid: List[List[int]], k: int) -> List[int]:\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    def dfs(x: int, y: int, path: List[int]):\n        if len(path) == k:\n            paths.append(path[:])\n            return\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                dfs(nx, ny, path + [grid[nx][ny]])\n    \n    paths = []\n    for i in range(N):\n        for j in range(N):\n            dfs(i, j, [grid[i][j]])\n    \n    return min(paths)",
+        "completion_tokens": 183,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 437,
+        "raw_text": "```python\nfrom typing import List\n\ndef minPath(grid: List[List[int]], k: int) -> List[int]:\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    def dfs(x: int, y: int, path: List[int]):\n        if len(path) == k:\n            paths.append(path[:])\n            return\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                dfs(nx, ny, path + [grid[nx][ny]])\n    \n    paths = []\n    for i in range(N):\n        for j in range(N):\n            dfs(i, j, [grid[i][j]])\n    \n    return min(paths)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 4.042905625003186,
+        "generation_seconds": 5.610071208000591
+      }
+    },
+    {
+      "code_hash": "4376b85856ccd359f80c29ddfdf5377dc967f9e3d80098c835bab8f29c02c19d",
+      "execution": {
+        "duration_seconds": 0.06048324999937904,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.060441375000664266,
+            "exception_message": "not enough values to unpack (expected 3, got 2)",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 58, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 43, in check\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 31, in minPath\n    current_value, x, y = heappop(pq)\n    ^^^^^^^^^^^^^^^^^^^\nValueError: not enough values to unpack (expected 3, got 2)\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    print\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n    assert candidate([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 1) == [1]\n    assert candidate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], 4) == [1, 2, 1, 2]\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n    assert candidate([[8, 14, 9, 2], [6, 4, 13, 15], [5, 7, 1, 12], [3, 10, 11, 16]], 5) == [1, 7, 1, 7, 1]\n    assert candidate([[11, 8, 7, 2], [5, 16, 14, 4], [9, 3, 15, 6], [12, 13, 10, 1]], 9) == [1, 6, 1, 6, 1, 6, 1, 6, 1]\n    assert candidate([[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4], [11, 8, 7, 2]], 12) == [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6]\n    assert candidate([[2, 7, 4], [3, 1, 5], [6, 8, 9]], 8) == [1, 3, 1, 3, 1, 3, 1, 3]\n    assert candidate([[6, 1, 5], [3, 8, 9], [2, 7, 4]], 8) == [1, 5, 1, 5, 1, 5, 1, 5]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([[1, 2], [3, 4]], 10) == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]\n    assert candidate([[1, 3], [3, 2]], 10) == [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]\n\n\ncheck(minPath)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 58, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 43, in check\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-ntov6gf3/program.py\", line 31, in minPath\n    current_value, x, y = heappop(pq)\n    ^^^^^^^^^^^^^^^^^^^\nValueError: not enough values to unpack (expected 3, got 2)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:22:10.065706Z",
+          "eval_duration_ns": 3927100000,
+          "load_duration_ns": 133943333,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 31245000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 4094205250
+        },
+        "code": "from heapq import heappop, heappush\n\ndef minPath(grid, k):\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    pq = []\n    \n    for i in range(N):\n        for j in range(N):\n            heappush(pq, ((grid[i][j], i, j), [grid[i][j]]))\n    \n    while pq:\n        current_value, x, y = heappop(pq)\n        if len(current_value) == k:\n            return current_value\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                heappush(pq, ((current_value[1:], nx, ny), [grid[nx][ny]] + current_value))",
+        "completion_tokens": 197,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 437,
+        "raw_text": "```python\nfrom heapq import heappop, heappush\n\ndef minPath(grid, k):\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    pq = []\n    \n    for i in range(N):\n        for j in range(N):\n            heappush(pq, ((grid[i][j], i, j), [grid[i][j]]))\n    \n    while pq:\n        current_value, x, y = heappop(pq)\n        if len(current_value) == k:\n            return current_value\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                heappush(pq, ((current_value[1:], nx, ny), [grid[nx][ny]] + current_value))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 43,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.06048324999937904,
+        "generation_seconds": 4.09750483300013
+      }
+    },
+    {
+      "code_hash": "ce304c820c8924c2b41dca05a6ca57684fa1343156b327a6f5f599b12085e07f",
+      "execution": {
+        "duration_seconds": 0.05916516599972965,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05912862499826588,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-jr3721si/program.py\", line 64, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-jr3721si/program.py\", line 49, in check\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "[1]\n[1]\n",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    print\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n    assert candidate([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 1) == [1]\n    assert candidate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], 4) == [1, 2, 1, 2]\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n    assert candidate([[8, 14, 9, 2], [6, 4, 13, 15], [5, 7, 1, 12], [3, 10, 11, 16]], 5) == [1, 7, 1, 7, 1]\n    assert candidate([[11, 8, 7, 2], [5, 16, 14, 4], [9, 3, 15, 6], [12, 13, 10, 1]], 9) == [1, 6, 1, 6, 1, 6, 1, 6, 1]\n    assert candidate([[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4], [11, 8, 7, 2]], 12) == [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6]\n    assert candidate([[2, 7, 4], [3, 1, 5], [6, 8, 9]], 8) == [1, 3, 1, 3, 1, 3, 1, 3]\n    assert candidate([[6, 1, 5], [3, 8, 9], [2, 7, 4]], 8) == [1, 5, 1, 5, 1, 5, 1, 5]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([[1, 2], [3, 4]], 10) == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]\n    assert candidate([[1, 3], [3, 2]], 10) == [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]\n\n\ncheck(minPath)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-jr3721si/program.py\", line 64, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-jr3721si/program.py\", line 49, in check\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:22:16.934669Z",
+          "eval_duration_ns": 6658560000,
+          "load_duration_ns": 123743834,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 20856000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 6805023625
+        },
+        "code": "from heapq import heappop, heappush\n\ndef minPath(grid, k):\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    heap = []\n    for i in range(N):\n        for j in range(N):\n            heappush(heap, (grid[i][j], [i, j]))\n    \n    while k > 0:\n        value, position = heappop(heap)\n        x, y = position\n        if k == 1:\n            return [value]\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                heappush(heap, (grid[nx][ny], [nx, ny]))\n        k -= 1\n\n# Example usage:\nprint(minPath([[1,2,3], [4,5,6], [7,8,9]], 3))  # Output: [1, 2, 1]\nprint(minPath([[5,9,3], [4,1,6], [7,8,2]], 1))  # Output: [1]",
+        "completion_tokens": 268,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 437,
+        "raw_text": "```python\nfrom heapq import heappop, heappush\n\ndef minPath(grid, k):\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    heap = []\n    for i in range(N):\n        for j in range(N):\n            heappush(heap, (grid[i][j], [i, j]))\n    \n    while k > 0:\n        value, position = heappop(heap)\n        x, y = position\n        if k == 1:\n            return [value]\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                heappush(heap, (grid[nx][ny], [nx, ny]))\n        k -= 1\n\n# Example usage:\nprint(minPath([[1,2,3], [4,5,6], [7,8,9]], 3))  # Output: [1, 2, 1]\nprint(minPath([[5,9,3], [4,1,6], [7,8,2]], 1))  # Output: [1]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 44,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.05916516599972965,
+        "generation_seconds": 6.808864458998869
+      }
+    },
+    {
+      "code_hash": "f5ee40c3bfcd022353a93f9fde7b6743f3e1984a1d6f40874da4f53aa4037687",
+      "execution": {
+        "duration_seconds": 4.151757625000755,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 4.151718541001173,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    print\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n    assert candidate([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 1) == [1]\n    assert candidate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], 4) == [1, 2, 1, 2]\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n    assert candidate([[8, 14, 9, 2], [6, 4, 13, 15], [5, 7, 1, 12], [3, 10, 11, 16]], 5) == [1, 7, 1, 7, 1]\n    assert candidate([[11, 8, 7, 2], [5, 16, 14, 4], [9, 3, 15, 6], [12, 13, 10, 1]], 9) == [1, 6, 1, 6, 1, 6, 1, 6, 1]\n    assert candidate([[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4], [11, 8, 7, 2]], 12) == [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6]\n    assert candidate([[2, 7, 4], [3, 1, 5], [6, 8, 9]], 8) == [1, 3, 1, 3, 1, 3, 1, 3]\n    assert candidate([[6, 1, 5], [3, 8, 9], [2, 7, 4]], 8) == [1, 5, 1, 5, 1, 5, 1, 5]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([[1, 2], [3, 4]], 10) == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]\n    assert candidate([[1, 3], [3, 2]], 10) == [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]\n\n\ncheck(minPath)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:22:20.943914Z",
+          "eval_duration_ns": 3788447000,
+          "load_duration_ns": 124939416,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 30792000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3946114750
+        },
+        "code": "def minPath(grid, k):\n    N = len(grid)\n    \n    def dfs(x, y, path):\n        if len(path) == k:\n            paths.append(path[:])\n            return\n        directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                dfs(nx, ny, path + [grid[nx][ny]])\n    \n    paths = []\n    for i in range(N):\n        for j in range(N):\n            dfs(i, j, [grid[i][j]])\n    \n    return min(paths)",
+        "completion_tokens": 161,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 437,
+        "raw_text": "```python\ndef minPath(grid, k):\n    N = len(grid)\n    \n    def dfs(x, y, path):\n        if len(path) == k:\n            paths.append(path[:])\n            return\n        directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                dfs(nx, ny, path + [grid[nx][ny]])\n    \n    paths = []\n    for i in range(N):\n        for j in range(N):\n            dfs(i, j, [grid[i][j]])\n    \n    return min(paths)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 45,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 4.151757625000755,
+        "generation_seconds": 3.950021041000582
+      }
+    },
+    {
+      "code_hash": "3da06b51e14be12bc9efbe931cba16f51b6d988a18f6d56e2f127a6c08e256e2",
+      "execution": {
+        "duration_seconds": 0.061442583002644824,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.0614002080001228,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-gwjljzev/program.py\", line 58, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-gwjljzev/program.py\", line 46, in check\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    print\n    assert candidate([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3) == [1, 2, 1]\n    assert candidate([[5, 9, 3], [4, 1, 6], [7, 8, 2]], 1) == [1]\n    assert candidate([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]], 4) == [1, 2, 1, 2]\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n    assert candidate([[8, 14, 9, 2], [6, 4, 13, 15], [5, 7, 1, 12], [3, 10, 11, 16]], 5) == [1, 7, 1, 7, 1]\n    assert candidate([[11, 8, 7, 2], [5, 16, 14, 4], [9, 3, 15, 6], [12, 13, 10, 1]], 9) == [1, 6, 1, 6, 1, 6, 1, 6, 1]\n    assert candidate([[12, 13, 10, 1], [9, 3, 15, 6], [5, 16, 14, 4], [11, 8, 7, 2]], 12) == [1, 6, 1, 6, 1, 6, 1, 6, 1, 6, 1, 6]\n    assert candidate([[2, 7, 4], [3, 1, 5], [6, 8, 9]], 8) == [1, 3, 1, 3, 1, 3, 1, 3]\n    assert candidate([[6, 1, 5], [3, 8, 9], [2, 7, 4]], 8) == [1, 5, 1, 5, 1, 5, 1, 5]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([[1, 2], [3, 4]], 10) == [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]\n    assert candidate([[1, 3], [3, 2]], 10) == [1, 3, 1, 3, 1, 3, 1, 3, 1, 3]\n\n\ncheck(minPath)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-gwjljzev/program.py\", line 58, in <module>\n    check(minPath)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-gwjljzev/program.py\", line 46, in check\n    assert candidate([[6, 4, 13, 10], [5, 7, 12, 1], [3, 16, 11, 15], [8, 14, 9, 2]], 7) == [1, 10, 1, 10, 1, 10, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:22:29.233792Z",
+          "eval_duration_ns": 3961830000,
+          "load_duration_ns": 138296167,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 31951000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 4134001875
+        },
+        "code": "def minPath(grid, k):\n    from heapq import heappush, heappop\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    heap = []\n    for i in range(N):\n        for j in range(N):\n            heappush(heap, (grid[i][j], i, j, [grid[i][j]]))\n    \n    while heap:\n        value, x, y, path = heappop(heap)\n        if len(path) == k:\n            return path\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                new_path = path + [grid[nx][ny]]\n                heappush(heap, (grid[nx][ny], nx, ny, new_path))",
+        "completion_tokens": 200,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 437,
+        "raw_text": "```python\ndef minPath(grid, k):\n    from heapq import heappush, heappop\n    N = len(grid)\n    directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]\n    \n    heap = []\n    for i in range(N):\n        for j in range(N):\n            heappush(heap, (grid[i][j], i, j, [grid[i][j]]))\n    \n    while heap:\n        value, x, y, path = heappop(heap)\n        if len(path) == k:\n            return path\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < N and 0 <= ny < N:\n                new_path = path + [grid[nx][ny]]\n                heappush(heap, (grid[nx][ny], nx, ny, new_path))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 46,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.061442583002644824,
+        "generation_seconds": 4.13797324999905
+      }
+    }
+  ],
+  "duration_seconds": 32.98054762500033,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    3
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "HumanEval/129",
+  "unique_code_count": 5
+}

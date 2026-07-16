@@ -1,0 +1,377 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "136479ffc10a06e38fc3475b49c32693988321a99f0d002dab38d9c981a3a736",
+      "execution": {
+        "duration_seconds": 0.058653874999436084,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05861829199784552,
+            "exception_message": "This prints if this assert fails 1 (good for debugging!)",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-nzm_psio/program.py\", line 48, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-nzm_psio/program.py\", line 39, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(encode)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-nzm_psio/program.py\", line 48, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-nzm_psio/program.py\", line 39, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:15:09.736971Z",
+          "eval_duration_ns": 3111318000,
+          "load_duration_ns": 121318209,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 376430000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3611431417
+        },
+        "code": "def encode(message):\n    vowels = 'aeiou'\n    shifted_vowels = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    shifted_vowels.update({v.upper(): shifted_vowels[v].upper() for v in shifted_vowels})\n    \n    result = []\n    for char in message:\n        if char.isalpha():\n            if char.lower() in vowels:\n                result.append(shifted_vowels[char])\n            else:\n                result.append(char.swapcase())\n        else:\n            result.append(char)\n    \n    return ''.join(result)",
+        "completion_tokens": 134,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "raw_text": "def encode(message):\n    vowels = 'aeiou'\n    shifted_vowels = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    shifted_vowels.update({v.upper(): shifted_vowels[v].upper() for v in shifted_vowels})\n    \n    result = []\n    for char in message:\n        if char.isalpha():\n            if char.lower() in vowels:\n                result.append(shifted_vowels[char])\n            else:\n                result.append(char.swapcase())\n        else:\n            result.append(char)\n    \n    return ''.join(result)",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.058653874999436084,
+        "generation_seconds": 3.6145449169998756
+      }
+    },
+    {
+      "code_hash": "e82026569777a52578b534b712a876013e27588585705633d5fee8d8a652598d",
+      "execution": {
+        "duration_seconds": 0.05899441599831334,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.058958249999705004,
+            "exception_message": "This prints if this assert fails 1 (good for debugging!)",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-mhid2gm3/program.py\", line 48, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-mhid2gm3/program.py\", line 39, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(encode)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-mhid2gm3/program.py\", line 48, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-mhid2gm3/program.py\", line 39, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:15:12.635442Z",
+          "eval_duration_ns": 2677543000,
+          "load_duration_ns": 126137833,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 31352000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2836531000
+        },
+        "code": "def encode(message):\n    vowels = \"aeiou\"\n    shift = 2\n    encoded_message = \"\"\n    \n    for char in message:\n        if char.isalpha():\n            if char.lower() in vowels:\n                new_char = chr((ord(char.lower()) - ord('a') + shift) % 26 + ord('a'))\n                encoded_message += new_char.upper() if char.isupper() else new_char\n            else:\n                encoded_message += char.swapcase()\n        else:\n            encoded_message += char\n    \n    return encoded_message",
+        "completion_tokens": 117,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "raw_text": "```python\ndef encode(message):\n    vowels = \"aeiou\"\n    shift = 2\n    encoded_message = \"\"\n    \n    for char in message:\n        if char.isalpha():\n            if char.lower() in vowels:\n                new_char = chr((ord(char.lower()) - ord('a') + shift) % 26 + ord('a'))\n                encoded_message += new_char.upper() if char.isupper() else new_char\n            else:\n                encoded_message += char.swapcase()\n        else:\n            encoded_message += char\n    \n    return encoded_message\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 43,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.05899441599831334,
+        "generation_seconds": 2.8395931249979185
+      }
+    },
+    {
+      "code_hash": "8c86cbe1adcb34610bd58ecbed9b6761ffc223aba27d6c086733839af52dc6ab",
+      "execution": {
+        "duration_seconds": 0.05819066600088263,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.058151750003162306,
+            "exception_message": "This prints if this assert fails 1 (good for debugging!)",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-wicnuclu/program.py\", line 46, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-wicnuclu/program.py\", line 37, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(encode)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-wicnuclu/program.py\", line 46, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-wicnuclu/program.py\", line 37, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:15:16.067321Z",
+          "eval_duration_ns": 3210408000,
+          "load_duration_ns": 125680625,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 32048000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3369586125
+        },
+        "code": "def encode(message):\n    vowels = 'aeiou'\n    shifted_vowels = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    shifted_vowels.update({v.upper(): shifted_vowels[v].upper() for v in shifted_vowels})\n    \n    def swap_case_and_shift(c):\n        if c.isalpha():\n            if c.lower() in vowels:\n                return shifted_vowels[c]\n            else:\n                return c.swapcase()\n        return c\n    \n    return ''.join(swap_case_and_shift(char) for char in message)",
+        "completion_tokens": 138,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "raw_text": "```python\ndef encode(message):\n    vowels = 'aeiou'\n    shifted_vowels = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    shifted_vowels.update({v.upper(): shifted_vowels[v].upper() for v in shifted_vowels})\n    \n    def swap_case_and_shift(c):\n        if c.isalpha():\n            if c.lower() in vowels:\n                return shifted_vowels[c]\n            else:\n                return c.swapcase()\n        return c\n    \n    return ''.join(swap_case_and_shift(char) for char in message)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 44,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.05819066600088263,
+        "generation_seconds": 3.3727127500023926
+      }
+    },
+    {
+      "code_hash": "46afd3dc87c2ed4157b2485e350ab13cad357e275f5fc08f4108a0ffcce50155",
+      "execution": {
+        "duration_seconds": 0.05795833299998776,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05792183299854514,
+            "exception_message": "This prints if this assert fails 1 (good for debugging!)",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-qwhh5frb/program.py\", line 54, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-qwhh5frb/program.py\", line 45, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(encode)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-qwhh5frb/program.py\", line 54, in <module>\n    check(encode)\n    ~~~~~^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-qwhh5frb/program.py\", line 45, in check\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: This prints if this assert fails 1 (good for debugging!)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:15:19.815812Z",
+          "eval_duration_ns": 3532356000,
+          "load_duration_ns": 123990375,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 29264000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3687040125
+        },
+        "code": "def encode(message):\n    vowels = \"aeiou\"\n    encoded_message = \"\"\n    \n    for char in message:\n        if char.isalpha():\n            # Swap case\n            new_char = char.lower() if char.isupper() else char.upper()\n            \n            # Replace vowels with the letter 2 places ahead\n            if new_char.lower() in vowels:\n                index = (vowels.index(new_char.lower()) + 2) % len(vowels)\n                new_char = vowels[index]\n                \n                # Preserve original case\n                new_char = new_char.upper() if char.isupper() else new_char.lower()\n        else:\n            new_char = char\n        \n        encoded_message += new_char\n    \n    return encoded_message",
+        "completion_tokens": 152,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "raw_text": "```python\ndef encode(message):\n    vowels = \"aeiou\"\n    encoded_message = \"\"\n    \n    for char in message:\n        if char.isalpha():\n            # Swap case\n            new_char = char.lower() if char.isupper() else char.upper()\n            \n            # Replace vowels with the letter 2 places ahead\n            if new_char.lower() in vowels:\n                index = (vowels.index(new_char.lower()) + 2) % len(vowels)\n                new_char = vowels[index]\n                \n                # Preserve original case\n                new_char = new_char.upper() if char.isupper() else new_char.lower()\n        else:\n            new_char = char\n        \n        encoded_message += new_char\n    \n    return encoded_message\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 45,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.05795833299998776,
+        "generation_seconds": 3.6901452080019226
+      }
+    },
+    {
+      "code_hash": "3d214f91231346a3bc7cd3301d1ae296458ca572fd48b7561ad03ee519dcdc21",
+      "execution": {
+        "duration_seconds": 0.05396195800130954,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.053916500000923406,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(encode)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:15:21.989795Z",
+          "eval_duration_ns": 1949935000,
+          "load_duration_ns": 125708083,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 34304000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2112723458
+        },
+        "code": "def encode(message):\n    vowels = 'aeiou'\n    mapping = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    mapping.update({k.upper(): v.upper() for k, v in mapping.items()})\n    \n    return ''.join(mapping.get(c, c).swapcase() for c in message)",
+        "completion_tokens": 86,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 150,
+        "raw_text": "```python\ndef encode(message):\n    vowels = 'aeiou'\n    mapping = {v: chr((ord(v) - 97 + 2) % 26 + 97) for v in vowels}\n    mapping.update({k.upper(): v.upper() for k, v in mapping.items()})\n    \n    return ''.join(mapping.get(c, c).swapcase() for c in message)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 46,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.05396195800130954,
+        "generation_seconds": 2.1158717079997587
+      }
+    }
+  ],
+  "duration_seconds": 15.920996832999663,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "HumanEval/93",
+  "unique_code_count": 5
+}
