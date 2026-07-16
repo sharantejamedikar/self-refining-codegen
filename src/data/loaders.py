@@ -117,10 +117,16 @@ def write_jsonl(problems: Iterable[Problem], path: str | Path) -> Path:
 
 
 def load_jsonl(path: str | Path) -> list[Problem]:
-    """Load problems from the unified JSON Lines format."""
+    """Load problems and enforce benchmark-specific normalized invariants."""
 
     with Path(path).open(encoding="utf-8") as handle:
-        return [Problem.from_dict(json.loads(line)) for line in handle if line.strip()]
+        problems = [
+            Problem.from_dict(json.loads(line)) for line in handle if line.strip()
+        ]
+    for problem in problems:
+        if {"mbpp", "sanitized"}.issubset(problem.tags):
+            _validate_normalized_mbpp_prompt(problem)
+    return problems
 
 
 def _normalize_humaneval(record: dict[str, Any]) -> Problem:
@@ -198,3 +204,18 @@ def _extract_mbpp_entry_point_signature(
         f"{prefix} {function.name}({ast.unparse(function.args)})"
         f"{return_annotation}:"
     )
+
+
+def _validate_normalized_mbpp_prompt(problem: Problem) -> None:
+    """Reject stale normalized MBPP records without the tested entry point."""
+
+    marker = "Required function signature:"
+    signature = _extract_mbpp_entry_point_signature(
+        problem.canonical_solution, list(problem.test_cases), problem.task_id
+    )
+    required_block = f"{marker}\n{signature}"
+    if problem.prompt.count(marker) != 1 or required_block not in problem.prompt:
+        raise ValueError(
+            f"Normalized MBPP task {problem.task_id} must contain exactly one "
+            f"tested signature block: {required_block!r}"
+        )

@@ -103,6 +103,37 @@ def test_mbpp_loader_rejects_missing_tested_entry_point(tmp_path: Path) -> None:
         load_mbpp_sanitized(source)
 
 
+def test_normalized_mbpp_loader_rejects_stale_prompt_without_signature(
+    tmp_path: Path,
+) -> None:
+    problem = Problem(
+        task_id="MBPP/9",
+        prompt="Return one.",
+        canonical_solution="def answer(): return 1",
+        test_cases=("assert answer() == 1",),
+        difficulty="unspecified",
+        tags=("mbpp", "sanitized"),
+    )
+    normalized = write_jsonl([problem], tmp_path / "stale.jsonl")
+
+    with pytest.raises(ValueError, match="exactly one tested signature block"):
+        load_jsonl(normalized)
+
+
+def test_normalized_mbpp_loader_accepts_exact_tested_signature(tmp_path: Path) -> None:
+    problem = Problem(
+        task_id="MBPP/9",
+        prompt="Return one.\n\nRequired function signature:\ndef answer():",
+        canonical_solution="def answer(): return 1",
+        test_cases=("assert answer() == 1",),
+        difficulty="unspecified",
+        tags=("mbpp", "sanitized"),
+    )
+    normalized = write_jsonl([problem], tmp_path / "fixed.jsonl")
+
+    assert load_jsonl(normalized) == [problem]
+
+
 def test_humaneval_split_preserves_imports_helpers_metadata_and_entry_point() -> None:
     harness = """
 import math
