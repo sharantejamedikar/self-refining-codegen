@@ -1,0 +1,109 @@
+{
+  "duration_seconds": 6.814251292000108,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.13067933299998913,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.057732500000156506,
+            "exception_message": "name 'get_Inv_Count' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-q96bps3u/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 20, 6, 4, 5])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-q96bps3u/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 20, 6, 4, 5])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.03783983299990723,
+            "exception_message": "name 'get_Inv_Count' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-2n6mlx4m/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 2, 1])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-2n6mlx4m/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 2, 1])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.03504350000002887,
+            "exception_message": "name 'get_Inv_Count' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-v1k872hj/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 2, 5, 6, 1])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-v1k872hj/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = get_Inv_Count([1, 2, 5, 6, 1])\n                                   ^^^^^^^^^^^^^\nNameError: name 'get_Inv_Count' is not defined\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T16:37:54.570507Z",
+          "eval_duration_ns": 6409952000,
+          "load_duration_ns": 134696208,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 132191000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 6679134708
+        },
+        "code": "def count_inversions(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        mid = len(arr) // 2\n        left, left_inv = merge_sort_and_count(arr[:mid])\n        right, right_inv = merge_sort_and_count(arr[mid:])\n        merged, split_inv = merge_and_count(left, right)\n        return merged, left_inv + right_inv + split_inv\n\n    def merge_and_count(left, right):\n        result = []\n        i = j = inversions = 0\n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                result.append(left[i])\n                i += 1\n            else:\n                result.append(right[j])\n                j += 1\n                inversions += len(left) - i\n        result.extend(left[i:])\n        result.extend(right[j:])\n        return result, inversions\n\n    _, total_inversions = merge_sort_and_count(arr)\n    return total_inversions",
+        "completion_tokens": 218,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 59,
+        "raw_text": "```python\ndef count_inversions(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        mid = len(arr) // 2\n        left, left_inv = merge_sort_and_count(arr[:mid])\n        right, right_inv = merge_sort_and_count(arr[mid:])\n        merged, split_inv = merge_and_count(left, right)\n        return merged, left_inv + right_inv + split_inv\n\n    def merge_and_count(left, right):\n        result = []\n        i = j = inversions = 0\n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                result.append(left[i])\n                i += 1\n            else:\n                result.append(right[j])\n                j += 1\n                inversions += len(left) - i\n        result.extend(left[i:])\n        result.extend(right[j:])\n        return result, inversions\n\n    _, total_inversions = merge_sort_and_count(arr)\n    return total_inversions\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.13067933299998913,
+        "generation_seconds": 6.683476165999991
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "seed": 42,
+  "task_id": "MBPP/296"
+}

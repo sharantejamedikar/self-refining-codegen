@@ -1,0 +1,380 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d28098e635ac080f1ba3b04a78f67e70a906f27c187d64a9042e3fb2e639e459",
+      "execution": {
+        "duration_seconds": 0.05603687500115484,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05600033299924689,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(get_row)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:14:13.208077Z",
+          "eval_duration_ns": 1818690000,
+          "load_duration_ns": 123453125,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 842593000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2787376833
+        },
+        "code": "def get_row(lst, x):\n    coordinates = []\n    for row_idx, row in enumerate(lst):\n        for col_idx, value in enumerate(row[::-1]):\n            if value == x:\n                coordinates.append((row_idx, len(row) - 1 - col_idx))\n    \n    return sorted(coordinates, key=lambda coord: (coord[0], -coord[1]))",
+        "completion_tokens": 81,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 300,
+        "raw_text": "```python\ndef get_row(lst, x):\n    coordinates = []\n    for row_idx, row in enumerate(lst):\n        for col_idx, value in enumerate(row[::-1]):\n            if value == x:\n                coordinates.append((row_idx, len(row) - 1 - col_idx))\n    \n    return sorted(coordinates, key=lambda coord: (coord[0], -coord[1]))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.05603687500115484,
+        "generation_seconds": 2.7904238750015793
+      }
+    },
+    {
+      "code_hash": "cc4798e87b6ed7885be92e225eb34186a2fbaeb6bdbb6248249a009e0e81aed2",
+      "execution": {
+        "duration_seconds": 0.05298791599852848,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.052947958996810485,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(get_row)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:14:15.067798Z",
+          "eval_duration_ns": 1642045000,
+          "load_duration_ns": 124028584,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 32651000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 1800474750
+        },
+        "code": "def get_row(lst, x):\n    coordinates = []\n    for i, row in enumerate(lst):\n        for j, value in enumerate(row[::-1]):\n            if value == x:\n                coordinates.append((i, len(row) - 1 - j))\n    return sorted(coordinates, key=lambda coord: (coord[0], -coord[1]))",
+        "completion_tokens": 76,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 300,
+        "raw_text": "```python\ndef get_row(lst, x):\n    coordinates = []\n    for i, row in enumerate(lst):\n        for j, value in enumerate(row[::-1]):\n            if value == x:\n                coordinates.append((i, len(row) - 1 - j))\n    return sorted(coordinates, key=lambda coord: (coord[0], -coord[1]))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 43,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.05298791599852848,
+        "generation_seconds": 1.8034609580026881
+      }
+    },
+    {
+      "code_hash": "dfebd0df3556e5854709199715199dbf442c063f5b27aaa3a9810d28faa1ad76",
+      "execution": {
+        "duration_seconds": 0.058154250000370666,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05809991699788952,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-6rgbj99z/program.py\", line 60, in <module>\n    check(get_row)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-6rgbj99z/program.py\", line 30, in check\n    assert candidate([\n           ^^^^^^^^^^^\n    ...<3 lines>...\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(get_row)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-6rgbj99z/program.py\", line 60, in <module>\n    check(get_row)\n    ~~~~~^^^^^^^^^\n  File \"/var/folders/9r/wf0m6_p92vz0wgbwgsch7t8c0000gn/T/srcg-6rgbj99z/program.py\", line 30, in check\n    assert candidate([\n           ^^^^^^^^^^^\n    ...<3 lines>...\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:14:16.736757Z",
+          "eval_duration_ns": 1453129000,
+          "load_duration_ns": 124542792,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 33405000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 1612828458
+        },
+        "code": "def get_row(lst, x):\n    coordinates = []\n    for row_idx, row in enumerate(lst):\n        for col_idx, value in enumerate(reversed(row)):\n            if value == x:\n                coordinates.append((row_idx, len(row) - 1 - col_idx))\n    return sorted(coordinates)",
+        "completion_tokens": 66,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 300,
+        "raw_text": "```python\ndef get_row(lst, x):\n    coordinates = []\n    for row_idx, row in enumerate(lst):\n        for col_idx, value in enumerate(reversed(row)):\n            if value == x:\n                coordinates.append((row_idx, len(row) - 1 - col_idx))\n    return sorted(coordinates)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 44,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.058154250000370666,
+        "generation_seconds": 1.6157987910009979
+      }
+    },
+    {
+      "code_hash": "39bab9aa86f92baa009cb36dc432ab8805f30d627ff28ad913053eb825628a83",
+      "execution": {
+        "duration_seconds": 0.05425666700102738,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05421345900322194,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(get_row)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:14:18.826249Z",
+          "eval_duration_ns": 1871169000,
+          "load_duration_ns": 122161417,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 33314000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2028318084
+        },
+        "code": "def get_row(lst, x):\n    result = []\n    for y, row in enumerate(lst):\n        if x in row:\n            for z, value in enumerate(row[::-1]):\n                if value == x:\n                    result.append((y, len(row) - 1 - z))\n    return sorted(result, key=lambda k: (k[0], -k[1]))",
+        "completion_tokens": 82,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 300,
+        "raw_text": "```python\ndef get_row(lst, x):\n    result = []\n    for y, row in enumerate(lst):\n        if x in row:\n            for z, value in enumerate(row[::-1]):\n                if value == x:\n                    result.append((y, len(row) - 1 - z))\n    return sorted(result, key=lambda k: (k[0], -k[1]))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 45,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.05425666700102738,
+        "generation_seconds": 2.030972374999692
+      }
+    },
+    {
+      "code_hash": "cf656f0c4ee9315b17f97490be609925dd8d3112c7202fc8d5108a5799894e64",
+      "execution": {
+        "duration_seconds": 0.05312462499932735,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05308320900076069,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(get_row)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-16T23:14:20.600354Z",
+          "eval_duration_ns": 1561048000,
+          "load_duration_ns": 122188167,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 32279000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 1717100750
+        },
+        "code": "def get_row(lst, x):\n    result = []\n    for i in range(len(lst)):\n        for j in range(len(lst[i])):\n            if lst[i][j] == x:\n                result.append((i, j))\n    return sorted(result, key=lambda k: (k[0], -k[1]))",
+        "completion_tokens": 70,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 300,
+        "raw_text": "```python\ndef get_row(lst, x):\n    result = []\n    for i in range(len(lst)):\n        for j in range(len(lst[i])):\n            if lst[i][j] == x:\n                result.append((i, j))\n    return sorted(result, key=lambda k: (k[0], -k[1]))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 46,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.05312462499932735,
+        "generation_seconds": 1.7204099579976173
+      }
+    }
+  ],
+  "duration_seconds": 10.235984959002963,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "HumanEval/87",
+  "unique_code_count": 5
+}
