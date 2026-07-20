@@ -1,0 +1,765 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 14.090232375000596,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "3e295b992770853dba15fb85fc4bc11de511e8c8c9d83dbc4aa689fe14ae051b",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 1,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.06174575000022742,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.06171191700013878,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1, 2) == 2\n    assert candidate(1, 2.5) == 2.5\n    assert candidate(2, 3) == 3\n    assert candidate(5, 6) == 6\n    assert candidate(1, \"2,3\") == \"2,3\"\n    assert candidate(\"5,1\", \"6\") == \"6\"\n    assert candidate(\"1\", \"2\") == \"2\"\n    assert candidate(\"1\", 1) == None\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(compare_one)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_value",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "compare_one",
+                  "line_number": 13,
+                  "source": "elif a_parsed > b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 16,
+                  "source": "return b"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 2,
+                  "source": "def parse_value(value):"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 8,
+                  "source": "a_parsed = parse_value(a)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 4,
+                  "source": "value = value.replace(',', '.')"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 5,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 9,
+                  "source": "b_parsed = parse_value(b)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 6,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 11,
+                  "source": "if a_parsed == b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 12,
+                  "source": "return None"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-20T12:52:46.967276Z",
+          "eval_duration_ns": 2283262000,
+          "load_duration_ns": 115037375,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 680569000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3081797333
+        },
+        "code": "def compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 182,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.06174575000022742,
+        "generation_seconds": 3.084223583000494
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "3e295b992770853dba15fb85fc4bc11de511e8c8c9d83dbc4aa689fe14ae051b",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 2,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.06359920799968677,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.06357587500042428,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1, 2) == 2\n    assert candidate(1, 2.5) == 2.5\n    assert candidate(2, 3) == 3\n    assert candidate(5, 6) == 6\n    assert candidate(1, \"2,3\") == \"2,3\"\n    assert candidate(\"5,1\", \"6\") == \"6\"\n    assert candidate(\"1\", \"2\") == \"2\"\n    assert candidate(\"1\", 1) == None\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(compare_one)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_value",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "compare_one",
+                  "line_number": 13,
+                  "source": "elif a_parsed > b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 16,
+                  "source": "return b"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 2,
+                  "source": "def parse_value(value):"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 8,
+                  "source": "a_parsed = parse_value(a)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 4,
+                  "source": "value = value.replace(',', '.')"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 5,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 9,
+                  "source": "b_parsed = parse_value(b)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 6,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 11,
+                  "source": "if a_parsed == b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 12,
+                  "source": "return None"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-20T12:52:49.791904Z",
+          "eval_duration_ns": 2277785000,
+          "load_duration_ns": 120618250,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 360315000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2760370375
+        },
+        "code": "def compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 283,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.06359920799968677,
+        "generation_seconds": 2.762868249999883
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "3e295b992770853dba15fb85fc4bc11de511e8c8c9d83dbc4aa689fe14ae051b",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 3,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.06258508300015819,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.06256287500036706,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1, 2) == 2\n    assert candidate(1, 2.5) == 2.5\n    assert candidate(2, 3) == 3\n    assert candidate(5, 6) == 6\n    assert candidate(1, \"2,3\") == \"2,3\"\n    assert candidate(\"5,1\", \"6\") == \"6\"\n    assert candidate(\"1\", \"2\") == \"2\"\n    assert candidate(\"1\", 1) == None\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(compare_one)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_value",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "compare_one",
+                  "line_number": 13,
+                  "source": "elif a_parsed > b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 16,
+                  "source": "return b"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 2,
+                  "source": "def parse_value(value):"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 8,
+                  "source": "a_parsed = parse_value(a)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 4,
+                  "source": "value = value.replace(',', '.')"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 5,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 9,
+                  "source": "b_parsed = parse_value(b)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 6,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 11,
+                  "source": "if a_parsed == b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 12,
+                  "source": "return None"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-20T12:52:52.389216Z",
+          "eval_duration_ns": 2381176000,
+          "load_duration_ns": 121879000,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 26260000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2531107250
+        },
+        "code": "def compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 283,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.06258508300015819,
+        "generation_seconds": 2.533895709000717
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "3e295b992770853dba15fb85fc4bc11de511e8c8c9d83dbc4aa689fe14ae051b",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 4,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.0647333750002872,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.06470629099931102,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1, 2) == 2\n    assert candidate(1, 2.5) == 2.5\n    assert candidate(2, 3) == 3\n    assert candidate(5, 6) == 6\n    assert candidate(1, \"2,3\") == \"2,3\"\n    assert candidate(\"5,1\", \"6\") == \"6\"\n    assert candidate(\"1\", \"2\") == \"2\"\n    assert candidate(\"1\", 1) == None\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(compare_one)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_value",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "compare_one",
+                  "line_number": 13,
+                  "source": "elif a_parsed > b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 16,
+                  "source": "return b"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 2,
+                  "source": "def parse_value(value):"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 8,
+                  "source": "a_parsed = parse_value(a)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 4,
+                  "source": "value = value.replace(',', '.')"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 5,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 9,
+                  "source": "b_parsed = parse_value(b)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 6,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 11,
+                  "source": "if a_parsed == b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 12,
+                  "source": "return None"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-20T12:52:55.30475Z",
+          "eval_duration_ns": 2700796000,
+          "load_duration_ns": 121811541,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 25879000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2850040833
+        },
+        "code": "def compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 283,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.0647333750002872,
+        "generation_seconds": 2.853575125000134
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "3e295b992770853dba15fb85fc4bc11de511e8c8c9d83dbc4aa689fe14ae051b",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 5,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.06016687500050466,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.060145374999592605,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1, 2) == 2\n    assert candidate(1, 2.5) == 2.5\n    assert candidate(2, 3) == 3\n    assert candidate(5, 6) == 6\n    assert candidate(1, \"2,3\") == \"2,3\"\n    assert candidate(\"5,1\", \"6\") == \"6\"\n    assert candidate(\"1\", \"2\") == \"2\"\n    assert candidate(\"1\", 1) == None\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n\ncheck(compare_one)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_value",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "compare_one",
+                  "line_number": 13,
+                  "source": "elif a_parsed > b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 16,
+                  "source": "return b"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 2,
+                  "source": "def parse_value(value):"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 8,
+                  "source": "a_parsed = parse_value(a)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 4,
+                  "source": "value = value.replace(',', '.')"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 5,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 9,
+                  "source": "b_parsed = parse_value(b)"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 3,
+                  "source": "if isinstance(value, str):"
+                },
+                {
+                  "function": "parse_value",
+                  "line_number": 6,
+                  "source": "return float(value)"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 11,
+                  "source": "if a_parsed == b_parsed:"
+                },
+                {
+                  "function": "compare_one",
+                  "line_number": 12,
+                  "source": "return None"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-20T12:52:57.91212Z",
+          "eval_duration_ns": 2382354000,
+          "load_duration_ns": 123833500,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 31037000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2538939084
+        },
+        "code": "def compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 283,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\nPrevious solution:\ndef compare_one(a, b):\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return float(value)\n\n    a_parsed = parse_value(a)\n    b_parsed = parse_value(b)\n\n    if a_parsed == b_parsed:\n        return None\n    elif a_parsed > b_parsed:\n        return a\n    else:\n        return b\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.06016687500050466,
+        "generation_seconds": 2.542225750000398
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/137"
+}
