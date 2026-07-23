@@ -89,6 +89,32 @@ def test_template_feedback_includes_assertion_actual_and_expected() -> None:
     assert "Passed 1/2" in feedback
 
 
+def test_feedback_uses_traceback_matched_assertion_for_compound_harness() -> None:
+    """Report the later assertion that failed, not the harness's first assertion."""
+
+    compound_harness = """\
+def check(candidate):
+    assert candidate(1) == 1
+    assert candidate(2) == 99
+
+check(candidate)
+"""
+    execution = SubprocessExecutor(
+        timeout_seconds=1, memory_limit_mb=None, collect_trace=True
+    ).execute(
+        "def candidate(value):\n    return value",
+        [compound_harness],
+    )
+    failed = execution.tests[0]
+    feedback = TraceFeedbackGenerator().generate(
+        classify_execution(execution), execution
+    )
+
+    assert failed.assertion_expression == "candidate(2) == 99"
+    assert "1. candidate(2) == 99" in feedback
+    assert "candidate(1) == 1" not in feedback
+
+
 @pytest.mark.parametrize(
     ("result", "category", "expected"),
     [
