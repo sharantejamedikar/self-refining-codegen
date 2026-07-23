@@ -144,6 +144,8 @@ class SubprocessExecutor(Executor):
 
         trace, stderr = self._parse_trace(completed.stderr)
         exception_type, exception_message = self._parse_exception(stderr)
+        if assertion_expression is None and exception_type == "AssertionError":
+            assertion_expression = self._parse_traceback_assertion(stderr)
         actual_value, expected_value = self._parse_assertion_values(exception_message)
         if actual_value is not None:
             exception_message = (
@@ -358,6 +360,23 @@ finally:
         if match:
             return match.group("type"), match.group("msg") or ""
         return "ProcessError", last_line
+
+    @staticmethod
+    def _parse_traceback_assertion(stderr: str) -> str | None:
+        """Recover the deepest failing assertion rendered by a Python traceback."""
+
+        for line in reversed(stderr.splitlines()):
+            source = line.strip()
+            if not source.startswith("assert "):
+                continue
+            try:
+                module = ast.parse(source)
+            except SyntaxError:
+                continue
+            if len(module.body) != 1 or not isinstance(module.body[0], ast.Assert):
+                continue
+            return ast.unparse(module.body[0].test)
+        return None
 
     @staticmethod
     def _decode_timeout_stream(stream: bytes | str | None) -> str:
