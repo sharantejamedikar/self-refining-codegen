@@ -36,7 +36,7 @@ def main() -> None:
         if args.limit <= 0:
             raise ValueError("--limit must be positive")
         problems = problems[: args.limit]
-    generator = create_generator(config.model)
+    generator = create_generator(config.model, config.device.accelerator)
     if isinstance(generator, OllamaGenerator):
         artifact = generator.verify_artifact()
         print(

@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -84,6 +86,19 @@ def test_detect_accelerator_without_torch(monkeypatch: pytest.MonkeyPatch) -> No
 
     monkeypatch.setattr("builtins.__import__", blocked_import)
     assert config_module.detect_accelerator() == "cpu"
+
+
+def test_detect_accelerator_prefers_cuda_over_mps(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    fake_torch = SimpleNamespace(
+        cuda=SimpleNamespace(is_available=lambda: True),
+        backends=SimpleNamespace(
+            mps=SimpleNamespace(is_available=lambda: True),
+        ),
+    )
+    monkeypatch.setitem(sys.modules, "torch", fake_torch)
+    assert config_module.detect_accelerator() == "cuda"
 
 
 @pytest.mark.parametrize(
