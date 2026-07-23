@@ -1,0 +1,36 @@
+# Cluster preflight only. Never load this 13B model on the 24GB local Mac.
+model:
+  name: codellama/CodeLlama-13b-Instruct-hf
+  backend: huggingface
+  revision: 745795438019e47e4dad1347a0093e11deee4c68
+  backend_model: codellama/CodeLlama-13b-Instruct-hf
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.2
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval
+  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  data_dir: data
+  split: dev
+  path: data/dev/humaneval_dev.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+experiment:
+  name: cluster_codellama_hf_zero_shot_humaneval_dev
+  seed: 42
+  output_dir: experiments/results
+device:
+  profile: cluster
+  accelerator: auto
+profiles:
+  cluster:
+    device: {accelerator: auto}
+  colab:
+    device: {accelerator: auto}
