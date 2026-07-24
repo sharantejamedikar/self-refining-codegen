@@ -1,0 +1,765 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 16.85381095799994,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "93e91590509e8a1282ddd7fc0ae9d62a662e3f4c3e0934a1b8b3a0a07a60ad07",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 1,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.056414417000041794,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05638716699991164,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_balanced",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_balanced",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 3,
+                  "source": "balance = 0"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 6,
+                  "source": "balance += 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 8,
+                  "source": "balance -= 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 11,
+                  "source": "return balance == 0"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-24T15:39:33.785222Z",
+          "eval_duration_ns": 2940983000,
+          "load_duration_ns": 121720708,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 601688000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3667387666
+        },
+        "code": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "completion_tokens": 119,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 209,
+        "raw_text": "```python\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.056414417000041794,
+        "generation_seconds": 3.670093749999978
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "93e91590509e8a1282ddd7fc0ae9d62a662e3f4c3e0934a1b8b3a0a07a60ad07",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 2,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.04330449999997654,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.04326079199995547,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_balanced",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_balanced",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 3,
+                  "source": "balance = 0"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 6,
+                  "source": "balance += 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 8,
+                  "source": "balance -= 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 11,
+                  "source": "return balance == 0"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-24T15:39:37.587907Z",
+          "eval_duration_ns": 3104675000,
+          "load_duration_ns": 118532375,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 518400999,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3743435708
+        },
+        "code": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "completion_tokens": 115,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 339,
+        "raw_text": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.04330449999997654,
+        "generation_seconds": 3.745452832999945
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "93e91590509e8a1282ddd7fc0ae9d62a662e3f4c3e0934a1b8b3a0a07a60ad07",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 3,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.05759341599991785,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.057571040999846446,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_balanced",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_balanced",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 3,
+                  "source": "balance = 0"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 6,
+                  "source": "balance += 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 8,
+                  "source": "balance -= 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 11,
+                  "source": "return balance == 0"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-24T15:39:40.633524Z",
+          "eval_duration_ns": 2854364000,
+          "load_duration_ns": 114960250,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 26632000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 2998808667
+        },
+        "code": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "completion_tokens": 115,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 339,
+        "raw_text": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.05759341599991785,
+        "generation_seconds": 3.003086749999966
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "93e91590509e8a1282ddd7fc0ae9d62a662e3f4c3e0934a1b8b3a0a07a60ad07",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 4,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.056488375000071755,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.05643716700001278,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_balanced",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_balanced",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 3,
+                  "source": "balance = 0"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 6,
+                  "source": "balance += 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 8,
+                  "source": "balance -= 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 11,
+                  "source": "return balance == 0"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-24T15:39:43.764562Z",
+          "eval_duration_ns": 2924447000,
+          "load_duration_ns": 119978625,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 24180000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3070419833
+        },
+        "code": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "completion_tokens": 115,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 339,
+        "raw_text": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.056488375000071755,
+        "generation_seconds": 3.073739250000017
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "93e91590509e8a1282ddd7fc0ae9d62a662e3f4c3e0934a1b8b3a0a07a60ad07",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 5,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.05568158300002324,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.0556533330000093,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_balanced",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_balanced",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 3,
+                  "source": "balance = 0"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 6,
+                  "source": "balance += 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 5,
+                  "source": "if char == '(':"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 8,
+                  "source": "balance -= 1"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 9,
+                  "source": "if balance < 0:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 4,
+                  "source": "for char in s:"
+                },
+                {
+                  "function": "is_balanced",
+                  "line_number": 11,
+                  "source": "return balance == 0"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "artifact_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+          "backend": "ollama",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "created_at": "2026-07-24T15:39:46.913133Z",
+          "eval_duration_ns": 2944576000,
+          "load_duration_ns": 118028834,
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "prompt_eval_duration_ns": 24225000,
+          "prompt_strategy": "zero_shot",
+          "quantization": "Q4_K_M",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "total_duration_ns": 3088577875
+        },
+        "code": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "completion_tokens": 115,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 339,
+        "raw_text": "def match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "model": "qwen2.5-coder:7b-instruct-q4_K_M",
+          "options": {
+            "num_predict": 512,
+            "repeat_penalty": 1.1,
+            "seed": 42,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    def is_balanced(s):\n        balance = 0\n        for char in s:\n            if char == '(':\n                balance += 1\n            else:\n                balance -= 1\n            if balance < 0:\n                return False\n        return balance == 0\n\n    first_order = lst[0] + lst[1]\n    second_order = lst[1] + lst[0]\n    return 'Yes' if is_balanced(first_order) or is_balanced(second_order) else 'No'\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+          "stream": false,
+          "system": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature."
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.05568158300002324,
+        "generation_seconds": 3.0912897910000083
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/119"
+}
