@@ -51,6 +51,27 @@ the traceback.
 MBPP was unaffected because its assertions had already been split into atomic
 per-assertion test cases since M3.
 
+This claim was also checked directly against every stored M5 MBPP development
+refinement trajectory and both M7 MBPP full-scale refinement trajectories,
+rather than inferred from the atomic-test structure alone. For each feedback
+entry that cited a failed assertion, the cited expression was AST-normalized
+and compared with the failed atomic assertion expressions in that iteration's
+execution record.
+
+| MBPP run | Matching cited assertions | Mismatched cited assertions | Clean feedback-bearing failed iterations |
+|---|---:|---:|---:|
+| M5 template, development set | 61 | 0 | 22/22 |
+| M5 trace, development set | 65 | 0 | 25/25 |
+| M5 hybrid, development set | 62 | 0 | 22/22 |
+| M7 hybrid adaptive, full scale | 641 | 0 | 240/240 |
+| M7 hybrid fixed-k=5, full scale | 1,037 | 0 | 397/397 |
+| **Total** | **1,866** | **0** | **706/706** |
+
+At the run-problem level, all 234 run-specific problems containing at least one
+assertion citation were clean and zero were affected. Exception-oriented
+feedback entries that cited no assertion were outside this assertion-identity
+denominator; they cannot exhibit the specific defect under audit.
+
 The audit of the original M7 hybrid runs found:
 
 | Original run | Mismatched failed-feedback iterations | Affected problems |
