@@ -36,6 +36,8 @@ class _Tensor:
     def __getitem__(self, item: object) -> _Tensor:
         if isinstance(item, tuple):
             return _Tensor(self.values[item[1]])
+        if item == 0:
+            return self
         raise TypeError(item)
 
 
@@ -101,9 +103,8 @@ def test_huggingface_generation_is_config_and_device_driven(
         AutoTokenizer=AutoTokenizer,
     )
     fake_torch = SimpleNamespace(
-        Generator=lambda device: SimpleNamespace(
-            manual_seed=lambda seed: (device, seed)
-        ),
+        manual_seed=lambda seed: captured.setdefault("seed", seed),
+        ones_like=lambda tensor: captured.setdefault("attention_mask", tensor),
         bfloat16="bfloat16",
         float16="float16",
         float32="float32",
@@ -132,6 +133,10 @@ def test_huggingface_generation_is_config_and_device_driven(
     assert model.generation_kwargs["max_new_tokens"] == 99
     assert model.generation_kwargs["temperature"] == 0.25
     assert model.generation_kwargs["do_sample"] is True
+    assert captured["seed"] == 73
+    assert "generator" not in model.generation_kwargs
+    assert model.generation_kwargs["attention_mask"] is captured["attention_mask"]
+    assert "attention_mask" not in output.request_payload["generation_options"]
     assert output.request_payload and output.request_payload["seed"] == 73
 
 
