@@ -44,8 +44,7 @@ class HuggingFaceGenerator(Generator):
             add_generation_prompt=True,
             return_tensors="pt",
         ).to(self.accelerator)
-        generator = torch.Generator(device=self.accelerator)
-        generator.manual_seed(request.seed)
+        torch.manual_seed(request.seed)
         generation_options = {
             "max_new_tokens": self.config.max_new_tokens,
             "temperature": self.config.temperature,
@@ -53,11 +52,11 @@ class HuggingFaceGenerator(Generator):
             "repetition_penalty": self.config.repetition_penalty,
             "do_sample": self.config.temperature > 0,
             "pad_token_id": tokenizer.pad_token_id or tokenizer.eos_token_id,
-            "generator": generator,
+            "attention_mask": torch.ones_like(input_ids),
         }
         generated_ids = model.generate(input_ids, **generation_options)
         completion_ids = generated_ids[:, input_ids.shape[-1] :]
-        raw_text = tokenizer.decode(completion_ids, skip_special_tokens=True)
+        raw_text = tokenizer.decode(completion_ids[0], skip_special_tokens=True)
         extraction = extract_python(raw_text, request.problem_prompt)
         prompt_tokens = int(input_ids.shape[-1])
         completion_tokens = int(completion_ids.shape[-1])
@@ -72,7 +71,7 @@ class HuggingFaceGenerator(Generator):
             "generation_options": {
                 key: value
                 for key, value in generation_options.items()
-                if key != "generator"
+                if key != "attention_mask"
             },
         }
         return GenerationOutput(

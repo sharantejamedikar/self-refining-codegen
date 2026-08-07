@@ -1,6 +1,9 @@
-.PHONY: test lint format
+.PHONY: data test lint format
 
 PYTHON ?= .venv/bin/python
+
+data:
+	$(PYTHON) experiments/scripts/build_datasets.py
 
 test:
 	$(PYTHON) -m coverage run -m pytest
