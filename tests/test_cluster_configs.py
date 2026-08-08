@@ -62,6 +62,22 @@ def test_cluster_best_of_five_config_uses_diverse_sampling_protocol() -> None:
     assert config.experiment.seed == 42
 
 
+def test_cluster_full_best_of_five_config_uses_frozen_tier_one_protocol() -> None:
+    config = load_config(
+        Path("configs/cluster_qwen_hf_best_of_5_humaneval_full.yaml"),
+        profile="cluster",
+    )
+
+    assert config.model.backend == "huggingface"
+    assert config.model.revision == "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+    assert config.model.quantization is None
+    assert config.model.temperature == 0.8
+    assert config.dataset.split == "full"
+    assert config.dataset.path == "data/normalized/humaneval.jsonl"
+    assert config.experiment.samples_per_problem == 5
+    assert config.experiment.seed == 42
+
+
 def test_cuda_auto_detection_flows_from_cluster_config_to_hf_factory(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
