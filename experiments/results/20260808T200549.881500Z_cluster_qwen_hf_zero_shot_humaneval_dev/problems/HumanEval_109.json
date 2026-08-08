@@ -1,0 +1,145 @@
+{
+  "duration_seconds": 3.6054693274199963,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.6081375507637858,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([3, 4, 5, 1, 2]) == True",
+            "duration_seconds": 0.10769558977335691,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 1\ndef check(candidate):\n    assert candidate([3, 4, 5, 1, 2]) == True, 'This prints if this assert fails 1 (good for debugging!)'\ncheck(move_one_ball)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([3, 5, 10, 1, 2]) == True",
+            "duration_seconds": 0.1338506704196334,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 2\ndef check(candidate):\n    assert candidate([3, 5, 10, 1, 2]) == True\ncheck(move_one_ball)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([4, 3, 1, 2]) == False",
+            "duration_seconds": 0.13587884698063135,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 3\ndef check(candidate):\n    assert candidate([4, 3, 1, 2]) == False\ncheck(move_one_ball)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([3, 5, 4, 1, 2]) == False",
+            "duration_seconds": 0.11659894976764917,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 4\ndef check(candidate):\n    assert candidate([3, 5, 4, 1, 2]) == False, 'This prints if this assert fails 2 (also good for debugging!)'\ncheck(move_one_ball)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([]) == True",
+            "duration_seconds": 0.11363024264574051,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "# HumanEval atomic assertion 5\ndef check(candidate):\n    assert candidate([]) == True\ncheck(move_one_ball)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def move_one_ball(arr):\n    if not arr:\n        return True\n    \n    n = len(arr)\n    count = 0\n    \n    for i in range(1, n):\n        if arr[i] < arr[i - 1]:\n            count += 1\n            start = i\n    \n    if arr[n - 1] > arr[0]:\n        count += 1\n    \n    return count <= 1",
+        "completion_tokens": 91,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 340,
+        "raw_text": "```python\ndef move_one_ball(arr):\n    if not arr:\n        return True\n    \n    n = len(arr)\n    count = 0\n    \n    for i in range(1, n):\n        if arr[i] < arr[i - 1]:\n            count += 1\n            start = i\n    \n    if arr[n - 1] > arr[0]:\n        count += 1\n    \n    return count <= 1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef move_one_ball(arr):\n    \"\"\"We have an array 'arr' of N integers arr[1], arr[2], ..., arr[N].The\n    numbers in the array will be randomly ordered. Your task is to determine if\n    it is possible to get an array sorted in non-decreasing order by performing \n    the following operation on the given array:\n        You are allowed to perform right shift operation any number of times.\n    \n    One right shift operation means shifting all elements of the array by one\n    position in the right direction. The last element of the array will be moved to\n    the starting position in the array i.e. 0th index. \n\n    If it is possible to obtain the sorted array by performing the above operation\n    then return True else return False.\n    If the given array is empty then return True.\n\n    Note: The given list is guaranteed to have unique elements.\n\n    For Example:\n    \n    move_one_ball([3, 4, 5, 1, 2])==>True\n    Explanation: By performin 2 right shift operations, non-decreasing order can\n                 be achieved for the given array.\n    move_one_ball([3, 5, 4, 1, 2])==>False\n    Explanation:It is not possible to get non-decreasing order for the given\n                array by performing any number of right shift operations.\n                \n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef move_one_ball(arr):\n    \"\"\"We have an array 'arr' of N integers arr[1], arr[2], ..., arr[N].The\n    numbers in the array will be randomly ordered. Your task is to determine if\n    it is possible to get an array sorted in non-decreasing order by performing \n    the following operation on the given array:\n        You are allowed to perform right shift operation any number of times.\n    \n    One right shift operation means shifting all elements of the array by one\n    position in the right direction. The last element of the array will be moved to\n    the starting position in the array i.e. 0th index. \n\n    If it is possible to obtain the sorted array by performing the above operation\n    then return True else return False.\n    If the given array is empty then return True.\n\n    Note: The given list is guaranteed to have unique elements.\n\n    For Example:\n    \n    move_one_ball([3, 4, 5, 1, 2])==>True\n    Explanation: By performin 2 right shift operations, non-decreasing order can\n                 be achieved for the given array.\n    move_one_ball([3, 5, 4, 1, 2])==>False\n    Explanation:It is not possible to get non-decreasing order for the given\n                array by performing any number of right shift operations.\n                \n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.6081375507637858,
+        "generation_seconds": 2.996561178006232
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/109"
+}
