@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
+
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 from data import load_jsonl
 from execution import SubprocessExecutor

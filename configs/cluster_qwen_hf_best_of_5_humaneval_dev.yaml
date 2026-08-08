@@ -1,0 +1,37 @@
+# Full-precision HumanEval-Dev compute-matched best-of-5 on a cluster GPU.
+model:
+  name: Qwen/Qwen2.5-Coder-7B-Instruct
+  backend: huggingface
+  revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+  backend_model: Qwen/Qwen2.5-Coder-7B-Instruct
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.8
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval
+  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  data_dir: data
+  split: dev
+  path: data/dev/humaneval_dev.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+experiment:
+  name: cluster_qwen_hf_best_of_5_humaneval_dev
+  seed: 42
+  samples_per_problem: 5
+  output_dir: experiments/results
+device:
+  profile: cluster
+  accelerator: auto
+profiles:
+  cluster:
+    device: {accelerator: auto}
+  colab:
+    device: {accelerator: auto}
