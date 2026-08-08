@@ -19,6 +19,11 @@ from utils.config import detect_accelerator, load_config
             "c03e6d358207e414f1eca0bb1891e29f1db0e242",
         ),
         (
+            "cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_dev.yaml",
+            "Qwen/Qwen2.5-Coder-7B-Instruct",
+            "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+        ),
+        (
             "cluster_codellama_hf_zero_shot_humaneval_dev.yaml",
             "codellama/CodeLlama-13b-Instruct-hf",
             "745795438019e47e4dad1347a0093e11deee4c68",
