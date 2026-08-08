@@ -1,0 +1,735 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 8.115221247076988,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "20b6846087411607cb9f69691d62c0f653f3dd2468be4701b6361fe1f0764986",
+        "error_hash": "c40affc09fd28e27299ebffebe0280d5268e359ca996beaa83237074a8dadc01",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.11661587655544281,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('Is the sky blue?') == 0",
+            "duration_seconds": 0.11653657257556915,
+            "exception_message": "Test 2",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-o2rgs8tp/program.py\", line 81, in <module>\n    check(is_bored)\n    ~~~~~^^^^^^^^^^\n  File \"/tmp/srcg-o2rgs8tp/program.py\", line 71, in check\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Test 2\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(is_bored)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.startswith('I') for sentence in sentences if sentence)"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-o2rgs8tp/program.py\", line 81, in <module>\n    check(is_bored)\n    ~~~~~^^^^^^^^^^\n  File \"/tmp/srcg-o2rgs8tp/program.py\", line 71, in check\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Test 2\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.startswith('I') for sentence in sentences if sentence)",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.startswith('I') for sentence in sentences if sentence)",
+        "completion_tokens": 43,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 148,
+        "raw_text": "```python\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.startswith('I') for sentence in sentences if sentence)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.11661587655544281,
+        "generation_seconds": 1.4264787621796131
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "00c74b1ef54ae1992e9ddf78cd87bcc9d051aafad2a53e22a2e5cb50d2b8528b",
+        "error_hash": "c40affc09fd28e27299ebffebe0280d5268e359ca996beaa83237074a8dadc01",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.11499171797186136,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('Is the sky blue?') == 0",
+            "duration_seconds": 0.11491763591766357,
+            "exception_message": "Test 2",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jlcnhtyc/program.py\", line 81, in <module>\n    check(is_bored)\n    ~~~~~^^^^^^^^^^\n  File \"/tmp/srcg-jlcnhtyc/program.py\", line 71, in check\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Test 2\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(is_bored)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jlcnhtyc/program.py\", line 81, in <module>\n    check(is_bored)\n    ~~~~~^^^^^^^^^^\n  File \"/tmp/srcg-jlcnhtyc/program.py\", line 71, in check\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Test 2\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)",
+        "completion_tokens": 45,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.startswith('I') for sentence in sentences if sentence)\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.startswith('I') for sentence in sentences if sentence)\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.startswith('I') for sentence in sentences if sentence)\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.startswith('I') for sentence in sentences if sentence)\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.11499171797186136,
+        "generation_seconds": 1.5076403664425015
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "73bc8f2e7b5fd2952ba230d6787cd4478e1f1e9d8e4c59e752a7988958d98a0d",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 3,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.11560047045350075,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.11552637442946434,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(is_bored)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)",
+        "completion_tokens": 47,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 292,
+        "raw_text": "```python\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('Is the sky blue?') == 0\n   error: Test 2\nTrace analysis:\n1. Failed assertion: candidate('Is the sky blue?') == 0\n   Last candidate operation: line 5 in <genexpr>: return sum(sentence.strip().startswith('I') for sentence in sentences if sentence)\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.11560047045350075,
+        "generation_seconds": 1.5643847342580557
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "73bc8f2e7b5fd2952ba230d6787cd4478e1f1e9d8e4c59e752a7988958d98a0d",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 4,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.12762132659554482,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.1275512995198369,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(is_bored)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)",
+        "completion_tokens": 47,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 206,
+        "raw_text": "```python\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.12762132659554482,
+        "generation_seconds": 1.4913504095748067
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "73bc8f2e7b5fd2952ba230d6787cd4478e1f1e9d8e4c59e752a7988958d98a0d",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 5,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09250080771744251,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.0924223717302084,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(is_bored)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 4,
+                  "source": "sentences = re.split(r'[.?!]\\s*', S)"
+                },
+                {
+                  "function": "is_bored",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 5,
+                  "source": "return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)",
+        "completion_tokens": 47,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 206,
+        "raw_text": "```python\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\nPrevious solution:\nimport re\n\ndef is_bored(S):\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence.strip().lower().startswith('i ') for sentence in sentences if sentence)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09250080771744251,
+        "generation_seconds": 1.5529262460768223
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/91"
+}

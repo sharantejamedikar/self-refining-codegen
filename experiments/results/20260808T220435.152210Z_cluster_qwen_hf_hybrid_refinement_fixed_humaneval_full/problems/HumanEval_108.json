@@ -1,0 +1,795 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 14.825845256447792,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "7f21be993d4bfc14b01e31b7afc82eed45ff58299b524716121206bfef6409d0",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 1,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.1332588754594326,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.13318357802927494,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(count_nums)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 4,
+              "recent_events": [
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 2,
+                  "source": "def sum_of_digits(n):"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.1332588754594326,
+        "generation_seconds": 2.434867402538657
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "7f21be993d4bfc14b01e31b7afc82eed45ff58299b524716121206bfef6409d0",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 2,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09615461807698011,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.09607564192265272,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(count_nums)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 4,
+              "recent_events": [
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 2,
+                  "source": "def sum_of_digits(n):"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 270,
+        "raw_text": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09615461807698011,
+        "generation_seconds": 2.9513087356463075
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "7f21be993d4bfc14b01e31b7afc82eed45ff58299b524716121206bfef6409d0",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 3,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09377307537943125,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.09369942173361778,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(count_nums)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 4,
+              "recent_events": [
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 2,
+                  "source": "def sum_of_digits(n):"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 270,
+        "raw_text": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09377307537943125,
+        "generation_seconds": 2.9727398799732327
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "7f21be993d4bfc14b01e31b7afc82eed45ff58299b524716121206bfef6409d0",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 4,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09268046729266644,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.09260688535869122,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(count_nums)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 4,
+              "recent_events": [
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 2,
+                  "source": "def sum_of_digits(n):"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 270,
+        "raw_text": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09268046729266644,
+        "generation_seconds": 2.950608752667904
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "7f21be993d4bfc14b01e31b7afc82eed45ff58299b524716121206bfef6409d0",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 5,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.12799914088100195,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.12792483251541853,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(count_nums)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "<genexpr>",
+              "max_call_depth": 4,
+              "recent_events": [
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 2,
+                  "source": "def sum_of_digits(n):"
+                },
+                {
+                  "function": "count_nums",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 3,
+                  "source": "if n >= 0:"
+                },
+                {
+                  "function": "sum_of_digits",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 4,
+                  "source": "return sum(int(digit) for digit in str(n))"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 10,
+                  "source": "return sum(1 for num in arr if sum_of_digits(num) > 0)"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 270,
+        "raw_text": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\nPrevious solution:\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n >= 0:\n            return sum(int(digit) for digit in str(n))\n        else:\n            digits = [int(d) for d in str(n)[1:]]\n            digits[0] *= -1\n            return sum(digits)\n    \n    return sum(1 for num in arr if sum_of_digits(num) > 0)\n\nExecution feedback:\nAll assertions passed.\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.12799914088100195,
+        "generation_seconds": 2.9672439815476537
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "seed": 42,
+  "task_id": "HumanEval/108"
+}
