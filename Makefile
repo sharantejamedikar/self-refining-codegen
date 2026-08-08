@@ -11,8 +11,10 @@ test:
 
 lint:
 	$(PYTHON) -m ruff check .
-	$(PYTHON) -m black --check .
+	find src tests experiments/scripts -type f -name '*.py' -print0 | \
+		xargs -0 -n 1 $(PYTHON) -m black --check --quiet
 
 format:
-	$(PYTHON) -m black .
+	find src tests experiments/scripts -type f -name '*.py' -print0 | \
+		xargs -0 -n 1 $(PYTHON) -m black --quiet
 	$(PYTHON) -m ruff check --fix .
