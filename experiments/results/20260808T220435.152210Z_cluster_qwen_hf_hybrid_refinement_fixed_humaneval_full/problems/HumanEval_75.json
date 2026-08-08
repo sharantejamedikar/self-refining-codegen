@@ -1,0 +1,795 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 20.468226530589163,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "11750204c546d8ee0ded0bb8017ce912a9f2ac17fa610013de00efbace89587f",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08443635609000921,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(125) == True",
+            "duration_seconds": 0.08435502555221319,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9ky_cyvf/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-9ky_cyvf/program.py\", line 87, in check\n    assert candidate(125) == True\n           ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == False\n    assert candidate(30) == True\n    assert candidate(8) == True\n    assert candidate(10) == False\n    assert candidate(125) == True\n    assert candidate(3 * 5 * 7) == True\n    assert candidate(3 * 6 * 7) == False\n    assert candidate(9 * 9 * 9) == False\n    assert candidate(11 * 9 * 9) == False\n    assert candidate(11 * 13 * 7) == True\n\n\ncheck(is_multiply_prime)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 19,
+                  "source": "return prime_factors == 3"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 12,
+                  "source": "if a >= 100:"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 13,
+                  "source": "return False"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9ky_cyvf/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-9ky_cyvf/program.py\", line 87, in check\n    assert candidate(125) == True\n           ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(125) == True\nTrace analysis:\n1. Failed assertion: candidate(125) == True\n   Last candidate operation: line 13 in is_multiply_prime: return False",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = 0\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors += 1\n            a //= i\n    return prime_factors == 3",
+        "completion_tokens": 131,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 124,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = 0\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors += 1\n            a //= i\n    return prime_factors == 3\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08443635609000921,
+        "generation_seconds": 3.774433048442006
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "641766af398d3460787f06e4c56af9b1db6558840adc4b72e10f61d210b50f10",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08467765152454376,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(8) == True",
+            "duration_seconds": 0.0846102898940444,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fy_2glrg/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-fy_2glrg/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == False\n    assert candidate(30) == True\n    assert candidate(8) == True\n    assert candidate(10) == False\n    assert candidate(125) == True\n    assert candidate(3 * 5 * 7) == True\n    assert candidate(3 * 6 * 7) == False\n    assert candidate(9 * 9 * 9) == False\n    assert candidate(11 * 9 * 9) == False\n    assert candidate(11 * 13 * 7) == True\n\n\ncheck(is_multiply_prime)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 19,
+                  "source": "return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])"
+                },
+                {
+                  "function": "<genexpr>",
+                  "line_number": 19,
+                  "source": "return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fy_2glrg/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-fy_2glrg/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in <genexpr>: return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])",
+        "completion_tokens": 147,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 329,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = 0\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors += 1\n            a //= i\n    return prime_factors == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(125) == True\nTrace analysis:\n1. Failed assertion: candidate(125) == True\n   Last candidate operation: line 13 in is_multiply_prime: return False\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = 0\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors += 1\n            a //= i\n    return prime_factors == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(125) == True\nTrace analysis:\n1. Failed assertion: candidate(125) == True\n   Last candidate operation: line 13 in is_multiply_prime: return False\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08467765152454376,
+        "generation_seconds": 4.651460802182555
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "85485f8c850617d380c02468f7eb1666a1a637fb713d591addd1543a7c16f633",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08515941444784403,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(8) == True",
+            "duration_seconds": 0.08508624788373709,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-aoryq97y/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-aoryq97y/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == False\n    assert candidate(30) == True\n    assert candidate(8) == True\n    assert candidate(10) == False\n    assert candidate(125) == True\n    assert candidate(3 * 5 * 7) == True\n    assert candidate(3 * 6 * 7) == False\n    assert candidate(9 * 9 * 9) == False\n    assert candidate(11 * 9 * 9) == False\n    assert candidate(11 * 13 * 7) == True\n\n\ncheck(is_multiply_prime)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 19,
+                  "source": "return len(prime_factors) == 3 and len(set(prime_factors)) == 3"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-aoryq97y/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-aoryq97y/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+        "completion_tokens": 141,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 366,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in <genexpr>: return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in <genexpr>: return len(prime_factors) == 3 and all(factor != prime_factors[0] for factor in prime_factors[1:])\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08515941444784403,
+        "generation_seconds": 3.866126731969416
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "85485f8c850617d380c02468f7eb1666a1a637fb713d591addd1543a7c16f633",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08634955808520317,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(8) == True",
+            "duration_seconds": 0.08627450466156006,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-y1zvi_po/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-y1zvi_po/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == False\n    assert candidate(30) == True\n    assert candidate(8) == True\n    assert candidate(10) == False\n    assert candidate(125) == True\n    assert candidate(3 * 5 * 7) == True\n    assert candidate(3 * 6 * 7) == False\n    assert candidate(9 * 9 * 9) == False\n    assert candidate(11 * 9 * 9) == False\n    assert candidate(11 * 13 * 7) == True\n\n\ncheck(is_multiply_prime)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 19,
+                  "source": "return len(prime_factors) == 3 and len(set(prime_factors)) == 3"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-y1zvi_po/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-y1zvi_po/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+        "completion_tokens": 141,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 352,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08634955808520317,
+        "generation_seconds": 3.861135844141245
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "85485f8c850617d380c02468f7eb1666a1a637fb713d591addd1543a7c16f633",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 5,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10643199738115072,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(8) == True",
+            "duration_seconds": 0.10635984595865011,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0w0p7z97/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-0w0p7z97/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == False\n    assert candidate(30) == True\n    assert candidate(8) == True\n    assert candidate(10) == False\n    assert candidate(125) == True\n    assert candidate(3 * 5 * 7) == True\n    assert candidate(3 * 6 * 7) == False\n    assert candidate(9 * 9 * 9) == False\n    assert candidate(11 * 9 * 9) == False\n    assert candidate(11 * 13 * 7) == True\n\n\ncheck(is_multiply_prime)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 16,
+                  "source": "while a % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 15,
+                  "source": "for i in range(2, a + 1):"
+                },
+                {
+                  "function": "is_multiply_prime",
+                  "line_number": 19,
+                  "source": "return len(prime_factors) == 3 and len(set(prime_factors)) == 3"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0w0p7z97/program.py\", line 95, in <module>\n    check(is_multiply_prime)\n    ~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-0w0p7z97/program.py\", line 85, in check\n    assert candidate(8) == True\n           ^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3",
+        "completion_tokens": 141,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 352,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\nPrevious solution:\nfrom math import sqrt\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(sqrt(n)) + 1):\n        if n % i == 0:\n            return False\n    return True\n\ndef is_multiply_prime(a):\n    if a >= 100:\n        return False\n    prime_factors = []\n    for i in range(2, a + 1):\n        while a % i == 0 and is_prime(i):\n            prime_factors.append(i)\n            a //= i\n    return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(8) == True\nTrace analysis:\n1. Failed assertion: candidate(8) == True\n   Last candidate operation: line 19 in is_multiply_prime: return len(prime_factors) == 3 and len(set(prime_factors)) == 3\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10643199738115072,
+        "generation_seconds": 3.86327350884676
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "seed": 42,
+  "task_id": "HumanEval/75"
+}
