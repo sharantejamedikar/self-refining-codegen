@@ -142,6 +142,31 @@ def test_cluster_full_mbpp_adaptive_refinement_uses_frozen_tier_one_protocol() -
     assert config.experiment.seed == 42
 
 
+def test_cluster_full_mbpp_fixed_refinement_uses_frozen_tier_one_protocol() -> None:
+    config = load_config(
+        Path("configs/cluster_qwen_hf_hybrid_refinement_fixed_mbpp_full.yaml"),
+        profile="cluster",
+    )
+
+    assert config.model.backend == "huggingface"
+    assert config.model.revision == "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+    assert config.model.quantization is None
+    assert config.model.temperature == 0.2
+    assert config.model.top_p == 0.95
+    assert config.model.max_new_tokens == 512
+    assert config.model.repetition_penalty == 1.1
+    assert config.dataset.name == "mbpp"
+    assert config.dataset.split == "full"
+    assert config.dataset.path == "data/normalized/mbpp_sanitized.jsonl"
+    assert config.execution.collect_trace is True
+    assert config.experiment.max_iterations == 5
+    assert config.experiment.stagnation_patience == 2
+    assert config.experiment.oscillation_window == 3
+    assert config.experiment.feedback_strategy == "hybrid"
+    assert config.experiment.convergence_mode == "fixed"
+    assert config.experiment.seed == 42
+
+
 def test_cuda_auto_detection_flows_from_cluster_config_to_hf_factory(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
