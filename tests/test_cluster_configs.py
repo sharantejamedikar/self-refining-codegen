@@ -33,6 +33,11 @@ from utils.config import detect_accelerator, load_config
             "codellama/CodeLlama-13b-Instruct-hf",
             "745795438019e47e4dad1347a0093e11deee4c68",
         ),
+        (
+            "cluster_codellama_hf_zero_shot_mbpp_dev.yaml",
+            "codellama/CodeLlama-13b-Instruct-hf",
+            "745795438019e47e4dad1347a0093e11deee4c68",
+        ),
     ],
 )
 def test_cluster_config_uses_revision_pinned_unquantized_hf_backend(
@@ -47,8 +52,44 @@ def test_cluster_config_uses_revision_pinned_unquantized_hf_backend(
     assert config.model.backend == "huggingface"
     assert config.model.revision == revision
     assert config.model.quantization is None
+    if model_name.startswith("codellama/"):
+        assert config.model.device_map == "auto"
+        assert config.model.gpu_preflight_index == 1
+        assert config.model.gpu_preflight_samples == 3
+        assert config.model.gpu_preflight_interval_seconds == 3.0
     assert config.device.profile == "cluster"
     assert config.dataset.split == "dev"
+
+
+@pytest.mark.parametrize(
+    ("filename", "dataset_name", "dataset_path"),
+    [
+        (
+            "cluster_codellama_hf_zero_shot_humaneval_dev.yaml",
+            "humaneval",
+            "data/dev/humaneval_dev.jsonl",
+        ),
+        (
+            "cluster_codellama_hf_zero_shot_mbpp_dev.yaml",
+            "mbpp",
+            "data/dev/mbpp_dev.jsonl",
+        ),
+    ],
+)
+def test_codellama_preflight_configs_use_frozen_dev_protocol(
+    filename: str,
+    dataset_name: str,
+    dataset_path: str,
+) -> None:
+    config = load_config(Path("configs") / filename, profile="cluster")
+
+    assert config.model.temperature == 0.2
+    assert config.model.top_p == 0.95
+    assert config.model.max_new_tokens == 512
+    assert config.model.repetition_penalty == 1.1
+    assert config.dataset.name == dataset_name
+    assert config.dataset.path == dataset_path
+    assert config.experiment.seed == 42
 
 
 def test_cluster_best_of_five_config_uses_diverse_sampling_protocol() -> None:
@@ -188,3 +229,19 @@ def test_cuda_auto_detection_flows_from_cluster_config_to_hf_factory(
     assert config.device.accelerator == "cuda"
     assert isinstance(generator, HuggingFaceGenerator)
     assert generator.accelerator == "cuda"
+
+
+def test_codellama_bitsandbytes_smoke_config_is_explicitly_quantized() -> None:
+    config = load_config(
+        Path("configs/cluster_codellama_hf_bnb_8bit_zero_shot_humaneval_dev.yaml"),
+        profile="cluster",
+    )
+
+    assert config.model.backend == "huggingface"
+    assert config.model.revision == "745795438019e47e4dad1347a0093e11deee4c68"
+    assert config.model.quantization == "bitsandbytes_8bit"
+    assert config.dataset.name == "humaneval"
+    assert config.dataset.split == "dev"
+    assert config.dataset.path == "data/dev/humaneval_dev.jsonl"
+    assert config.device.accelerator == "cuda"
+    assert "quantized_development" in config.experiment.name

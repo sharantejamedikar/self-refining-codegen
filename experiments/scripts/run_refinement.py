@@ -11,7 +11,7 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 from data import load_jsonl
 from execution import SubprocessExecutor
 from feedback import create_feedback_generator
-from generation import OllamaGenerator, create_generator
+from generation import GPUPreflightRefused, OllamaGenerator, create_generator
 from loop import RefinementRunner
 from utils.config import load_config
 
@@ -63,4 +63,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except GPUPreflightRefused as error:
+        raise SystemExit(f"SAFETY REFUSAL: {error}") from None

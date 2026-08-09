@@ -17,8 +17,8 @@ import yaml
 
 from data.schema import Problem
 from execution.base import Executor
-from generation.base import GenerationRequest, Generator
-from loop.persistence import write_problem_record
+from generation.base import GenerationOutput, GenerationRequest, Generator
+from loop.persistence import model_provenance, write_problem_record
 from utils.config import AppConfig
 
 
@@ -56,6 +56,7 @@ class BestOfKRunner:
     def _run_problem(self, problem: Problem) -> dict[str, Any]:
         started = time.monotonic()
         candidates: list[dict[str, Any]] = []
+        first_generation: GenerationOutput | None = None
         base_seed = self.config.experiment.seed
 
         for sample_index in range(self.config.experiment.samples_per_problem):
@@ -64,6 +65,8 @@ class BestOfKRunner:
             generated = self.generator.generate(
                 GenerationRequest(problem_prompt=problem.prompt, seed=seed)
             )
+            if first_generation is None:
+                first_generation = generated
             generation_duration = time.monotonic() - generation_started
             execution = self.executor.execute(generated.code, list(problem.test_cases))
             candidates.append(
@@ -89,6 +92,8 @@ class BestOfKRunner:
             if candidate["passed"]
         ]
         unique_code_count = len({candidate["code_hash"] for candidate in candidates})
+        if first_generation is None:
+            raise AssertionError("samples_per_problem must be positive")
         return {
             "task_id": problem.task_id,
             "base_seed": base_seed,
@@ -99,6 +104,7 @@ class BestOfKRunner:
             "unique_code_count": unique_code_count,
             "all_candidates_unique": unique_code_count == len(candidates),
             "metric": "pass@1_bo5",
+            "provenance": model_provenance(self.config.model, first_generation),
             "candidates": candidates,
             "duration_seconds": time.monotonic() - started,
         }

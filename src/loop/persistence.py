@@ -6,6 +6,26 @@ import json
 from pathlib import Path
 from typing import Any
 
+from generation.base import GenerationOutput
+from utils.config import ModelConfig
+
+
+def model_provenance(
+    model_config: ModelConfig, generation: GenerationOutput
+) -> dict[str, Any]:
+    """Build explicit per-record model and precision provenance."""
+
+    metadata = dict(generation.backend_metadata or {})
+    metadata.setdefault("backend", model_config.backend)
+    metadata.setdefault("canonical_model", model_config.name)
+    metadata.setdefault("revision", model_config.revision)
+    metadata.setdefault("quantization", model_config.quantization)
+    metadata.setdefault(
+        "result_precision",
+        "QUANTIZED" if model_config.quantization is not None else "FULL_PRECISION",
+    )
+    return metadata
+
 
 def write_problem_record(problem_directory: Path, record: dict[str, Any]) -> Path:
     """Atomically persist one completed problem record and return its path."""

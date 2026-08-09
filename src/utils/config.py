@@ -20,6 +20,12 @@ class ModelConfig:
     backend_model: str | None = None
     artifact_digest: str | None = None
     quantization: str | None = None
+    device_map: str | None = None
+    gpu_preflight_index: int | None = None
+    gpu_preflight_samples: int = 3
+    gpu_preflight_interval_seconds: float = 3.0
+    gpu_idle_utilization_threshold_percent: float = 5.0
+    gpu_idle_memory_threshold_mb: float = 500.0
     endpoint: str | None = None
     request_timeout_seconds: float = 300.0
     prompt_strategy: Literal["zero_shot", "few_shot"] = "zero_shot"
@@ -161,6 +167,15 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
         raise ValueError("model.few_shot_examples must be between 0 and 3")
     if model.request_timeout_seconds <= 0:
         raise ValueError("model.request_timeout_seconds must be positive")
+    if model.gpu_preflight_samples < 2:
+        raise ValueError("model.gpu_preflight_samples must be at least 2")
+    if model.gpu_preflight_interval_seconds <= 0:
+        raise ValueError("model.gpu_preflight_interval_seconds must be positive")
+    if (
+        model.gpu_idle_utilization_threshold_percent <= 0
+        or model.gpu_idle_memory_threshold_mb <= 0
+    ):
+        raise ValueError("model GPU idle thresholds must be positive")
     if (
         model.backend != "mock"
         and re.fullmatch(r"[0-9a-f]{40}", model.revision) is None
