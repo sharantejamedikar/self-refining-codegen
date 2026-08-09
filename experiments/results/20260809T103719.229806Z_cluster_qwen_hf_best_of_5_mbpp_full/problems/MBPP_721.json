@@ -1,0 +1,635 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "6c46b3c78d739a41807daffd54990c266197478958acc4c26a46f25dd642ba9e",
+      "execution": {
+        "duration_seconds": 0.4131845301017165,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "duration_seconds": 0.06440116092562675,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "2.4\n",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "duration_seconds": 0.1050776494666934,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "2.4\n",
+            "test_case": "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "duration_seconds": 0.11172683630138636,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "2.4\n",
+            "test_case": "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "duration_seconds": 0.13162524811923504,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "2.4\n",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def maxAverageOfPath(cost):\n    N = len(cost)\n    dp = [[0] * N for _ in range(N)]\n\n    for i in range(N-1, -1, -1):\n        for j in range(N-1, -1, -1):\n            if i == N-1 and j == N-1:\n                dp[i][j] = cost[i][j]\n            elif i == N-1:\n                dp[i][j] = cost[i][j] + dp[i][j+1]\n            elif j == N-1:\n                dp[i][j] = cost[i][j] + dp[i+1][j]\n            else:\n                dp[i][j] = cost[i][j] + max(dp[i+1][j], dp[i][j+1])\n\n    return dp[0][0] / (2*N - 1)\n\n# Example usage:\ncost = [\n    [1, 3, 1],\n    [1, 5, 1],\n    [4, 2, 1]\n]\n\nprint(maxAverageOfPath(cost))  # Output should be the maximum average path cost",
+        "completion_tokens": 306,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef maxAverageOfPath(cost):\n    N = len(cost)\n    dp = [[0] * N for _ in range(N)]\n\n    for i in range(N-1, -1, -1):\n        for j in range(N-1, -1, -1):\n            if i == N-1 and j == N-1:\n                dp[i][j] = cost[i][j]\n            elif i == N-1:\n                dp[i][j] = cost[i][j] + dp[i][j+1]\n            elif j == N-1:\n                dp[i][j] = cost[i][j] + dp[i+1][j]\n            else:\n                dp[i][j] = cost[i][j] + max(dp[i+1][j], dp[i][j+1])\n\n    return dp[0][0] / (2*N - 1)\n\n# Example usage:\ncost = [\n    [1, 3, 1],\n    [1, 5, 1],\n    [4, 2, 1]\n]\n\nprint(maxAverageOfPath(cost))  # Output should be the maximum average path cost\n```\n\nThis solution uses dynamic programming to compute the maximum sum of any path from the top-left to the bottom-right corner of the grid. It then calculates the average by dividing this sum by the total number of cells visited, which is `2N - 1` for an N*N grid.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4131845301017165,
+        "generation_seconds": 8.555813488550484
+      }
+    },
+    {
+      "code_hash": "e7c8489a19087dad62ab14deebce6ceea76c999e66f501234c3e4bdffa2c1f92",
+      "execution": {
+        "duration_seconds": 0.39755005668848753,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "duration_seconds": 0.06443774234503508,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "duration_seconds": 0.0958502534776926,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "duration_seconds": 0.10488715302199125,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "duration_seconds": 0.13205568306148052,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def maxAverageOfPath(cost):\n    n = len(cost)\n    \n    # Create a DP table to store the maximum cost up to each cell\n    dp = [[0 for _ in range(n)] for _ in range(n)]\n    \n    # Initialize the first cell with its own cost\n    dp[0][0] = cost[0][0]\n    \n    # Fill the first row\n    for j in range(1, n):\n        dp[0][j] = dp[0][j-1] + cost[0][j]\n    \n    # Fill the first column\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The maximum cost is at the bottom-right corner\n    max_cost = dp[-1][-1]\n    \n    # Calculate the maximum average path length\n    max_average_length = 2 * n - 1\n    \n    # Calculate the maximum average path cost\n    max_average_cost = max_cost / max_average_length\n    \n    return max_average_cost",
+        "completion_tokens": 353,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef maxAverageOfPath(cost):\n    n = len(cost)\n    \n    # Create a DP table to store the maximum cost up to each cell\n    dp = [[0 for _ in range(n)] for _ in range(n)]\n    \n    # Initialize the first cell with its own cost\n    dp[0][0] = cost[0][0]\n    \n    # Fill the first row\n    for j in range(1, n):\n        dp[0][j] = dp[0][j-1] + cost[0][j]\n    \n    # Fill the first column\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The maximum cost is at the bottom-right corner\n    max_cost = dp[-1][-1]\n    \n    # Calculate the maximum average path length\n    max_average_length = 2 * n - 1\n    \n    # Calculate the maximum average path cost\n    max_average_cost = max_cost / max_average_length\n    \n    return max_average_cost\n```\n\nThis solution uses dynamic programming to find the maximum cost path from the top-left to the bottom-right cell of the matrix. It then calculates the maximum average path cost based on the number of cells visited in the path, which is always `2 * n - 1` for an `n x n` grid.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.39755005668848753,
+        "generation_seconds": 9.494566124863923
+      }
+    },
+    {
+      "code_hash": "4c8cf57a6dc120cdcfdac3e32d11612581eb0c2e40292711d811df415d55656f",
+      "execution": {
+        "duration_seconds": 0.3893057852983475,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "duration_seconds": 0.06219581887125969,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "duration_seconds": 0.11126772500574589,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "duration_seconds": 0.10620333254337311,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "duration_seconds": 0.10926970094442368,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import heapq\n\ndef maxAverageOfPath(cost):\n    n = len(cost)\n    \n    # Directions for moving right (1, 0) and down (0, 1)\n    directions = [(0, 1), (1, 0)]\n    \n    # Min heap to store negative values of costs for max-heap behavior\n    pq = [(-cost[0][0], 0, 0)]\n    \n    # Dictionary to store the minimum cost to reach each cell\n    min_cost = {(0, 0): -cost[0][0]}\n    \n    while pq:\n        neg_cost, x, y = heapq.heappop(pq)\n        current_cost = -neg_cost\n        \n        if x == y == n - 1:\n            return current_cost / (2 * n - 1)\n        \n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            \n            if 0 <= nx < n and 0 <= ny < n:\n                new_cost = current_cost + cost[nx][ny]\n                \n                if (nx, ny) not in min_cost or new_cost < min_cost[(nx, ny)]:\n                    min_cost[(nx, ny)] = new_cost\n                    heapq.heappush(pq, (-new_cost, nx, ny))\n                    \n    return -1",
+        "completion_tokens": 283,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\nimport heapq\n\ndef maxAverageOfPath(cost):\n    n = len(cost)\n    \n    # Directions for moving right (1, 0) and down (0, 1)\n    directions = [(0, 1), (1, 0)]\n    \n    # Min heap to store negative values of costs for max-heap behavior\n    pq = [(-cost[0][0], 0, 0)]\n    \n    # Dictionary to store the minimum cost to reach each cell\n    min_cost = {(0, 0): -cost[0][0]}\n    \n    while pq:\n        neg_cost, x, y = heapq.heappop(pq)\n        current_cost = -neg_cost\n        \n        if x == y == n - 1:\n            return current_cost / (2 * n - 1)\n        \n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            \n            if 0 <= nx < n and 0 <= ny < n:\n                new_cost = current_cost + cost[nx][ny]\n                \n                if (nx, ny) not in min_cost or new_cost < min_cost[(nx, ny)]:\n                    min_cost[(nx, ny)] = new_cost\n                    heapq.heappush(pq, (-new_cost, nx, ny))\n                    \n    return -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3893057852983475,
+        "generation_seconds": 7.619679009541869
+      }
+    },
+    {
+      "code_hash": "87af39a1a233afdf11d665c727e458e6d609e841be2013cc0a82bc58a69af6ec",
+      "execution": {
+        "duration_seconds": 0.3940988006070256,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "duration_seconds": 0.06620667595416307,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "duration_seconds": 0.10348822455853224,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "duration_seconds": 0.11510251183062792,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "duration_seconds": 0.10892531462013721,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef maxAverageOfPath(cost: List[List[int]]) -> float:\n    n = len(cost)\n    \n    # Initialize a DP table with the same size as the cost matrix\n    dp = [[0 for _ in range(n)] for _ in range(n)]\n    \n    # Fill the first row and first column of the DP table\n    dp[0][0] = cost[0][0]\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n        dp[0][i] = dp[0][i-1] + cost[0][i]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The value in the bottom-right corner of the DP table is the maximum total cost of any path\n    max_total_cost = dp[n-1][n-1]\n    \n    # The length of the path from the top-left to the bottom-right cell is n (number of rows) + n - 2 (number of columns minus one since we already counted the starting cell)\n    path_length = 2 * n - 1\n    \n    # Calculate the maximum average\n    max_average = max_total_cost / path_length\n    \n    return max_average",
+        "completion_tokens": 319,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\nfrom typing import List\n\ndef maxAverageOfPath(cost: List[List[int]]) -> float:\n    n = len(cost)\n    \n    # Initialize a DP table with the same size as the cost matrix\n    dp = [[0 for _ in range(n)] for _ in range(n)]\n    \n    # Fill the first row and first column of the DP table\n    dp[0][0] = cost[0][0]\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n        dp[0][i] = dp[0][i-1] + cost[0][i]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The value in the bottom-right corner of the DP table is the maximum total cost of any path\n    max_total_cost = dp[n-1][n-1]\n    \n    # The length of the path from the top-left to the bottom-right cell is n (number of rows) + n - 2 (number of columns minus one since we already counted the starting cell)\n    path_length = 2 * n - 1\n    \n    # Calculate the maximum average\n    max_average = max_total_cost / path_length\n    \n    return max_average\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3940988006070256,
+        "generation_seconds": 9.291747737675905
+      }
+    },
+    {
+      "code_hash": "b2ebe02d88d795b51afab78d96c2db23c68f79bbd6a82e713e5c1a9a377aff6d",
+      "execution": {
+        "duration_seconds": 0.5177487460896373,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "2.888888888888889",
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "duration_seconds": 0.08198556397110224,
+            "exception_message": "assertion comparison failed: actual=2.888888888888889; expected=5.2",
+            "exception_type": "AssertionError",
+            "expected_value": "5.2",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-88eb61zi/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('2.888888888888889', '5.2')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-88eb61zi/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('2.888888888888889', '5.2')\n"
+          },
+          {
+            "actual_value": "3.4444444444444446",
+            "assertion_expression": "maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "duration_seconds": 0.1216676589101553,
+            "exception_message": "assertion comparison failed: actual=3.4444444444444446; expected=6.2",
+            "exception_type": "AssertionError",
+            "expected_value": "6.2",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n41npajl/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3.4444444444444446', '6.2')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n41npajl/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3.4444444444444446', '6.2')\n"
+          },
+          {
+            "actual_value": "4.0",
+            "assertion_expression": "maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "duration_seconds": 0.1577362548559904,
+            "exception_message": "assertion comparison failed: actual=4.0; expected=7.2",
+            "exception_type": "AssertionError",
+            "expected_value": "7.2",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zhpt6zh2/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4.0', '7.2')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zhpt6zh2/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4.0', '7.2')\n"
+          },
+          {
+            "actual_value": "3.2222222222222223",
+            "assertion_expression": "maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "duration_seconds": 0.15601585246622562,
+            "exception_message": "assertion comparison failed: actual=3.2222222222222223; expected=5.8",
+            "exception_type": "AssertionError",
+            "expected_value": "5.8",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dnzhvgh5/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3.2222222222222223', '5.8')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOfPath([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 5.8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dnzhvgh5/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3.2222222222222223', '5.8')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def maxAverageOfPath(cost):\n    if not cost or not cost[0]:\n        return 0\n    \n    n = len(cost)\n    \n    # Initialize a DP table to store the maximum average up to each cell\n    dp = [[0] * n for _ in range(n)]\n    \n    # Fill the first row and first column since there's only one way to reach them\n    dp[0][0] = cost[0][0]\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n        dp[0][i] = dp[0][i-1] + cost[0][i]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The maximum average is the maximum value in the last cell divided by the number of cells (n*n)\n    max_average = dp[-1][-1] / (n * n)\n    \n    return max_average",
+        "completion_tokens": 256,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef maxAverageOfPath(cost):\n    if not cost or not cost[0]:\n        return 0\n    \n    n = len(cost)\n    \n    # Initialize a DP table to store the maximum average up to each cell\n    dp = [[0] * n for _ in range(n)]\n    \n    # Fill the first row and first column since there's only one way to reach them\n    dp[0][0] = cost[0][0]\n    for i in range(1, n):\n        dp[i][0] = dp[i-1][0] + cost[i][0]\n        dp[0][i] = dp[0][i-1] + cost[0][i]\n    \n    # Fill the rest of the DP table\n    for i in range(1, n):\n        for j in range(1, n):\n            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + cost[i][j]\n    \n    # The maximum average is the maximum value in the last cell divided by the number of cells (n*n)\n    max_average = dp[-1][-1] / (n * n)\n    \n    return max_average\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nGiven a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\n\nRequired function signature:\ndef maxAverageOfPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5177487460896373,
+        "generation_seconds": 6.888939015567303
+      }
+    }
+  ],
+  "duration_seconds": 43.96606876514852,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/721",
+  "unique_code_count": 5
+}

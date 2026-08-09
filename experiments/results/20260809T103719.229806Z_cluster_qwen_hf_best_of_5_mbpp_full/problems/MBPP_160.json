@@ -1,0 +1,559 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "92211b9bd9749d9d7385db4b091aef00d90decb8ff19007ab0f3327fd179de9a",
+      "execution": {
+        "duration_seconds": 0.38566137850284576,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "(3, -3)",
+            "assertion_expression": "find_solution(2, 3, 7) == (2, 1)",
+            "duration_seconds": 0.1403564801439643,
+            "exception_message": "assertion comparison failed: actual=(3, -3); expected=(2, 1)",
+            "exception_type": "AssertionError",
+            "expected_value": "(2, 1)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i6ifulhf/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(3, -3)', '(2, 1)')\n",
+            "stdout": "",
+            "test_case": "assert find_solution(2, 3, 7) == (2, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i6ifulhf/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(3, -3)', '(2, 1)')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(4, 2, 7) == None",
+            "duration_seconds": 0.11268715001642704,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(4, 2, 7) == None",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "(0, 17)",
+            "assertion_expression": "find_solution(1, 13, 17) == (4, 1)",
+            "duration_seconds": 0.13237480726093054,
+            "exception_message": "assertion comparison failed: actual=(0, 17); expected=(4, 1)",
+            "exception_type": "AssertionError",
+            "expected_value": "(4, 1)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n_ip7e1r/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 17)', '(4, 1)')\n",
+            "stdout": "",
+            "test_case": "assert find_solution(1, 13, 17) == (4, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n_ip7e1r/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 17)', '(4, 1)')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import gcd\n\ndef find_solution(a, b, n):\n    if n % gcd(a, b) != 0:\n        return None\n    \n    t, s, r = 1, 0, a\n    u, v, q = 0, 1, b\n    \n    while q != 0:\n        quotient = r // q\n        r, q = q, r - quotient * q\n        t, u = u, t - quotient * u\n        s, v = v, s - quotient * v\n    \n    x, y = (n // a) * s, (n // a) * t\n    return x, y",
+        "completion_tokens": 195,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "raw_text": "```python\nfrom math import gcd\n\ndef find_solution(a, b, n):\n    if n % gcd(a, b) != 0:\n        return None\n    \n    t, s, r = 1, 0, a\n    u, v, q = 0, 1, b\n    \n    while q != 0:\n        quotient = r // q\n        r, q = q, r - quotient * q\n        t, u = u, t - quotient * u\n        s, v = v, s - quotient * v\n    \n    x, y = (n // a) * s, (n // a) * t\n    return x, y\n```\n\nThis function uses the Extended Euclidean Algorithm to find coefficients x and y such that ax + by = n. If no solution exists (i.e., n is not divisible by the greatest common divisor of a and b), it returns None.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.38566137850284576,
+        "generation_seconds": 5.6041005570441484
+      }
+    },
+    {
+      "code_hash": "49b97d07ad32230c0c99262bdc9fdc190d501f7fad27aec6ecda7eaf99f09cba",
+      "execution": {
+        "duration_seconds": 0.32782693300396204,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(2, 3, 7) == (2, 1)",
+            "duration_seconds": 0.08051118534058332,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(2, 3, 7) == (2, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(4, 2, 7) == None",
+            "duration_seconds": 0.1291601974517107,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(4, 2, 7) == None",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(1, 13, 17) == (4, 1)",
+            "duration_seconds": 0.11789377871900797,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(1, 13, 17) == (4, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_solution(a, b, n):\n    for x in range(0, (n // a) + 1):\n        if (n - (a * x)) % b == 0:\n            y = (n - (a * x)) // b\n            return (x, y)\n    return None",
+        "completion_tokens": 72,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "raw_text": "```python\ndef find_solution(a, b, n):\n    for x in range(0, (n // a) + 1):\n        if (n - (a * x)) % b == 0:\n            y = (n - (a * x)) // b\n            return (x, y)\n    return None\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.32782693300396204,
+        "generation_seconds": 2.342036362737417
+      }
+    },
+    {
+      "code_hash": "055548951a41b99c94cf63c4bd7943e0421801e3ddd1e3a3dae3cfbe814e15a7",
+      "execution": {
+        "duration_seconds": 0.3527999157086015,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(2, 3, 7) == (2, 1)",
+            "duration_seconds": 0.1093332041054964,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(2, 3, 7) == (2, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(4, 2, 7) == None",
+            "duration_seconds": 0.11512881424278021,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(4, 2, 7) == None",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(1, 13, 17) == (4, 1)",
+            "duration_seconds": 0.1280672363936901,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(1, 13, 17) == (4, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_solution(a, b, n):\n    for x in range(n // a + 1):\n        if (n - a * x) % b == 0:\n            y = (n - a * x) // b\n            return (x, y)\n    return None",
+        "completion_tokens": 65,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "raw_text": "```python\ndef find_solution(a, b, n):\n    for x in range(n // a + 1):\n        if (n - a * x) % b == 0:\n            y = (n - a * x) // b\n            return (x, y)\n    return None\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3527999157086015,
+        "generation_seconds": 2.134506060741842
+      }
+    },
+    {
+      "code_hash": "dad00f5a4bfed655b3fa4a66d3bf4e35b1d477b615bc8b1246510b352c8426ff",
+      "execution": {
+        "duration_seconds": 0.32604645378887653,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "(5, -1)",
+            "assertion_expression": "find_solution(2, 3, 7) == (2, 1)",
+            "duration_seconds": 0.07551393378525972,
+            "exception_message": "assertion comparison failed: actual=(5, -1); expected=(2, 1)",
+            "exception_type": "AssertionError",
+            "expected_value": "(2, 1)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-u9xsv69w/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(5, -1)', '(2, 1)')\n",
+            "stdout": "",
+            "test_case": "assert find_solution(2, 3, 7) == (2, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-u9xsv69w/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(5, -1)', '(2, 1)')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(4, 2, 7) == None",
+            "duration_seconds": 0.11225167661905289,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(4, 2, 7) == None",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "(24, -1)",
+            "assertion_expression": "find_solution(1, 13, 17) == (4, 1)",
+            "duration_seconds": 0.13807818945497274,
+            "exception_message": "assertion comparison failed: actual=(24, -1); expected=(4, 1)",
+            "exception_type": "AssertionError",
+            "expected_value": "(4, 1)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dwclkew2/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(24, -1)', '(4, 1)')\n",
+            "stdout": "",
+            "test_case": "assert find_solution(1, 13, 17) == (4, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dwclkew2/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(24, -1)', '(4, 1)')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import gcd\n\ndef find_solution(a, b, n):\n    g = gcd(a, b)\n    \n    if n % g != 0:\n        return None\n    \n    a //= g\n    b //= g\n    n //= g\n    \n    x = n * b // (a * b - a * n % b)\n    y = (n - a * x) // b\n    \n    return (x, y)",
+        "completion_tokens": 94,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "raw_text": "```python\nfrom math import gcd\n\ndef find_solution(a, b, n):\n    g = gcd(a, b)\n    \n    if n % g != 0:\n        return None\n    \n    a //= g\n    b //= g\n    n //= g\n    \n    x = n * b // (a * b - a * n % b)\n    y = (n - a * x) // b\n    \n    return (x, y)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.32604645378887653,
+        "generation_seconds": 3.004555626772344
+      }
+    },
+    {
+      "code_hash": "e1ee9e8b16d90cad1b72c8dbf1a4a56132c0f5831f0a826f846c40a30e3ac048",
+      "execution": {
+        "duration_seconds": 0.3077856097370386,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(2, 3, 7) == (2, 1)",
+            "duration_seconds": 0.08167514763772488,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(2, 3, 7) == (2, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(4, 2, 7) == None",
+            "duration_seconds": 0.11172539740800858,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(4, 2, 7) == None",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solution(1, 13, 17) == (4, 1)",
+            "duration_seconds": 0.11411874275654554,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_solution(1, 13, 17) == (4, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_solution(a, b, n):\n    for x in range(n // a + 1):\n        if (n - a * x) % b == 0:\n            y = (n - a * x) // b\n            return x, y\n    return None",
+        "completion_tokens": 64,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 88,
+        "raw_text": "```python\ndef find_solution(a, b, n):\n    for x in range(n // a + 1):\n        if (n - a * x) % b == 0:\n            y = (n - a * x) // b\n            return x, y\n    return None\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\n\nRequired function signature:\ndef find_solution(a, b, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3077856097370386,
+        "generation_seconds": 2.050899804569781
+      }
+    }
+  ],
+  "duration_seconds": 16.839282705448568,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    1,
+    2,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/160",
+  "unique_code_count": 5
+}

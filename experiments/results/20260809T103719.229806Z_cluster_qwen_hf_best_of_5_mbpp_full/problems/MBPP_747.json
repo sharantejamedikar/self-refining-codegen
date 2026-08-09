@@ -1,0 +1,561 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "12ebda526db417930fa9c84c70764100cacd78520a8f43b263285fb570dc2b26",
+      "execution": {
+        "duration_seconds": 0.30681481678038836,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.06706379540264606,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.11338803544640541,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.12607176322489977,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of LCS\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The length of the longest common subsequence is in the bottom-right corner\n    return L[m][n][o]",
+        "completion_tokens": 272,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 98,
+        "raw_text": "```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of LCS\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The length of the longest common subsequence is in the bottom-right corner\n    return L[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.30681481678038836,
+        "generation_seconds": 8.263668734580278
+      }
+    },
+    {
+      "code_hash": "fe701f2624ba9e905bbca4ea07211f0c7ffb4eedee7da6683e26281b393aeb6c",
+      "execution": {
+        "duration_seconds": 0.25469973776489496,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.06543996650725603,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.0840180953964591,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.10504898615181446,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    L = [[[0 for k in range(o + 1)] for j in range(n + 1)] for i in range(m + 1)]\n\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] and Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    return L[m][n][o]",
+        "completion_tokens": 236,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 98,
+        "raw_text": "```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    L = [[[0 for k in range(o + 1)] for j in range(n + 1)] for i in range(m + 1)]\n\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] and Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    return L[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.25469973776489496,
+        "generation_seconds": 7.037594291381538
+      }
+    },
+    {
+      "code_hash": "65f5f7cf2da8eb9c0efdc494e96ae695f0430fc6bb0f8bef4fe9a5d6fab06dde",
+      "execution": {
+        "duration_seconds": 0.292771746404469,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.06370939407497644,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.1100562084466219,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.11878542602062225,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of longest common subsequence.\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the table in bottom-up fashion\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The length of the longest common subsequence is in the bottom-right corner of the table\n    return L[m][n][o]",
+        "completion_tokens": 276,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 98,
+        "raw_text": "```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of longest common subsequence.\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the table in bottom-up fashion\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The length of the longest common subsequence is in the bottom-right corner of the table\n    return L[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.292771746404469,
+        "generation_seconds": 7.406415991485119
+      }
+    },
+    {
+      "code_hash": "c154cf8a8e844d5fd022d6be4f59c78d1c8521058b9f9fdb83c300ac8e6c5359",
+      "execution": {
+        "duration_seconds": 0.2827048897743225,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.06779952254146338,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.10362750571221113,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.11104235053062439,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of longest common subsequence.\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if (i == 0 or j == 0 or k == 0):\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] and X[i - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The value in the last cell will be the length of LCS for the three strings\n    return L[m][n][o]",
+        "completion_tokens": 285,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 98,
+        "raw_text": "```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of longest common subsequence.\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if (i == 0 or j == 0 or k == 0):\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] and X[i - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    # The value in the last cell will be the length of LCS for the three strings\n    return L[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2827048897743225,
+        "generation_seconds": 8.352818093262613
+      }
+    },
+    {
+      "code_hash": "07b1bb4d294ccd6655e77013673be5212aeaab54a053668e81a03cc9a55d91f4",
+      "execution": {
+        "duration_seconds": 0.27791455294936895,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.06705356016755104,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.11148186679929495,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.09908930212259293,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of LCS of X[0..i], Y[0..j], and Z[0..k]\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    return L[m][n][o]",
+        "completion_tokens": 274,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 98,
+        "raw_text": "```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n\n    # Create a 3D array to store lengths of LCS of X[0..i], Y[0..j], and Z[0..k]\n    L = [[[0 for _ in range(o + 1)] for _ in range(n + 1)] for _ in range(m + 1)]\n\n    # Build the 3D array from bottom up\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i == 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n\n    return L[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.27791455294936895,
+        "generation_seconds": 7.720772106200457
+      }
+    }
+  ],
+  "duration_seconds": 40.19929614569992,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/747",
+  "unique_code_count": 5
+}
