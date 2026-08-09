@@ -1,0 +1,555 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "0f6d0b143d5e43245fda036224e46f722a368e8762defd274341314db5e66dfb",
+      "execution": {
+        "duration_seconds": 0.3139305869117379,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "min_Swaps('1101', '1110') == 1",
+            "duration_seconds": 0.07706764433532953,
+            "exception_message": "assertion comparison failed: actual=0; expected=1",
+            "exception_type": "AssertionError",
+            "expected_value": "1",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-f8tk2qhu/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"1101\",\"1110\") == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-f8tk2qhu/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '000') == 'Not Possible'",
+            "duration_seconds": 0.11512644495815039,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-j0lbokxk/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"000\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-j0lbokxk/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '110') == 'Not Possible'",
+            "duration_seconds": 0.1214953288435936,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ngde86q1/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"110\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ngde86q1/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def min_Swaps(str1, str2):\n    if len(str1) != len(str2):\n        return -1\n    \n    misplaced = 0\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            misplaced += 1\n    \n    if misplaced % 2 != 0:\n        return -1\n    \n    swaps = 0\n    for i in range(0, misplaced, 2):\n        if str1[i] != str2[i]:\n            for j in range(i + 1, misplaced):\n                if str1[j] == str2[i]:\n                    while j > i:\n                        temp = str1[j]\n                        str1 = str1[:j] + str1[j-1] + str1[j+1:]\n                        str1 = str1[:j-1] + temp + str1[j:]\n                        j -= 1\n                        swaps += 1\n                    break\n    return swaps",
+        "completion_tokens": 205,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "raw_text": "```python\ndef min_Swaps(str1, str2):\n    if len(str1) != len(str2):\n        return -1\n    \n    misplaced = 0\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            misplaced += 1\n    \n    if misplaced % 2 != 0:\n        return -1\n    \n    swaps = 0\n    for i in range(0, misplaced, 2):\n        if str1[i] != str2[i]:\n            for j in range(i + 1, misplaced):\n                if str1[j] == str2[i]:\n                    while j > i:\n                        temp = str1[j]\n                        str1 = str1[:j] + str1[j-1] + str1[j+1:]\n                        str1 = str1[:j-1] + temp + str1[j:]\n                        j -= 1\n                        swaps += 1\n                    break\n    return swaps\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3139305869117379,
+        "generation_seconds": 5.455336671322584
+      }
+    },
+    {
+      "code_hash": "303699d6433b0d5992442c50e93387e561700a0551a54d681ce4340415a74ada",
+      "execution": {
+        "duration_seconds": 0.3821821389719844,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "min_Swaps('1101', '1110') == 1",
+            "duration_seconds": 0.11526310723274946,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"1101\",\"1110\") == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '000') == 'Not Possible'",
+            "duration_seconds": 0.13544061593711376,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ch0jonku/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"000\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ch0jonku/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '110') == 'Not Possible'",
+            "duration_seconds": 0.13123563956469297,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8p482_q9/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"110\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8p482_q9/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def min_Swaps(str1, str2):\n    n = len(str1)\n    count_diff = 0\n    \n    # Count positions where characters differ\n    for i in range(n):\n        if str1[i] != str2[i]:\n            count_diff += 1\n    \n    # If the number of differing positions is odd, it's impossible to make them identical by swapping\n    if count_diff % 2 != 0:\n        return -1\n    \n    # Otherwise, the minimum number of swaps is half the number of differing positions\n    return count_diff // 2",
+        "completion_tokens": 125,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "raw_text": "```python\ndef min_Swaps(str1, str2):\n    n = len(str1)\n    count_diff = 0\n    \n    # Count positions where characters differ\n    for i in range(n):\n        if str1[i] != str2[i]:\n            count_diff += 1\n    \n    # If the number of differing positions is odd, it's impossible to make them identical by swapping\n    if count_diff % 2 != 0:\n        return -1\n    \n    # Otherwise, the minimum number of swaps is half the number of differing positions\n    return count_diff // 2\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3821821389719844,
+        "generation_seconds": 3.3204655749723315
+      }
+    },
+    {
+      "code_hash": "eb12124a7c98797ff345eaf6a61c4d3897b9bf0af60bdda2c59bd7f41535ed7c",
+      "execution": {
+        "duration_seconds": 0.41945082414895296,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "min_Swaps('1101', '1110') == 1",
+            "duration_seconds": 0.14156197290867567,
+            "exception_message": "assertion comparison failed: actual=0; expected=1",
+            "exception_type": "AssertionError",
+            "expected_value": "1",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-uafgsfu8/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"1101\",\"1110\") == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-uafgsfu8/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '000') == 'Not Possible'",
+            "duration_seconds": 0.15194764360785484,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b762jpop/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"000\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b762jpop/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '110') == 'Not Possible'",
+            "duration_seconds": 0.12572611030191183,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-wl4jkw_j/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"110\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-wl4jkw_j/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def min_Swaps(str1, str2):\n    # Initialize swap count and mismatch positions list\n    swaps = 0\n    mismatches = []\n    \n    # Iterate through both strings simultaneously\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            mismatches.append(i)\n    \n    # If there is an odd number of mismatches, return -1 (impossible to fix by swapping)\n    if len(mismatches) % 2 != 0:\n        return -1\n    \n    # Calculate the number of swaps needed\n    for i in range(0, len(mismatches), 2):\n        if str1[mismatches[i]] == str2[mismatches[i + 1]]:\n            swaps += 1\n            # Swap characters in the first string to match the second string\n            str1 = str1[:mismatches[i]] + str1[mismatches[i+1]] + str1[mismatches[i]+1:mismatches[i]] + str1[mismatches[i+1]+1:]\n    \n    return swaps // 2",
+        "completion_tokens": 236,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "raw_text": "```python\ndef min_Swaps(str1, str2):\n    # Initialize swap count and mismatch positions list\n    swaps = 0\n    mismatches = []\n    \n    # Iterate through both strings simultaneously\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            mismatches.append(i)\n    \n    # If there is an odd number of mismatches, return -1 (impossible to fix by swapping)\n    if len(mismatches) % 2 != 0:\n        return -1\n    \n    # Calculate the number of swaps needed\n    for i in range(0, len(mismatches), 2):\n        if str1[mismatches[i]] == str2[mismatches[i + 1]]:\n            swaps += 1\n            # Swap characters in the first string to match the second string\n            str1 = str1[:mismatches[i]] + str1[mismatches[i+1]] + str1[mismatches[i]+1:mismatches[i]] + str1[mismatches[i+1]+1:]\n    \n    return swaps // 2\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.41945082414895296,
+        "generation_seconds": 6.337235394865274
+      }
+    },
+    {
+      "code_hash": "fd9ea8a8dc4e4b16086075c1ef736bd6336756f8d28cc4256048468fbc6b3958",
+      "execution": {
+        "duration_seconds": 0.315967814065516,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "min_Swaps('1101', '1110') == 1",
+            "duration_seconds": 0.062076933681964874,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"1101\",\"1110\") == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "1",
+            "assertion_expression": "min_Swaps('111', '000') == 'Not Possible'",
+            "duration_seconds": 0.11266694497317076,
+            "exception_message": "assertion comparison failed: actual=1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-s9wlp1t6/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"000\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-s9wlp1t6/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1', \"'Not Possible'\")\n"
+          },
+          {
+            "actual_value": "0",
+            "assertion_expression": "min_Swaps('111', '110') == 'Not Possible'",
+            "duration_seconds": 0.14101126324385405,
+            "exception_message": "assertion comparison failed: actual=0; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b280cazk/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"110\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b280cazk/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', \"'Not Possible'\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def min_Swaps(str1, str2):\n    diff = 0\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            diff += 1\n    return diff // 2",
+        "completion_tokens": 55,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "raw_text": "```python\ndef min_Swaps(str1, str2):\n    diff = 0\n    for i in range(len(str1)):\n        if str1[i] != str2[i]:\n            diff += 1\n    return diff // 2\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.315967814065516,
+        "generation_seconds": 1.4689587941393256
+      }
+    },
+    {
+      "code_hash": "304a1f4b4cfc9abae2f70c11ef0bce42551f867741962ed86a14c174de7f02aa",
+      "execution": {
+        "duration_seconds": 0.39970813039690256,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "min_Swaps('1101', '1110') == 1",
+            "duration_seconds": 0.0860927077010274,
+            "exception_message": "assertion comparison failed: actual=0; expected=1",
+            "exception_type": "AssertionError",
+            "expected_value": "1",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-g_bs7mz0/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"1101\",\"1110\") == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-g_bs7mz0/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '1')\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '000') == 'Not Possible'",
+            "duration_seconds": 0.16770733520388603,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-sd8jzcyq/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"000\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-sd8jzcyq/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "min_Swaps('111', '110') == 'Not Possible'",
+            "duration_seconds": 0.14564890693873167,
+            "exception_message": "assertion comparison failed: actual=-1; expected='Not Possible'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Not Possible'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-k_b31b77/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n",
+            "stdout": "",
+            "test_case": "assert min_Swaps(\"111\",\"110\") == \"Not Possible\"",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-k_b31b77/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', \"'Not Possible'\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def min_Swaps(str1, str2):\n    n = len(str1)\n    swap_count = 0\n    mismatch_positions = [i for i in range(n) if str1[i] != str2[i]]\n    \n    if len(mismatch_positions) % 2 != 0:\n        return -1\n    \n    for i in range(0, len(mismatch_positions), 2):\n        if mismatch_positions[i+1] != mismatch_positions[i] + 1:\n            mismatch_positions[i], mismatch_positions[i+1] = mismatch_positions[i+1], mismatch_positions[i]\n            swap_count += 1\n    \n    return swap_count",
+        "completion_tokens": 139,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 85,
+        "raw_text": "```python\ndef min_Swaps(str1, str2):\n    n = len(str1)\n    swap_count = 0\n    mismatch_positions = [i for i in range(n) if str1[i] != str2[i]]\n    \n    if len(mismatch_positions) % 2 != 0:\n        return -1\n    \n    for i in range(0, len(mismatch_positions), 2):\n        if mismatch_positions[i+1] != mismatch_positions[i] + 1:\n            mismatch_positions[i], mismatch_positions[i+1] = mismatch_positions[i+1], mismatch_positions[i]\n            swap_count += 1\n    \n    return swap_count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count minimum number of swaps required to convert one binary number represented as a string to another.\n\nRequired function signature:\ndef min_Swaps(str1, str2):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.39970813039690256,
+        "generation_seconds": 3.7349768383428454
+      }
+    }
+  ],
+  "duration_seconds": 22.150868773460388,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/595",
+  "unique_code_count": 5
+}

@@ -1,0 +1,561 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "1f4549348330c5cdf647626e86a22da82e79af0af78cfd2a4a3e5a4acf90d231",
+      "execution": {
+        "duration_seconds": 0.24472358170896769,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.06048040743917227,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.08948537427932024,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.09449712093919516,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    if n == 0:\n        return 0\n\n    # Calculate maximum sum increasing subsequence (MSIS) for each element\n    msis = arr[:]\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and msis[i] < msis[j] + arr[i]:\n                msis[i] = msis[j] + arr[i]\n\n    # Calculate maximum sum decreasing subsequence (MSDS) for each element\n    mSDS = [arr[i]] * n\n    for i in reversed(range(n-1)):\n        for j in reversed(range(i+1, n)):\n            if arr[i] > arr[j] and mSDS[i] < mSDS[j] + arr[i]:\n                mSDS[i] = mSDS[j] + arr[i]\n\n    # Find the maximum sum bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, msis[i] + mSDS[i] - arr[i])\n\n    return max_bitonic_sum",
+        "completion_tokens": 255,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    if n == 0:\n        return 0\n\n    # Calculate maximum sum increasing subsequence (MSIS) for each element\n    msis = arr[:]\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and msis[i] < msis[j] + arr[i]:\n                msis[i] = msis[j] + arr[i]\n\n    # Calculate maximum sum decreasing subsequence (MSDS) for each element\n    mSDS = [arr[i]] * n\n    for i in reversed(range(n-1)):\n        for j in reversed(range(i+1, n)):\n            if arr[i] > arr[j] and mSDS[i] < mSDS[j] + arr[i]:\n                mSDS[i] = mSDS[j] + arr[i]\n\n    # Find the maximum sum bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, msis[i] + mSDS[i] - arr[i])\n\n    return max_bitonic_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.24472358170896769,
+        "generation_seconds": 7.487008901312947
+      }
+    },
+    {
+      "code_hash": "b56be2cdf1ca2410ad89e3853b45f74fdf3b3b2965f9c4b3262272ed55329141",
+      "execution": {
+        "duration_seconds": 0.2738729454576969,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.06210164073854685,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.09613355901092291,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.11536470241844654,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    dp_incr = [0] * n\n    dp_decr = [0] * n\n    \n    # Fill dp_incr array\n    for i in range(n):\n        dp_incr[i] = arr[i]\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp_incr[i] = max(dp_incr[i], dp_incr[j] + arr[i])\n    \n    # Fill dp_decr array\n    for i in reversed(range(n)):\n        dp_decr[i] = arr[i]\n        for j in reversed(range(i, n)):\n            if arr[j] < arr[i]:\n                dp_decr[i] = max(dp_decr[i], dp_decr[j] + arr[i])\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, dp_incr[i] + dp_decr[i] - arr[i])\n    \n    return max_bitonic_sum",
+        "completion_tokens": 233,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    dp_incr = [0] * n\n    dp_decr = [0] * n\n    \n    # Fill dp_incr array\n    for i in range(n):\n        dp_incr[i] = arr[i]\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp_incr[i] = max(dp_incr[i], dp_incr[j] + arr[i])\n    \n    # Fill dp_decr array\n    for i in reversed(range(n)):\n        dp_decr[i] = arr[i]\n        for j in reversed(range(i, n)):\n            if arr[j] < arr[i]:\n                dp_decr[i] = max(dp_decr[i], dp_decr[j] + arr[i])\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, dp_incr[i] + dp_decr[i] - arr[i])\n    \n    return max_bitonic_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2738729454576969,
+        "generation_seconds": 6.242475465871394
+      }
+    },
+    {
+      "code_hash": "b65d931db59b5cb302b970d77bf70dd2dd99255ac9b3afe1bc7bdc7ebf60ddf1",
+      "execution": {
+        "duration_seconds": 0.3013105848804116,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.06632127612829208,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.11138688772916794,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.12333946023136377,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    lis = [arr[i] for i in range(n)]\n    lds = [arr[i] for i in range(n)]\n\n    # Compute maximum sum increasing subsequence for all elements\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and lis[i] < lis[j] + arr[i]:\n                lis[i] = lis[j] + arr[i]\n\n    # Compute maximum sum decreasing subsequence for all elements\n    for i in reversed(range(n-1)):\n        for j in reversed(range(i+1, n)):\n            if arr[i] > arr[j] and lds[i] < lds[j] + arr[i]:\n                lds[i] = lds[j] + arr[i]\n\n    # Find the maximum sum of bitonic subsequence\n    max_sum_bitonic = 0\n    for i in range(n):\n        max_sum_bitonic = max(max_sum_bitonic, lis[i] + lds[i] - arr[i])\n\n    return max_sum_bitonic",
+        "completion_tokens": 235,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    lis = [arr[i] for i in range(n)]\n    lds = [arr[i] for i in range(n)]\n\n    # Compute maximum sum increasing subsequence for all elements\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and lis[i] < lis[j] + arr[i]:\n                lis[i] = lis[j] + arr[i]\n\n    # Compute maximum sum decreasing subsequence for all elements\n    for i in reversed(range(n-1)):\n        for j in reversed(range(i+1, n)):\n            if arr[i] > arr[j] and lds[i] < lds[j] + arr[i]:\n                lds[i] = lds[j] + arr[i]\n\n    # Find the maximum sum of bitonic subsequence\n    max_sum_bitonic = 0\n    for i in range(n):\n        max_sum_bitonic = max(max_sum_bitonic, lis[i] + lds[i] - arr[i])\n\n    return max_sum_bitonic\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3013105848804116,
+        "generation_seconds": 7.055757927708328
+      }
+    },
+    {
+      "code_hash": "d6dfae2f7472cf8fb6e501ce4f1f71967e21334f5cf51f3a2e4b1fec8f572ff9",
+      "execution": {
+        "duration_seconds": 0.2754936162382364,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.06420913338661194,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.09321758802980185,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.11780733894556761,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    \n    # Initialize increase list where increase[i] stores the maximum sum of increasing subsequence ending at i\n    increase = arr[:]\n    \n    # Initialize decrease list where decrease[i] stores the maximum sum of decreasing subsequence starting at i\n    decrease = arr[:]\n    \n    # Compute maximum sum increasing subsequence values in bottom up manner\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and increase[i] < increase[j] + arr[i]:\n                increase[i] = increase[j] + arr[i]\n    \n    # Compute maximum sum decreasing subsequence values in bottom up manner\n    for i in range(n-2, -1, -1):\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and decrease[i] < decrease[j] + arr[i]:\n                decrease[i] = decrease[j] + arr[i]\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, increase[i] + decrease[i] - arr[i])\n    \n    return max_bitonic_sum",
+        "completion_tokens": 269,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    \n    # Initialize increase list where increase[i] stores the maximum sum of increasing subsequence ending at i\n    increase = arr[:]\n    \n    # Initialize decrease list where decrease[i] stores the maximum sum of decreasing subsequence starting at i\n    decrease = arr[:]\n    \n    # Compute maximum sum increasing subsequence values in bottom up manner\n    for i in range(1, n):\n        for j in range(i):\n            if arr[i] > arr[j] and increase[i] < increase[j] + arr[i]:\n                increase[i] = increase[j] + arr[i]\n    \n    # Compute maximum sum decreasing subsequence values in bottom up manner\n    for i in range(n-2, -1, -1):\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and decrease[i] < decrease[j] + arr[i]:\n                decrease[i] = decrease[j] + arr[i]\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, increase[i] + decrease[i] - arr[i])\n    \n    return max_bitonic_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2754936162382364,
+        "generation_seconds": 7.213709844276309
+      }
+    },
+    {
+      "code_hash": "ad118a7a8b0c1fe21294d0157903f8ff9864ea72e18400f50924596b5d176cf8",
+      "execution": {
+        "duration_seconds": 0.2855866951867938,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.06554881390184164,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.11487539112567902,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.10490699019283056,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    inc = [0] * n\n    dec = [0] * n\n\n    # Calculate maximum sum increasing subsequence (MSIS) values from left to right\n    for i in range(n):\n        inc[i] = arr[i]\n        for j in range(i):\n            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:\n                inc[i] = inc[j] + arr[i]\n\n    # Calculate maximum sum decreasing subsequence (MSDS) values from right to left\n    for i in range(n-1, -1, -1):\n        dec[i] = arr[i]\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:\n                dec[i] = dec[j] + arr[i]\n\n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, inc[i] + dec[i] - arr[i])\n\n    return max_bitonic_sum",
+        "completion_tokens": 250,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    inc = [0] * n\n    dec = [0] * n\n\n    # Calculate maximum sum increasing subsequence (MSIS) values from left to right\n    for i in range(n):\n        inc[i] = arr[i]\n        for j in range(i):\n            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:\n                inc[i] = inc[j] + arr[i]\n\n    # Calculate maximum sum decreasing subsequence (MSDS) values from right to left\n    for i in range(n-1, -1, -1):\n        dec[i] = arr[i]\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:\n                dec[i] = dec[j] + arr[i]\n\n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, inc[i] + dec[i] - arr[i])\n\n    return max_bitonic_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.2855866951867938,
+        "generation_seconds": 6.7165105398744345
+      }
+    }
+  ],
+  "duration_seconds": 36.09984218608588,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/245",
+  "unique_code_count": 5
+}

@@ -1,0 +1,561 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "55ae1ea7aab9c5d66e11a4253604512aeb710412f132810a053ac0aa13174dbb",
+      "execution": {
+        "duration_seconds": 0.29721998423337936,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('TENS FOR TENS') == 5",
+            "duration_seconds": 0.05978874210268259,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"TENS FOR TENS\") == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('CARDIO FOR CARDS') == 7",
+            "duration_seconds": 0.12317050993442535,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"CARDIO FOR CARDS\") == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('PART OF THE JOURNEY IS PART') == 9",
+            "duration_seconds": 0.1140011353418231,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"PART OF THE JOURNEY IS PART\") == 9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n + 1):  # cl is the length of the substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]",
+        "completion_tokens": 313,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 77,
+        "raw_text": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n + 1):  # cl is the length of the substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]\n```\nThis function uses dynamic programming to build a table `dp` where `dp[i][j]` represents the length of the longest palindromic subsequence within the substring `s[i:j+1]`. It iterates over all possible lengths of substrings, updating the table based on whether the characters at the ends match or not. The final result is found in `dp[0][n-1]`, which contains the length of the longest palindromic subsequence in the entire string `s`.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.29721998423337936,
+        "generation_seconds": 9.097763681784272
+      }
+    },
+    {
+      "code_hash": "3c1f1ff2674d84f0d7d65f28d432958f9b5bb4e2205d5b89968efa9bd2cfc9f1",
+      "execution": {
+        "duration_seconds": 0.32724841497838497,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('TENS FOR TENS') == 5",
+            "duration_seconds": 0.10834670346230268,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"TENS FOR TENS\") == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('CARDIO FOR CARDS') == 7",
+            "duration_seconds": 0.10372316930443048,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"CARDIO FOR CARDS\") == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('PART OF THE JOURNEY IS PART') == 9",
+            "duration_seconds": 0.11490489263087511,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"PART OF THE JOURNEY IS PART\") == 9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n+1):  # cl is length of substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i][j-1], dp[i+1][j])\n    \n    return dp[0][n-1]",
+        "completion_tokens": 199,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 77,
+        "raw_text": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n+1):  # cl is length of substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i+1][j-1] + 2\n            else:\n                dp[i][j] = max(dp[i][j-1], dp[i+1][j])\n    \n    return dp[0][n-1]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.32724841497838497,
+        "generation_seconds": 5.324382718652487
+      }
+    },
+    {
+      "code_hash": "c672da4bccc27f0002457976805d8f544d83f81a36558c235d63a827e028cccc",
+      "execution": {
+        "duration_seconds": 0.296322513371706,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('TENS FOR TENS') == 5",
+            "duration_seconds": 0.06452164705842733,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"TENS FOR TENS\") == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('CARDIO FOR CARDS') == 7",
+            "duration_seconds": 0.12272824998944998,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"CARDIO FOR CARDS\") == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('PART OF THE JOURNEY IS PART') == 9",
+            "duration_seconds": 0.10870927013456821,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"PART OF THE JOURNEY IS PART\") == 9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Build the table from smaller substrings to larger ones\n    for cl in range(2, n + 1):  # cl is the length of the substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]",
+        "completion_tokens": 319,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 77,
+        "raw_text": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Build the table from smaller substrings to larger ones\n    for cl in range(2, n + 1):  # cl is the length of the substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]\n```\n\nThis solution uses dynamic programming to build a table `dp` where `dp[i][j]` represents the length of the longest palindromic subsequence in the substring `s[i:j+1]`. The table is filled in a bottom-up manner, starting with the shortest substrings and gradually building up to the entire string. The final answer is found in `dp[0][n-1]`, which contains the length of the longest palindromic subsequence in the entire string `s`.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.296322513371706,
+        "generation_seconds": 8.554982204921544
+      }
+    },
+    {
+      "code_hash": "6bc6fdcf803ffdcbd4a5550ff274d69d34daba34b6d2c18e685eabb881bb57a0",
+      "execution": {
+        "duration_seconds": 0.27062415331602097,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('TENS FOR TENS') == 5",
+            "duration_seconds": 0.061358935199677944,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"TENS FOR TENS\") == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('CARDIO FOR CARDS') == 7",
+            "duration_seconds": 0.10469298996031284,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"CARDIO FOR CARDS\") == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('PART OF THE JOURNEY IS PART') == 9",
+            "duration_seconds": 0.1042931517586112,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"PART OF THE JOURNEY IS PART\") == 9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n + 1):  # cl is the length of substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]",
+        "completion_tokens": 308,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 77,
+        "raw_text": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Fill the table\n    for cl in range(2, n + 1):  # cl is the length of substring\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]\n```\nThis solution uses dynamic programming to build a table `dp` where `dp[i][j]` represents the length of the longest palindromic subsequence in the substring `s[i:j+1]`. The function iterates over all possible lengths of substrings, updating the table based on whether the characters at the ends match and using previously computed values for smaller substrings. The final answer is found in `dp[0][n-1]`, which represents the entire string `s`.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.27062415331602097,
+        "generation_seconds": 8.96901638712734
+      }
+    },
+    {
+      "code_hash": "bdcd4fd88af75d56e696923135adf71500071d3d76fb2ed0c936f780f368f0e5",
+      "execution": {
+        "duration_seconds": 0.3405226720497012,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('TENS FOR TENS') == 5",
+            "duration_seconds": 0.11057267803698778,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"TENS FOR TENS\") == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('CARDIO FOR CARDS') == 7",
+            "duration_seconds": 0.11126937996596098,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"CARDIO FOR CARDS\") == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lps('PART OF THE JOURNEY IS PART') == 9",
+            "duration_seconds": 0.11844019312411547,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lps(\"PART OF THE JOURNEY IS PART\") == 9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Build the table. The outer loop goes from substring lengths of 2 to n\n    for cl in range(2, n + 1):\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]",
+        "completion_tokens": 210,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 77,
+        "raw_text": "```python\ndef lps(s):\n    n = len(s)\n    dp = [[0] * n for _ in range(n)]\n    \n    # Every single character is a palindrome of length 1\n    for i in range(n):\n        dp[i][i] = 1\n    \n    # Build the table. The outer loop goes from substring lengths of 2 to n\n    for cl in range(2, n + 1):\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if s[i] == s[j] and cl == 2:\n                dp[i][j] = 2\n            elif s[i] == s[j]:\n                dp[i][j] = dp[i + 1][j - 1] + 2\n            else:\n                dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])\n    \n    return dp[0][n - 1]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the length of the longest palindromic subsequence in the given string.\n\nRequired function signature:\ndef lps(str):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3405226720497012,
+        "generation_seconds": 6.325553733855486
+      }
+    }
+  ],
+  "duration_seconds": 39.807145982049406,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/247",
+  "unique_code_count": 5
+}

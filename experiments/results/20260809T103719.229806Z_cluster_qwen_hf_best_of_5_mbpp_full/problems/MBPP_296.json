@@ -1,0 +1,561 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "2a5b02f5f58377fb76a138d7882071b2d738d014e9955287be3dcc19ffe04ea7",
+      "execution": {
+        "duration_seconds": 0.35425964277237654,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.1117346016690135,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.11289962846785784,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.1293993592262268,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def get_Inv_Count(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left, left_inv = merge_sort_and_count(arr[:mid])\n        right, right_inv = merge_sort_and_count(arr[mid:])\n        \n        merged, split_inv = merge_and_count(left, right)\n        \n        return merged, left_inv + right_inv + split_inv\n    \n    def merge_and_count(left, right):\n        i = j = inv_count = 0\n        merged = []\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                inv_count += len(left) - i\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        \n        return merged, inv_count\n    \n    _, inv_count = merge_sort_and_count(arr)\n    return inv_count",
+        "completion_tokens": 221,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 70,
+        "raw_text": "```python\ndef get_Inv_Count(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left, left_inv = merge_sort_and_count(arr[:mid])\n        right, right_inv = merge_sort_and_count(arr[mid:])\n        \n        merged, split_inv = merge_and_count(left, right)\n        \n        return merged, left_inv + right_inv + split_inv\n    \n    def merge_and_count(left, right):\n        i = j = inv_count = 0\n        merged = []\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                inv_count += len(left) - i\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        \n        return merged, inv_count\n    \n    _, inv_count = merge_sort_and_count(arr)\n    return inv_count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.35425964277237654,
+        "generation_seconds": 5.99658268224448
+      }
+    },
+    {
+      "code_hash": "67b4429f2ecba2a9046ac6e6cfe565a03d4c991defa05740faf32f6170a69927",
+      "execution": {
+        "duration_seconds": 0.2553113726899028,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.06532074697315693,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.08724714163690805,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.10251092631369829,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def merge_and_count(arr, temp_arr, left, mid, right):\n    i = left    # Starting index for left subarray\n    j = mid + 1 # Starting index for right subarray\n    k = left    # Starting index to be sorted\n    inv_count = 0\n\n    # Conditions are checked to ensure that i doesn't exceed mid and j doesn't exceed right\n    while i <= mid and j <= right:\n        if arr[i] <= arr[j]:\n            temp_arr[k] = arr[i]\n            i += 1\n        else:\n            # There are mid - i inversions, because all the remaining elements in the left subarray (arr[i], arr[i+1], ..., arr[mid]) are greater than arr[j]\n            temp_arr[k] = arr[j]\n            inv_count += (mid-i + 1)\n            j += 1\n        k += 1\n\n    # Copy the remaining elements of left subarray, if any\n    while i <= mid:\n        temp_arr[k] = arr[i]\n        i += 1\n        k += 1\n\n    # Copy the remaining elements of right subarray, if any\n    while j <= right:\n        temp_arr[k] = arr[j]\n        j += 1\n        k += 1\n\n    # Copy the sorted subarray into Original array\n    for i in range(left, right + 1):\n        arr[i] = temp_arr[i]\n\n    return inv_count\n\ndef get_Inv_Count(arr):\n    temp_arr = [0]*len(arr)\n    return merge_sort_and_count(arr, temp_arr, 0, len(arr)-1)\n\ndef merge_sort_and_count(arr, temp_arr, left, right):\n    inv_count = 0\n    if left < right:\n        mid = (left + right)//2\n\n        inv_count += merge_sort_and_count(arr, temp_arr, left, mid)\n        inv_count += merge_sort_and_count(arr, temp_arr, mid + 1, right)\n\n        inv_count += merge_and_count(arr, temp_arr, left, mid, right)\n\n    return inv_count",
+        "completion_tokens": 512,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "length",
+        "prompt_tokens": 70,
+        "raw_text": "```python\ndef merge_and_count(arr, temp_arr, left, mid, right):\n    i = left    # Starting index for left subarray\n    j = mid + 1 # Starting index for right subarray\n    k = left    # Starting index to be sorted\n    inv_count = 0\n\n    # Conditions are checked to ensure that i doesn't exceed mid and j doesn't exceed right\n    while i <= mid and j <= right:\n        if arr[i] <= arr[j]:\n            temp_arr[k] = arr[i]\n            i += 1\n        else:\n            # There are mid - i inversions, because all the remaining elements in the left subarray (arr[i], arr[i+1], ..., arr[mid]) are greater than arr[j]\n            temp_arr[k] = arr[j]\n            inv_count += (mid-i + 1)\n            j += 1\n        k += 1\n\n    # Copy the remaining elements of left subarray, if any\n    while i <= mid:\n        temp_arr[k] = arr[i]\n        i += 1\n        k += 1\n\n    # Copy the remaining elements of right subarray, if any\n    while j <= right:\n        temp_arr[k] = arr[j]\n        j += 1\n        k += 1\n\n    # Copy the sorted subarray into Original array\n    for i in range(left, right + 1):\n        arr[i] = temp_arr[i]\n\n    return inv_count\n\ndef get_Inv_Count(arr):\n    temp_arr = [0]*len(arr)\n    return merge_sort_and_count(arr, temp_arr, 0, len(arr)-1)\n\ndef merge_sort_and_count(arr, temp_arr, left, right):\n    inv_count = 0\n    if left < right:\n        mid = (left + right)//2\n\n        inv_count += merge_sort_and_count(arr, temp_arr, left, mid)\n        inv_count += merge_sort_and_count(arr, temp_arr, mid + 1, right)\n\n        inv_count += merge_and_count(arr, temp_arr, left, mid, right)\n\n    return inv_count\n```\n\nThis solution uses a modified merge sort algorithm to count inversions efficiently. The `merge_and_count` function merges two sorted halves of the array and counts the inversions caused by elements from different halves. The `get_Inv_Count` function initializes the process by calling `merge_sort_and_count`, which recursively divides the array until",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2553113726899028,
+        "generation_seconds": 13.747707752510905
+      }
+    },
+    {
+      "code_hash": "6bc6d66e4e679ff8a21a76f62dfe5bbfc1cb27cd5d9b306743ef1dc98959f3be",
+      "execution": {
+        "duration_seconds": 0.2271543275564909,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.06199498753994703,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.0806729206815362,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.08427375741302967,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def merge_sort_and_count(arr):\n    if len(arr) <= 1:\n        return arr, 0\n    mid = len(arr) // 2\n    left, x = merge_sort_and_count(arr[:mid])\n    right, y = merge_sort_and_count(arr[mid:])\n    merged, z = merge_and_count(left, right)\n    return merged, (x + y + z)\n\ndef merge_and_count(left, right):\n    result = []\n    i = j = inv_count = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i])\n            i += 1\n        else:\n            result.append(right[j])\n            j += 1\n            inv_count += (len(left) - i)\n    result.extend(left[i:])\n    result.extend(right[j:])\n    return result, inv_count\n\ndef get_Inv_Count(arr):\n    _, count = merge_sort_and_count(arr)\n    return count",
+        "completion_tokens": 314,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 70,
+        "raw_text": "```python\ndef merge_sort_and_count(arr):\n    if len(arr) <= 1:\n        return arr, 0\n    mid = len(arr) // 2\n    left, x = merge_sort_and_count(arr[:mid])\n    right, y = merge_sort_and_count(arr[mid:])\n    merged, z = merge_and_count(left, right)\n    return merged, (x + y + z)\n\ndef merge_and_count(left, right):\n    result = []\n    i = j = inv_count = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i])\n            i += 1\n        else:\n            result.append(right[j])\n            j += 1\n            inv_count += (len(left) - i)\n    result.extend(left[i:])\n    result.extend(right[j:])\n    return result, inv_count\n\ndef get_Inv_Count(arr):\n    _, count = merge_sort_and_count(arr)\n    return count\n```\n\nThis solution uses a modified merge sort algorithm to efficiently count inversions in an array. The `merge_sort_and_count` function recursively splits the array until it reaches subarrays of size one. It then merges these subarrays back together while counting inversions. The `merge_and_count` function merges two sorted arrays and counts the inversions caused by elements from the right array being smaller than elements from the left array. The main function `get_Inv_Count` initializes the process and returns the total number of inversions.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2271543275564909,
+        "generation_seconds": 8.376644193194807
+      }
+    },
+    {
+      "code_hash": "f06fd929ee4ec9cc80416dc6fe324a99c8711b37f18c149535d336ee220d410d",
+      "execution": {
+        "duration_seconds": 0.3493845099583268,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.10284690465778112,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.12469933740794659,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.1215604180470109,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def merge_sort_and_count(arr):\n    if len(arr) <= 1:\n        return arr, 0\n    \n    mid = len(arr) // 2\n    left, left_inv = merge_sort_and_count(arr[:mid])\n    right, right_inv = merge_sort_and_count(arr[mid:])\n    \n    merged, split_inv = merge_and_count(left, right)\n    \n    return merged, left_inv + right_inv + split_inv\n\ndef merge_and_count(left, right):\n    i = j = inv_count = 0\n    merged = []\n    \n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            merged.append(left[i])\n            i += 1\n        else:\n            merged.append(right[j])\n            j += 1\n            inv_count += (len(left) - i)\n    \n    merged.extend(left[i:])\n    merged.extend(right[j:])\n    \n    return merged, inv_count\n\ndef get_Inv_Count(arr):\n    _, inv_count = merge_sort_and_count(arr)\n    return inv_count",
+        "completion_tokens": 319,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 70,
+        "raw_text": "```python\ndef merge_sort_and_count(arr):\n    if len(arr) <= 1:\n        return arr, 0\n    \n    mid = len(arr) // 2\n    left, left_inv = merge_sort_and_count(arr[:mid])\n    right, right_inv = merge_sort_and_count(arr[mid:])\n    \n    merged, split_inv = merge_and_count(left, right)\n    \n    return merged, left_inv + right_inv + split_inv\n\ndef merge_and_count(left, right):\n    i = j = inv_count = 0\n    merged = []\n    \n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            merged.append(left[i])\n            i += 1\n        else:\n            merged.append(right[j])\n            j += 1\n            inv_count += (len(left) - i)\n    \n    merged.extend(left[i:])\n    merged.extend(right[j:])\n    \n    return merged, inv_count\n\ndef get_Inv_Count(arr):\n    _, inv_count = merge_sort_and_count(arr)\n    return inv_count\n```\n\nThis solution uses the merge sort algorithm to count inversions efficiently. The `merge_sort_and_count` function recursively splits the array into halves until it reaches subarrays of length one. Then, it merges the subarrays back together while counting the inversions caused by elements from different halves. The `merge_and_count` function handles the merging process and counts the split inversions. Finally, the `get_Inv_Count` function initializes the process and returns the total number of inversions.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3493845099583268,
+        "generation_seconds": 8.510484143160284
+      }
+    },
+    {
+      "code_hash": "5d5baf35967cda4234cd4a6a4ab823c204238b9d06a169fd2165ca3d32cad8ea",
+      "execution": {
+        "duration_seconds": 0.26614953111857176,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 20, 6, 4, 5]) == 5",
+            "duration_seconds": 0.0613964032381773,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,20,6,4,5]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 1]) == 1",
+            "duration_seconds": 0.0902361674234271,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,1]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "get_Inv_Count([1, 2, 5, 6, 1]) == 3",
+            "duration_seconds": 0.11425779014825821,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert get_Inv_Count([1,2,5,6,1]) == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def get_Inv_Count(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left, left_count = merge_sort_and_count(arr[:mid])\n        right, right_count = merge_sort_and_count(arr[mid:])\n        \n        merged, split_count = merge_and_count(left, right)\n        \n        return merged, left_count + right_count + split_count\n    \n    def merge_and_count(left, right):\n        i = j = inv_count = 0\n        merged = []\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                inv_count += (len(left) - i)\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        \n        return merged, inv_count\n    \n    _, count = merge_sort_and_count(arr)\n    return count",
+        "completion_tokens": 221,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 70,
+        "raw_text": "```python\ndef get_Inv_Count(arr):\n    def merge_sort_and_count(arr):\n        if len(arr) <= 1:\n            return arr, 0\n        \n        mid = len(arr) // 2\n        left, left_count = merge_sort_and_count(arr[:mid])\n        right, right_count = merge_sort_and_count(arr[mid:])\n        \n        merged, split_count = merge_and_count(left, right)\n        \n        return merged, left_count + right_count + split_count\n    \n    def merge_and_count(left, right):\n        i = j = inv_count = 0\n        merged = []\n        \n        while i < len(left) and j < len(right):\n            if left[i] <= right[j]:\n                merged.append(left[i])\n                i += 1\n            else:\n                merged.append(right[j])\n                j += 1\n                inv_count += (len(left) - i)\n        \n        merged.extend(left[i:])\n        merged.extend(right[j:])\n        \n        return merged, inv_count\n    \n    _, count = merge_sort_and_count(arr)\n    return count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to count inversions in an array.\n\nRequired function signature:\ndef get_Inv_Count(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.26614953111857176,
+        "generation_seconds": 5.9168711444363
+      }
+    }
+  ],
+  "duration_seconds": 44.00304493959993,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/296",
+  "unique_code_count": 5
+}
