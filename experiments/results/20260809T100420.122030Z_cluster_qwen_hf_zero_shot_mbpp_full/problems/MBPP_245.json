@@ -1,0 +1,115 @@
+{
+  "duration_seconds": 7.360090582631528,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.26516855228692293,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "duration_seconds": 0.05841448437422514,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "duration_seconds": 0.09833670221269131,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum([2, 3, 14, 16, 21, 23, 29, 30]) == 138",
+            "duration_seconds": 0.10812049079686403,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "dtype": "torch.bfloat16",
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum(arr):\n    n = len(arr)\n    inc = [0] * n\n    dec = [0] * n\n    \n    # Compute maximum sum increasing subsequence for each element\n    for i in range(n):\n        inc[i] = arr[i]\n        for j in range(i):\n            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:\n                inc[i] = inc[j] + arr[i]\n    \n    # Compute maximum sum decreasing subsequence for each element\n    for i in range(n-1, -1, -1):\n        dec[i] = arr[i]\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:\n                dec[i] = dec[j] + arr[i]\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, inc[i] + dec[i] - arr[i])\n    \n    return max_bitonic_sum",
+        "completion_tokens": 241,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 94,
+        "raw_text": "```python\ndef max_sum(arr):\n    n = len(arr)\n    inc = [0] * n\n    dec = [0] * n\n    \n    # Compute maximum sum increasing subsequence for each element\n    for i in range(n):\n        inc[i] = arr[i]\n        for j in range(i):\n            if arr[i] > arr[j] and inc[i] < inc[j] + arr[i]:\n                inc[i] = inc[j] + arr[i]\n    \n    # Compute maximum sum decreasing subsequence for each element\n    for i in range(n-1, -1, -1):\n        dec[i] = arr[i]\n        for j in range(i+1, n):\n            if arr[i] > arr[j] and dec[i] < dec[j] + arr[i]:\n                dec[i] = dec[j] + arr[i]\n    \n    # Find the maximum sum of bitonic subsequence\n    max_bitonic_sum = 0\n    for i in range(n):\n        max_bitonic_sum = max(max_bitonic_sum, inc[i] + dec[i] - arr[i])\n    \n    return max_bitonic_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.\n\nRequired function signature:\ndef max_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.26516855228692293,
+        "generation_seconds": 7.094273570924997
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": true,
+  "seed": 42,
+  "task_id": "MBPP/245"
+}
