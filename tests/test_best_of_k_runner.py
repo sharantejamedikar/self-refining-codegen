@@ -82,6 +82,7 @@ def test_best_of_five_runs_every_candidate_and_aggregates(tmp_path: Path) -> Non
     assert record["passing_sample_indices"] == [2]
     assert len(record["candidates"]) == 5
     assert record["unique_code_count"] == 2
+    assert record["provenance"]["result_precision"] == "FULL_PRECISION"
     assert all(
         candidate["generation"]["request_payload"]["options"]["seed"]
         == candidate["seed"]

@@ -1,16 +1,11 @@
-# Full-precision multi-GPU config. GPU 1 access is blocked unless sustainably idle.
-# Never load this 13B model on the 24GB local Mac.
+# QUANTIZED DEVELOPMENT RESULT ONLY: never report this as Tier 2 full precision.
+# Restrict the process with CUDA_VISIBLE_DEVICES=0 when running on the shared host.
 model:
   name: codellama/CodeLlama-13b-Instruct-hf
   backend: huggingface
   revision: 745795438019e47e4dad1347a0093e11deee4c68
   backend_model: codellama/CodeLlama-13b-Instruct-hf
-  device_map: auto
-  gpu_preflight_index: 1
-  gpu_preflight_samples: 3
-  gpu_preflight_interval_seconds: 3.0
-  gpu_idle_utilization_threshold_percent: 5.0
-  gpu_idle_memory_threshold_mb: 500.0
+  quantization: bitsandbytes_8bit
   request_timeout_seconds: 300.0
   prompt_strategy: zero_shot
   few_shot_examples: 2
@@ -30,14 +25,12 @@ execution:
   memory_limit_mb: 512
   python_executable: python3
 experiment:
-  name: cluster_codellama_hf_zero_shot_humaneval_dev
+  name: cluster_codellama_13b_bnb_8bit_quantized_development_humaneval_dev
   seed: 42
   output_dir: experiments/results
 device:
   profile: cluster
-  accelerator: auto
+  accelerator: cuda
 profiles:
   cluster:
-    device: {accelerator: auto}
-  colab:
-    device: {accelerator: auto}
+    device: {accelerator: cuda}

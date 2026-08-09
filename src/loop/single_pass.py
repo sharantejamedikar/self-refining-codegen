@@ -17,7 +17,7 @@ import yaml
 from data.schema import Problem
 from execution.base import Executor
 from generation.base import GenerationRequest, Generator
-from loop.persistence import write_problem_record
+from loop.persistence import model_provenance, write_problem_record
 from utils.config import AppConfig
 
 
@@ -67,6 +67,7 @@ class SinglePassRunner:
             "seed": self.config.experiment.seed,
             "passed": execution.passed,
             "metric": "pass@1_single",
+            "provenance": model_provenance(self.config.model, generated),
             "iterations": [
                 {
                     "iteration": 1,

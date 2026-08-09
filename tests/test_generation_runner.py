@@ -70,6 +70,13 @@ def test_three_problem_mock_integration(tmp_path: Path) -> None:
     result_files = sorted((destination / "problems").glob("*.json"))
     assert len(result_files) == 3
     assert all(json.loads(path.read_text())["passed"] for path in result_files)
+    assert json.loads(result_files[0].read_text())["provenance"] == {
+        "backend": "mock",
+        "canonical_model": "mock",
+        "quantization": None,
+        "result_precision": "FULL_PRECISION",
+        "revision": "fixture-v1",
+    }
     persisted_generation = json.loads(result_files[0].read_text())["iterations"][0][
         "generation"
     ]

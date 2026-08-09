@@ -1,5 +1,6 @@
-# Full-precision multi-GPU config. GPU 1 access is blocked unless sustainably idle.
-# Never load this 13B model on the 24GB local Mac.
+# Cluster preflight metadata only. Never load this 13B model on the 24GB local Mac.
+# The current HF backend targets one CUDA device; multi-GPU placement is pending
+# an explicit shared-GPU decision.
 model:
   name: codellama/CodeLlama-13b-Instruct-hf
   backend: huggingface
@@ -19,18 +20,18 @@ model:
   max_new_tokens: 512
   repetition_penalty: 1.1
 dataset:
-  name: humaneval
-  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  name: mbpp
+  source_url: https://raw.githubusercontent.com/google-research/google-research/master/mbpp/sanitized-mbpp.json
   data_dir: data
   split: dev
-  path: data/dev/humaneval_dev.jsonl
+  path: data/dev/mbpp_dev.jsonl
 execution:
   backend: subprocess
   timeout_seconds: 10.0
   memory_limit_mb: 512
   python_executable: python3
 experiment:
-  name: cluster_codellama_hf_zero_shot_humaneval_dev
+  name: cluster_codellama_hf_zero_shot_mbpp_dev
   seed: 42
   output_dir: experiments/results
 device:

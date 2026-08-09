@@ -9,6 +9,7 @@ from typing import Any
 import pytest
 
 from generation import GenerationRequest, HuggingFaceGenerator, create_generator
+from generation.gpu_safety import GPUPreflightResult, GPUReading
 from utils.config import ModelConfig
 
 
@@ -78,6 +79,9 @@ class _Model:
         self.generation_kwargs = kwargs
         return _Tensor([10, 11, 12, 20, 21])
 
+    def get_memory_footprint(self) -> int:
+        return 13_000_000_000
+
 
 def test_huggingface_generation_is_config_and_device_driven(
     monkeypatch: pytest.MonkeyPatch,
@@ -98,9 +102,14 @@ def test_huggingface_generation_is_config_and_device_driven(
             captured["model"] = (name, kwargs)
             return model
 
+    class BitsAndBytesConfig:
+        def __init__(self, **kwargs: Any) -> None:
+            self.kwargs = kwargs
+
     fake_transformers = SimpleNamespace(
         AutoModelForCausalLM=AutoModelForCausalLM,
         AutoTokenizer=AutoTokenizer,
+        BitsAndBytesConfig=BitsAndBytesConfig,
     )
     fake_torch = SimpleNamespace(
         manual_seed=lambda seed: captured.setdefault("seed", seed),
@@ -124,6 +133,8 @@ def test_huggingface_generation_is_config_and_device_driven(
         output.backend_metadata and output.backend_metadata["backend"] == "huggingface"
     )
     assert output.backend_metadata["accelerator"] == "cuda"
+    assert output.backend_metadata["result_precision"] == "FULL_PRECISION"
+    assert output.backend_metadata["model_memory_footprint_bytes"] == 13_000_000_000
     assert captured["tokenizer"] == (
         "org/generic-code-model",
         {"revision": "a" * 40},
@@ -151,3 +162,139 @@ def test_huggingface_rejects_missing_model_and_unsupported_accelerator() -> None
         HuggingFaceGenerator(_config(backend_model=None), accelerator="cpu")
     with pytest.raises(ValueError, match="accelerator"):
         HuggingFaceGenerator(_config(), accelerator="tpu")
+    with pytest.raises(ValueError, match="requires the CUDA"):
+        HuggingFaceGenerator(
+            _config(quantization="bitsandbytes_8bit"), accelerator="cpu"
+        )
+    with pytest.raises(ValueError, match="quantization must be"):
+        HuggingFaceGenerator(_config(quantization="GPTQ"), accelerator="cuda")
+
+
+@pytest.mark.parametrize(
+    ("quantization", "expected_options"),
+    [
+        ("bitsandbytes_8bit", {"load_in_8bit": True}),
+        (
+            "bitsandbytes_4bit",
+            {
+                "load_in_4bit": True,
+                "bnb_4bit_compute_dtype": "bfloat16",
+                "bnb_4bit_quant_type": "nf4",
+                "bnb_4bit_use_double_quant": True,
+            },
+        ),
+    ],
+)
+def test_huggingface_builds_bitsandbytes_config_and_records_provenance(
+    monkeypatch: pytest.MonkeyPatch,
+    quantization: str,
+    expected_options: dict[str, Any],
+) -> None:
+    tokenizer = _Tokenizer()
+    model = _Model()
+    captured: dict[str, Any] = {}
+
+    class AutoTokenizer:
+        @staticmethod
+        def from_pretrained(name: str, **kwargs: Any) -> _Tokenizer:
+            return tokenizer
+
+    class AutoModelForCausalLM:
+        @staticmethod
+        def from_pretrained(name: str, **kwargs: Any) -> _Model:
+            captured.update(kwargs)
+            return model
+
+    class BitsAndBytesConfig:
+        def __init__(self, **kwargs: Any) -> None:
+            self.kwargs = kwargs
+
+    monkeypatch.setitem(
+        sys.modules,
+        "transformers",
+        SimpleNamespace(
+            AutoModelForCausalLM=AutoModelForCausalLM,
+            AutoTokenizer=AutoTokenizer,
+            BitsAndBytesConfig=BitsAndBytesConfig,
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "torch",
+        SimpleNamespace(
+            manual_seed=lambda seed: None,
+            ones_like=lambda tensor: tensor,
+            bfloat16="bfloat16",
+            float16="float16",
+            float32="float32",
+        ),
+    )
+
+    output = HuggingFaceGenerator(
+        _config(quantization=quantization), accelerator="cuda"
+    ).generate(GenerationRequest("def answer():\n    pass", 42))
+
+    assert captured["quantization_config"].kwargs == expected_options
+    assert output.backend_metadata is not None
+    assert output.backend_metadata["result_precision"] == "QUANTIZED"
+    assert output.backend_metadata["quantization_method"] == "bitsandbytes"
+    assert output.backend_metadata["quantization_config"] == expected_options
+
+
+def test_device_map_auto_is_gated_and_preflight_is_retained(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, Any] = {}
+    result = GPUPreflightResult(
+        gpu_index=1,
+        idle=True,
+        utilization_threshold_percent=5.0,
+        memory_threshold_mb=500.0,
+        sample_interval_seconds=3.0,
+        readings=(GPUReading("2026-08-09T12:00:00+00:00", 0.0, 100.0),) * 3,
+    )
+
+    class AutoTokenizer:
+        @staticmethod
+        def from_pretrained(name: str, **kwargs: Any) -> _Tokenizer:
+            return _Tokenizer()
+
+    class AutoModelForCausalLM:
+        @staticmethod
+        def from_pretrained(name: str, **kwargs: Any) -> _Model:
+            captured["load_options"] = kwargs
+            return _Model()
+
+    monkeypatch.setitem(
+        sys.modules,
+        "transformers",
+        SimpleNamespace(
+            AutoModelForCausalLM=AutoModelForCausalLM,
+            AutoTokenizer=AutoTokenizer,
+            BitsAndBytesConfig=object,
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "torch",
+        SimpleNamespace(bfloat16="bfloat16", float16="float16", float32="float32"),
+    )
+    def preflight(**kwargs: Any) -> GPUPreflightResult:
+        captured["preflight_kwargs"] = kwargs
+        return result
+
+    monkeypatch.setattr("generation.huggingface.require_gpu_idle", preflight)
+
+    generator = HuggingFaceGenerator(
+        _config(device_map="auto", gpu_preflight_index=1), accelerator="cuda"
+    )
+    generator._load()
+
+    assert captured["preflight_kwargs"]["gpu_index"] == 1
+    assert captured["load_options"]["device_map"] == "auto"
+    assert generator._gpu_preflight == result
+
+
+def test_device_map_auto_requires_explicit_safety_gate() -> None:
+    with pytest.raises(ValueError, match="gpu_preflight_index"):
+        HuggingFaceGenerator(_config(device_map="auto"), accelerator="cuda")

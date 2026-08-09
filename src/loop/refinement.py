@@ -25,7 +25,7 @@ from data.schema import Problem
 from execution.base import ExecutionResult, Executor
 from feedback import FeedbackGenerator, classify_execution
 from generation.base import GenerationRequest, Generator
-from loop.persistence import write_problem_record
+from loop.persistence import model_provenance, write_problem_record
 from utils.config import AppConfig
 
 
@@ -76,6 +76,7 @@ class RefinementRunner:
         convergence_records: list[IterationRecord] = []
         previous_code: str | None = None
         feedback: str | None = None
+        first_generation = None
 
         for iteration in range(1, self.config.experiment.max_iterations + 1):
             generation_started = time.monotonic()
@@ -87,6 +88,8 @@ class RefinementRunner:
                     feedback=feedback,
                 )
             )
+            if first_generation is None:
+                first_generation = generated
             generation_duration = time.monotonic() - generation_started
             execution = self.executor.execute(generated.code, list(problem.test_cases))
             classification = classify_execution(execution)
@@ -140,6 +143,8 @@ class RefinementRunner:
             previous_code = generated.code
             feedback = rendered_feedback
 
+        if first_generation is None:
+            raise AssertionError("max_iterations must be positive")
         return {
             "task_id": problem.task_id,
             "seed": self.config.experiment.seed,
@@ -147,6 +152,7 @@ class RefinementRunner:
                 item["classification"]["category"] == "success" for item in iterations
             ),
             "metric": "pass@1_refined",
+            "provenance": model_provenance(self.config.model, first_generation),
             "iterations": iterations,
             "convergence_reason": iterations[-1]["convergence_decision"],
             "duration_seconds": time.monotonic() - started,
