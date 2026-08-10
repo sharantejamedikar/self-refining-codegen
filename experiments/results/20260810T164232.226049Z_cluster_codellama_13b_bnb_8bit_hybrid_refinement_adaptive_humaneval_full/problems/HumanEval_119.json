@@ -1,0 +1,372 @@
+{
+  "convergence_reason": "oscillation",
+  "duration_seconds": 28.3118308018893,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "cba272e2f65a98faac92dde41f2454e713f49a4f5ae463233c12eec5e7bf427f",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.1451809722930193,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([')())', '(()()(']) == 'Yes'",
+            "duration_seconds": 0.14510616939514875,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-wrydop42/program.py\", line 93, in <module>\n    check(match_parens)\n    ~~~~~^^^^^^^^^^^^^^\n  File \"/tmp/srcg-wrydop42/program.py\", line 79, in check\n    assert candidate([')())', '(()()(']) == 'Yes'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "match_parens",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 6,
+                  "source": "open_count += 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 8,
+                  "source": "open_count -= 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 8,
+                  "source": "open_count -= 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 9,
+                  "source": "if open_count < 0:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 10,
+                  "source": "return \"No\""
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-wrydop42/program.py\", line 93, in <module>\n    check(match_parens)\n    ~~~~~^^^^^^^^^^^^^^\n  File \"/tmp/srcg-wrydop42/program.py\", line 79, in check\n    assert candidate([')())', '(()()(']) == 'Yes'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate([')())', '(()()(']) == 'Yes'\nTrace analysis:\n1. Failed assertion: candidate([')())', '(()()(']) == 'Yes'\n   Last candidate operation: line 10 in match_parens: return \"No\"",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"",
+        "completion_tokens": 108,
+        "extraction_method": "prose_wrapped",
+        "finish_reason": "stop",
+        "prompt_tokens": 247,
+        "raw_text": "   \n[PYTHON]\ndef match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"\n[/PYTHON]\n",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.1451809722930193,
+        "generation_seconds": 15.292241773568094
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "oscillation",
+      "convergence_state": {
+        "code_hash": "cba272e2f65a98faac92dde41f2454e713f49a4f5ae463233c12eec5e7bf427f",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08795579336583614,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate([')())', '(()()(']) == 'Yes'",
+            "duration_seconds": 0.08787662070244551,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-r2kiezrr/program.py\", line 93, in <module>\n    check(match_parens)\n    ~~~~~^^^^^^^^^^^^^^\n  File \"/tmp/srcg-r2kiezrr/program.py\", line 79, in check\n    assert candidate([')())', '(()()(']) == 'Yes'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n\ncheck(match_parens)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "match_parens",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 6,
+                  "source": "open_count += 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 8,
+                  "source": "open_count -= 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 5,
+                  "source": "if c == '(':"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 8,
+                  "source": "open_count -= 1"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 4,
+                  "source": "for c in s:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 9,
+                  "source": "if open_count < 0:"
+                },
+                {
+                  "function": "match_parens",
+                  "line_number": 10,
+                  "source": "return \"No\""
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-r2kiezrr/program.py\", line 93, in <module>\n    check(match_parens)\n    ~~~~~^^^^^^^^^^^^^^\n  File \"/tmp/srcg-r2kiezrr/program.py\", line 79, in check\n    assert candidate([')())', '(()()(']) == 'Yes'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate([')())', '(()()(']) == 'Yes'\nTrace analysis:\n1. Failed assertion: candidate([')())', '(()()(']) == 'Yes'\n   Last candidate operation: line 10 in match_parens: return \"No\"",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"",
+        "completion_tokens": 93,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 448,
+        "raw_text": " def match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate([')())', '(()()(']) == 'Yes'\nTrace analysis:\n1. Failed assertion: candidate([')())', '(()()(']) == 'Yes'\n   Last candidate operation: line 10 in match_parens: return \"No\"\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n\nPrevious solution:\ndef match_parens(lst):\n    open_count = 0\n    for s in lst:\n        for c in s:\n            if c == '(':\n                open_count += 1\n            else:\n                open_count -= 1\n        if open_count < 0:\n            return \"No\"\n    return \"Yes\" if open_count == 0 else \"No\"\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate([')())', '(()()(']) == 'Yes'\nTrace analysis:\n1. Failed assertion: candidate([')())', '(()()(']) == 'Yes'\n   Last candidate operation: line 10 in match_parens: return \"No\"\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08795579336583614,
+        "generation_seconds": 12.784596871584654
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/119"
+}
