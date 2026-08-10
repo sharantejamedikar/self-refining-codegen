@@ -1,0 +1,118 @@
+{
+  "duration_seconds": 16.442040885798633,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.07361693866550922,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('Earth', 'Mercury') == ('Venus',)",
+            "duration_seconds": 0.0735146515071392,
+            "exception_message": "Second test error: ()",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m_w_4k6t/program.py\", line 41, in <module>\n    check(bf)\n  File \"/tmp/srcg-m_w_4k6t/program.py\", line 30, in check\n    assert candidate(\"Earth\", \"Mercury\") == (\"Venus\",), \"Second test error: \" + str(candidate(\"Earth\", \"Mercury\"))  \nAssertionError: Second test error: ()\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Jupiter\", \"Neptune\") == (\"Saturn\", \"Uranus\"), \"First test error: \" + str(len(candidate(\"Jupiter\", \"Neptune\")))      \n    assert candidate(\"Earth\", \"Mercury\") == (\"Venus\",), \"Second test error: \" + str(candidate(\"Earth\", \"Mercury\"))  \n    assert candidate(\"Mercury\", \"Uranus\") == (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\"), \"Third test error: \" + str(candidate(\"Mercury\", \"Uranus\"))      \n    assert candidate(\"Neptune\", \"Venus\") == (\"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\"), \"Fourth test error: \" + str(candidate(\"Neptune\", \"Venus\"))  \n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"Earth\", \"Earth\") == ()\n    assert candidate(\"Mars\", \"Earth\") == ()\n    assert candidate(\"Jupiter\", \"Makemake\") == ()\n\n\ncheck(bf)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m_w_4k6t/program.py\", line 41, in <module>\n    check(bf)\n  File \"/tmp/srcg-m_w_4k6t/program.py\", line 30, in check\n    assert candidate(\"Earth\", \"Mercury\") == (\"Venus\",), \"Second test error: \" + str(candidate(\"Earth\", \"Mercury\"))  \nAssertionError: Second test error: ()\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def bf(planet1, planet2):\n    planets = [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    indices = [planets.index(p) for p in (planet1, planet2)]\n    if len(indices) != 2 or indices[0] > indices[1]:\n        return ()\n    return tuple(planets[i] for i in range(indices[0]+1, indices[1]))",
+        "completion_tokens": 133,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```\ndef bf(planet1, planet2):\n    planets = [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    indices = [planets.index(p) for p in (planet1, planet2)]\n    if len(indices) != 2 or indices[0] > indices[1]:\n        return ()\n    return tuple(planets[i] for i in range(indices[0]+1, indices[1]))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef bf(planet1, planet2):\n    '''\n    There are eight planets in our solar system: the closerst to the Sun \n    is Mercury, the next one is Venus, then Earth, Mars, Jupiter, Saturn, \n    Uranus, Neptune.\n    Write a function that takes two planet names as strings planet1 and planet2. \n    The function should return a tuple containing all planets whose orbits are \n    located between the orbit of planet1 and the orbit of planet2, sorted by \n    the proximity to the sun. \n    The function should return an empty tuple if planet1 or planet2\n    are not correct planet names. \n    Examples\n    bf(\"Jupiter\", \"Neptune\") ==> (\"Saturn\", \"Uranus\")\n    bf(\"Earth\", \"Mercury\") ==> (\"Venus\")\n    bf(\"Mercury\", \"Uranus\") ==> (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\")\n    '''\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef bf(planet1, planet2):\n    '''\n    There are eight planets in our solar system: the closerst to the Sun \n    is Mercury, the next one is Venus, then Earth, Mars, Jupiter, Saturn, \n    Uranus, Neptune.\n    Write a function that takes two planet names as strings planet1 and planet2. \n    The function should return a tuple containing all planets whose orbits are \n    located between the orbit of planet1 and the orbit of planet2, sorted by \n    the proximity to the sun. \n    The function should return an empty tuple if planet1 or planet2\n    are not correct planet names. \n    Examples\n    bf(\"Jupiter\", \"Neptune\") ==> (\"Saturn\", \"Uranus\")\n    bf(\"Earth\", \"Mercury\") ==> (\"Venus\")\n    bf(\"Mercury\", \"Uranus\") ==> (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\")\n    '''\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.07361693866550922,
+        "generation_seconds": 16.367834279313684
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/148"
+}
