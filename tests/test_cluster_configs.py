@@ -119,6 +119,27 @@ def test_cluster_full_best_of_five_config_uses_frozen_tier_one_protocol() -> Non
     assert config.experiment.seed == 42
 
 
+def test_codellama_8bit_full_best_of_five_uses_frozen_protocol() -> None:
+    config = load_config(
+        Path("configs/cluster_codellama_hf_bnb_8bit_best_of_5_humaneval_full.yaml"),
+        profile="cluster",
+    )
+
+    assert config.model.backend == "huggingface"
+    assert config.model.revision == "745795438019e47e4dad1347a0093e11deee4c68"
+    assert config.model.quantization == "bitsandbytes_8bit"
+    assert config.model.temperature == 0.8
+    assert config.model.top_p == 0.95
+    assert config.model.max_new_tokens == 512
+    assert config.model.repetition_penalty == 1.1
+    assert config.dataset.name == "humaneval"
+    assert config.dataset.split == "full"
+    assert config.dataset.path == "data/normalized/humaneval.jsonl"
+    assert config.experiment.samples_per_problem == 5
+    assert config.experiment.seed == 42
+    assert config.device.accelerator == "cuda"
+
+
 def test_cluster_full_mbpp_single_config_uses_guarded_tier_one_protocol() -> None:
     config = load_config(
         Path("configs/cluster_qwen_hf_zero_shot_mbpp_full.yaml"),
