@@ -1,4 +1,4 @@
-# Cross-model HumanEval-164 summary
+# Cross-model summary
 
 ## Scope and comparability
 
@@ -11,6 +11,12 @@ comparison**. Model family, model size, numerical precision, and the associated
 inference configuration differ. The results support cross-configuration
 replication of qualitative patterns, but they do not isolate a causal model or
 precision effect.
+
+CodeLlama single-pass has now also been run on sanitized MBPP-427. The MBPP
+comparison below remains descriptive: benchmark difficulty and task contracts
+differ from HumanEval, while the Qwen comparisons additionally confound model
+family, parameter count, numerical precision, and (for Q4_K_M) inference
+backend.
 
 ## Master results
 
@@ -64,6 +70,30 @@ has a higher intrinsic regression rate: the comparison has only one run per
 configuration and is confounded by model family, model size, and precision
 (8-bit CodeLlama versus full-precision Qwen).
 
+## MBPP-427 single-pass extension
+
+| Model configuration | Solved | `pass@1_single` | Wall clock | Prompt tokens | Completion tokens | Total tokens |
+|---|---:|---:|---:|---:|---:|---:|
+| CodeLlama-13B, bitsandbytes 8-bit | 192/427 | 0.4496 | 3,389.17 s (56m 29.17s) | 43,492 | 23,935 | 67,427 |
+| Qwen-7B, Hugging Face `bfloat16` | 307/427 | 0.7190 | — | — | — | — |
+| Qwen-7B, Ollama Q4_K_M | 311/427 | 0.7283 | — | — | — | — |
+
+On CodeLlama, MBPP single-pass exceeded its own HumanEval single-pass result by
+3.50 percentage points (44.96% versus 41.46%). This is not evidence that MBPP
+is intrinsically easier: the benchmarks differ in tasks, tests, prompts, and
+denominators.
+
+On the shared MBPP-427 task set, CodeLlama solved 115 fewer problems than
+full-precision Qwen (a 26.93 percentage-point deficit) and 119 fewer than
+Q4_K_M Qwen (a 27.87 percentage-point deficit). These are end-to-end
+configuration differences, not isolated model-family effects. CodeLlama has
+13B parameters and used bitsandbytes 8-bit through Hugging Face; the Qwen
+configuration has 7B parameters and used either Hugging Face `bfloat16` or
+Ollama Q4_K_M. Quantization format, numerical precision, model family, model
+size, and—in the Q4_K_M comparison—inference backend are all confounded. Each
+configuration is represented by one fixed-seed run, so run-to-run variability
+is also unmeasured.
+
 ## Authoritative artifacts
 
 | Configuration | Qwen full precision | CodeLlama 8-bit |
@@ -72,3 +102,7 @@ configuration and is confounded by model family, model size, and precision
 | Best-of-5 | [`20260808...best_of_5`](../../experiments/results/20260808T210242.687568Z_cluster_qwen_hf_best_of_5_humaneval_full/) | [`20260810...best_of_5`](../../experiments/results/20260810T121044.505386Z_cluster_codellama_13b_bnb_8bit_best_of_5_humaneval_full/) |
 | Adaptive refinement | [`20260808...adaptive`](../../experiments/results/20260808T215208.948344Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_full/) | [`20260810...adaptive`](../../experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/) |
 | Fixed-k refinement | [`20260808...fixed`](../../experiments/results/20260808T220435.152210Z_cluster_qwen_hf_hybrid_refinement_fixed_humaneval_full/) | [`20260810...fixed`](../../experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/) |
+
+The authoritative CodeLlama MBPP single-pass artifact is
+[`20260811...zero_shot_mbpp`](../../experiments/results/20260811T125007.528701Z_cluster_codellama_13b_bnb_8bit_zero_shot_mbpp_full/),
+persisted at git commit `b24f31bc468c81706844aa4f01c4c376c15a9e37`.

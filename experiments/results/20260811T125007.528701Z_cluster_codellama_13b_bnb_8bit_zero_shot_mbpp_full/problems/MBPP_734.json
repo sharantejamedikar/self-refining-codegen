@@ -1,0 +1,148 @@
+{
+  "duration_seconds": 25.35958893224597,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.36374961119145155,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "3",
+            "assertion_expression": "sum_Of_Subarray_Prod([1, 2, 3]) == 20",
+            "duration_seconds": 0.09735356457531452,
+            "exception_message": "assertion comparison failed: actual=3; expected=20",
+            "exception_type": "AssertionError",
+            "expected_value": "20",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m672d_tc/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3', '20')\n",
+            "stdout": "",
+            "test_case": "assert sum_Of_Subarray_Prod([1,2,3]) == 20",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m672d_tc/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('3', '20')\n"
+          },
+          {
+            "actual_value": "2",
+            "assertion_expression": "sum_Of_Subarray_Prod([1, 2]) == 5",
+            "duration_seconds": 0.13701023068279028,
+            "exception_message": "assertion comparison failed: actual=2; expected=5",
+            "exception_type": "AssertionError",
+            "expected_value": "5",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ljqzp7ps/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('2', '5')\n",
+            "stdout": "",
+            "test_case": "assert sum_Of_Subarray_Prod([1,2]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ljqzp7ps/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('2', '5')\n"
+          },
+          {
+            "actual_value": "4",
+            "assertion_expression": "sum_Of_Subarray_Prod([1, 2, 3, 4]) == 84",
+            "duration_seconds": 0.1291500860825181,
+            "exception_message": "assertion comparison failed: actual=4; expected=84",
+            "exception_type": "AssertionError",
+            "expected_value": "84",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8gcda1db/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4', '84')\n",
+            "stdout": "",
+            "test_case": "assert sum_Of_Subarray_Prod([1,2,3,4]) == 84",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8gcda1db/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4', '84')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def sum_Of_Subarray_Prod(arr):\n    n = len(arr)\n    dp = [[0 for i in range(n+1)] for j in range(n+1)]\n    \n    for i in range(n):\n        dp[i][i] = arr[i]\n        \n    for i in range(n-1):\n        dp[i][i+1] = arr[i]*arr[i+1]\n        \n    for i in range(2, n+1):\n        for j in range(n-i+1):\n            dp[j][j+i-1] = max(dp[j][j+i-2], dp[j+1][j+i-1])\n            \n    return dp[0][n-1]",
+        "completion_tokens": 189,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": " def sum_Of_Subarray_Prod(arr):\n    n = len(arr)\n    dp = [[0 for i in range(n+1)] for j in range(n+1)]\n    \n    for i in range(n):\n        dp[i][i] = arr[i]\n        \n    for i in range(n-1):\n        dp[i][i+1] = arr[i]*arr[i+1]\n        \n    for i in range(2, n+1):\n        for j in range(n-i+1):\n            dp[j][j+i-1] = max(dp[j][j+i-2], dp[j+1][j+i-1])\n            \n    return dp[0][n-1]",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a python function to find sum of products of all possible sublists of a given list. https://www.geeksforgeeks.org/sum-of-products-of-all-possible-subarrays/\n\nRequired function signature:\ndef sum_Of_Subarray_Prod(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a python function to find sum of products of all possible sublists of a given list. https://www.geeksforgeeks.org/sum-of-products-of-all-possible-subarrays/\n\nRequired function signature:\ndef sum_Of_Subarray_Prod(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.36374961119145155,
+        "generation_seconds": 24.995107553899288
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "MBPP/734"
+}
