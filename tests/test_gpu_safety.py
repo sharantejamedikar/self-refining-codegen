@@ -23,9 +23,7 @@ def test_sustained_idle_requires_every_sample_below_both_thresholds() -> None:
     readings = iter([_reading(0, 100), _reading(4.9, 499), _reading(0, 200)])
     sleeps: list[float] = []
 
-    result = check_gpu_idle(
-        1, query=lambda index: next(readings), sleep=sleeps.append
-    )
+    result = check_gpu_idle(1, query=lambda index: next(readings), sleep=sleeps.append)
 
     assert result.idle is True
     assert len(result.readings) == 3

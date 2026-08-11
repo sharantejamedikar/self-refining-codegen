@@ -279,6 +279,7 @@ def test_device_map_auto_is_gated_and_preflight_is_retained(
         "torch",
         SimpleNamespace(bfloat16="bfloat16", float16="float16", float32="float32"),
     )
+
     def preflight(**kwargs: Any) -> GPUPreflightResult:
         captured["preflight_kwargs"] = kwargs
         return result

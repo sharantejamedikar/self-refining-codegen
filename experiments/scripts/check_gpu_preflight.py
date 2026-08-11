@@ -26,9 +26,7 @@ def main() -> None:
         memory_threshold_mb=args.memory_threshold_mb,
     )
     print(json.dumps(result.to_dict(), indent=2))
-    print(
-        f"GPU {args.gpu_index}: {'IDLE' if result.idle else 'BUSY — REFUSE ACCESS'}"
-    )
+    print(f"GPU {args.gpu_index}: {'IDLE' if result.idle else 'BUSY — REFUSE ACCESS'}")
 
 
 if __name__ == "__main__":
