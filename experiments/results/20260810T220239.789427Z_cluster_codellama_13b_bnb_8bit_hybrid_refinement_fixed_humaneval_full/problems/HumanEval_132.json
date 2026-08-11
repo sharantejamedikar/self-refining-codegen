@@ -1,0 +1,888 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 58.69433474075049,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "c332401920b8675bd5f0653fab9d133219dbe1bb29a3c8c6481d89754dfcccae",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08908859547227621,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('[][]') == False",
+            "duration_seconds": 0.08901905361562967,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m74qd9a_/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-m74qd9a_/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n\ncheck(is_nested)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_nested",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 5,
+                  "source": "stack.append(char)"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 6,
+                  "source": "elif char == ']':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 10,
+                  "source": "return not stack"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m74qd9a_/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-m74qd9a_/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return not stack",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return not stack",
+        "completion_tokens": 78,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 225,
+        "raw_text": " ```\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return not stack\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08908859547227621,
+        "generation_seconds": 9.884599718265235
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "b37375d1981e15e4bc561b1ba5d3cdd6dc4d83624feb91ea00497d228f97fec8",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.0862996680662036,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('[][]') == False",
+            "duration_seconds": 0.08622574247419834,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-hhc8ye0w/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-hhc8ye0w/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n\ncheck(is_nested)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_nested",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 5,
+                  "source": "stack.append(char)"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 6,
+                  "source": "elif char == ']':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 10,
+                  "source": "return len(stack) == 0"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-hhc8ye0w/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-hhc8ye0w/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "completion_tokens": 136,
+        "extraction_method": "prose_wrapped",
+        "finish_reason": "stop",
+        "prompt_tokens": 391,
+        "raw_text": " def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nThis solution uses a similar approach to the previous one, but it checks whether the stack is empty after processing all the characters in the string. If the stack is empty, then the brackets are balanced and the function returns `True`. Otherwise, the function returns `False`.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return not stack\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return not stack\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return not stack\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return not stack\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.0862996680662036,
+        "generation_seconds": 17.585607011802495
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "b37375d1981e15e4bc561b1ba5d3cdd6dc4d83624feb91ea00497d228f97fec8",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.16280849277973175,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('[][]') == False",
+            "duration_seconds": 0.16273485496640205,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n68_ja5x/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-n68_ja5x/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n\ncheck(is_nested)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_nested",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 5,
+                  "source": "stack.append(char)"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 6,
+                  "source": "elif char == ']':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 10,
+                  "source": "return len(stack) == 0"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n68_ja5x/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-n68_ja5x/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "completion_tokens": 80,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 401,
+        "raw_text": "    \ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.16280849277973175,
+        "generation_seconds": 10.333399141207337
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "b37375d1981e15e4bc561b1ba5d3cdd6dc4d83624feb91ea00497d228f97fec8",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08735085837543011,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('[][]') == False",
+            "duration_seconds": 0.08725424576550722,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-25ied4k0/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-25ied4k0/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n\ncheck(is_nested)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_nested",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 5,
+                  "source": "stack.append(char)"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 6,
+                  "source": "elif char == ']':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 10,
+                  "source": "return len(stack) == 0"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-25ied4k0/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-25ied4k0/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "completion_tokens": 80,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 401,
+        "raw_text": "    \ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08735085837543011,
+        "generation_seconds": 10.209973190911114
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "b37375d1981e15e4bc561b1ba5d3cdd6dc4d83624feb91ea00497d228f97fec8",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 5,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08751536998897791,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('[][]') == False",
+            "duration_seconds": 0.08748104330152273,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0uddwcf9/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-0uddwcf9/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n\ncheck(is_nested)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_nested",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 5,
+                  "source": "stack.append(char)"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 4,
+                  "source": "if char == '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 6,
+                  "source": "elif char == ']':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 7,
+                  "source": "if not stack or stack[-1] != '[':"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 9,
+                  "source": "stack.pop()"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 3,
+                  "source": "for char in string:"
+                },
+                {
+                  "function": "is_nested",
+                  "line_number": 10,
+                  "source": "return len(stack) == 0"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0uddwcf9/program.py\", line 93, in <module>\n    check(is_nested)\n    ~~~~~^^^^^^^^^^^\n  File \"/tmp/srcg-0uddwcf9/program.py\", line 77, in check\n    assert candidate('[][]') == False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "completion_tokens": 80,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 401,
+        "raw_text": "    \ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\nPrevious solution:\ndef is_nested(string):\n    stack = []\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if not stack or stack[-1] != '[':\n                return False\n            stack.pop()\n    return len(stack) == 0\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('[][]') == False\nTrace analysis:\n1. Failed assertion: candidate('[][]') == False\n   Last candidate operation: line 10 in is_nested: return len(stack) == 0\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08751536998897791,
+        "generation_seconds": 10.163916483521461
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/132"
+}
