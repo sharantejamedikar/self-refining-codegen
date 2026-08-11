@@ -1,4 +1,4 @@
-# Dissertation results tables: full-precision Tier 1
+# Dissertation results tables: Tier 1 and cross-model replication
 
 These tables are the citation-ready presentation of the frozen Tier 1 results
 for `Qwen/Qwen2.5-Coder-7B-Instruct` at pinned revision
@@ -11,6 +11,13 @@ permitted by the method passes all tests. Thus the fixed-​*k* row uses its
 ever-solved score; its final-iteration-only diagnostic is reported separately
 in Table 3. “Compute ratio” is generation calls divided by the corresponding
 best-of-5 call count, so lower values indicate fewer model calls.
+
+The cross-model replication in Table 5 adds
+`codellama/CodeLlama-13b-Instruct-hf` on HumanEval-164. CodeLlama used
+bitsandbytes 8-bit quantization, whereas Qwen used full-precision
+`bfloat16`. Consequently, the cross-model results are an end-to-end
+configuration comparison, not a precision-controlled estimate of model-family
+effects.
 
 ## Table 1. Main Tier 1 results
 
@@ -73,6 +80,42 @@ outcome, for which the paired task outcomes are identical; final-only scores
 are diagnostics and are not substituted for the pre-specified headline
 metric.
 
+## Table 5. Cross-model HumanEval-164 replication
+
+| Configuration | Qwen full-precision pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
+|---|---:|---:|---:|---:|---:|
+| Single-pass | 0.8659 (142/164) | 164 | 0.4146 (68/164) | 164 | H-S + C-S[^h-s][^c-s] |
+| Best-of-5 | **0.9268 (152/164)** | 820 | **0.6220 (102/164)** | 820 | H-B + C-B[^h-b][^c-b] |
+| Adaptive hybrid refinement | 0.9024 (148/164) | **199** | 0.5305 (87/164) | **311** | H-A + C-A[^h-a][^c-a] |
+| Fixed-​*k*=5 hybrid refinement (ever solved) | 0.9024 (148/164) | 820 | 0.5305 (87/164) | 820 | H-F + C-F[^h-f][^c-f] |
+| Fixed-​*k*=5 hybrid refinement (final only) | 0.8720 (143/164) | 820 | 0.4756 (78/164) | 820 | H-F + C-F[^h-f][^c-f] |
+
+**Table note.** Bold marks the highest headline score and the adaptive
+refinement call count within each model configuration. Gap closure is defined
+as `(adaptive solved − single-pass solved) / (best-of-5 solved − single-pass
+solved)`. Adaptive refinement closed 60.0% of the Qwen gap (`6/10`) and 55.9%
+of the CodeLlama gap (`19/34`). It used 75.73% fewer calls than best-of-5 for
+Qwen and 62.07% fewer for CodeLlama.
+
+The qualitative pattern replicated: for both model configurations,
+execution-feedback refinement improved on single-pass generation and
+approached best-of-5 while using substantially fewer calls. The quantitative
+gap closure was weaker for the less capable CodeLlama configuration, and its
+remaining best-of-5 deficit was larger: 15 problems (9.15 percentage points),
+versus 4 problems (2.44 percentage points) for Qwen. This difference must not
+be attributed solely to capability or model family because CodeLlama was
+8-bit quantized while Qwen was full precision.
+
+Forced-iteration regression also replicated across model families. Nine
+CodeLlama tasks that passed before iteration 5 failed at the final iteration,
+compared with five Qwen tasks. Using the fixed-run reporting denominators,
+these are 9/87 (10.3%) and 5/143 (3.5%), respectively; the corresponding
+ever-solved-to-final score changes are 87 to 78 and 148 to 143. This confirms
+the existence of the phenomenon across the two model configurations and
+supports success-priority stopping. It does not establish a model-specific
+rate difference: there is only one run per configuration, and model family,
+model size, and precision are confounded.[^cross-model]
+
 ## Artifact and commit references
 
 Every table entry above resolves to an immutable run directory. The commit is
@@ -89,3 +132,8 @@ files.
 [^m-b]: **M-B:** git commit `195c24f6cadfdeb044d754fadbc50adec35f5fb1`; [`experiments/results/20260809T103719.229806Z_cluster_qwen_hf_best_of_5_mbpp_full/`](../experiments/results/20260809T103719.229806Z_cluster_qwen_hf_best_of_5_mbpp_full/).
 [^m-a]: **M-A:** git commit `dae941e62195eca48d17f3884939f6e7aaa91bf2`; [`experiments/results/20260809T155124.955006Z_cluster_qwen_hf_hybrid_refinement_adaptive_mbpp_full/`](../experiments/results/20260809T155124.955006Z_cluster_qwen_hf_hybrid_refinement_adaptive_mbpp_full/).
 [^m-f]: **M-F:** git commit `7507a422afb33f86256aa16bb0e926379e5477ef`; [`experiments/results/20260809T162731.848774Z_cluster_qwen_hf_hybrid_refinement_fixed_mbpp_full/`](../experiments/results/20260809T162731.848774Z_cluster_qwen_hf_hybrid_refinement_fixed_mbpp_full/).
+[^c-s]: **C-S:** git commit `a855eb1ac9d08e05633af70e29e1232afced7eed`; [`experiments/results/20260810T113106.471817Z_cluster_codellama_13b_bnb_8bit_zero_shot_humaneval_full/`](../experiments/results/20260810T113106.471817Z_cluster_codellama_13b_bnb_8bit_zero_shot_humaneval_full/).
+[^c-b]: **C-B:** git commit `6cb1deef5025d922dc86e0a4823116dc4c3daff1`; [`experiments/results/20260810T121044.505386Z_cluster_codellama_13b_bnb_8bit_best_of_5_humaneval_full/`](../experiments/results/20260810T121044.505386Z_cluster_codellama_13b_bnb_8bit_best_of_5_humaneval_full/).
+[^c-a]: **C-A:** git commit `e5a829b5c10d4c8edde7f61eb87ff438c25f1d86`; [`experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/`](../experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/).
+[^c-f]: **C-F:** git commit `1dfc96c9436db2a8f04dfb2d209004fee2d9a94a`; [`experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/`](../experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/).
+[^cross-model]: Cross-model synthesis: git commit `a5d1574`; [`docs/validation/cross_model_summary.md`](validation/cross_model_summary.md).
