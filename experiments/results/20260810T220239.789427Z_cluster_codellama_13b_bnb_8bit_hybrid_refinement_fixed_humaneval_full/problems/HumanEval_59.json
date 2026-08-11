@@ -1,0 +1,763 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 83.33173313271254,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "5aaf2afb4e40d525237f5c0a5a94c6ed7ce84ea8f3d9bf6540b0c4211a4a2594",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08418460935354233,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(15) == 5",
+            "duration_seconds": 0.08410592749714851,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-t9d_ver0/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-t9d_ver0/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n\ncheck(largest_prime_factor)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 2,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 4,
+                  "source": "for i in range(int(n**0.5), 1, -1):"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 5,
+                  "source": "if n % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 10,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "for i in range(2, int(n**0.5) + 1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 15,
+                  "source": "return True"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 6,
+                  "source": "return i"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-t9d_ver0/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-t9d_ver0/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 132,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 138,
+        "raw_text": "```\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08418460935354233,
+        "generation_seconds": 16.553861957974732
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "5aaf2afb4e40d525237f5c0a5a94c6ed7ce84ea8f3d9bf6540b0c4211a4a2594",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08778583258390427,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(15) == 5",
+            "duration_seconds": 0.0877148462459445,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-g4t7u48i/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-g4t7u48i/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n\ncheck(largest_prime_factor)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 2,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 4,
+                  "source": "for i in range(int(n**0.5), 1, -1):"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 5,
+                  "source": "if n % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 10,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "for i in range(2, int(n**0.5) + 1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 15,
+                  "source": "return True"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 6,
+                  "source": "return i"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-g4t7u48i/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-g4t7u48i/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 129,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 361,
+        "raw_text": " def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08778583258390427,
+        "generation_seconds": 16.30403771996498
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "5aaf2afb4e40d525237f5c0a5a94c6ed7ce84ea8f3d9bf6540b0c4211a4a2594",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.14203754719346762,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(15) == 5",
+            "duration_seconds": 0.1419959682971239,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mqs8oxap/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-mqs8oxap/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n\ncheck(largest_prime_factor)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 2,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 4,
+                  "source": "for i in range(int(n**0.5), 1, -1):"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 5,
+                  "source": "if n % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 10,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "for i in range(2, int(n**0.5) + 1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 15,
+                  "source": "return True"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 6,
+                  "source": "return i"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mqs8oxap/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-mqs8oxap/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 129,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 361,
+        "raw_text": " def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.14203754719346762,
+        "generation_seconds": 16.30561538785696
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "5aaf2afb4e40d525237f5c0a5a94c6ed7ce84ea8f3d9bf6540b0c4211a4a2594",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.14187772758305073,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(15) == 5",
+            "duration_seconds": 0.14180919993668795,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-adcg3s0c/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-adcg3s0c/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n\ncheck(largest_prime_factor)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 2,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 4,
+                  "source": "for i in range(int(n**0.5), 1, -1):"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 5,
+                  "source": "if n % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 10,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "for i in range(2, int(n**0.5) + 1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 15,
+                  "source": "return True"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 6,
+                  "source": "return i"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-adcg3s0c/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-adcg3s0c/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 129,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 361,
+        "raw_text": " def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.14187772758305073,
+        "generation_seconds": 17.58192577585578
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "5aaf2afb4e40d525237f5c0a5a94c6ed7ce84ea8f3d9bf6540b0c4211a4a2594",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 5,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08740579336881638,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(15) == 5",
+            "duration_seconds": 0.08733256533741951,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-msm2s1si/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-msm2s1si/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n\ncheck(largest_prime_factor)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 2,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 4,
+                  "source": "for i in range(int(n**0.5), 1, -1):"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 5,
+                  "source": "if n % i == 0 and is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 10,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "for i in range(2, int(n**0.5) + 1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 15,
+                  "source": "return True"
+                },
+                {
+                  "function": "largest_prime_factor",
+                  "line_number": 6,
+                  "source": "return i"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-msm2s1si/program.py\", line 90, in <module>\n    check(largest_prime_factor)\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-msm2s1si/program.py\", line 83, in check\n    assert candidate(15) == 5\n           ^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 129,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 361,
+        "raw_text": " def largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\nPrevious solution:\ndef largest_prime_factor(n):\n    if n <= 1:\n        return None\n    for i in range(int(n**0.5), 1, -1):\n        if n % i == 0 and is_prime(i):\n            return i\n    return 1\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(15) == 5\nTrace analysis:\n1. Failed assertion: candidate(15) == 5\n   Last candidate operation: line 6 in largest_prime_factor: return i\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08740579336881638,
+        "generation_seconds": 16.038630405440927
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/59"
+}
