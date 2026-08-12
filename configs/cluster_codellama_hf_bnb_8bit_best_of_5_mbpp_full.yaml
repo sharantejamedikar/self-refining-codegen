@@ -1,0 +1,36 @@
+# CodeLlama-13B 8-bit MBPP-427 compute-matched best-of-5 run on GPU 0.
+model:
+  name: codellama/CodeLlama-13b-Instruct-hf
+  backend: huggingface
+  revision: 745795438019e47e4dad1347a0093e11deee4c68
+  backend_model: codellama/CodeLlama-13b-Instruct-hf
+  quantization: bitsandbytes_8bit
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.8
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: mbpp
+  source_url: https://raw.githubusercontent.com/google-research/google-research/master/mbpp/sanitized-mbpp.json
+  data_dir: data
+  split: full
+  path: data/normalized/mbpp_sanitized.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+experiment:
+  name: cluster_codellama_13b_bnb_8bit_best_of_5_mbpp_full
+  seed: 42
+  samples_per_problem: 5
+  output_dir: experiments/results
+device:
+  profile: cluster
+  accelerator: cuda
+profiles:
+  cluster:
+    device: {accelerator: cuda}

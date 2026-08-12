@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -106,3 +107,67 @@ def test_best_of_k_rejects_empty_problem_list(tmp_path: Path) -> None:
             SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
             _config(tmp_path),
         ).run([])
+
+
+def test_best_of_k_resumes_and_skips_complete_records(tmp_path: Path) -> None:
+    problems = [
+        Problem(
+            f"Integration/{index}",
+            "def value():\n",
+            "def value(): return 1",
+            ("assert value() == 1",),
+            "fixture",
+            ("integration",),
+        )
+        for index in range(2)
+    ]
+    destination = tmp_path / "best-of-5-resume"
+    first_generator = SeededGenerator()
+    runner = BestOfKRunner(
+        first_generator,
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        _config(tmp_path),
+    )
+    runner.run(problems[:1], destination)
+
+    resumed_generator = SeededGenerator()
+    resumed = BestOfKRunner(
+        resumed_generator,
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        _config(tmp_path),
+    ).run(problems, destination)
+
+    assert resumed == destination
+    assert resumed_generator.seeds == [42, 43, 44, 45, 46]
+    assert len(list((destination / "problems").glob("*.json"))) == 2
+    with (destination / "summary.csv").open(newline="") as handle:
+        summary = next(csv.DictReader(handle))
+    assert summary["total"] == "2"
+    assert summary["prompt_tokens"] == "100"
+    assert summary["completion_tokens"] == "30"
+
+
+def test_best_of_k_resume_rejects_config_mismatch(tmp_path: Path) -> None:
+    problem = Problem(
+        "Integration/0",
+        "def value():\n",
+        "def value(): return 1",
+        ("assert value() == 1",),
+        "fixture",
+        ("integration",),
+    )
+    destination = tmp_path / "best-of-5-mismatch"
+    config = _config(tmp_path)
+    BestOfKRunner(
+        SeededGenerator(),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        config,
+    ).run([problem], destination)
+    config = replace(config, experiment=replace(config.experiment, seed=7))
+
+    with pytest.raises(ValueError, match="does not match"):
+        BestOfKRunner(
+            SeededGenerator(),
+            SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+            config,
+        ).run([problem], destination)

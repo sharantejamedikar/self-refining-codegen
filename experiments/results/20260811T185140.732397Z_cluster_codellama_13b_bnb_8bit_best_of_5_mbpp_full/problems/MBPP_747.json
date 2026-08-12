@@ -1,0 +1,650 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "83f7ab70787e89ae910811497b8735966acb45d09e96b822c849a4c0da5e65c8",
+      "execution": {
+        "duration_seconds": 0.321345092728734,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.08469104487448931,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.11268912069499493,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "4",
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.12369436211884022,
+            "exception_message": "assertion comparison failed: actual=4; expected=3",
+            "exception_type": "AssertionError",
+            "expected_value": "3",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cg2ma5v6/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4', '3')\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cg2ma5v6/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('4', '3')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    # Find the length of the three strings\n    n = len(X)\n    m = len(Y)\n    k = len(Z)\n    \n    # Create a matrix to store the length of the LCS\n    dp = [[0] * (k+1) for _ in range(n+1)]\n    \n    # Fill in the first row and column of the matrix\n    for i in range(1, n+1):\n        for j in range(1, k+1):\n            if X[i-1] == Z[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n    \n    # Find the maximum length of the LCS\n    result = 0\n    for i in range(n+1):\n        for j in range(k+1):\n            if dp[i][j] > result:\n                result = dp[i][j]\n    \n    # Return the length of the LCS\n    return result",
+        "completion_tokens": 285,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 128,
+        "raw_text": " def lcs_of_three(X, Y, Z):\n    # Find the length of the three strings\n    n = len(X)\n    m = len(Y)\n    k = len(Z)\n    \n    # Create a matrix to store the length of the LCS\n    dp = [[0] * (k+1) for _ in range(n+1)]\n    \n    # Fill in the first row and column of the matrix\n    for i in range(1, n+1):\n        for j in range(1, k+1):\n            if X[i-1] == Z[j-1]:\n                dp[i][j] = dp[i-1][j-1] + 1\n            else:\n                dp[i][j] = max(dp[i-1][j], dp[i][j-1])\n    \n    # Find the maximum length of the LCS\n    result = 0\n    for i in range(n+1):\n        for j in range(k+1):\n            if dp[i][j] > result:\n                result = dp[i][j]\n    \n    # Return the length of the LCS\n    return result",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.321345092728734,
+        "generation_seconds": 36.60464160423726
+      }
+    },
+    {
+      "code_hash": "5ffba73865511952589d6b35e4bbbf7e0efe58eff2339bd786a397f6ef326fd0",
+      "execution": {
+        "duration_seconds": 0.3314366592094302,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.08427456207573414,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.13290030229836702,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.11398980766534805,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n    dp = [[[0] * (o+1) for _ in range(n+1)] for __ in range(m+1)]\n    \n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            for k in range(1, o+1):\n                if X[i-1] == Y[j-1] == Z[k-1]:\n                    dp[i][j][k] = dp[i-1][j-1][k-1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i-1][j][k], dp[i][j-1][k], dp[i][j][k-1])\n    \n    return dp[m][n][o]",
+        "completion_tokens": 238,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 128,
+        "raw_text": " ```python\ndef lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n    dp = [[[0] * (o+1) for _ in range(n+1)] for __ in range(m+1)]\n    \n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            for k in range(1, o+1):\n                if X[i-1] == Y[j-1] == Z[k-1]:\n                    dp[i][j][k] = dp[i-1][j-1][k-1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i-1][j][k], dp[i][j-1][k], dp[i][j][k-1])\n    \n    return dp[m][n][o]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3314366592094302,
+        "generation_seconds": 31.807159879244864
+      }
+    },
+    {
+      "code_hash": "7982dd19eac2a3f8e469f51c7f2ec2d35927b3dd7be7e365c78171b870753ca3",
+      "execution": {
+        "duration_seconds": 0.38367077615112066,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.09685097821056843,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-uj4wsyz5/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('AGGT12', '12TXAYB', '12XBA')\n  File \"/tmp/srcg-uj4wsyz5/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-uj4wsyz5/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('AGGT12', '12TXAYB', '12XBA')\n  File \"/tmp/srcg-uj4wsyz5/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.1372024854645133,
+            "exception_message": "list assignment index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4nsbzmvp/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-4nsbzmvp/program.py\", line 29, in lcs_of_three\n    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n    ~~~~~~~~^^^\nIndexError: list assignment index out of range\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4nsbzmvp/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-4nsbzmvp/program.py\", line 29, in lcs_of_three\n    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n    ~~~~~~~~^^^\nIndexError: list assignment index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.14934907387942076,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-db5hoou1/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-db5hoou1/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                                       ~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-db5hoou1/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-db5hoou1/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                                       ~~^^^\nIndexError: list index out of range\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    p = len(Z)\n    dp = [[[0] * (n + 1) for _ in range(m + 1)] for _ in range(p + 1)]\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            for k in range(1, p + 1):\n                if X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n\n    return dp[m][n][p]",
+        "completion_tokens": 246,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 128,
+        "raw_text": " def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    p = len(Z)\n    dp = [[[0] * (n + 1) for _ in range(m + 1)] for _ in range(p + 1)]\n\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            for k in range(1, p + 1):\n                if X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n\n    return dp[m][n][p]",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.38367077615112066,
+        "generation_seconds": 32.34189287573099
+      }
+    },
+    {
+      "code_hash": "b10680053b1276f08fa1aef077623b7a62c86c3451bf147d0734e4c6e33a3ae2",
+      "execution": {
+        "duration_seconds": 0.3286528140306473,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.10127739515155554,
+            "exception_message": "'int' object is not subscriptable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-xrsx4dss/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('AGGT12', '12TXAYB', '12XBA')\n  File \"/tmp/srcg-xrsx4dss/program.py\", line 35, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nTypeError: 'int' object is not subscriptable\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-xrsx4dss/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('AGGT12', '12TXAYB', '12XBA')\n  File \"/tmp/srcg-xrsx4dss/program.py\", line 35, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nTypeError: 'int' object is not subscriptable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.10993141774088144,
+            "exception_message": "'int' object is not subscriptable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yxba7peu/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-yxba7peu/program.py\", line 33, in lcs_of_three\n    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                  ~~~~~~~~~~~~~~~~^^^^^^^\nTypeError: 'int' object is not subscriptable\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yxba7peu/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-yxba7peu/program.py\", line 33, in lcs_of_three\n    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                  ~~~~~~~~~~~~~~~~^^^^^^^\nTypeError: 'int' object is not subscriptable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.11718445084989071,
+            "exception_message": "'int' object is not subscriptable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-lnuj0he4/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-lnuj0he4/program.py\", line 35, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nTypeError: 'int' object is not subscriptable\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-lnuj0he4/program.py\", line 58, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-lnuj0he4/program.py\", line 35, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nTypeError: 'int' object is not subscriptable\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    # Find the length of the strings\n    n = len(X)\n    m = len(Y)\n    p = len(Z)\n    \n    # Create a table to store the results\n    dp = [[0] * (p + 1) for _ in range(n + 1)]\n    \n    # Fill in the table\n    for i in range(1, n + 1):\n        for j in range(1, m + 1):\n            for k in range(1, p + 1):\n                if X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n    \n    # Find the longest common subsequence\n    result = []\n    i, j, k = n, m, p\n    while i > 0 and j > 0 and k > 0:\n        if X[i - 1] == Y[j - 1] == Z[k - 1]:\n            result.append(X[i - 1])\n            i -= 1\n            j -= 1\n            k -= 1\n        elif dp[i][j][k] == dp[i - 1][j][k]:\n            i -= 1\n        elif dp[i][j][k] == dp[i][j - 1][k]:\n            j -= 1\n        else:\n            k -= 1\n    \n    # Reverse the result\n    result.reverse()\n    \n    return \"\".join(result)",
+        "completion_tokens": 454,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 128,
+        "raw_text": " def lcs_of_three(X, Y, Z):\n    # Find the length of the strings\n    n = len(X)\n    m = len(Y)\n    p = len(Z)\n    \n    # Create a table to store the results\n    dp = [[0] * (p + 1) for _ in range(n + 1)]\n    \n    # Fill in the table\n    for i in range(1, n + 1):\n        for j in range(1, m + 1):\n            for k in range(1, p + 1):\n                if X[i - 1] == Y[j - 1] == Z[k - 1]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n    \n    # Find the longest common subsequence\n    result = []\n    i, j, k = n, m, p\n    while i > 0 and j > 0 and k > 0:\n        if X[i - 1] == Y[j - 1] == Z[k - 1]:\n            result.append(X[i - 1])\n            i -= 1\n            j -= 1\n            k -= 1\n        elif dp[i][j][k] == dp[i - 1][j][k]:\n            i -= 1\n        elif dp[i][j][k] == dp[i][j - 1][k]:\n            j -= 1\n        else:\n            k -= 1\n    \n    # Reverse the result\n    result.reverse()\n    \n    return \"\".join(result)",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3286528140306473,
+        "generation_seconds": 59.20445111673325
+      }
+    },
+    {
+      "code_hash": "44e2a685e9649df7cd9017f43eb1f420faae62411a2b3b4983789a9c06c2c5f1",
+      "execution": {
+        "duration_seconds": 0.3646456655114889,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "duration_seconds": 0.09581552632153034,
+            "exception_message": "assertion comparison failed: actual=0; expected=2",
+            "exception_type": "AssertionError",
+            "expected_value": "2",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fz71wxd_/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '2')\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fz71wxd_/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '2')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "duration_seconds": 0.13599442038685083,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-z7h16kd5/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-z7h16kd5/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-z7h16kd5/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels')\n  File \"/tmp/srcg-z7h16kd5/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                      ~~~~~~~~~~~~^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "duration_seconds": 0.13258002046495676,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-qdmg_edn/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-qdmg_edn/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                                       ~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-qdmg_edn/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea')\n  File \"/tmp/srcg-qdmg_edn/program.py\", line 31, in lcs_of_three\n    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n                                       ~~^^^\nIndexError: list index out of range\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    p = len(Z)\n    dp = [[[0] * (n + 1) for _ in range(m + 1)] for _ in range(p + 1)]\n    \n    for i in range(m):\n        for j in range(n):\n            for k in range(p):\n                if X[i] == Y[j] == Z[k]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n    \n    return dp[-1][-1][-1]",
+        "completion_tokens": 226,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 128,
+        "raw_text": " def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    p = len(Z)\n    dp = [[[0] * (n + 1) for _ in range(m + 1)] for _ in range(p + 1)]\n    \n    for i in range(m):\n        for j in range(n):\n            for k in range(p):\n                if X[i] == Y[j] == Z[k]:\n                    dp[i][j][k] = dp[i - 1][j - 1][k - 1] + 1\n                else:\n                    dp[i][j][k] = max(dp[i - 1][j][k], dp[i][j - 1][k], dp[i][j][k - 1])\n    \n    return dp[-1][-1][-1]",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/\n\nRequired function signature:\ndef lcs_of_three(X, Y, Z):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3646456655114889,
+        "generation_seconds": 29.390462043695152
+      }
+    }
+  ],
+  "duration_seconds": 191.08232774958014,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    1
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/747",
+  "unique_code_count": 5
+}
