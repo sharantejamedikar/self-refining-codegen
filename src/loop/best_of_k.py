@@ -41,17 +41,66 @@ class BestOfKRunner:
         if not problem_list:
             raise ValueError("At least one problem is required")
         destination = Path(run_dir) if run_dir else self._new_run_directory()
-        self._write_run_metadata(destination)
+        resuming = destination.exists()
+        if resuming:
+            self._validate_resume_directory(destination)
+        else:
+            self._write_run_metadata(destination)
         problem_dir = destination / "problems"
-        problem_dir.mkdir()
+        problem_dir.mkdir(exist_ok=resuming)
 
         records: list[dict[str, Any]] = []
         for problem in problem_list:
-            record = self._run_problem(problem)
-            write_problem_record(problem_dir, record)
+            record = self._load_completed_record(problem_dir, problem)
+            if record is None:
+                record = self._run_problem(problem)
+                write_problem_record(problem_dir, record)
             records.append(record)
         self._write_summary(destination, records)
         return destination
+
+    def _validate_resume_directory(self, destination: Path) -> None:
+        """Refuse to mix records when an existing run has a different config."""
+
+        if not destination.is_dir():
+            raise ValueError(f"Resume path is not a directory: {destination}")
+        config_path = destination / "config.yaml"
+        if not config_path.is_file():
+            raise ValueError(f"Resume directory has no config snapshot: {destination}")
+        with config_path.open(encoding="utf-8") as handle:
+            stored_config = yaml.safe_load(handle)
+        current_config = asdict(self.config)
+        if stored_config != current_config:
+            raise ValueError("Resume config does not match the stored run config")
+
+    def _load_completed_record(
+        self, problem_dir: Path, problem: Problem
+    ) -> dict[str, Any] | None:
+        """Load a structurally complete record, or regenerate it when incomplete."""
+
+        path = problem_dir / f"{problem.task_id.replace('/', '_')}.json"
+        if not path.is_file():
+            return None
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return None
+        expected_seeds = [
+            self.config.experiment.seed + index
+            for index in range(self.config.experiment.samples_per_problem)
+        ]
+        candidates = record.get("candidates")
+        if (
+            record.get("task_id") != problem.task_id
+            or record.get("metric") != "pass@1_bo5"
+            or record.get("sample_seeds") != expected_seeds
+            or record.get("candidate_count") != len(expected_seeds)
+            or not isinstance(candidates, list)
+            or len(candidates) != len(expected_seeds)
+            or [candidate.get("seed") for candidate in candidates] != expected_seeds
+        ):
+            return None
+        return record
 
     def _run_problem(self, problem: Problem) -> dict[str, Any]:
         started = time.monotonic()

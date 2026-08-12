@@ -1,0 +1,648 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "99ae01684d0e4fbd40d2c7c5a5ad3b0eb137d9beb485ab1d5dcdb619fdbdde11",
+      "execution": {
+        "duration_seconds": 0.40832926146686077,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "12",
+            "assertion_expression": "rearrange_bigger(12) == 21",
+            "duration_seconds": 0.10854445118457079,
+            "exception_message": "assertion comparison failed: actual=12; expected=21",
+            "exception_type": "AssertionError",
+            "expected_value": "21",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ofiz4qlw/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('12', '21')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(12)==21",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ofiz4qlw/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('12', '21')\n"
+          },
+          {
+            "actual_value": "1",
+            "assertion_expression": "rearrange_bigger(10) == False",
+            "duration_seconds": 0.15354313235729933,
+            "exception_message": "assertion comparison failed: actual=1; expected=False",
+            "exception_type": "AssertionError",
+            "expected_value": "False",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-izmekdpb/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1', 'False')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(10)==False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-izmekdpb/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1', 'False')\n"
+          },
+          {
+            "actual_value": "201",
+            "assertion_expression": "rearrange_bigger(102) == 120",
+            "duration_seconds": 0.14601051341742277,
+            "exception_message": "assertion comparison failed: actual=201; expected=120",
+            "exception_type": "AssertionError",
+            "expected_value": "120",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6sfwni3h/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('201', '120')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(102)==120",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6sfwni3h/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('201', '120')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rearrange_bigger(n):\n    n = str(n)\n    num_digits = len(n)\n    if num_digits == 1:\n        return -1\n    \n    # Sort the digits in descending order\n    sorted_digits = sorted(n, reverse=True)\n    \n    # Find the largest digit that is not at the end of the sorted list\n    for i in range(num_digits-2, -1, -1):\n        if sorted_digits[i] != '9':\n            break\n    \n    # Swap the largest digit with the digit at the end of the sorted list\n    largest_digit = sorted_digits[i]\n    sorted_digits[i] = sorted_digits[-1]\n    sorted_digits[-1] = largest_digit\n    \n    # Convert the sorted digits back into an integer\n    result = int(''.join(sorted_digits))\n    return result",
+        "completion_tokens": 223,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "raw_text": " def rearrange_bigger(n):\n    n = str(n)\n    num_digits = len(n)\n    if num_digits == 1:\n        return -1\n    \n    # Sort the digits in descending order\n    sorted_digits = sorted(n, reverse=True)\n    \n    # Find the largest digit that is not at the end of the sorted list\n    for i in range(num_digits-2, -1, -1):\n        if sorted_digits[i] != '9':\n            break\n    \n    # Swap the largest digit with the digit at the end of the sorted list\n    largest_digit = sorted_digits[i]\n    sorted_digits[i] = sorted_digits[-1]\n    sorted_digits[-1] = largest_digit\n    \n    # Convert the sorted digits back into an integer\n    result = int(''.join(sorted_digits))\n    return result",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.40832926146686077,
+        "generation_seconds": 28.75663132313639
+      }
+    },
+    {
+      "code_hash": "aa1971220d4bb881dcf6869eb1eb420c29d847f68e01f5cec6c03e676c83c6e5",
+      "execution": {
+        "duration_seconds": 0.3065268350765109,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(12) == 21",
+            "duration_seconds": 0.09500687941908836,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-q88gqmck/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(12)==21",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-q88gqmck/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(10) == False",
+            "duration_seconds": 0.1020554881542921,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-7vzoj5c0/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(10)==False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-7vzoj5c0/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(102) == 120",
+            "duration_seconds": 0.10921759903430939,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-l6cdjch7/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(102)==120",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-l6cdjch7/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rearrange_bigger(n):\n\"\"\"\nReturns the next bigger number by rearranging the digits of the given number.\n\nArgs:\n    n (int): The given number.\n\nReturns:\n    int: The next bigger number.\n\"\"\"\n    # Convert the number to a list of individual digits\n    digits = [int(digit) for digit in str(n)]\n\n    # Sort the digits in descending order\n    digits.sort(reverse=True)\n\n    # Create a new number by joining the sorted digits together\n    new_number = int(\"\".join([str(digit) for digit in digits]))\n\n    return new_number",
+        "completion_tokens": 153,
+        "extraction_method": "unparsed_fallback",
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "raw_text": "   def rearrange_bigger(n):\n\"\"\"\nReturns the next bigger number by rearranging the digits of the given number.\n\nArgs:\n    n (int): The given number.\n\nReturns:\n    int: The next bigger number.\n\"\"\"\n    # Convert the number to a list of individual digits\n    digits = [int(digit) for digit in str(n)]\n\n    # Sort the digits in descending order\n    digits.sort(reverse=True)\n\n    # Create a new number by joining the sorted digits together\n    new_number = int(\"\".join([str(digit) for digit in digits]))\n\n    return new_number",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": false
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3065268350765109,
+        "generation_seconds": 20.620463837869465
+      }
+    },
+    {
+      "code_hash": "bd8fd53b1594ec8f11dfeaa83f0ea2093b8e8a7d118339437fb8584aa264fd53",
+      "execution": {
+        "duration_seconds": 0.4073355505242944,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(12) == 21",
+            "duration_seconds": 0.13699159864336252,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-m1b38e_8/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(12)==21",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-m1b38e_8/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(10) == False",
+            "duration_seconds": 0.1300413878634572,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-7pgsaemh/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(10)==False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-7pgsaemh/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(102) == 120",
+            "duration_seconds": 0.14005667716264725,
+            "exception_message": "expected an indented block after function definition on line 19",
+            "exception_type": "IndentationError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "  File \"/tmp/srcg-bbzt3v1i/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(102)==120",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "  File \"/tmp/srcg-bbzt3v1i/program.py\", line 20\n    \"\"\"\n    ^^^\nIndentationError: expected an indented block after function definition on line 19\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rearrange_bigger(n):\n\"\"\"\nReturns the next bigger number by rearranging the digits of a given number.\n\nArgs:\n    n (int): The number to find the next bigger number for.\n\nReturns:\n    int: The next bigger number.\n\nExamples:\n    >>> rearrange_bigger(123456789)\n    123456789\n    >>> rearrange_bigger(100)\n    100\n    >>> rearrange_bigger(987654321)\n    987654321\n    >>> rearrange_bigger(123456780)\n    123456780\n\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n\n    # Convert the number to a list of individual digits\n    digits = [int(digit) for digit in str(n)]\n\n    # Sort the digits in descending order\n    sorted_digits = sorted(digits, reverse=True)\n\n    # Create a new number by combining the sorted digits\n    new_number = int(\"\".join([str(digit) for digit in sorted_digits]))\n\n    return new_number",
+        "completion_tokens": 304,
+        "extraction_method": "unparsed_fallback",
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "raw_text": "   def rearrange_bigger(n):\n\"\"\"\nReturns the next bigger number by rearranging the digits of a given number.\n\nArgs:\n    n (int): The number to find the next bigger number for.\n\nReturns:\n    int: The next bigger number.\n\nExamples:\n    >>> rearrange_bigger(123456789)\n    123456789\n    >>> rearrange_bigger(100)\n    100\n    >>> rearrange_bigger(987654321)\n    987654321\n    >>> rearrange_bigger(123456780)\n    123456780\n\"\"\"\n    if not isinstance(n, int):\n        raise ValueError(\"n must be an integer\")\n\n    # Convert the number to a list of individual digits\n    digits = [int(digit) for digit in str(n)]\n\n    # Sort the digits in descending order\n    sorted_digits = sorted(digits, reverse=True)\n\n    # Create a new number by combining the sorted digits\n    new_number = int(\"\".join([str(digit) for digit in sorted_digits]))\n\n    return new_number",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": false
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4073355505242944,
+        "generation_seconds": 38.45864644832909
+      }
+    },
+    {
+      "code_hash": "16dc33b712fb1faf69d3429c2f7e756472665064fc64c6b32f6323c6fa825c7a",
+      "execution": {
+        "duration_seconds": 0.36145277973264456,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(12) == 21",
+            "duration_seconds": 0.08462752867490053,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(12)==21",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "10",
+            "assertion_expression": "rearrange_bigger(10) == False",
+            "duration_seconds": 0.13800899125635624,
+            "exception_message": "assertion comparison failed: actual=10; expected=False",
+            "exception_type": "AssertionError",
+            "expected_value": "False",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-snhug8w3/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', 'False')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(10)==False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-snhug8w3/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', 'False')\n"
+          },
+          {
+            "actual_value": "210",
+            "assertion_expression": "rearrange_bigger(102) == 120",
+            "duration_seconds": 0.1385689890012145,
+            "exception_message": "assertion comparison failed: actual=210; expected=120",
+            "exception_type": "AssertionError",
+            "expected_value": "120",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_pdf9064/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('210', '120')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(102)==120",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_pdf9064/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('210', '120')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rearrange_bigger(n):\n    n_str = str(n)\n    n_list = list(n_str)\n    n_list.sort(reverse=True)\n    return int(''.join(n_list))",
+        "completion_tokens": 57,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "raw_text": " def rearrange_bigger(n):\n    n_str = str(n)\n    n_list = list(n_str)\n    n_list.sort(reverse=True)\n    return int(''.join(n_list))",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.36145277973264456,
+        "generation_seconds": 7.12700426671654
+      }
+    },
+    {
+      "code_hash": "eb5369b77c8b8fc81950351da4b00020898a2338d1e0553538833107551dad86",
+      "execution": {
+        "duration_seconds": 0.3232548367232084,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rearrange_bigger(12) == 21",
+            "duration_seconds": 0.08826461248099804,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(12)==21",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "10",
+            "assertion_expression": "rearrange_bigger(10) == False",
+            "duration_seconds": 0.11982663162052631,
+            "exception_message": "assertion comparison failed: actual=10; expected=False",
+            "exception_type": "AssertionError",
+            "expected_value": "False",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-c07cpt40/program.py\", line 26, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', 'False')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(10)==False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-c07cpt40/program.py\", line 26, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', 'False')\n"
+          },
+          {
+            "actual_value": "210",
+            "assertion_expression": "rearrange_bigger(102) == 120",
+            "duration_seconds": 0.11494090966880322,
+            "exception_message": "assertion comparison failed: actual=210; expected=120",
+            "exception_type": "AssertionError",
+            "expected_value": "120",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zha7nb81/program.py\", line 26, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('210', '120')\n",
+            "stdout": "",
+            "test_case": "assert rearrange_bigger(102)==120",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zha7nb81/program.py\", line 26, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('210', '120')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rearrange_bigger(n):\n        n = list(str(n))\n        n.sort(reverse=True)\n        return int(\"\".join(n))",
+        "completion_tokens": 41,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 100,
+        "raw_text": "   def rearrange_bigger(n):\n        n = list(str(n))\n        n.sort(reverse=True)\n        return int(\"\".join(n))",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a function to create the next bigger number by rearranging the digits of a given number.\n\nRequired function signature:\ndef rearrange_bigger(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3232548367232084,
+        "generation_seconds": 6.588645490817726
+      }
+    }
+  ],
+  "duration_seconds": 103.36206127051264,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "MBPP/407",
+  "unique_code_count": 5
+}
