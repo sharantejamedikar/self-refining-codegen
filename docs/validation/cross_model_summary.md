@@ -12,7 +12,8 @@ inference configuration differ. The results support cross-configuration
 replication of qualitative patterns, but they do not isolate a causal model or
 precision effect.
 
-CodeLlama single-pass has now also been run on sanitized MBPP-427. The MBPP
+The CodeLlama single-pass, best-of-5, and adaptive-refinement configurations
+have now also been run on sanitized MBPP-427. The MBPP
 comparison below remains descriptive: benchmark difficulty and task contracts
 differ from HumanEval, while the Qwen comparisons additionally confound model
 family, parameter count, numerical precision, and (for Q4_K_M) inference
@@ -70,13 +71,35 @@ has a higher intrinsic regression rate: the comparison has only one run per
 configuration and is confounded by model family, model size, and precision
 (8-bit CodeLlama versus full-precision Qwen).
 
-## MBPP-427 single-pass extension
+## MBPP-427 extension
 
-| Model configuration | Solved | `pass@1_single` | Wall clock | Prompt tokens | Completion tokens | Total tokens |
-|---|---:|---:|---:|---:|---:|---:|
-| CodeLlama-13B, bitsandbytes 8-bit | 192/427 | 0.4496 | 3,389.17 s (56m 29.17s) | 43,492 | 23,935 | 67,427 |
-| Qwen-7B, Hugging Face `bfloat16` | 307/427 | 0.7190 | — | — | — | — |
-| Qwen-7B, Ollama Q4_K_M | 311/427 | 0.7283 | — | — | — | — |
+| Model configuration | Method | Solved | pass@1 | Calls | Wall clock | Total tokens |
+|---|---|---:|---:|---:|---:|---:|
+| CodeLlama-13B, bitsandbytes 8-bit | Single-pass | 192/427 | 0.4496 | 427 | 3,389.17 s | 67,427 |
+| CodeLlama-13B, bitsandbytes 8-bit | Best-of-5 | **263/427** | **0.6159** | 2,135 | 18,310.02 s | 348,041 |
+| CodeLlama-13B, bitsandbytes 8-bit | Adaptive hybrid refinement | 257/427 | 0.6019 | **821** | **8,039.95 s** | **309,044** |
+| Qwen-7B, Hugging Face `bfloat16` | Adaptive hybrid refinement | 352/427 | 0.8244 | 647 | 1,505.82 s | 206,160 |
+| Qwen-7B, Ollama Q4_K_M | Adaptive hybrid refinement | 351/427 | 0.8220 | 637 | 1,450.89 s | 197,079 |
+
+CodeLlama adaptive refinement improved over its own single-pass result by 65
+solves (+15.22 percentage points), using 821 calls rather than 427. It did
+**not** reproduce Qwen's MBPP pattern of refinement beating best-of-5:
+CodeLlama refinement finished 6 solves below best-of-5 (-1.41 percentage
+points). The paired comparison contained 29 refinement-only passes and 35
+best-of-5-only passes (exact two-sided McNemar `p=0.5323`; matched odds ratio
+`0.8286`). Thus the observed six-problem deficit is not statistically
+significant at 0.05. Refinement nevertheless used 1,314 fewer calls (61.55%
+fewer), 10,270.06 fewer summed wall-clock seconds (56.09% fewer), and 38,997
+fewer tokens (11.20% fewer) than best-of-5. Its seed-42, 10,000-resample
+bootstrap 95% CI was `[0.5550, 0.6487]`.
+
+The Qwen contrast is qualitative and clear: full-precision Qwen adaptive
+refinement solved 352/427, 15 more than its own best-of-5, while Q4_K_M Qwen
+adaptive refinement solved 351/427, 8 more than its own best-of-5. CodeLlama
+adaptive refinement instead solved 257/427, 6 fewer than its own best-of-5.
+Accordingly, the claim that adaptive refinement beats best-of-5 on MBPP is
+supported for both tested Qwen precision configurations but does not
+generalize to this CodeLlama-13B 8-bit configuration.
 
 On CodeLlama, MBPP single-pass exceeded its own HumanEval single-pass result by
 3.50 percentage points (44.96% versus 41.46%). This is not evidence that MBPP
@@ -103,6 +126,10 @@ is also unmeasured.
 | Adaptive refinement | [`20260808...adaptive`](../../experiments/results/20260808T215208.948344Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_full/) | [`20260810...adaptive`](../../experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/) |
 | Fixed-k refinement | [`20260808...fixed`](../../experiments/results/20260808T220435.152210Z_cluster_qwen_hf_hybrid_refinement_fixed_humaneval_full/) | [`20260810...fixed`](../../experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/) |
 
-The authoritative CodeLlama MBPP single-pass artifact is
+The authoritative CodeLlama MBPP artifacts are
 [`20260811...zero_shot_mbpp`](../../experiments/results/20260811T125007.528701Z_cluster_codellama_13b_bnb_8bit_zero_shot_mbpp_full/),
-persisted at git commit `b24f31bc468c81706844aa4f01c4c376c15a9e37`.
+[`20260811...best_of_5_mbpp`](../../experiments/results/20260811T185140.732397Z_cluster_codellama_13b_bnb_8bit_best_of_5_mbpp_full/), and
+[`20260812...adaptive_mbpp`](../../experiments/results/20260812T222900Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_mbpp_full/).
+Their persisted commits are `b24f31bc468c81706844aa4f01c4c376c15a9e37`,
+`20b161898692443e3aa32b5c83338841beb4753b`, and
+`20b161898692443e3aa32b5c83338841beb4753b`, respectively.

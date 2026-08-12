@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -31,9 +32,13 @@ from utils.config import (
 class FeedbackAwareMockGenerator(Generator):
     """Explicit test mock that fixes one task after receiving feedback."""
 
+    def __init__(self) -> None:
+        self.prompts: list[str] = []
+
     def generate(self, request: GenerationRequest) -> GenerationOutput:
         """Return canned code selected by prompt and refinement stage."""
 
+        self.prompts.append(request.problem_prompt)
         index = int(request.problem_prompt.rsplit(" ", maxsplit=1)[-1])
         if index == 0 or (index == 1 and request.feedback is not None):
             code = f"def value(): return {index}"
@@ -197,3 +202,49 @@ def test_fixed_mode_runs_all_five_iterations_and_preserves_any_success(
         "continue",
         "fixed_iterations_complete",
     ]
+
+
+def test_refinement_resumes_and_skips_complete_records(tmp_path: Path) -> None:
+    destination = tmp_path / "refinement-resume"
+    problems = _problems()
+    RefinementRunner(
+        FeedbackAwareMockGenerator(),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        TemplateFeedbackGenerator(),
+        _config(tmp_path),
+    ).run(problems[:1], destination)
+
+    resumed_generator = FeedbackAwareMockGenerator()
+    resumed = RefinementRunner(
+        resumed_generator,
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        TemplateFeedbackGenerator(),
+        _config(tmp_path),
+    ).run(problems, destination)
+
+    assert resumed == destination
+    assert problems[0].prompt not in resumed_generator.prompts
+    assert len(list((destination / "problems").glob("*.json"))) == 3
+    with (destination / "summary.csv").open(newline="") as handle:
+        summary = next(csv.DictReader(handle))
+    assert summary["total"] == "3"
+
+
+def test_refinement_resume_rejects_config_mismatch(tmp_path: Path) -> None:
+    destination = tmp_path / "refinement-mismatch"
+    config = _config(tmp_path)
+    RefinementRunner(
+        FeedbackAwareMockGenerator(),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        TemplateFeedbackGenerator(),
+        config,
+    ).run(_problems()[:1], destination)
+    changed = replace(config, experiment=replace(config.experiment, seed=7))
+
+    with pytest.raises(ValueError, match="does not match"):
+        RefinementRunner(
+            FeedbackAwareMockGenerator(),
+            SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+            TemplateFeedbackGenerator(),
+            changed,
+        ).run(_problems(), destination)
