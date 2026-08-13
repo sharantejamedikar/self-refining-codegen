@@ -1,0 +1,163 @@
+{
+  "duration_seconds": 22.580960681661963,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.4659406952559948,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_dicts_by_case([{'a': 'apple', 'b': 'banana'}, {'A': 'apple', 'B': 'banana'}, {'Name': 'John', 'Age': '36'}]) == [{'a': 'apple', 'b': 'banana'}, {'A': 'apple', 'B': 'banana'}]",
+            "duration_seconds": 0.08333314955234528,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_dicts_by_case([{'a': 'apple', 'b': 'banana'}, {'A': 'apple', 'B': 'banana'}, {'Name': 'John', 'Age': '36'}]) == [{'a': 'apple', 'b': 'banana'}, {'A': 'apple', 'B': 'banana'}]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_dicts_by_case([{'STATE': 'NC', 'ZIP': '12345'}, {'name': 'John', 'age': '36'}, {'city': 'Houston'}]) == [{'STATE': 'NC', 'ZIP': '12345'}, {'name': 'John', 'age': '36'}, {'city': 'Houston'}]",
+            "duration_seconds": 0.1066870279610157,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_dicts_by_case([{'STATE': 'NC', 'ZIP': '12345'}, {'name': 'John', 'age': '36'}, {'city': 'Houston'}]) == [{'STATE': 'NC', 'ZIP': '12345'}, {'name': 'John', 'age': '36'}, {'city': 'Houston'}]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_dicts_by_case([]) == []",
+            "duration_seconds": 0.13204429857432842,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_dicts_by_case([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_dicts_by_case([{'a': 'apple', 8: 'banana', 'a': 'apple'}]) == []",
+            "duration_seconds": 0.1435467880219221,
+            "exception_message": "'int' object has no attribute 'islower'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 36, in <module>\n    __srcg_assertion_actual_7f31 = filter_dicts_by_case([{'a': 'apple', 8: 'banana', 'a': 'apple'}])\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 34, in filter_dicts_by_case\n    return [d for d in dict_list if check_dict_case(d)]\n                                    ~~~~~~~~~~~~~~~^^^\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 29, in check_dict_case\n    elif (key_case == 'lower' and not key.islower()) or (key_case == 'upper' and not key.isupper()):\n                                      ^^^^^^^^^^^\nAttributeError: 'int' object has no attribute 'islower'\n",
+            "stdout": "",
+            "test_case": "assert filter_dicts_by_case([{'a': 'apple', 8: 'banana', 'a': 'apple'}]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 36, in <module>\n    __srcg_assertion_actual_7f31 = filter_dicts_by_case([{'a': 'apple', 8: 'banana', 'a': 'apple'}])\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 34, in filter_dicts_by_case\n    return [d for d in dict_list if check_dict_case(d)]\n                                    ~~~~~~~~~~~~~~~^^^\n  File \"/tmp/srcg-cnk11u5u/program.py\", line 29, in check_dict_case\n    elif (key_case == 'lower' and not key.islower()) or (key_case == 'upper' and not key.isupper()):\n                                      ^^^^^^^^^^^\nAttributeError: 'int' object has no attribute 'islower'\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def check_dict_case(dict):\n    if not dict:\n        return False\n    keys = set(dict.keys())\n    if len(keys) == 0:\n        return False\n    key_case = None\n    for key in keys:\n        if key_case is None:\n            key_case = 'lower' if key.islower() else 'upper'\n        elif (key_case == 'lower' and not key.islower()) or (key_case == 'upper' and not key.isupper()):\n            return False\n    return True\n\ndef filter_dicts_by_case(dict_list):\n    return [d for d in dict_list if check_dict_case(d)]",
+        "completion_tokens": 171,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 387,
+        "raw_text": " ```\ndef check_dict_case(dict):\n    if not dict:\n        return False\n    keys = set(dict.keys())\n    if len(keys) == 0:\n        return False\n    key_case = None\n    for key in keys:\n        if key_case is None:\n            key_case = 'lower' if key.islower() else 'upper'\n        elif (key_case == 'lower' and not key.islower()) or (key_case == 'upper' and not key.isupper()):\n            return False\n    return True\n\ndef filter_dicts_by_case(dict_list):\n    return [d for d in dict_list if check_dict_case(d)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef check_dict_case(dict):\n    \"\"\"\n    Given a dictionary, return True if all keys are strings in lower \n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\"a\":\"apple\", \"b\":\"banana\"}) should return True.\n    check_dict_case({\"a\":\"apple\", \"A\":\"banana\", \"B\":\"banana\"}) should return False.\n    check_dict_case({\"a\":\"apple\", 8:\"banana\", \"a\":\"apple\"}) should return False.\n    check_dict_case({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}) should return False.\n    check_dict_case({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) should return True.\n    \"\"\"\n\n# Given a list of dictionaries, return a list of dictionaries that meet the criteria of the check_dict_case function. The output should be a list of dictionaries where each dictionary has either all lower case keys or all upper case keys. If the input list is empty, return an empty list.\ndef filter_dicts_by_case(dict_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef check_dict_case(dict):\n    \"\"\"\n    Given a dictionary, return True if all keys are strings in lower \n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\"a\":\"apple\", \"b\":\"banana\"}) should return True.\n    check_dict_case({\"a\":\"apple\", \"A\":\"banana\", \"B\":\"banana\"}) should return False.\n    check_dict_case({\"a\":\"apple\", 8:\"banana\", \"a\":\"apple\"}) should return False.\n    check_dict_case({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}) should return False.\n    check_dict_case({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) should return True.\n    \"\"\"\n\n# Given a list of dictionaries, return a list of dictionaries that meet the criteria of the check_dict_case function. The output should be a list of dictionaries where each dictionary has either all lower case keys or all upper case keys. If the input list is empty, return an empty list.\ndef filter_dicts_by_case(dict_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.4659406952559948,
+        "generation_seconds": 22.114692533388734
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "humaneval_pro/95"
+}
