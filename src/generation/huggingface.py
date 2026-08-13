@@ -141,7 +141,7 @@ class HuggingFaceGenerator(Generator):
                 "install the project with the 'cluster' extra"
             ) from error
 
-        if self.config.device_map == "auto":
+        if self.config.gpu_preflight_index is not None:
             self._gpu_preflight = require_gpu_idle(
                 gpu_index=self.config.gpu_preflight_index,
                 sample_count=self.config.gpu_preflight_samples,

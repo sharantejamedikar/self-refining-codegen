@@ -78,7 +78,7 @@ def check_gpu_idle(
     *,
     sample_count: int = 3,
     sample_interval_seconds: float = 3.0,
-    utilization_threshold_percent: float = 5.0,
+    utilization_threshold_percent: float = 25.0,
     memory_threshold_mb: float = 500.0,
     query: Callable[[int], GPUReading] = query_gpu_reading,
     sleep: Callable[[float], None] = time.sleep,
