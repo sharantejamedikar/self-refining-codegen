@@ -30,6 +30,15 @@ MBPP_SANITIZED_URL = (
     "https://raw.githubusercontent.com/google-research/google-research/master/"
     "mbpp/sanitized-mbpp.json"
 )
+CODEEVAL_PRO_REVISION = "36f292eafc597b38535fbc8b4aafea8e5c654e3c"
+HUMANEVAL_PRO_URL = (
+    "https://raw.githubusercontent.com/CodeEval-Pro/CodeEval-Pro/"
+    f"{CODEEVAL_PRO_REVISION}/dataset/humaneval_pro.json"
+)
+MBPP_PRO_URL = (
+    "https://raw.githubusercontent.com/CodeEval-Pro/CodeEval-Pro/"
+    f"{CODEEVAL_PRO_REVISION}/dataset/mbpp_pro.json"
+)
 
 
 def download_file(url: str, destination: str | Path) -> Path:
@@ -105,6 +114,18 @@ def load_mbpp_sanitized(path: str | Path) -> list[Problem]:
     return [_normalize_mbpp(record) for record in records]
 
 
+def load_codeeval_pro(path: str | Path, benchmark: str) -> list[Problem]:
+    """Load an official CodeEval-Pro JSON file into the shared problem schema."""
+
+    if benchmark not in {"humaneval_pro", "mbpp_pro"}:
+        raise ValueError(f"Unsupported CodeEval-Pro benchmark: {benchmark!r}")
+    with Path(path).open(encoding="utf-8") as handle:
+        records = json.load(handle)
+    if not isinstance(records, list):
+        raise ValueError("CodeEval-Pro root must be a list")
+    return [_normalize_codeeval_pro(record, benchmark) for record in records]
+
+
 def write_jsonl(problems: Iterable[Problem], path: str | Path) -> Path:
     """Write normalized problems as deterministic UTF-8 JSON Lines."""
 
@@ -169,6 +190,59 @@ def _normalize_mbpp(record: dict[str, Any]) -> Problem:
         test_cases=tuple(tests),
         difficulty="unspecified",
         tags=("mbpp", "sanitized"),
+    )
+
+
+def _normalize_codeeval_pro(record: dict[str, Any], benchmark: str) -> Problem:
+    required = {
+        "id",
+        "raw_problem",
+        "raw_solution",
+        "new_problem",
+        "new_solution",
+        "test_code",
+    }
+    missing = required - set(record)
+    if missing:
+        raise ValueError(f"CodeEval-Pro record is missing {sorted(missing)}")
+    base_problem = str(record["raw_problem"]).strip()
+    dependent_problem = str(record["new_problem"]).strip()
+    prompt = (
+        "Write a solution Python file for the following two problems. The "
+        "solution to the second problem must use one or more calls to the first "
+        "solution. Return both complete implementations.\n\n"
+        f"{base_problem}\n\n{dependent_problem}"
+    )
+    canonical_solution = "\n".join(
+        (
+            base_problem,
+            str(record["raw_solution"]).rstrip(),
+            dependent_problem,
+            str(record["new_solution"]).rstrip(),
+        )
+    )
+    tests = _split_top_level_assertions(str(record["test_code"]))
+    return Problem(
+        task_id=f"{benchmark}/{record['id']}",
+        prompt=prompt,
+        canonical_solution=canonical_solution,
+        test_cases=tests,
+        difficulty="unspecified",
+        tags=(benchmark, "codeeval-pro", "self-invoking"),
+    )
+
+
+def _split_top_level_assertions(test_code: str) -> tuple[str, ...]:
+    """Split a Pro harness into atomic assertions while preserving setup code."""
+
+    tree = ast.parse(test_code)
+    assertions = [node for node in tree.body if isinstance(node, ast.Assert)]
+    if not assertions:
+        raise ValueError("CodeEval-Pro test_code contains no top-level assertions")
+    setup = [node for node in tree.body if not isinstance(node, ast.Assert)]
+    return tuple(
+        ast.unparse(ast.Module(body=[*setup, assertion], type_ignores=[]))
+        for assertion in assertions
     )
 
 

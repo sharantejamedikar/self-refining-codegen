@@ -17,6 +17,7 @@ from data.humaneval import (
 )
 from data.loaders import (
     download_file,
+    load_codeeval_pro,
     load_humaneval,
     load_humaneval_with_report,
     load_jsonl,
@@ -81,6 +82,43 @@ def test_mbpp_loader_repeats_imports_for_each_test(tmp_path: Path) -> None:
     assert problem.tags == ("mbpp", "sanitized")
     assert "Required function signature:\ndef value():" in problem.prompt
     assert all(case.startswith("import math\n") for case in problem.test_cases)
+
+
+def test_codeeval_pro_loader_builds_self_invoking_problem(tmp_path: Path) -> None:
+    source = tmp_path / "pro.json"
+    source.write_text(
+        json.dumps(
+            [
+                {
+                    "id": 4,
+                    "raw_problem": "def double(x):\n",
+                    "raw_solution": "    return 2 * x\n",
+                    "new_problem": "def double_all(values):\n",
+                    "new_solution": "    return [double(x) for x in values]\n",
+                    "test_code": (
+                        "import math\n"
+                        "assert double_all([1, 2]) == [2, 4]\n"
+                        "assert math.prod(double_all([2])) == 4"
+                    ),
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    problem = load_codeeval_pro(source, "humaneval_pro")[0]
+
+    assert problem.task_id == "humaneval_pro/4"
+    assert "solution to the second problem" in problem.prompt
+    assert "def double(x):" in problem.canonical_solution
+    assert len(problem.test_cases) == 2
+    assert all(case.startswith("import math\n") for case in problem.test_cases)
+    assert problem.tags == ("humaneval_pro", "codeeval-pro", "self-invoking")
+
+
+def test_codeeval_pro_loader_rejects_unknown_benchmark(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="Unsupported"):
+        load_codeeval_pro(tmp_path / "missing.json", "other")
 
 
 def test_mbpp_loader_rejects_missing_tested_entry_point(tmp_path: Path) -> None:

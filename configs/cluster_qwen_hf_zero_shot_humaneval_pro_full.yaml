@@ -1,0 +1,36 @@
+# Full-precision Tier 1 HumanEval single-pass run on the GPU cluster.
+model:
+  name: Qwen/Qwen2.5-Coder-7B-Instruct
+  backend: huggingface
+  revision: c03e6d358207e414f1eca0bb1891e29f1db0e242
+  backend_model: Qwen/Qwen2.5-Coder-7B-Instruct
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.2
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval_pro
+  source_url: https://raw.githubusercontent.com/CodeEval-Pro/CodeEval-Pro/36f292eafc597b38535fbc8b4aafea8e5c654e3c/dataset/humaneval_pro.json
+  data_dir: data
+  split: full
+  path: data/normalized/humaneval_pro.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+experiment:
+  name: cluster_qwen_hf_zero_shot_humaneval_pro_full
+  seed: 42
+  output_dir: experiments/results
+device:
+  profile: cluster
+  accelerator: auto
+profiles:
+  cluster:
+    device: {accelerator: auto}
+  colab:
+    device: {accelerator: auto}

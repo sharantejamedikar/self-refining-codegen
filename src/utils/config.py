@@ -71,6 +71,7 @@ class ExperimentConfig:
     samples_per_problem: int = 5
     feedback_strategy: Literal["template", "trace", "hybrid"] = "template"
     convergence_mode: Literal["adaptive", "fixed"] = "adaptive"
+    feedback_max_words: int | None = None
 
 
 @dataclass(frozen=True)
@@ -191,6 +192,8 @@ def load_config(path: str | Path, profile: str | None = None) -> AppConfig:
         )
     if experiment.convergence_mode not in {"adaptive", "fixed"}:
         raise ValueError("experiment.convergence_mode must be 'adaptive' or 'fixed'")
+    if experiment.feedback_max_words is not None and experiment.feedback_max_words <= 0:
+        raise ValueError("experiment.feedback_max_words must be positive")
     if (
         min(
             experiment.max_iterations,
