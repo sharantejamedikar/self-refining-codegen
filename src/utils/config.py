@@ -24,7 +24,7 @@ class ModelConfig:
     gpu_preflight_index: int | None = None
     gpu_preflight_samples: int = 3
     gpu_preflight_interval_seconds: float = 3.0
-    gpu_idle_utilization_threshold_percent: float = 5.0
+    gpu_idle_utilization_threshold_percent: float = 25.0
     gpu_idle_memory_threshold_mb: float = 500.0
     endpoint: str | None = None
     request_timeout_seconds: float = 300.0

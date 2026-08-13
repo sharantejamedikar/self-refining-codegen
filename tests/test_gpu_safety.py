@@ -20,7 +20,7 @@ def _reading(utilization: float, memory: float) -> GPUReading:
 
 
 def test_sustained_idle_requires_every_sample_below_both_thresholds() -> None:
-    readings = iter([_reading(0, 100), _reading(4.9, 499), _reading(0, 200)])
+    readings = iter([_reading(0, 100), _reading(24.9, 499), _reading(0, 200)])
     sleeps: list[float] = []
 
     result = check_gpu_idle(1, query=lambda index: next(readings), sleep=sleeps.append)
@@ -31,7 +31,7 @@ def test_sustained_idle_requires_every_sample_below_both_thresholds() -> None:
     assert result.to_dict()["gpu_index"] == 1
 
 
-@pytest.mark.parametrize("busy", [_reading(5, 100), _reading(0, 500)])
+@pytest.mark.parametrize("busy", [_reading(25, 100), _reading(0, 500)])
 def test_threshold_is_strict_and_one_busy_sample_refuses(busy: GPUReading) -> None:
     readings = iter([_reading(0, 100), busy, _reading(0, 100)])
 
