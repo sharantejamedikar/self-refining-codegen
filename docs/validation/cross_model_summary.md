@@ -78,6 +78,8 @@ configuration and is confounded by model family, model size, and precision
 | CodeLlama-13B, bitsandbytes 8-bit | Single-pass | 192/427 | 0.4496 | 427 | 3,389.17 s | 67,427 |
 | CodeLlama-13B, bitsandbytes 8-bit | Best-of-5 | **263/427** | **0.6159** | 2,135 | 18,310.02 s | 348,041 |
 | CodeLlama-13B, bitsandbytes 8-bit | Adaptive hybrid refinement | 257/427 | 0.6019 | **821** | **8,039.95 s** | **309,044** |
+| CodeLlama-13B, bitsandbytes 8-bit | Fixed-k=5 hybrid refinement (ever solved) | 257/427 | 0.6019 | 2,135 | 18,916.06 s | 777,571 |
+| CodeLlama-13B, bitsandbytes 8-bit | Fixed-k=5 final iteration only | 211/427 | 0.4941 | 2,135 | 18,916.06 s | 777,571 |
 | Qwen-7B, Hugging Face `bfloat16` | Adaptive hybrid refinement | 352/427 | 0.8244 | 647 | 1,505.82 s | 206,160 |
 | Qwen-7B, Ollama Q4_K_M | Adaptive hybrid refinement | 351/427 | 0.8220 | 637 | 1,450.89 s | 197,079 |
 
@@ -100,6 +102,17 @@ adaptive refinement instead solved 257/427, 6 fewer than its own best-of-5.
 Accordingly, the claim that adaptive refinement beats best-of-5 on MBPP is
 supported for both tested Qwen precision configurations but does not
 generalize to this CodeLlama-13B 8-bit configuration.
+
+Fixed iteration produced no ever-solved gain over adaptive CodeLlama: both
+solved exactly the same 257 tasks. It nevertheless used 2,135 versus 821 calls
+(2.60x; 1,314 extra), 777,571 versus 309,044 tokens (2.52x), and 18,916.06
+versus 8,039.95 summed wall-clock seconds (2.35x). At iteration 5 only 211
+tasks still passed, so 46/257 (17.9%) ever-solved tasks regressed. All 46 next
+prompts paired `All assertions passed.` with `Return a corrected complete
+solution.`, replicating the same self-contradictory post-success instruction
+in the other five fixed-run conditions. This sixth condition completes the
+executed two-model, two-benchmark fixed-run coverage, with Qwen represented at
+both full precision and Q4_K_M.
 
 On CodeLlama, MBPP single-pass exceeded its own HumanEval single-pass result by
 3.50 percentage points (44.96% versus 41.46%). This is not evidence that MBPP
@@ -129,7 +142,11 @@ is also unmeasured.
 The authoritative CodeLlama MBPP artifacts are
 [`20260811...zero_shot_mbpp`](../../experiments/results/20260811T125007.528701Z_cluster_codellama_13b_bnb_8bit_zero_shot_mbpp_full/),
 [`20260811...best_of_5_mbpp`](../../experiments/results/20260811T185140.732397Z_cluster_codellama_13b_bnb_8bit_best_of_5_mbpp_full/), and
-[`20260812...adaptive_mbpp`](../../experiments/results/20260812T222900Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_mbpp_full/).
+[`20260812...adaptive_mbpp`](../../experiments/results/20260812T222900Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_mbpp_full/), and
+[`20260813...fixed_mbpp`](../../experiments/results/20260813T005000Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_mbpp_full/).
+The fixed-run case audit is
+[`codellama_mbpp_fixed_refinement_analysis.md`](codellama_mbpp_fixed_refinement_analysis.md).
 Their persisted commits are `b24f31bc468c81706844aa4f01c4c376c15a9e37`,
 `20b161898692443e3aa32b5c83338841beb4753b`, and
-`20b161898692443e3aa32b5c83338841beb4753b`, respectively.
+`20b161898692443e3aa32b5c83338841beb4753b`; the fixed artifact's commit is
+`80bde190b03b441b7e2328b8b8475cd8353c440f`.
