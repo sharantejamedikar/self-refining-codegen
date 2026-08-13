@@ -23,6 +23,13 @@ def parse_args() -> argparse.Namespace:
 
 
 def _pid_exists(pid: int) -> bool:
+    stat_path = Path(f"/proc/{pid}/stat")
+    try:
+        fields = stat_path.read_text(encoding="utf-8").split()
+    except (FileNotFoundError, PermissionError, OSError):
+        fields = []
+    if len(fields) >= 3 and fields[2] == "Z":
+        return False
     try:
         os.kill(pid, 0)
     except ProcessLookupError:
