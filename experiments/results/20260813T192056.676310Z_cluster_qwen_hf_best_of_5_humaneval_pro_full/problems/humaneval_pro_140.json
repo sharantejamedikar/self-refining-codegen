@@ -1,0 +1,705 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "04c38f524ec08bab16d4f7eb235496fc5094f6112a4fa060187324d0adeb3f9e",
+      "execution": {
+        "duration_seconds": 0.4063175115734339,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "duration_seconds": 0.07344204932451248,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "duration_seconds": 0.08729813806712627,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Single']) == 'Single'",
+            "duration_seconds": 0.11260725371539593,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Single']) == 'Single'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "duration_seconds": 0.13261757977306843,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    import re\n    result = re.sub(r' {3,}', '-', text)\n    return result.replace(' ', '_')\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')",
+        "completion_tokens": 264,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 260,
+        "raw_text": "```python\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    import re\n    result = re.sub(r' {3,}', '-', text)\n    return result.replace(' ', '_')\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')\n```\n\nThis solution includes two functions as specified:\n\n1. `fix_spaces`: This function takes a string and replaces all spaces with underscores. If there are more than two consecutive spaces, it replaces them with a hyphen.\n\n2. `process_and_concatenate_strings`: This function processes a list of strings using `fix_spaces`, concatenates them into a single string with newlines, and finally replaces all underscores in the concatenated string with asterisks.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4063175115734339,
+        "generation_seconds": 7.192220726981759
+      }
+    },
+    {
+      "code_hash": "af21e4883fd78f4ef32571fe02844e97b87a3eb09ea76046030dfd8342e78a8e",
+      "execution": {
+        "duration_seconds": 0.5003713984042406,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "'Example\\nExample_1\\n_Example_2\\n_Example-3'",
+            "assertion_expression": "process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "duration_seconds": 0.08723686262965202,
+            "exception_message": "assertion comparison failed: actual='Example\\nExample_1\\n_Example_2\\n_Example-3'; expected='Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-229p_sgj/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Example\\\\nExample_1\\\\n_Example_2\\\\n_Example-3'\", \"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example-3'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-229p_sgj/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Example\\\\nExample_1\\\\n_Example_2\\\\n_Example-3'\", \"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example-3'\")\n"
+          },
+          {
+            "actual_value": "'Hello_World\\n__Test-Case_\\nAnother_Example'",
+            "assertion_expression": "process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "duration_seconds": 0.13541304506361485,
+            "exception_message": "assertion comparison failed: actual='Hello_World\\n__Test-Case_\\nAnother_Example'; expected='Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-vv3t1odm/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Hello_World\\\\n__Test-Case_\\\\nAnother_Example'\", \"'Hello*World\\\\n**Test-Case*\\\\nAnother*Example'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-vv3t1odm/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Hello_World\\\\n__Test-Case_\\\\nAnother_Example'\", \"'Hello*World\\\\n**Test-Case*\\\\nAnother*Example'\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Single']) == 'Single'",
+            "duration_seconds": 0.13811851106584072,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Single']) == 'Single'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "'-Leading_spaces\\nTrailing_spaces-\\n_Both-sides-'",
+            "assertion_expression": "process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "duration_seconds": 0.13932165130972862,
+            "exception_message": "assertion comparison failed: actual='-Leading_spaces\\nTrailing_spaces-\\n_Both-sides-'; expected='-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "exception_type": "AssertionError",
+            "expected_value": "'-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dfpb_f8p/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'-Leading_spaces\\\\nTrailing_spaces-\\\\n_Both-sides-'\", \"'-Leading*spaces\\\\nTrailing*spaces-\\\\n*Both-sides-'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dfpb_f8p/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'-Leading_spaces\\\\nTrailing_spaces-\\\\n_Both-sides-'\", \"'-Leading*spaces\\\\nTrailing*spaces-\\\\n*Both-sides-'\")\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    result = []\n    space_count = 0\n    for char in text:\n        if char == ' ':\n            space_count += 1\n        else:\n            if space_count > 2:\n                result.append('-')\n            elif space_count > 0:\n                result.extend(['_'] * space_count)\n            result.append(char)\n            space_count = 0\n    if space_count > 2:\n        result.append('-')\n    elif space_count > 0:\n        result.extend(['_'] * space_count)\n    return ''.join(result)\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s).replace(' ', '*') for s in string_list]\n    return '\\n'.join(processed_strings)",
+        "completion_tokens": 258,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 260,
+        "raw_text": "```python\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    result = []\n    space_count = 0\n    for char in text:\n        if char == ' ':\n            space_count += 1\n        else:\n            if space_count > 2:\n                result.append('-')\n            elif space_count > 0:\n                result.extend(['_'] * space_count)\n            result.append(char)\n            space_count = 0\n    if space_count > 2:\n        result.append('-')\n    elif space_count > 0:\n        result.extend(['_'] * space_count)\n    return ''.join(result)\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s).replace(' ', '*') for s in string_list]\n    return '\\n'.join(processed_strings)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5003713984042406,
+        "generation_seconds": 7.080067468807101
+      }
+    },
+    {
+      "code_hash": "d160bc4bd95d1c505d95cf0e00080c0ec0a56d11fe106aa29d9554367e148678",
+      "execution": {
+        "duration_seconds": 0.432687783613801,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "duration_seconds": 0.09293028526008129,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "duration_seconds": 0.08867845684289932,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Single']) == 'Single'",
+            "duration_seconds": 0.12088329158723354,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Single']) == 'Single'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "duration_seconds": 0.1298299189656973,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef fix_spaces(text):\n    text = re.sub(r' {3,}', '-', text)\n    return text.replace(' ', '_')\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')",
+        "completion_tokens": 79,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 260,
+        "raw_text": "```python\nimport re\n\ndef fix_spaces(text):\n    text = re.sub(r' {3,}', '-', text)\n    return text.replace(' ', '_')\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.432687783613801,
+        "generation_seconds": 2.2642513681203127
+      }
+    },
+    {
+      "code_hash": "d1ac2a6aa105434f1fc30483020dc58700451588539818db8ca3efb320d46100",
+      "execution": {
+        "duration_seconds": 0.5148363783955574,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "'Example\\nExample*1\\n*Example*2\\n*Example***3'",
+            "assertion_expression": "process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "duration_seconds": 0.14931328408420086,
+            "exception_message": "assertion comparison failed: actual='Example\\nExample*1\\n*Example*2\\n*Example***3'; expected='Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-wqtu8zpx/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example***3'\", \"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example-3'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-wqtu8zpx/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example***3'\", \"'Example\\\\nExample*1\\\\n*Example*2\\\\n*Example-3'\")\n"
+          },
+          {
+            "actual_value": "'Hello*World\\n**Test***Case*\\nAnother*Example'",
+            "assertion_expression": "process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "duration_seconds": 0.11523580923676491,
+            "exception_message": "assertion comparison failed: actual='Hello*World\\n**Test***Case*\\nAnother*Example'; expected='Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "exception_type": "AssertionError",
+            "expected_value": "'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-1sogwmtg/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Hello*World\\\\n**Test***Case*\\\\nAnother*Example'\", \"'Hello*World\\\\n**Test-Case*\\\\nAnother*Example'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-1sogwmtg/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'Hello*World\\\\n**Test***Case*\\\\nAnother*Example'\", \"'Hello*World\\\\n**Test-Case*\\\\nAnother*Example'\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Single']) == 'Single'",
+            "duration_seconds": 0.12503879703581333,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Single']) == 'Single'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "'***Leading*spaces\\nTrailing*spaces***\\n*Both***sides***'",
+            "assertion_expression": "process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "duration_seconds": 0.124939339235425,
+            "exception_message": "assertion comparison failed: actual='***Leading*spaces\\nTrailing*spaces***\\n*Both***sides***'; expected='-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "exception_type": "AssertionError",
+            "expected_value": "'-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kezkxvce/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'***Leading*spaces\\\\nTrailing*spaces***\\\\n*Both***sides***'\", \"'-Leading*spaces\\\\nTrailing*spaces-\\\\n*Both-sides-'\")\n",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kezkxvce/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'***Leading*spaces\\\\nTrailing*spaces***\\\\n*Both***sides***'\", \"'-Leading*spaces\\\\nTrailing*spaces-\\\\n*Both-sides-'\")\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    import re\n    return re.sub(r' {3,}', '-', re.sub(r' ', '_', text))\n\ndef process_and_concatenate_strings(string_list):\n    \"\"\"\n    Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\n    \n    process_and_concatenate_strings([\"Hello World\", \"This   is a test\", \"End\"]) == \"Hello_World\\nThis-is_a_test\\nEnd\"\n    \"\"\"\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')",
+        "completion_tokens": 281,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 260,
+        "raw_text": "```python\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    import re\n    return re.sub(r' {3,}', '-', re.sub(r' ', '_', text))\n\ndef process_and_concatenate_strings(string_list):\n    \"\"\"\n    Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\n    \n    process_and_concatenate_strings([\"Hello World\", \"This   is a test\", \"End\"]) == \"Hello_World\\nThis-is_a_test\\nEnd\"\n    \"\"\"\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings)\n    return concatenated_string.replace('_', '*')\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.5148363783955574,
+        "generation_seconds": 7.658818643540144
+      }
+    },
+    {
+      "code_hash": "b908fe0daa42b205297ff0dcc4ca0f9f2f37640eb8cc49948930b7fc3c8fb4bd",
+      "execution": {
+        "duration_seconds": 0.4248310811817646,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "duration_seconds": 0.07245049253106117,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Example', 'Example 1', ' Example 2', ' Example   3']) == 'Example\\nExample*1\\n*Example*2\\n*Example-3'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "duration_seconds": 0.12623237632215023,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Hello World', '  Test   Case ', 'Another Example']) == 'Hello*World\\n**Test-Case*\\nAnother*Example'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['Single']) == 'Single'",
+            "duration_seconds": 0.11630239523947239,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['Single']) == 'Single'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "duration_seconds": 0.10953079350292683,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_and_concatenate_strings(['   Leading spaces', 'Trailing spaces   ', ' Both   sides   ']) == '-Leading*spaces\\nTrailing*spaces-\\n*Both-sides-'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    result = []\n    space_count = 0\n    \n    for char in text:\n        if char == ' ':\n            space_count += 1\n        else:\n            if space_count > 2:\n                result.append('-')\n            elif space_count > 0:\n                result.extend(['_'] * space_count)\n            result.append(char)\n            space_count = 0\n    \n    if space_count > 2:\n        result.append('-')\n    elif space_count > 0:\n        result.extend(['_'] * space_count)\n    \n    return ''.join(result)\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings).replace('_', '*')\n    return concatenated_string",
+        "completion_tokens": 339,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 260,
+        "raw_text": "```python\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n    result = []\n    space_count = 0\n    \n    for char in text:\n        if char == ' ':\n            space_count += 1\n        else:\n            if space_count > 2:\n                result.append('-')\n            elif space_count > 0:\n                result.extend(['_'] * space_count)\n            result.append(char)\n            space_count = 0\n    \n    if space_count > 2:\n        result.append('-')\n    elif space_count > 0:\n        result.extend(['_'] * space_count)\n    \n    return ''.join(result)\n\ndef process_and_concatenate_strings(string_list):\n    processed_strings = [fix_spaces(s) for s in string_list]\n    concatenated_string = '\\n'.join(processed_strings).replace('_', '*')\n    return concatenated_string\n```\n\nThis solution includes two functions:\n1. `fix_spaces(text)` which replaces spaces in a given string according to the specified rules.\n2. `process_and_concatenate_strings(string_list)` which uses `fix_spaces` to process each string in a list and then concatenates them into a single string with each separated by a newline, replacing all underscores with asterisks.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n\n# Given a list of strings, replace all spaces in each string with underscores, and if a string has more than 2 consecutive spaces, then replace all consecutive spaces with a hyphen. After processing all strings, concatenate them into a single string with each string separated by a newline character. Finally, replace all underscores in the concatenated string with asterisks.\ndef process_and_concatenate_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4248310811817646,
+        "generation_seconds": 9.246806839480996
+      }
+    }
+  ],
+  "duration_seconds": 35.72535069473088,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/140",
+  "unique_code_count": 5
+}

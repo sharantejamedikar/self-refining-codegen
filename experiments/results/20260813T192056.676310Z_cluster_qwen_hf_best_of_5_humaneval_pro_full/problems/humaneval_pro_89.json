@@ -1,0 +1,707 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "2c7bcb1e8490e7fe0c5cc48aaaf2c694e82d25cc3e162a2f20119fc857bb16bf",
+      "execution": {
+        "duration_seconds": 0.43715980648994446,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "duration_seconds": 0.07071033865213394,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "duration_seconds": 0.12626086175441742,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "duration_seconds": 0.11326057091355324,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "duration_seconds": 0.12650258652865887,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encrypt(s, rotate_by=2):\n    encrypted_chars = []\n    for char in s:\n        if char.isalpha():\n            base = 'a' if char.islower() else 'A'\n            offset = (ord(char) - ord(base) + rotate_by * 2) % 26\n            encrypted_char = chr(ord(base) + offset)\n            encrypted_chars.append(encrypted_char)\n        else:\n            encrypted_chars.append(char)\n    return ''.join(encrypted_chars)\n\ndef encrypt_message(strings, rotate_by=2):\n    return [encrypt(s, rotate_by) for s in strings]",
+        "completion_tokens": 129,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef encrypt(s, rotate_by=2):\n    encrypted_chars = []\n    for char in s:\n        if char.isalpha():\n            base = 'a' if char.islower() else 'A'\n            offset = (ord(char) - ord(base) + rotate_by * 2) % 26\n            encrypted_char = chr(ord(base) + offset)\n            encrypted_chars.append(encrypted_char)\n        else:\n            encrypted_chars.append(char)\n    return ''.join(encrypted_chars)\n\ndef encrypt_message(strings, rotate_by=2):\n    return [encrypt(s, rotate_by) for s in strings]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.43715980648994446,
+        "generation_seconds": 3.588573405519128
+      }
+    },
+    {
+      "code_hash": "ca0641d96de9bc564e4c912a5d5540c896ea0df44bcc3e059000184d83491eff",
+      "execution": {
+        "duration_seconds": 0.3769398611038923,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "duration_seconds": 0.06938939541578293,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "duration_seconds": 0.0949999950826168,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "duration_seconds": 0.11714333668351173,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "duration_seconds": 0.09513393044471741,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encrypt(s, rotate_by=2):\n    encrypted_chars = []\n    for char in s:\n        if char.isalpha():\n            shift = (ord(char.lower()) - ord('a') + rotate_by * 2) % 26\n            new_char = chr(ord('a') + shift)\n            encrypted_chars.append(new_char.upper() if char.isupper() else new_char)\n        else:\n            encrypted_chars.append(char)\n    return ''.join(encrypted_chars)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(msg, rotate_by) for msg in messages]",
+        "completion_tokens": 205,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef encrypt(s, rotate_by=2):\n    encrypted_chars = []\n    for char in s:\n        if char.isalpha():\n            shift = (ord(char.lower()) - ord('a') + rotate_by * 2) % 26\n            new_char = chr(ord('a') + shift)\n            encrypted_chars.append(new_char.upper() if char.isupper() else new_char)\n        else:\n            encrypted_chars.append(char)\n    return ''.join(encrypted_chars)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(msg, rotate_by) for msg in messages]\n```\n\nThis solution includes the implementation of both `encrypt` and `encrypt_message` functions as described. The `encrypt` function now accepts an optional `rotate_by` parameter, which defaults to 2 if not provided. The `encrypt_message` function uses a list comprehension to apply the `encrypt` function to each string in the input list, handling the `rotate_by` parameter as well.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3769398611038923,
+        "generation_seconds": 5.61138254776597
+      }
+    },
+    {
+      "code_hash": "50fd2e6eb26bd6169e303e90882fe12a8430415d598800151d477421e5bb265e",
+      "execution": {
+        "duration_seconds": 0.36367884278297424,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "duration_seconds": 0.07397426292300224,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "duration_seconds": 0.06840324960649014,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "duration_seconds": 0.1159604974091053,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "duration_seconds": 0.10497530922293663,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encrypt(s, rotate_by=2):\n    result = []\n    for char in s:\n        if char.isalpha():\n            offset = 65 if char.isupper() else 97\n            rotated_char = chr((ord(char) - offset + (rotate_by * 2)) % 26 + offset)\n            result.append(rotated_char)\n        else:\n            result.append(char)\n    return ''.join(result)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(message, rotate_by) for message in messages]",
+        "completion_tokens": 180,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef encrypt(s, rotate_by=2):\n    result = []\n    for char in s:\n        if char.isalpha():\n            offset = 65 if char.isupper() else 97\n            rotated_char = chr((ord(char) - offset + (rotate_by * 2)) % 26 + offset)\n            result.append(rotated_char)\n        else:\n            result.append(char)\n    return ''.join(result)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(message, rotate_by) for message in messages]\n```\n\nThis solution includes both required functions. The `encrypt` function rotates the alphabet by a specified number of places, defaulting to 4 when no argument is provided. The `encrypt_message` function applies the `encrypt` function to each string in a list, also accepting an optional `rotate_by` parameter.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.36367884278297424,
+        "generation_seconds": 4.963471999391913
+      }
+    },
+    {
+      "code_hash": "e7f30e9ae85a74da487fc462f307fbab1f46bd8d7cdb7c4852bfb98466294e26",
+      "execution": {
+        "duration_seconds": 0.4140846226364374,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "duration_seconds": 0.07955840975046158,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "duration_seconds": 0.09558966383337975,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "duration_seconds": 0.12420627474784851,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "duration_seconds": 0.11436784639954567,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encrypt(s, rotate_by=2):\n    result = []\n    for char in s:\n        if 'a' <= char <= 'z':\n            result.append(chr((ord(char) - ord('a') + rotate_by * 2) % 26 + ord('a')))\n        elif 'A' <= char <= 'Z':\n            result.append(chr((ord(char) - ord('A') + rotate_by * 2) % 26 + ord('A')))\n        else:\n            result.append(char)\n    return ''.join(result)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(msg, rotate_by) for msg in messages]",
+        "completion_tokens": 260,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef encrypt(s, rotate_by=2):\n    result = []\n    for char in s:\n        if 'a' <= char <= 'z':\n            result.append(chr((ord(char) - ord('a') + rotate_by * 2) % 26 + ord('a')))\n        elif 'A' <= char <= 'Z':\n            result.append(chr((ord(char) - ord('A') + rotate_by * 2) % 26 + ord('A')))\n        else:\n            result.append(char)\n    return ''.join(result)\n\ndef encrypt_message(messages, rotate_by=2):\n    return [encrypt(msg, rotate_by) for msg in messages]\n```\n\nThis solution includes two functions: `encrypt` and `encrypt_message`. The `encrypt` function takes a string `s` and an optional `rotate_by` parameter (defaulting to 2). It encrypts the string by rotating the alphabet according to the specified rotation value. The `encrypt_message` function takes a list of strings `messages` and an optional `rotate_by` parameter. It applies the `encrypt` function to each string in the list and returns a new list containing the encrypted strings. Both functions handle uppercase and lowercase alphabetic characters while leaving other characters unchanged.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4140846226364374,
+        "generation_seconds": 7.161031931638718
+      }
+    },
+    {
+      "code_hash": "dcdf83efeaa496199e4f19ab636bc07b81ce8d9085f3ed8088a831f050e0c6bc",
+      "execution": {
+        "duration_seconds": 0.4088057465851307,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "duration_seconds": 0.10824988409876823,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et']) == ['lm', 'ewhjklnop', 'kj', 'ix']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "duration_seconds": 0.11915682628750801,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hi', 'asdfghjkl', 'gf', 'et'], 3) == ['no', 'gyjlmnpqr', 'ml', 'kz']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "duration_seconds": 0.09444978274405003,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['abc', 'xyz'], 1) == ['cde', 'zab']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "duration_seconds": 0.08663343265652657,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert encrypt_message(['hello', 'world'], 0) == ['hello', 'world']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encrypt(s, rotate_by=2):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n    alphabet = \"abcdefghijklmnopqrstuvwxyz\"\n    encrypted_string = \"\"\n    for char in s:\n        if char in alphabet:\n            new_index = (alphabet.index(char) + rotate_by * 2) % len(alphabet)\n            encrypted_string += alphabet[new_index]\n        else:\n            encrypted_string += char\n    return encrypted_string\n\ndef encrypt_message(strings, rotate_by=2):\n    \"\"\"Encrypts a list of messages.\"\"\"\n    return [encrypt(s, rotate_by) for s in strings]",
+        "completion_tokens": 213,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef encrypt(s, rotate_by=2):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n    alphabet = \"abcdefghijklmnopqrstuvwxyz\"\n    encrypted_string = \"\"\n    for char in s:\n        if char in alphabet:\n            new_index = (alphabet.index(char) + rotate_by * 2) % len(alphabet)\n            encrypted_string += alphabet[new_index]\n        else:\n            encrypted_string += char\n    return encrypted_string\n\ndef encrypt_message(strings, rotate_by=2):\n    \"\"\"Encrypts a list of messages.\"\"\"\n    return [encrypt(s, rotate_by) for s in strings]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encrypt(s):\n    \"\"\"Create a function encrypt that takes a string as an argument and\n    returns a string encrypted with the alphabet being rotated. \n    The alphabet should be rotated in a manner such that the letters \n    shift down by two multiplied to two places.\n    For example:\n    encrypt('hi') returns 'lm'\n    encrypt('asdfghjkl') returns 'ewhjklnop'\n    encrypt('gf') returns 'kj'\n    encrypt('et') returns 'ix'\n    \"\"\"\n\n# Create a function `encrypt_message` that takes a list of strings as an argument and returns a list of strings where each string is encrypted using the `encrypt` function. The `encrypt` function should be called for each string in the list. Additionally, the function should handle an optional argument `rotate_by` which specifies the number of places to rotate the alphabet. If `rotate_by` is not provided, it should default to 2. The `encrypt` function should be modified to accept this `rotate_by` argument.\ndef encrypt(s, rotate_by=2): \n    result = []\n    for char in s:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4088057465851307,
+        "generation_seconds": 5.826019970700145
+      }
+    }
+  ],
+  "duration_seconds": 29.155122751370072,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/89",
+  "unique_code_count": 5
+}

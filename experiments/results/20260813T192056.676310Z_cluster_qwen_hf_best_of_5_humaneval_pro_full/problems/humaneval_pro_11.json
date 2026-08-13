@@ -1,0 +1,781 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b866e3990bd20a6d5721d96318c9032cbf2f66d425e9d180feb090404d35661d",
+      "execution": {
+        "duration_seconds": 0.5018812827765942,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['010', '110', '101']) == '001'",
+            "duration_seconds": 0.07511843740940094,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['010', '110', '101']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['111', '111', '111']) == '111'",
+            "duration_seconds": 0.10768159106373787,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['111', '111', '111']) == '111'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['000', '000', '000']) == '000'",
+            "duration_seconds": 0.09968996234238148,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['000', '000', '000']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['101', '010', '111']) == '000'",
+            "duration_seconds": 0.1209256760776043,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['101', '010', '111']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['110', '011', '100']) == '001'",
+            "duration_seconds": 0.09805507212877274,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['110', '011', '100']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    \"\"\"\n    result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            result.append('0')\n        else:\n            result.append('1')\n    return ''.join(result)\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    current_result = binary_strings[0]\n    for binary_string in binary_strings[1:]:\n        current_result = string_xor(current_result, binary_string)\n    return current_result",
+        "completion_tokens": 199,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 221,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    \"\"\"\n    result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            result.append('0')\n        else:\n            result.append('1')\n    return ''.join(result)\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    current_result = binary_strings[0]\n    for binary_string in binary_strings[1:]:\n        current_result = string_xor(current_result, binary_string)\n    return current_result\n```\nThis solution includes two functions: `string_xor` which performs the binary XOR operation between two strings, and `cumulative_xor` which uses the `string_xor` function to perform a cumulative XOR operation over a list of binary strings.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.5018812827765942,
+        "generation_seconds": 6.052227949723601
+      }
+    },
+    {
+      "code_hash": "24864119e819c920a8a5bd3eecabc48c9ec4695b1d5eae799e8228a96246bb0e",
+      "execution": {
+        "duration_seconds": 0.49059642292559147,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['010', '110', '101']) == '001'",
+            "duration_seconds": 0.07307676039636135,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['010', '110', '101']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['111', '111', '111']) == '111'",
+            "duration_seconds": 0.08786060847342014,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['111', '111', '111']) == '111'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['000', '000', '000']) == '000'",
+            "duration_seconds": 0.11476740799844265,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['000', '000', '000']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['101', '010', '111']) == '000'",
+            "duration_seconds": 0.11338518373668194,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['101', '010', '111']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['110', '011', '100']) == '001'",
+            "duration_seconds": 0.10108321346342564,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['110', '011', '100']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    \"\"\"\n    xor_result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            xor_result.append('0')\n        else:\n            xor_result.append('1')\n    return ''.join(xor_result)\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = '0' * len(binary_strings[0])\n    for binary_string in binary_strings:\n        result = string_xor(result, binary_string)\n    return result",
+        "completion_tokens": 155,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 221,
+        "raw_text": "```python\nfrom typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    \"\"\"\n    xor_result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            xor_result.append('0')\n        else:\n            xor_result.append('1')\n    return ''.join(xor_result)\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = '0' * len(binary_strings[0])\n    for binary_string in binary_strings:\n        result = string_xor(result, binary_string)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.49059642292559147,
+        "generation_seconds": 4.2422889322042465
+      }
+    },
+    {
+      "code_hash": "32254b733a1875f35fd7b3cc7925f993963d6fc6b17d196c2b979210fd807df1",
+      "execution": {
+        "duration_seconds": 0.6737319864332676,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "'0'",
+            "assertion_expression": "cumulative_xor(['010', '110', '101']) == '001'",
+            "duration_seconds": 0.0878138318657875,
+            "exception_message": "assertion comparison failed: actual='0'; expected='001'",
+            "exception_type": "AssertionError",
+            "expected_value": "'001'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mf07ndn4/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'001'\")\n",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['010', '110', '101']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mf07ndn4/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'001'\")\n"
+          },
+          {
+            "actual_value": "'1'",
+            "assertion_expression": "cumulative_xor(['111', '111', '111']) == '111'",
+            "duration_seconds": 0.14836839213967323,
+            "exception_message": "assertion comparison failed: actual='1'; expected='111'",
+            "exception_type": "AssertionError",
+            "expected_value": "'111'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-svx5tbeg/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'1'\", \"'111'\")\n",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['111', '111', '111']) == '111'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-svx5tbeg/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'1'\", \"'111'\")\n"
+          },
+          {
+            "actual_value": "'0'",
+            "assertion_expression": "cumulative_xor(['000', '000', '000']) == '000'",
+            "duration_seconds": 0.1309564970433712,
+            "exception_message": "assertion comparison failed: actual='0'; expected='000'",
+            "exception_type": "AssertionError",
+            "expected_value": "'000'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-xt2yjpd5/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'000'\")\n",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['000', '000', '000']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-xt2yjpd5/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'000'\")\n"
+          },
+          {
+            "actual_value": "'0'",
+            "assertion_expression": "cumulative_xor(['101', '010', '111']) == '000'",
+            "duration_seconds": 0.13667656481266022,
+            "exception_message": "assertion comparison failed: actual='0'; expected='000'",
+            "exception_type": "AssertionError",
+            "expected_value": "'000'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cgpwvhgt/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'000'\")\n",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['101', '010', '111']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cgpwvhgt/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'000'\")\n"
+          },
+          {
+            "actual_value": "'0'",
+            "assertion_expression": "cumulative_xor(['110', '011', '100']) == '001'",
+            "duration_seconds": 0.16947060078382492,
+            "exception_message": "assertion comparison failed: actual='0'; expected='001'",
+            "exception_type": "AssertionError",
+            "expected_value": "'001'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zkxavir9/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'001'\")\n",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['110', '011', '100']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zkxavir9/program.py\", line 37, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'0'\", \"'001'\")\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    return ''.join(str(int(x) ^ int(y)) for x, y in zip(a, b))\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = '0'\n    for binary_string in binary_strings:\n        result = string_xor(result, binary_string)\n    return result",
+        "completion_tokens": 229,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 221,
+        "raw_text": "```python\nfrom typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    return ''.join(str(int(x) ^ int(y)) for x, y in zip(a, b))\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = '0'\n    for binary_string in binary_strings:\n        result = string_xor(result, binary_string)\n    return result\n```\n\nThis solution defines two functions:\n1. `string_xor` performs the binary XOR operation between two input strings `a` and `b`, returning the result as a string.\n2. `cumulative_xor` takes a list of binary strings, iterates through each string, and applies the `string_xor` function cumulatively to compute the final result. The initial value for the cumulative XOR is set to '0'.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.6737319864332676,
+        "generation_seconds": 6.204560078680515
+      }
+    },
+    {
+      "code_hash": "88aef79ffd0aa1f42cd4b98780ae0284def7f8e5ff26b303ac450d97edd2f66f",
+      "execution": {
+        "duration_seconds": 0.5736351106315851,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['010', '110', '101']) == '001'",
+            "duration_seconds": 0.07226026616990566,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['010', '110', '101']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['111', '111', '111']) == '111'",
+            "duration_seconds": 0.1173076368868351,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['111', '111', '111']) == '111'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['000', '000', '000']) == '000'",
+            "duration_seconds": 0.11295146867632866,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['000', '000', '000']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['101', '010', '111']) == '000'",
+            "duration_seconds": 0.12933912687003613,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['101', '010', '111']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['110', '011', '100']) == '001'",
+            "duration_seconds": 0.1413371004164219,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['110', '011', '100']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    return ''.join(str(int(x) ^ int(y)) for x, y in zip(a, b))\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    \"\"\" Given a list of binary strings, perform a cumulative XOR operation on them.\n    The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations.\n    Return the final result as a string.\n    \"\"\"\n    result = '0' * len(binary_strings[0])\n    for string in binary_strings:\n        result = string_xor(result, string)\n    return result",
+        "completion_tokens": 201,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 221,
+        "raw_text": "```python\nfrom typing import List\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    return ''.join(str(int(x) ^ int(y)) for x, y in zip(a, b))\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    \"\"\" Given a list of binary strings, perform a cumulative XOR operation on them.\n    The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations.\n    Return the final result as a string.\n    \"\"\"\n    result = '0' * len(binary_strings[0])\n    for string in binary_strings:\n        result = string_xor(result, string)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.5736351106315851,
+        "generation_seconds": 6.03835491463542
+      }
+    },
+    {
+      "code_hash": "c062c9a37a450f50a40926ba719cf8b2895c61429feee6e7d327b9b06c108fb5",
+      "execution": {
+        "duration_seconds": 0.5924935285001993,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['010', '110', '101']) == '001'",
+            "duration_seconds": 0.0878776665776968,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['010', '110', '101']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['111', '111', '111']) == '111'",
+            "duration_seconds": 0.11685453727841377,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['111', '111', '111']) == '111'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['000', '000', '000']) == '000'",
+            "duration_seconds": 0.13446582108736038,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['000', '000', '000']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['101', '010', '111']) == '000'",
+            "duration_seconds": 0.13590211793780327,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['101', '010', '111']) == '000'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "cumulative_xor(['110', '011', '100']) == '001'",
+            "duration_seconds": 0.1169347744435072,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert cumulative_xor(['110', '011', '100']) == '001'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            result.append('0')\n        else:\n            result.append('1')\n    return ''.join(result)\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = binary_strings[0]\n    for string in binary_strings[1:]:\n        result = string_xor(result, string)\n    return result",
+        "completion_tokens": 165,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 221,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    result = []\n    for i in range(len(a)):\n        if a[i] == b[i]:\n            result.append('0')\n        else:\n            result.append('1')\n    return ''.join(result)\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n    result = binary_strings[0]\n    for string in binary_strings[1:]:\n        result = string_xor(result, string)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n\n# Given a list of binary strings, perform a cumulative XOR operation on them. The cumulative XOR operation means that for each string in the list, XOR it with the result of all previous XOR operations. Return the final result as a string.\nfrom typing import List\n\n\ndef cumulative_xor(binary_strings: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5924935285001993,
+        "generation_seconds": 5.087180418893695
+      }
+    }
+  ],
+  "duration_seconds": 30.461491622030735,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/11",
+  "unique_code_count": 5
+}

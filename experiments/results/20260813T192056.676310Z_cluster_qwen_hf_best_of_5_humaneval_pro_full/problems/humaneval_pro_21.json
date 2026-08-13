@@ -1,0 +1,553 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "7ca2631539c24e5fae8eb2830a6e845de6267a016a292c57e80cd801f42eb697",
+      "execution": {
+        "duration_seconds": 0.2665907144546509,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "duration_seconds": 0.145138056948781,
+            "exception_message": "name 'rescale_nested_lists' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-l4xwaqqj/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-l4xwaqqj/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "duration_seconds": 0.121297063305974,
+            "exception_message": "name 'rescale_nested_lists' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-lzojhbp5/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-lzojhbp5/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rescale_to_unit(sublists: List[List[float]]) -> List[float]:\n    \"\"\" Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\n    \"\"\"\n    \n    def rescale(sublist: List[float]) -> List[float]:\n        min_val = min(sublist)\n        max_val = max(sublist)\n        return [(x - min_val) / (max_val - min_val) for x in sublist]\n    \n    # Apply rescaling to each sublist\n    transformed_sublists = [rescale(sublist) for sublist in sublists]\n    \n    # Combine all transformed sublists into a single list\n    combined_list = [num for sublist in transformed_sublists for num in sublist]\n    \n    # Rescale the combined list\n    final_transformed_list = rescale(combined_list)\n    \n    return final_transformed_list",
+        "completion_tokens": 305,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 303,
+        "raw_text": "```python\nfrom typing import List\n\ndef rescale_to_unit(sublists: List[List[float]]) -> List[float]:\n    \"\"\" Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\n    \"\"\"\n    \n    def rescale(sublist: List[float]) -> List[float]:\n        min_val = min(sublist)\n        max_val = max(sublist)\n        return [(x - min_val) / (max_val - min_val) for x in sublist]\n    \n    # Apply rescaling to each sublist\n    transformed_sublists = [rescale(sublist) for sublist in sublists]\n    \n    # Combine all transformed sublists into a single list\n    combined_list = [num for sublist in transformed_sublists for num in sublist]\n    \n    # Rescale the combined list\n    final_transformed_list = rescale(combined_list)\n    \n    return final_transformed_list\n```\n\nThis solution defines a helper function `rescale` that applies the linear transformation to a single sublist. It then uses this function to transform each sublist individually and combines the results. Finally, it transforms the combined list as well, ensuring consistency across all sublists.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.2665907144546509,
+        "generation_seconds": 8.925627475604415
+      }
+    },
+    {
+      "code_hash": "522e120ca0f63c5b63f8adbd58aec14c9af247485bd1f314db04b83bdb1d3ebd",
+      "execution": {
+        "duration_seconds": 0.2360051777213812,
+        "passed": true,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "duration_seconds": 0.10749923810362816,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "duration_seconds": 0.12829886190593243,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    if range_val == 0:\n        return [0] * len(numbers)\n    return [(x - min_val) / range_val for x in numbers]\n\ndef rescale_nested_lists(nested_numbers: List[List[float]]) -> List[float]:\n    flattened_list = [num for sublist in nested_numbers for num in sublist]\n    rescaled_flattened = rescale_to_unit(flattened_list)\n    \n    result = []\n    current_index = 0\n    for sublist in nested_numbers:\n        sublist_length = len(sublist)\n        rescaled_sublist = rescale_to_unit(rescaled_flattened[current_index:current_index + sublist_length])\n        result.extend(rescaled_sublist)\n        current_index += sublist_length\n    \n    return result",
+        "completion_tokens": 274,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 303,
+        "raw_text": "```python\nfrom typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    if range_val == 0:\n        return [0] * len(numbers)\n    return [(x - min_val) / range_val for x in numbers]\n\ndef rescale_nested_lists(nested_numbers: List[List[float]]) -> List[float]:\n    flattened_list = [num for sublist in nested_numbers for num in sublist]\n    rescaled_flattened = rescale_to_unit(flattened_list)\n    \n    result = []\n    current_index = 0\n    for sublist in nested_numbers:\n        sublist_length = len(sublist)\n        rescaled_sublist = rescale_to_unit(rescaled_flattened[current_index:current_index + sublist_length])\n        result.extend(rescaled_sublist)\n        current_index += sublist_length\n    \n    return result\n```\nThis solution consists of two functions. The `rescale_to_unit` function takes a list of numbers and scales them so that the minimum value becomes 0 and the maximum becomes 1. The `rescale_nested_lists` function applies this transformation not just to individual sublists but also to a combined version of all sublists, ensuring consistency across different sublists.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2360051777213812,
+        "generation_seconds": 8.021584071218967
+      }
+    },
+    {
+      "code_hash": "ace90127dbe27a4414e2e393209d9b1436fce728e4b89dda2b4921ec41637074",
+      "execution": {
+        "duration_seconds": 0.19968202896416187,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "duration_seconds": 0.09153139591217041,
+            "exception_message": "name 'rescale_nested_lists' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-hgeujcuv/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-hgeujcuv/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "duration_seconds": 0.10795433074235916,
+            "exception_message": "name 'rescale_nested_lists' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-82oubcpl/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-82oubcpl/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n    min_val = min(numbers)\n    max_val = max(numbers)\n    if min_val == max_val:\n        return [0] * len(numbers)  # Avoid division by zero if all values are the same\n    return [(x - min_val) / (max_val - min_val) for x in numbers]\n\ndef rescale_lists_of_numbers(lists_of_numbers: List[List[float]]) -> List[float]:\n    \"\"\" Apply rescale_to_unit to each sublist and then to the combined list \"\"\"\n    combined_list = []\n    for sublist in lists_of_numbers:\n        combined_list.extend(rescale_to_unit(sublist))\n    \n    return rescale_to_unit(combined_list)",
+        "completion_tokens": 338,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 303,
+        "raw_text": "```python\nfrom typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n    min_val = min(numbers)\n    max_val = max(numbers)\n    if min_val == max_val:\n        return [0] * len(numbers)  # Avoid division by zero if all values are the same\n    return [(x - min_val) / (max_val - min_val) for x in numbers]\n\ndef rescale_lists_of_numbers(lists_of_numbers: List[List[float]]) -> List[float]:\n    \"\"\" Apply rescale_to_unit to each sublist and then to the combined list \"\"\"\n    combined_list = []\n    for sublist in lists_of_numbers:\n        combined_list.extend(rescale_to_unit(sublist))\n    \n    return rescale_to_unit(combined_list)\n```\n\nThis solution includes two functions:\n1. `rescale_to_unit` which takes a list of floats and scales it so that the minimum value becomes 0 and the maximum value becomes 1.\n2. `rescale_lists_of_numbers` which applies the `rescale_to_unit` function to each sublist within a list of lists, and then scales the entire combined list as well.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.19968202896416187,
+        "generation_seconds": 9.247248018160462
+      }
+    },
+    {
+      "code_hash": "977f2e3faf4ccfb3a234a5024f54b35423bafa2fdb6561983fb33c63191c9fae",
+      "execution": {
+        "duration_seconds": 0.30134761705994606,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "duration_seconds": 0.15522873029112816,
+            "exception_message": "name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-k72l7p6n/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-k72l7p6n/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "duration_seconds": 0.14594120904803276,
+            "exception_message": "name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-h1x_zoyt/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-h1x_zoyt/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'rescale_nested_lists' is not defined. Did you mean: 'rescale_list_of_lists'?\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    return [(x - min_val) / range_val if range_val != 0 else 0.0 for x in numbers]\n\ndef rescale_list_of_lists(lists: List[List[float]]) -> List[float]:\n    all_numbers = [num for sublist in lists for num in sublist]\n    scaled_all_numbers = rescale_to_unit(all_numbers)\n    \n    scaled_lists = []\n    start_index = 0\n    for sublist in lists:\n        end_index = start_index + len(sublist)\n        scaled_sublist = rescale_to_unit(scaled_all_numbers[start_index:end_index])\n        scaled_lists.extend(scaled_sublist)\n        start_index = end_index\n    \n    return scaled_lists",
+        "completion_tokens": 188,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 303,
+        "raw_text": "```python\nfrom typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    return [(x - min_val) / range_val if range_val != 0 else 0.0 for x in numbers]\n\ndef rescale_list_of_lists(lists: List[List[float]]) -> List[float]:\n    all_numbers = [num for sublist in lists for num in sublist]\n    scaled_all_numbers = rescale_to_unit(all_numbers)\n    \n    scaled_lists = []\n    start_index = 0\n    for sublist in lists:\n        end_index = start_index + len(sublist)\n        scaled_sublist = rescale_to_unit(scaled_all_numbers[start_index:end_index])\n        scaled_lists.extend(scaled_sublist)\n        start_index = end_index\n    \n    return scaled_lists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.30134761705994606,
+        "generation_seconds": 5.137232648208737
+      }
+    },
+    {
+      "code_hash": "5cf6d97fe6ab7fdd8f0fc84a8bd7e03ea543103ae01655cf707565e086aaaca4",
+      "execution": {
+        "duration_seconds": 0.21134079806506634,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "duration_seconds": 0.08679578080773354,
+            "exception_message": "'float' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-xtkz798t/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n  File \"/tmp/srcg-xtkz798t/program.py\", line 36, in rescale_nested_lists\n    rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'float' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]) == [0.0, 0.5, 1.0, 0.0, 0.5, 1.0, 0.0, 0.5, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-xtkz798t/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])\n  File \"/tmp/srcg-xtkz798t/program.py\", line 36, in rescale_nested_lists\n    rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'float' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "duration_seconds": 0.1243588775396347,
+            "exception_message": "'float' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-d5jfoo4v/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n  File \"/tmp/srcg-d5jfoo4v/program.py\", line 36, in rescale_nested_lists\n    rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'float' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]]) == [0.0, 1.0, 0.0, 1.0, 0.0, 1.0]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-d5jfoo4v/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = rescale_nested_lists([[0.0, 1.0], [2.0, 3.0], [4.0, 5.0]])\n  File \"/tmp/srcg-d5jfoo4v/program.py\", line 36, in rescale_nested_lists\n    rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'float' object is not iterable\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    if range_val == 0:\n        return [0] * len(numbers)\n    return [(x - min_val) / range_val for x in numbers]\n\ndef rescale_nested_lists(nested_numbers: List[List[float]]) -> List[float]:\n    combined_numbers = [num for sublist in nested_numbers for num in sublist]\n    rescaled_combined = rescale_to_unit(combined_numbers)\n    \n    result = []\n    current_index = 0\n    for sublist in nested_numbers:\n        rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n        result.extend(rescaled_sublist)\n        current_index += len(sublist)\n    \n    return result",
+        "completion_tokens": 199,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 303,
+        "raw_text": "```python\nfrom typing import List\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val = min(numbers)\n    max_val = max(numbers)\n    range_val = max_val - min_val\n    if range_val == 0:\n        return [0] * len(numbers)\n    return [(x - min_val) / range_val for x in numbers]\n\ndef rescale_nested_lists(nested_numbers: List[List[float]]) -> List[float]:\n    combined_numbers = [num for sublist in nested_numbers for num in sublist]\n    rescaled_combined = rescale_to_unit(combined_numbers)\n    \n    result = []\n    current_index = 0\n    for sublist in nested_numbers:\n        rescaled_sublist = rescale_to_unit(sublist, min(rescaled_combined[current_index]), max(rescaled_combined[current_index + len(sublist)]))\n        result.extend(rescaled_sublist)\n        current_index += len(sublist)\n    \n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n\n# Given a list of lists of numbers (each sublist containing at least two elements), apply a linear transform to each sublist such that the smallest number in each sublist will become 0 and the largest will become 1. Then, combine all the transformed sublists into a single list and apply the same linear transform to this combined list, ensuring the smallest number in the combined list becomes 0 and the largest becomes 1.\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.21134079806506634,
+        "generation_seconds": 5.439130991697311
+      }
+    }
+  ],
+  "duration_seconds": 37.98930159583688,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    1
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/21",
+  "unique_code_count": 5
+}

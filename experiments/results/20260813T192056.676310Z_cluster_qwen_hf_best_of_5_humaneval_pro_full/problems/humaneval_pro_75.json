@@ -1,0 +1,781 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b2f3a853bb36c26a4c2637ab592878d017576ea14e5069af27ea0bf241444124",
+      "execution": {
+        "duration_seconds": 0.5530759524554014,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "duration_seconds": 0.0755008663982153,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "duration_seconds": 0.11314334347844124,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "duration_seconds": 0.1344397459179163,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "duration_seconds": 0.11905858665704727,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "duration_seconds": 0.11053854785859585,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers: List[int]) -> List[int]:\n    return [num for num in numbers if is_multiply_prime(num)]",
+        "completion_tokens": 255,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 211,
+        "raw_text": "```python\nfrom typing import List\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers: List[int]) -> List[int]:\n    return [num for num in numbers if is_multiply_prime(num)]\n```\n\nThis solution includes two functions:\n1. `is_multiply_prime(a)` checks if a number `a` (less than 100) is the product of exactly three prime numbers.\n2. `find_multiply_primes(numbers)` uses `is_multiply_prime` to filter and return a list of numbers from the input list that satisfy the condition of being the product of exactly three prime numbers.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.5530759524554014,
+        "generation_seconds": 6.908578360453248
+      }
+    },
+    {
+      "code_hash": "16185655ce13499dcbd2d2aa219b003cec64c8ea5a01b1ae9ee193f0b9f0bdc6",
+      "execution": {
+        "duration_seconds": 0.5411821007728577,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "duration_seconds": 0.08859523199498653,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "duration_seconds": 0.1103779748082161,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "duration_seconds": 0.0878524649888277,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "duration_seconds": 0.1275933627039194,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "duration_seconds": 0.12630545906722546,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        if n <= 3:\n            return True\n        if n % 2 == 0 or n % 3 == 0:\n            return False\n        i = 5\n        while i * i <= n:\n            if n % i == 0 or n % (i + 2) == 0:\n                return False\n            i += 6\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers: List[int]) -> List[int]:\n    result = []\n    for number in numbers:\n        if is_multiply_prime(number):\n            result.append(number)\n    return result",
+        "completion_tokens": 233,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 211,
+        "raw_text": "```python\nfrom typing import List\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        if n <= 3:\n            return True\n        if n % 2 == 0 or n % 3 == 0:\n            return False\n        i = 5\n        while i * i <= n:\n            if n % i == 0 or n % (i + 2) == 0:\n                return False\n            i += 6\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers: List[int]) -> List[int]:\n    result = []\n    for number in numbers:\n        if is_multiply_prime(number):\n            result.append(number)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5411821007728577,
+        "generation_seconds": 6.3079318925738335
+      }
+    },
+    {
+      "code_hash": "8579df19bb27caf8ae0e893644241cfc6f6af57f5de96d72b6fb8914abdd5efa",
+      "execution": {
+        "duration_seconds": 0.6053734421730042,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "duration_seconds": 0.1105478797107935,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "duration_seconds": 0.12955684028565884,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "duration_seconds": 0.1206132136285305,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "duration_seconds": 0.12957562692463398,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "duration_seconds": 0.11464890092611313,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(math.sqrt(n)) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for p1 in primes:\n        for p2 in primes:\n            for p3 in primes:\n                if p1 * p2 * p3 == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]",
+        "completion_tokens": 242,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 211,
+        "raw_text": "```python\nimport math\n\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(math.sqrt(n)) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for p1 in primes:\n        for p2 in primes:\n            for p3 in primes:\n                if p1 * p2 * p3 == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]\n```\n\nThis solution includes two functions: `is_multiply_prime` and `find_multiply_primes`. The `is_multiply_prime` function checks if a given number is the product of three prime numbers. It uses a helper function `is_prime` to determine if a number is prime. The `find_multiply_primes` function iterates over a list of numbers and returns a new list containing only those numbers that satisfy the condition defined in `is_multiply_prime`.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.6053734421730042,
+        "generation_seconds": 6.58521880581975
+      }
+    },
+    {
+      "code_hash": "c45b45458b339055eef0060f6fc0eb2f46523187489e3936b96a6a39d6415e4d",
+      "execution": {
+        "duration_seconds": 0.6955414600670338,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "duration_seconds": 0.14825046993792057,
+            "exception_message": "No module named 'sympy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ipo6xg3m/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ipo6xg3m/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "duration_seconds": 0.12794439867138863,
+            "exception_message": "No module named 'sympy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-nwegteys/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-nwegteys/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "duration_seconds": 0.14448541402816772,
+            "exception_message": "No module named 'sympy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cyx_n5id/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cyx_n5id/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "duration_seconds": 0.1394574623554945,
+            "exception_message": "No module named 'sympy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ax870d5l/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ax870d5l/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "duration_seconds": 0.13494536466896534,
+            "exception_message": "No module named 'sympy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bbzm3l90/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bbzm3l90/program.py\", line 19, in <module>\n    from sympy import primerange\nModuleNotFoundError: No module named 'sympy'\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from sympy import primerange\n\ndef is_multiply_prime(a):\n    primes = list(primerange(2, 100))\n    count = 0\n    for prime in primes:\n        while a % prime == 0:\n            a //= prime\n            count += 1\n            if count > 3:\n                return False\n    return count == 3\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]",
+        "completion_tokens": 104,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 211,
+        "raw_text": "```python\nfrom sympy import primerange\n\ndef is_multiply_prime(a):\n    primes = list(primerange(2, 100))\n    count = 0\n    for prime in primes:\n        while a % prime == 0:\n            a //= prime\n            count += 1\n            if count > 3:\n                return False\n    return count == 3\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.6955414600670338,
+        "generation_seconds": 2.8521106150001287
+      }
+    },
+    {
+      "code_hash": "acfd8dde4bd2a1580f79d6c5300468bf9b9657b1ed60e8978fc1f5723fdb3a43",
+      "execution": {
+        "duration_seconds": 0.5606301948428154,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "duration_seconds": 0.12059595808386803,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "duration_seconds": 0.11531129851937294,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([10, 15, 20, 25, 30]) == [20, 30]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "duration_seconds": 0.09954350255429745,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([1, 2, 3, 4, 5]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "duration_seconds": 0.11833171918988228,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([2, 3, 5, 7, 11]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "duration_seconds": 0.10647575929760933,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_multiply_primes([30, 42, 60, 70, 84, 90]) == [30, 42, 70]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def is_multiply_prime(a):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]",
+        "completion_tokens": 163,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 211,
+        "raw_text": "```python\ndef is_multiply_prime(a):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    primes = [i for i in range(2, 100) if is_prime(i)]\n    \n    for i in range(len(primes)):\n        for j in range(i, len(primes)):\n            for k in range(j, len(primes)):\n                if primes[i] * primes[j] * primes[k] == a:\n                    return True\n    return False\n\ndef find_multiply_primes(numbers):\n    return [num for num in numbers if is_multiply_prime(num)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n\n# Write a function that takes a list of numbers and returns a list of numbers that are the multiplication of exactly 3 prime numbers, considering each number in the input list. The input list contains numbers less than 100.\ndef find_multiply_primes(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5606301948428154,
+        "generation_seconds": 4.413305029273033
+      }
+    }
+  ],
+  "duration_seconds": 30.026347087696195,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/75",
+  "unique_code_count": 5
+}

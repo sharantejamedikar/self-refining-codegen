@@ -1,0 +1,704 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "793af79c630c5d9743122a452b87fbaeafa894cefe72202dfbdbe1c726428c78",
+      "execution": {
+        "duration_seconds": 0.4187765121459961,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "duration_seconds": 0.07332467287778854,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "duration_seconds": 0.12229579500854015,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "duration_seconds": 0.11532548069953918,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['', 'one two']) == ' one two'",
+            "duration_seconds": 0.10744638554751873,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['', 'one two']) == ' one two'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    num_map = {\n        'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4,\n        'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9\n    }\n    sorted_nums = sorted(numbers.split(), key=lambda x: num_map[x])\n    return ' '.join(sorted_nums)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    valid_numeral = {'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'}\n    result = []\n    \n    for seq in sequences:\n        sorted_seq = []\n        for word in seq.split():\n            if word in valid_numeral:\n                sorted_seq.append(word)\n        sorted_seq_str = sort_numbers(' '.join(sorted_seq))\n        result.append(sorted_seq_str)\n    \n    return ' '.join(result)",
+        "completion_tokens": 227,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 271,
+        "raw_text": "```python\nfrom typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    num_map = {\n        'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4,\n        'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9\n    }\n    sorted_nums = sorted(numbers.split(), key=lambda x: num_map[x])\n    return ' '.join(sorted_nums)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    valid_numeral = {'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'}\n    result = []\n    \n    for seq in sequences:\n        sorted_seq = []\n        for word in seq.split():\n            if word in valid_numeral:\n                sorted_seq.append(word)\n        sorted_seq_str = sort_numbers(' '.join(sorted_seq))\n        result.append(sorted_seq_str)\n    \n    return ' '.join(result)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4187765121459961,
+        "generation_seconds": 6.7523473016917706
+      }
+    },
+    {
+      "code_hash": "3672e8f591a2480f38a7e081372c4f0028c80d5fe9ba004a4ba8c4d511b8e6e2",
+      "execution": {
+        "duration_seconds": 0.4807923845946789,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "'three one five two four six'",
+            "assertion_expression": "sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "duration_seconds": 0.1234462633728981,
+            "exception_message": "assertion comparison failed: actual='three one five two four six'; expected='one three five two four six'",
+            "exception_type": "AssertionError",
+            "expected_value": "'one three five two four six'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-w965m473/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'three one five two four six'\", \"'one three five two four six'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-w965m473/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'three one five two four six'\", \"'one three five two four six'\")\n"
+          },
+          {
+            "actual_value": "'nine eight seven one two three'",
+            "assertion_expression": "sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "duration_seconds": 0.1251290999352932,
+            "exception_message": "assertion comparison failed: actual='nine eight seven one two three'; expected='seven eight nine one two three'",
+            "exception_type": "AssertionError",
+            "expected_value": "'seven eight nine one two three'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fh_099po/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'nine eight seven one two three'\", \"'seven eight nine one two three'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fh_099po/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'nine eight seven one two three'\", \"'seven eight nine one two three'\")\n"
+          },
+          {
+            "actual_value": "'zero zero'",
+            "assertion_expression": "sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "duration_seconds": 0.12168503738939762,
+            "exception_message": "assertion comparison failed: actual='zero zero'; expected='zero zero '",
+            "exception_type": "AssertionError",
+            "expected_value": "'zero zero '",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-47mojhmj/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'zero zero'\", \"'zero zero '\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-47mojhmj/program.py\", line 57, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'zero zero'\", \"'zero zero '\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['', 'one two']) == ' one two'",
+            "duration_seconds": 0.11026003025472164,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['', 'one two']) == ' one two'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    num_map = {\n        \"zero\": 0,\n        \"one\": 1,\n        \"two\": 2,\n        \"three\": 3,\n        \"four\": 4,\n        \"five\": 5,\n        \"six\": 6,\n        \"seven\": 7,\n        \"eight\": 8,\n        \"nine\": 9\n    }\n    \n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: num_map[word])\n    return ' '.join(sorted_words)\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    result = []\n    for seq in sequences:\n        valid = True\n        sorted_seq = ''\n        for word in seq.split():\n            if word in [\"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"]:\n                sorted_seq += sort_numbers(word) + ' '\n            else:\n                valid = False\n                break\n        if valid:\n            result.append(sorted_seq.strip())\n    return ' '.join(result)",
+        "completion_tokens": 242,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 271,
+        "raw_text": "```python\nfrom typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    num_map = {\n        \"zero\": 0,\n        \"one\": 1,\n        \"two\": 2,\n        \"three\": 3,\n        \"four\": 4,\n        \"five\": 5,\n        \"six\": 6,\n        \"seven\": 7,\n        \"eight\": 8,\n        \"nine\": 9\n    }\n    \n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: num_map[word])\n    return ' '.join(sorted_words)\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    result = []\n    for seq in sequences:\n        valid = True\n        sorted_seq = ''\n        for word in seq.split():\n            if word in [\"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"]:\n                sorted_seq += sort_numbers(word) + ' '\n            else:\n                valid = False\n                break\n        if valid:\n            result.append(sorted_seq.strip())\n    return ' '.join(result)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.4807923845946789,
+        "generation_seconds": 6.81979083456099
+      }
+    },
+    {
+      "code_hash": "d059cc614643937f75f33d47f23b53c67ddd28b5467de7e6208522d756a4752c",
+      "execution": {
+        "duration_seconds": 0.4542351718991995,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "'three one five two four six'",
+            "assertion_expression": "sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "duration_seconds": 0.09130914509296417,
+            "exception_message": "assertion comparison failed: actual='three one five two four six'; expected='one three five two four six'",
+            "exception_type": "AssertionError",
+            "expected_value": "'one three five two four six'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-v9cntxw4/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'three one five two four six'\", \"'one three five two four six'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-v9cntxw4/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'three one five two four six'\", \"'one three five two four six'\")\n"
+          },
+          {
+            "actual_value": "'nine eight seven one two three'",
+            "assertion_expression": "sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "duration_seconds": 0.146241944283247,
+            "exception_message": "assertion comparison failed: actual='nine eight seven one two three'; expected='seven eight nine one two three'",
+            "exception_type": "AssertionError",
+            "expected_value": "'seven eight nine one two three'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-qux0d5ar/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'nine eight seven one two three'\", \"'seven eight nine one two three'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-qux0d5ar/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'nine eight seven one two three'\", \"'seven eight nine one two three'\")\n"
+          },
+          {
+            "actual_value": "'zero zero  '",
+            "assertion_expression": "sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "duration_seconds": 0.12420486100018024,
+            "exception_message": "assertion comparison failed: actual='zero zero  '; expected='zero zero '",
+            "exception_type": "AssertionError",
+            "expected_value": "'zero zero '",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-whgjsi9r/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'zero zero  '\", \"'zero zero '\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-whgjsi9r/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'zero zero  '\", \"'zero zero '\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['', 'one two']) == ' one two'",
+            "duration_seconds": 0.09217716753482819,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['', 'one two']) == ' one two'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\nNUMERAL_MAP = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n}\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    \"\"\"\n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: NUMERAL_MAP[word])\n    return ' '.join(sorted_words)\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    sorted_sequences = []\n    for seq in sequences:\n        valid_parts = [sort_numbers(part) if part in NUMERAL_MAP else '' for part in seq.split()]\n        sorted_sequences.append(' '.join(valid_parts))\n    return ' '.join(sorted_sequences)",
+        "completion_tokens": 347,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 271,
+        "raw_text": "```python\nfrom typing import List\n\nNUMERAL_MAP = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n}\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    \"\"\"\n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: NUMERAL_MAP[word])\n    return ' '.join(sorted_words)\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    sorted_sequences = []\n    for seq in sequences:\n        valid_parts = [sort_numbers(part) if part in NUMERAL_MAP else '' for part in seq.split()]\n        sorted_sequences.append(' '.join(valid_parts))\n    return ' '.join(sorted_sequences)\n```\n\nExplanation:\n- `sort_numbers` takes a space-delimited string of numerals and sorts them based on their numeric value using a predefined mapping.\n- `sort_and_concatenate` processes a list of such space-delimited strings. It sorts each string individually by calling `sort_numbers`, replacing any invalid numerals with an empty string. Finally, it concatenates all sorted strings into a single string while maintaining the original order.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4542351718991995,
+        "generation_seconds": 9.812213780358434
+      }
+    },
+    {
+      "code_hash": "5dfd6338b166ff445c5bed709c97c1f19f5c4d557a4220538fd6ab3ed0db2b22",
+      "execution": {
+        "duration_seconds": 0.3499833606183529,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "duration_seconds": 0.07412049733102322,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "duration_seconds": 0.08872283063828945,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "duration_seconds": 0.0881024431437254,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_and_concatenate(['', 'one two']) == ' one two'",
+            "duration_seconds": 0.09875965677201748,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['', 'one two']) == ' one two'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\nNUMERAL_MAP = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n}\n\ndef sort_numbers(numbers: str) -> str:\n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: NUMERAL_MAP[word])\n    return ' '.join(sorted_words)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    sorted_sequences = []\n    for seq in sequences:\n        valid_numbers = [word for word in seq.split() if word in NUMERAL_MAP]\n        sorted_seq = sort_numbers(' '.join(valid_numbers))\n        sorted_sequences.append(sorted_seq)\n    return ' '.join(sorted_sequences)",
+        "completion_tokens": 197,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 271,
+        "raw_text": "```python\nfrom typing import List\n\nNUMERAL_MAP = {\n    'zero': 0,\n    'one': 1,\n    'two': 2,\n    'three': 3,\n    'four': 4,\n    'five': 5,\n    'six': 6,\n    'seven': 7,\n    'eight': 8,\n    'nine': 9\n}\n\ndef sort_numbers(numbers: str) -> str:\n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: NUMERAL_MAP[word])\n    return ' '.join(sorted_words)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    sorted_sequences = []\n    for seq in sequences:\n        valid_numbers = [word for word in seq.split() if word in NUMERAL_MAP]\n        sorted_seq = sort_numbers(' '.join(valid_numbers))\n        sorted_sequences.append(sorted_seq)\n    return ' '.join(sorted_sequences)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3499833606183529,
+        "generation_seconds": 5.377010410651565
+      }
+    },
+    {
+      "code_hash": "8f24d7594756d76952ab7825a2c0ed4c310b7eb6f62171dbbd0eb9871ca2ccb2",
+      "execution": {
+        "duration_seconds": 0.43535281904041767,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "' '",
+            "assertion_expression": "sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "duration_seconds": 0.08925665356218815,
+            "exception_message": "assertion comparison failed: actual=' '; expected='one three five two four six'",
+            "exception_type": "AssertionError",
+            "expected_value": "'one three five two four six'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-74lvnry7/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'one three five two four six'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['three one five', 'two four six']) == 'one three five two four six'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-74lvnry7/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'one three five two four six'\")\n"
+          },
+          {
+            "actual_value": "' '",
+            "assertion_expression": "sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "duration_seconds": 0.1152982097119093,
+            "exception_message": "assertion comparison failed: actual=' '; expected='seven eight nine one two three'",
+            "exception_type": "AssertionError",
+            "expected_value": "'seven eight nine one two three'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0cacxdzu/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'seven eight nine one two three'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['nine eight seven', 'one two three']) == 'seven eight nine one two three'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0cacxdzu/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'seven eight nine one two three'\")\n"
+          },
+          {
+            "actual_value": "' '",
+            "assertion_expression": "sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "duration_seconds": 0.12206549011170864,
+            "exception_message": "assertion comparison failed: actual=' '; expected='zero zero '",
+            "exception_type": "AssertionError",
+            "expected_value": "'zero zero '",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-y7g6pt37/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'zero zero '\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['zero zero', 'invalid numeral']) == 'zero zero '",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-y7g6pt37/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"'zero zero '\")\n"
+          },
+          {
+            "actual_value": "' '",
+            "assertion_expression": "sort_and_concatenate(['', 'one two']) == ' one two'",
+            "duration_seconds": 0.10844796150922775,
+            "exception_message": "assertion comparison failed: actual=' '; expected=' one two'",
+            "exception_type": "AssertionError",
+            "expected_value": "' one two'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dh4kihqm/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"' one two'\")\n",
+            "stdout": "",
+            "test_case": "assert sort_and_concatenate(['', 'one two']) == ' one two'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dh4kihqm/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"' '\", \"' one two'\")\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n    num_map = {\n        \"zero\": 0,\n        \"one\": 1,\n        \"two\": 2,\n        \"three\": 3,\n        \"four\": 4,\n        \"five\": 5,\n        \"six\": 6,\n        \"seven\": 7,\n        \"eight\": 8,\n        \"nine\": 9\n    }\n    \n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: num_map[word])\n    return ' '.join(sorted_words)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    \"\"\" Sorts each individual string of numerals from 'zero' to 'nine' within a list of sequences, \n    concatenates them into a single string, and maintains the original order of the strings.\n    Invalid numerals in any string are replaced with an empty string.\n    \"\"\"\n    result = []\n    for seq in sequences:\n        valid_seq = [word if word in sort_numbers(' '.join(sort_numbers(' ').split())) else '' for word in seq.split()]\n        result.append(sort_numbers(' '.join(valid_seq)))\n    return ' '.join(result)",
+        "completion_tokens": 421,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 271,
+        "raw_text": "```python\nfrom typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n    num_map = {\n        \"zero\": 0,\n        \"one\": 1,\n        \"two\": 2,\n        \"three\": 3,\n        \"four\": 4,\n        \"five\": 5,\n        \"six\": 6,\n        \"seven\": 7,\n        \"eight\": 8,\n        \"nine\": 9\n    }\n    \n    words = numbers.split()\n    sorted_words = sorted(words, key=lambda word: num_map[word])\n    return ' '.join(sorted_words)\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n    \"\"\" Sorts each individual string of numerals from 'zero' to 'nine' within a list of sequences, \n    concatenates them into a single string, and maintains the original order of the strings.\n    Invalid numerals in any string are replaced with an empty string.\n    \"\"\"\n    result = []\n    for seq in sequences:\n        valid_seq = [word if word in sort_numbers(' '.join(sort_numbers(' ').split())) else '' for word in seq.split()]\n        result.append(sort_numbers(' '.join(valid_seq)))\n    return ' '.join(result)\n```\nThis solution defines two functions as required. The `sort_numbers` function sorts a string of numerals from 'zero' to 'nine'. The `sort_and_concatenate` function uses `sort_numbers` to sort each sequence of numerals within a given list of sequences, replaces any invalid numerals with empty strings, and concatenates the sorted sequences into a single string while maintaining their original order.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\n# Given a list of space-delimited strings, each representing a sequence of numerals from 'zero' to 'nine', sort each individual string from smallest to largest and then concatenate the sorted strings into a single string, maintaining the original order of the strings. If any string contains an invalid numeral, it should be replaced with an empty string in the final result.\nfrom typing import List\n\n\ndef sort_and_concatenate(sequences: List[str]) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.43535281904041767,
+        "generation_seconds": 11.504958944395185
+      }
+    }
+  ],
+  "duration_seconds": 42.40873679704964,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    3
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/19",
+  "unique_code_count": 5
+}

@@ -1,0 +1,707 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d216f48bcaf6e5d5c5a58d49531015274f4d12fdde9f3185bc81d3310ff938c0",
+      "execution": {
+        "duration_seconds": 0.3882661573588848,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.07054408639669418,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.09311147034168243,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.11416302248835564,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.11008811742067337,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from functools import reduce\nfrom operator import mul\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    def prime_factors(x):\n        i = 2\n        factors = []\n        while i * i <= x:\n            if x % i:\n                i += 1\n            else:\n                x //= i\n                factors.append(i)\n        if x > 1:\n            factors.append(x)\n        return factors\n    \n    factors = prime_factors(n)\n    return max(factors)\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime numbers.\"\"\"\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    valid_numbers = [num for num in numbers if num > 1 and not is_prime(num)]\n    largest_factors = [largest_prime_factor(num) for num in valid_numbers]\n    \n    return reduce(mul, largest_factors, 1)",
+        "completion_tokens": 277,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\nfrom functools import reduce\nfrom operator import mul\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    def prime_factors(x):\n        i = 2\n        factors = []\n        while i * i <= x:\n            if x % i:\n                i += 1\n            else:\n                x //= i\n                factors.append(i)\n        if x > 1:\n            factors.append(x)\n        return factors\n    \n    factors = prime_factors(n)\n    return max(factors)\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime numbers.\"\"\"\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    valid_numbers = [num for num in numbers if num > 1 and not is_prime(num)]\n    largest_factors = [largest_prime_factor(num) for num in valid_numbers]\n    \n    return reduce(mul, largest_factors, 1)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3882661573588848,
+        "generation_seconds": 7.555782742798328
+      }
+    },
+    {
+      "code_hash": "d98aae087fa305040919410ac1bd340e6263a2a9a0e94485c2cea75ff6e2970f",
+      "execution": {
+        "duration_seconds": 0.4390225149691105,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.10451624542474747,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.12239719554781914,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.09882705099880695,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.1129258293658495,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from functools import reduce\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    \"\"\"\n    def prime_factors(num):\n        i = 2\n        factors = []\n        while i * i <= num:\n            if num % i:\n                i += 1\n            else:\n                num //= i\n                factors.append(i)\n        if num > 1:\n            factors.append(num)\n        return factors\n    \n    return max(prime_factors(n))\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime.\n    \"\"\"\n    def is_prime(num):\n        if num < 2:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    result = 1\n    for number in numbers:\n        if number > 1 and not is_prime(number):\n            result *= largest_prime_factor(number)\n    \n    return result\n\n# Example usage:\n# print(largest_prime_factor(13195))  # Output: 29\n# print(largest_prime_factor(2048))   # Output: 2\n# print(product_of_largest_prime_factors([13195, 2048, 60]))  # Output: 1740",
+        "completion_tokens": 415,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\nfrom functools import reduce\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    \"\"\"\n    def prime_factors(num):\n        i = 2\n        factors = []\n        while i * i <= num:\n            if num % i:\n                i += 1\n            else:\n                num //= i\n                factors.append(i)\n        if num > 1:\n            factors.append(num)\n        return factors\n    \n    return max(prime_factors(n))\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime.\n    \"\"\"\n    def is_prime(num):\n        if num < 2:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    result = 1\n    for number in numbers:\n        if number > 1 and not is_prime(number):\n            result *= largest_prime_factor(number)\n    \n    return result\n\n# Example usage:\n# print(largest_prime_factor(13195))  # Output: 29\n# print(largest_prime_factor(2048))   # Output: 2\n# print(product_of_largest_prime_factors([13195, 2048, 60]))  # Output: 1740\n```\n\nThis solution includes two functions: `largest_prime_factor` which returns the largest prime factor of a given number, and `product_of_largest_prime_factors` which calculates the product of the largest prime factors of a list of integers, ignoring non-valid numbers. The `is_prime` helper function is used within `product_of_largest_prime_factors` to determine if a number should be ignored.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.4390225149691105,
+        "generation_seconds": 11.497012197971344
+      }
+    },
+    {
+      "code_hash": "d4d2d218d05c5f4e18742105cd5b86930194706c3ea62f8d8b071f2701962853",
+      "execution": {
+        "duration_seconds": 0.4596225582063198,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.11801115795969963,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.11635407246649265,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.11630936898291111,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.10859456844627857,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    # Divide n by 2 until it's odd\n    while n % 2 == 0:\n        max_prime = 2\n        n //= 2\n    \n    # Check for odd factors from 3 onwards\n    for i in range(3, int(math.sqrt(n)) + 1, 2):\n        while n % i == 0:\n            max_prime = i\n            n //= i\n    \n    # If n becomes a prime number greater than 2\n    if n > 2:\n        max_prime = n\n    \n    return max_prime\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Return the product of the largest prime factors of the given list of integers.\"\"\"\n    product = 1\n    for number in numbers:\n        if number > 1 and not is_prime(number):\n            product *= largest_prime_factor(number)\n    \n    return product\n\ndef is_prime(num: int) -> bool:\n    \"\"\"Helper function to check if a number is prime.\"\"\"\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True",
+        "completion_tokens": 442,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\nimport math\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    # Divide n by 2 until it's odd\n    while n % 2 == 0:\n        max_prime = 2\n        n //= 2\n    \n    # Check for odd factors from 3 onwards\n    for i in range(3, int(math.sqrt(n)) + 1, 2):\n        while n % i == 0:\n            max_prime = i\n            n //= i\n    \n    # If n becomes a prime number greater than 2\n    if n > 2:\n        max_prime = n\n    \n    return max_prime\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Return the product of the largest prime factors of the given list of integers.\"\"\"\n    product = 1\n    for number in numbers:\n        if number > 1 and not is_prime(number):\n            product *= largest_prime_factor(number)\n    \n    return product\n\ndef is_prime(num: int) -> bool:\n    \"\"\"Helper function to check if a number is prime.\"\"\"\n    if num <= 1:\n        return False\n    if num <= 3:\n        return True\n    if num % 2 == 0 or num % 3 == 0:\n        return False\n    i = 5\n    while i * i <= num:\n        if num % i == 0 or num % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n```\n\nThis solution includes the implementation of `largest_prime_factor` and `product_of_largest_prime_factors`. The `largest_prime_factor` function finds the largest prime factor of a given number `n`. The `product_of_largest_prime_factors` function calculates the product of the largest prime factors of each number in a given list, ignoring numbers that are less than or equal to 1 or are prime themselves. A helper function `is_prime` is also provided to determine if a number is prime.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4596225582063198,
+        "generation_seconds": 12.263647388666868
+      }
+    },
+    {
+      "code_hash": "4b4ade27b3e5c6ff6b7290755c8d6d4e4994f4d9e134f9e6b84157135e0a6ddc",
+      "execution": {
+        "duration_seconds": 0.46959470212459564,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.10641837120056152,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "29\n2\n58\n",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.1265131440013647,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "29\n2\n58\n",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.133283793926239,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "29\n2\n58\n",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.10303782112896442,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "29\n2\n58\n",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from functools import reduce\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    factor = 2\n    last_factor = 1\n    while factor * factor <= n:\n        if n % factor:\n            factor += 1\n        else:\n            n //= factor\n            last_factor = factor\n    if n > 1:\n        last_factor = n\n    return last_factor\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Return the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime.\"\"\"\n    \n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    valid_numbers = [num for num in numbers if num > 1 and not is_prime(num)]\n    largest_primes = [largest_prime_factor(num) for num in valid_numbers]\n    return reduce(lambda x, y: x * y, largest_primes, 1)\n\n# Test cases\nprint(largest_prime_factor(13195))  # Output: 29\nprint(largest_prime_factor(2048))   # Output: 2\nprint(product_of_largest_prime_factors([13195, 2048]))  # Output: 29 * 2 = 58",
+        "completion_tokens": 437,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\nfrom functools import reduce\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    factor = 2\n    last_factor = 1\n    while factor * factor <= n:\n        if n % factor:\n            factor += 1\n        else:\n            n //= factor\n            last_factor = factor\n    if n > 1:\n        last_factor = n\n    return last_factor\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Return the product of the largest prime factors of each integer in the list.\n    Ignore numbers that are less than or equal to 1 or are prime.\"\"\"\n    \n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    \n    valid_numbers = [num for num in numbers if num > 1 and not is_prime(num)]\n    largest_primes = [largest_prime_factor(num) for num in valid_numbers]\n    return reduce(lambda x, y: x * y, largest_primes, 1)\n\n# Test cases\nprint(largest_prime_factor(13195))  # Output: 29\nprint(largest_prime_factor(2048))   # Output: 2\nprint(product_of_largest_prime_factors([13195, 2048]))  # Output: 29 * 2 = 58\n```\n\nThis solution includes two functions as described:\n\n1. `largest_prime_factor(n: int)` returns the largest prime factor of a given non-prime number `n`.\n2. `product_of_largest_prime_factors(numbers: list)` calculates the product of the largest prime factors for all non-prime numbers in a given list, ignoring numbers that are less than or equal to 1 or are prime. It uses the `largest_prime_factor` function internally.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.46959470212459564,
+        "generation_seconds": 11.911504631862044
+      }
+    },
+    {
+      "code_hash": "3bf6b596dccc3f8af9fcd5263c7d8fb6ce19163b8b37259ed5a755241b6483e2",
+      "execution": {
+        "duration_seconds": 0.47740538418293,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.11610977165400982,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.12524433620274067,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.12076140008866787,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.11493486911058426,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    def prime_factors(num):\n        i = 2\n        factors = []\n        while i * i <= num:\n            if num % i:\n                i += 1\n            else:\n                num //= i\n                factors.append(i)\n        if num > 1:\n            factors.append(num)\n        return factors\n    \n    return max(prime_factors(n))\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\"\"\"\n    from functools import reduce\n    from operator import mul\n    \n    product = 1\n    for number in numbers:\n        if number > 1 and not all(number % i != 0 for i in range(2, int(number**0.5) + 1)):\n            product *= largest_prime_factor(number)\n    \n    return product",
+        "completion_tokens": 211,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    def prime_factors(num):\n        i = 2\n        factors = []\n        while i * i <= num:\n            if num % i:\n                i += 1\n            else:\n                num //= i\n                factors.append(i)\n        if num > 1:\n            factors.append(num)\n        return factors\n    \n    return max(prime_factors(n))\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\"\"\"\n    from functools import reduce\n    from operator import mul\n    \n    product = 1\n    for number in numbers:\n        if number > 1 and not all(number % i != 0 for i in range(2, int(number**0.5) + 1)):\n            product *= largest_prime_factor(number)\n    \n    return product\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.47740538418293,
+        "generation_seconds": 5.718248646706343
+      }
+    }
+  ],
+  "duration_seconds": 51.184481129050255,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/59",
+  "unique_code_count": 5
+}

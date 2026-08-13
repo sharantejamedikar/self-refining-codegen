@@ -1,0 +1,630 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b7bc905323d74571633bc0ef9bab468f3a8a947a6a128e568321ed00cb1ebbdd",
+      "execution": {
+        "duration_seconds": 0.325898852199316,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "duration_seconds": 0.07192435301840305,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "duration_seconds": 0.12778478488326073,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "duration_seconds": 0.12593349441885948,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def split_words(txt):\n    \"\"\"\n    Split a given string based on whitespace, commas, or count odd-positioned lowercase letters.\n    \n    Args:\n    txt (str): The input string to split.\n    \n    Returns:\n    list/int: A list of words or the count of specific letters.\n    \"\"\"\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    \"\"\"\n    Process a list of strings by splitting them using split_words function and accumulate total odd-positioned letters.\n    \n    Args:\n    string_list (list): A list of strings to process.\n    \n    Returns:\n    dict: A dictionary with each string as key and processed result as value, including 'total_odd_letters'.\n    \"\"\"\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed_result = split_words(s)\n        if isinstance(processed_result, list):\n            result_dict[s] = processed_result\n        elif isinstance(processed_result, int):\n            result_dict[s] = processed_result\n            total_odd_letters += processed_result\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict",
+        "completion_tokens": 289,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 314,
+        "raw_text": "```python\ndef split_words(txt):\n    \"\"\"\n    Split a given string based on whitespace, commas, or count odd-positioned lowercase letters.\n    \n    Args:\n    txt (str): The input string to split.\n    \n    Returns:\n    list/int: A list of words or the count of specific letters.\n    \"\"\"\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    \"\"\"\n    Process a list of strings by splitting them using split_words function and accumulate total odd-positioned letters.\n    \n    Args:\n    string_list (list): A list of strings to process.\n    \n    Returns:\n    dict: A dictionary with each string as key and processed result as value, including 'total_odd_letters'.\n    \"\"\"\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed_result = split_words(s)\n        if isinstance(processed_result, list):\n            result_dict[s] = processed_result\n        elif isinstance(processed_result, int):\n            result_dict[s] = processed_result\n            total_odd_letters += processed_result\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.325898852199316,
+        "generation_seconds": 7.930914239957929
+      }
+    },
+    {
+      "code_hash": "816ec5ba4273482884ac1372f7d3ef4c7e9af8eca9cfbb5cd170a6a11c0b751c",
+      "execution": {
+        "duration_seconds": 0.30142481438815594,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "duration_seconds": 0.07459690235555172,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "duration_seconds": 0.11979284323751926,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "duration_seconds": 0.10681590251624584,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def split_words(txt):\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed = split_words(s)\n        if isinstance(processed, list):\n            result_dict[s] = processed\n        elif isinstance(processed, int):\n            result_dict[s] = processed\n            total_odd_letters += processed\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict",
+        "completion_tokens": 157,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 314,
+        "raw_text": "```python\ndef split_words(txt):\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed = split_words(s)\n        if isinstance(processed, list):\n            result_dict[s] = processed\n        elif isinstance(processed, int):\n            result_dict[s] = processed\n            total_odd_letters += processed\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.30142481438815594,
+        "generation_seconds": 4.35126506537199
+      }
+    },
+    {
+      "code_hash": "496f00d5ead3afe351c67f291f282f555af7f4f0a4529aca135eaecd25cd7332",
+      "execution": {
+        "duration_seconds": 0.3231589961796999,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "duration_seconds": 0.08603892661631107,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bk7p3o56/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['Hello world!', 'Hello,world!', 'abcdef'])\n  File \"/tmp/srcg-bk7p3o56/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bk7p3o56/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['Hello world!', 'Hello,world!', 'abcdef'])\n  File \"/tmp/srcg-bk7p3o56/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "duration_seconds": 0.10340839438140392,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cwxfg0o6/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['abc def', 'ghi,jkl', 'mno'])\n  File \"/tmp/srcg-cwxfg0o6/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cwxfg0o6/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['abc def', 'ghi,jkl', 'mno'])\n  File \"/tmp/srcg-cwxfg0o6/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "duration_seconds": 0.13349692523479462,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9kcy_2fn/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['pqr', 'stu,vwx', 'yz'])\n  File \"/tmp/srcg-9kcy_2fn/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9kcy_2fn/program.py\", line 39, in <module>\n    __srcg_assertion_actual_7f31 = process_strings(['pqr', 'stu,vwx', 'yz'])\n  File \"/tmp/srcg-9kcy_2fn/program.py\", line 34, in process_strings\n    total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n                                           ^^^^^\nTypeError: 'int' object is not iterable\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def split_words(txt):\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n\n    for s in string_list:\n        words = split_words(s)\n        result_dict[s] = words\n        total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n\n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict",
+        "completion_tokens": 153,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 314,
+        "raw_text": "```python\ndef split_words(txt):\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n\n    for s in string_list:\n        words = split_words(s)\n        result_dict[s] = words\n        total_odd_letters += sum(1 for word in words if isinstance(word, str) and split_words(word) != len(word))\n\n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3231589961796999,
+        "generation_seconds": 4.2412651143968105
+      }
+    },
+    {
+      "code_hash": "46d7eced254dfdee25de4323e4d4011ea71f019a178d3626b434fce8acd01e39",
+      "execution": {
+        "duration_seconds": 0.2993347216397524,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 13}",
+            "assertion_expression": "process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "duration_seconds": 0.08788886293768883,
+            "exception_message": "assertion comparison failed: actual={'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 13}; expected={'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "exception_type": "AssertionError",
+            "expected_value": "{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-205lihgo/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 13}\", \"{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}\")\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-205lihgo/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 13}\", \"{'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}\")\n"
+          },
+          {
+            "actual_value": "{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 7}",
+            "assertion_expression": "process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "duration_seconds": 0.10388500802218914,
+            "exception_message": "assertion comparison failed: actual={'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 7}; expected={'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "exception_type": "AssertionError",
+            "expected_value": "{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fsk6b7yr/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 7}\", \"{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}\")\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fsk6b7yr/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 7}\", \"{'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}\")\n"
+          },
+          {
+            "actual_value": "{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 6}",
+            "assertion_expression": "process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "duration_seconds": 0.10739605315029621,
+            "exception_message": "assertion comparison failed: actual={'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 6}; expected={'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "exception_type": "AssertionError",
+            "expected_value": "{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-otzb8ewh/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 6}\", \"{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}\")\n",
+            "stdout": "",
+            "test_case": "assert process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-otzb8ewh/program.py\", line 56, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 6}\", \"{'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}\")\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from collections import defaultdict\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        split_result = split_words(s)\n        if isinstance(split_result, list):\n            result_dict[s] = split_result\n            total_odd_letters += sum(1 for word in split_result for char in word if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n        else:\n            result_dict[s] = split_result\n            total_odd_letters += split_result\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict",
+        "completion_tokens": 404,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 314,
+        "raw_text": "```python\nfrom collections import defaultdict\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        split_result = split_words(s)\n        if isinstance(split_result, list):\n            result_dict[s] = split_result\n            total_odd_letters += sum(1 for word in split_result for char in word if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n        else:\n            result_dict[s] = split_result\n            total_odd_letters += split_result\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict\n```\n\nThis solution includes two functions: `split_words` and `process_strings`. The `split_words` function processes a single string according to the specified rules. The `process_strings` function takes a list of strings, applies `split_words` to each, accumulates results into a dictionary, and calculates the total count of odd-order lowercase letters across all processed strings.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2993347216397524,
+        "generation_seconds": 11.078064691275358
+      }
+    },
+    {
+      "code_hash": "13d86929674e1d88f750ed8713c2bec77f317d0f36a84de6d1af26b82b0bfee1",
+      "execution": {
+        "duration_seconds": 0.3168436028063297,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "duration_seconds": 0.07276885025203228,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['Hello world!', 'Hello,world!', 'abcdef']) == {'Hello world!': ['Hello', 'world!'], 'Hello,world!': ['Hello', 'world!'], 'abcdef': 3, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "duration_seconds": 0.11792686767876148,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['abc def', 'ghi,jkl', 'mno']) == {'abc def': ['abc', 'def'], 'ghi,jkl': ['ghi', 'jkl'], 'mno': 1, 'total_odd_letters': 1}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "duration_seconds": 0.12588579766452312,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_strings(['pqr', 'stu,vwx', 'yz']) == {'pqr': 2, 'stu,vwx': ['stu', 'vwx'], 'yz': 1, 'total_odd_letters': 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def split_words(txt):\n    \"\"\"\n    Split text into words based on whitespace or commas, or count odd-positioned lowercase letters if neither are present.\n    \n    Args:\n    txt (str): The input string to process.\n    \n    Returns:\n    list or int: A list of words or the count of specific letters based on input conditions.\n    \"\"\"\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    \"\"\"\n    Process a list of strings to create a dictionary mapping each string to its processed form,\n    and include a total count of specific letters across all strings.\n    \n    Args:\n    string_list (list of str): The list of strings to process.\n    \n    Returns:\n    dict: A dictionary with keys as strings from the list and values as lists of words or counts of specific letters.\n    \"\"\"\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed = split_words(s)\n        if isinstance(processed, list):\n            result_dict[s] = processed\n        else:\n            result_dict[s] = processed\n            total_odd_letters += processed\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict",
+        "completion_tokens": 300,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 314,
+        "raw_text": "```python\ndef split_words(txt):\n    \"\"\"\n    Split text into words based on whitespace or commas, or count odd-positioned lowercase letters if neither are present.\n    \n    Args:\n    txt (str): The input string to process.\n    \n    Returns:\n    list or int: A list of words or the count of specific letters based on input conditions.\n    \"\"\"\n    if ' ' in txt:\n        return txt.split()\n    elif ',' in txt:\n        return txt.split(',')\n    else:\n        return sum(1 for char in txt if char.islower() and (ord(char) - ord('a')) % 2 == 1)\n\ndef process_strings(string_list):\n    \"\"\"\n    Process a list of strings to create a dictionary mapping each string to its processed form,\n    and include a total count of specific letters across all strings.\n    \n    Args:\n    string_list (list of str): The list of strings to process.\n    \n    Returns:\n    dict: A dictionary with keys as strings from the list and values as lists of words or counts of specific letters.\n    \"\"\"\n    result_dict = {}\n    total_odd_letters = 0\n    \n    for s in string_list:\n        processed = split_words(s)\n        if isinstance(processed, list):\n            result_dict[s] = processed\n        else:\n            result_dict[s] = processed\n            total_odd_letters += processed\n    \n    result_dict['total_odd_letters'] = total_odd_letters\n    return result_dict\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef split_words(txt):\n    '''\n    Given a string of words, return a list of words split on whitespace, if no whitespaces exists in the text you\n    should split on commas ',' if no commas exists you should return the number of lower-case letters with odd order in the\n    alphabet, ord('a') = 0, ord('b') = 1, ... ord('z') = 25\n    Examples\n    split_words(\"Hello world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"Hello,world!\") \u279e [\"Hello\", \"world!\"]\n    split_words(\"abcdef\") == 3 \n    '''\n\n# Given a list of strings, return a dictionary where each key is a string from the list and the value is a list of words split on whitespace, if no whitespaces exist in the text, split on commas ','. If no commas exist, the value should be the number of lower-case letters with odd order in the alphabet. Additionally, the dictionary should include a special key 'total_odd_letters' which is the sum of all odd order letters from all strings.\ndef process_strings(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3168436028063297,
+        "generation_seconds": 8.272157676517963
+      }
+    }
+  ],
+  "duration_seconds": 37.44381263293326,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/125",
+  "unique_code_count": 5
+}

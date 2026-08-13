@@ -1,0 +1,626 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "196a092726a412c8cb9d1782eff58bce65bce43bfd9d8afd48c5d9df98242100",
+      "execution": {
+        "duration_seconds": 0.26942785643041134,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "duration_seconds": 0.07779890112578869,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "['21', '43', '65']",
+            "assertion_expression": "circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "duration_seconds": 0.10445850901305676,
+            "exception_message": "assertion comparison failed: actual=['21', '43', '65']; expected=['12', '34', '56']",
+            "exception_type": "AssertionError",
+            "expected_value": "['12', '34', '56']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kj2ehjxy/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kj2ehjxy/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "duration_seconds": 0.08689554035663605,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    digits = str(x)\n    n = len(digits)\n    \n    if shift >= n:\n        return digits[::-1]\n    \n    shift %= n\n    return digits[-shift:] + digits[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(num, shift) for num in lst]",
+        "completion_tokens": 169,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 216,
+        "raw_text": "```python\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    digits = str(x)\n    n = len(digits)\n    \n    if shift >= n:\n        return digits[::-1]\n    \n    shift %= n\n    return digits[-shift:] + digits[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(num, shift) for num in lst]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.26942785643041134,
+        "generation_seconds": 4.578983448445797
+      }
+    },
+    {
+      "code_hash": "544df268a523bc2d8a2d10d17647ad44cdeeb54f11ac2421e693e856b6bbdd4c",
+      "execution": {
+        "duration_seconds": 0.41506793536245823,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "duration_seconds": 0.13858508318662643,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "['21', '43', '65']",
+            "assertion_expression": "circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "duration_seconds": 0.16299195401370525,
+            "exception_message": "assertion comparison failed: actual=['21', '43', '65']; expected=['12', '34', '56']",
+            "exception_type": "AssertionError",
+            "expected_value": "['12', '34', '56']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-53paau7j/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-53paau7j/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "duration_seconds": 0.11321968398988247,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    str_x = str(x)\n    if shift >= len(str_x):\n        return str_x[::-1]\n    else:\n        shift %= len(str_x)  # Handle shifts larger than the length of the number\n        return str_x[-shift:] + str_x[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\n    \"\"\"\n    return [circular_shift(num, shift) for num in lst]",
+        "completion_tokens": 186,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 216,
+        "raw_text": "```python\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    str_x = str(x)\n    if shift >= len(str_x):\n        return str_x[::-1]\n    else:\n        shift %= len(str_x)  # Handle shifts larger than the length of the number\n        return str_x[-shift:] + str_x[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\n    \"\"\"\n    return [circular_shift(num, shift) for num in lst]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.41506793536245823,
+        "generation_seconds": 5.036490499973297
+      }
+    },
+    {
+      "code_hash": "217d7c0b6c73d51f263a370cf07ead7854bbd31c60ec269419373bfc19021dac",
+      "execution": {
+        "duration_seconds": 0.26187661848962307,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "duration_seconds": 0.07029042765498161,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "['21', '43', '65']",
+            "assertion_expression": "circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "duration_seconds": 0.10214824788272381,
+            "exception_message": "assertion comparison failed: actual=['21', '43', '65']; expected=['12', '34', '56']",
+            "exception_type": "AssertionError",
+            "expected_value": "['12', '34', '56']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9nv3gehy/program.py\", line 34, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9nv3gehy/program.py\", line 34, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "duration_seconds": 0.08922437019646168,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def circular_shift(x, shift):\n    str_x = str(x)\n    num_digits = len(str_x)\n    \n    if shift >= num_digits:\n        return str_x[::-1]\n    \n    shift %= num_digits\n    return str_x[-shift:] + str_x[:-shift]\n\ndef circular_shift_list(lst, shift):\n    return [circular_shift(x, shift) for x in lst]",
+        "completion_tokens": 85,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 216,
+        "raw_text": "```python\ndef circular_shift(x, shift):\n    str_x = str(x)\n    num_digits = len(str_x)\n    \n    if shift >= num_digits:\n        return str_x[::-1]\n    \n    shift %= num_digits\n    return str_x[-shift:] + str_x[:-shift]\n\ndef circular_shift_list(lst, shift):\n    return [circular_shift(x, shift) for x in lst]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.26187661848962307,
+        "generation_seconds": 2.322411648929119
+      }
+    },
+    {
+      "code_hash": "385e8727aedd41e74d1adc376246612d438cf213df70fcf5876715fb37f46cb5",
+      "execution": {
+        "duration_seconds": 0.3976057767868042,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "duration_seconds": 0.11748014390468597,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "['21', '43', '65']",
+            "assertion_expression": "circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "duration_seconds": 0.15448563918471336,
+            "exception_message": "assertion comparison failed: actual=['21', '43', '65']; expected=['12', '34', '56']",
+            "exception_type": "AssertionError",
+            "expected_value": "['12', '34', '56']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-sqiwmcmp/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-sqiwmcmp/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "duration_seconds": 0.1253784466534853,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n    x_str = str(x)\n    if shift >= len(x_str):\n        return x_str[::-1]\n    else:\n        shift %= len(x_str)  # Handle shifts larger than the length of the number\n        return x_str[-shift:] + x_str[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(x, shift) for x in lst]",
+        "completion_tokens": 216,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 216,
+        "raw_text": "```python\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n    x_str = str(x)\n    if shift >= len(x_str):\n        return x_str[::-1]\n    else:\n        shift %= len(x_str)  # Handle shifts larger than the length of the number\n        return x_str[-shift:] + x_str[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Given a list of integers, perform a circular shift on each integer by a specified shift value.\n    If the shift value is greater than the number of digits in the integer, reverse the digits.\n    Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(x, shift) for x in lst]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3976057767868042,
+        "generation_seconds": 5.8514603320509195
+      }
+    },
+    {
+      "code_hash": "193da119ac495e274303955b76d852c98075235c52a9d13b78c7aa0901b4a55e",
+      "execution": {
+        "duration_seconds": 0.3951673340052366,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "duration_seconds": 0.10369164682924747,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 1) == ['21', '43', '65']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "['21', '43', '65']",
+            "assertion_expression": "circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "duration_seconds": 0.1714544054120779,
+            "exception_message": "assertion comparison failed: actual=['21', '43', '65']; expected=['12', '34', '56']",
+            "exception_type": "AssertionError",
+            "expected_value": "['12', '34', '56']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-syx29izb/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([12, 34, 56], 2) == ['12', '34', '56']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-syx29izb/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['21', '43', '65']\", \"['12', '34', '56']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "duration_seconds": 0.11976738646626472,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert circular_shift_list([123, 456, 789], 4) == ['321', '654', '987']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    x_str = str(x)\n    if shift >= len(x_str):\n        return x_str[::-1]\n    else:\n        shift %= len(x_str)  # Handle shifts larger than the length of the number\n        return x_str[-shift:] + x_str[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Perform a circular shift on each integer in lst by a specified shift value.\n    If the shift value is greater than the number of digits in the integer,\n    reverse the digits. Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(num, shift) for num in lst]",
+        "completion_tokens": 312,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 216,
+        "raw_text": "```python\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    \"\"\"\n    x_str = str(x)\n    if shift >= len(x_str):\n        return x_str[::-1]\n    else:\n        shift %= len(x_str)  # Handle shifts larger than the length of the number\n        return x_str[-shift:] + x_str[:-shift]\n\ndef circular_shift_list(lst, shift):\n    \"\"\"Perform a circular shift on each integer in lst by a specified shift value.\n    If the shift value is greater than the number of digits in the integer,\n    reverse the digits. Return the list of transformed integers as strings.\"\"\"\n    return [circular_shift(num, shift) for num in lst]\n```\n\nThis solution includes two functions: `circular_shift` which performs the circular shift on a single integer, and `circular_shift_list` which applies this operation to each element in a list of integers. The `circular_shift` function checks if the shift is greater than or equal to the number of digits in the integer; if so, it returns the reversed digits. Otherwise, it calculates the effective shift (using modulo operation to handle shifts larger than the length of the number) and rearranges the digits accordingly. The `circular_shift_list` function uses a list comprehension to apply `circular_shift` to each element in the input list.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef circular_shift(x, shift):\n    \"\"\"Circular shift the digits of the integer x, shift the digits right by shift\n    and return the result as a string.\n    If shift > number of digits, return digits reversed.\n    >>> circular_shift(12, 1)\n    \"21\"\n    >>> circular_shift(12, 2)\n    \"12\"\n    \"\"\"\n\n# Given a list of integers, perform a circular shift on each integer by a specified shift value. If the shift value is greater than the number of digits in the integer, reverse the digits. Return the list of transformed integers as strings.\ndef circular_shift_list(lst, shift):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3951673340052366,
+        "generation_seconds": 8.530424892902374
+      }
+    }
+  ],
+  "duration_seconds": 28.06256164237857,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/65",
+  "unique_code_count": 5
+}

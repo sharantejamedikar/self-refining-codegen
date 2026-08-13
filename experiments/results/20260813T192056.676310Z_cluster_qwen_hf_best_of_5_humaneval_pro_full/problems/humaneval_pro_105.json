@@ -1,0 +1,782 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "1ea465bb119db67c65ad5c5a8ff1234dbaeac03491e2572b75eb028c2168018b",
+      "execution": {
+        "duration_seconds": 0.5165643822401762,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "duration_seconds": 0.07176568359136581,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "duration_seconds": 0.1075709406286478,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "duration_seconds": 0.10880374535918236,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "duration_seconds": 0.11548390425741673,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "duration_seconds": 0.11250816471874714,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n    \"\"\"\n    digit_names = {\n        1: \"One\",\n        2: \"Two\",\n        3: \"Three\",\n        4: \"Four\",\n        5: \"Five\",\n        6: \"Six\",\n        7: \"Seven\",\n        8: \"Eight\",\n        9: \"Nine\"\n    }\n    \n    filtered_sorted_arr = sorted([x for x in arr if 1 <= x <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    named_arr = [digit_names[x] for x in reversed_arr]\n    \n    return named_arr\n\ndef process_arrays(arrays):\n    \"\"\"\n    Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array,\n    reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two',\n    'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed\n    arrays into a single array and return it.\n    \"\"\"\n    result = []\n    for array in arrays:\n        result.extend(by_length(array))\n    \n    return result",
+        "completion_tokens": 319,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 440,
+        "raw_text": "```python\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n    \"\"\"\n    digit_names = {\n        1: \"One\",\n        2: \"Two\",\n        3: \"Three\",\n        4: \"Four\",\n        5: \"Five\",\n        6: \"Six\",\n        7: \"Seven\",\n        8: \"Eight\",\n        9: \"Nine\"\n    }\n    \n    filtered_sorted_arr = sorted([x for x in arr if 1 <= x <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    named_arr = [digit_names[x] for x in reversed_arr]\n    \n    return named_arr\n\ndef process_arrays(arrays):\n    \"\"\"\n    Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array,\n    reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two',\n    'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed\n    arrays into a single array and return it.\n    \"\"\"\n    result = []\n    for array in arrays:\n        result.extend(by_length(array))\n    \n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.5165643822401762,
+        "generation_seconds": 8.833196967840195
+      }
+    },
+    {
+      "code_hash": "474b79a9203d3172caf26a9e90b4f2ec1c126f263d54ac4b76e0afd637a2af2e",
+      "execution": {
+        "duration_seconds": 0.5705239344388247,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "duration_seconds": 0.07312773168087006,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "duration_seconds": 0.1258627511560917,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "duration_seconds": 0.11545685678720474,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "duration_seconds": 0.12936703488230705,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "duration_seconds": 0.12627422250807285,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n    # Filter out numbers not in the range 1 to 9\n    filtered_arr = [x for x in arr if 1 <= x <= 9]\n    # Sort the filtered array\n    sorted_arr = sorted(filtered_arr)\n    # Reverse the sorted array\n    reversed_arr = sorted_arr[::-1]\n    # Map digits to their names\n    digit_to_name = {\n        1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\",\n        5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"\n    }\n    # Replace each digit with its corresponding name\n    result = [digit_to_name[x] for x in reversed_arr]\n    return result\n\ndef process_arrays(arrays):\n    # Initialize an empty list to store the results\n    result = []\n    # Process each array using the by_length function\n    for arr in arrays:\n        result.extend(by_length(arr))\n    return result",
+        "completion_tokens": 493,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 440,
+        "raw_text": "```python\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n    # Filter out numbers not in the range 1 to 9\n    filtered_arr = [x for x in arr if 1 <= x <= 9]\n    # Sort the filtered array\n    sorted_arr = sorted(filtered_arr)\n    # Reverse the sorted array\n    reversed_arr = sorted_arr[::-1]\n    # Map digits to their names\n    digit_to_name = {\n        1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\",\n        5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"\n    }\n    # Replace each digit with its corresponding name\n    result = [digit_to_name[x] for x in reversed_arr]\n    return result\n\ndef process_arrays(arrays):\n    # Initialize an empty list to store the results\n    result = []\n    # Process each array using the by_length function\n    for arr in arrays:\n        result.extend(by_length(arr))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5705239344388247,
+        "generation_seconds": 13.720654865726829
+      }
+    },
+    {
+      "code_hash": "6bc21731bb25806d6b88366fb3db4edf0fdf3f8cedeffdf0e1c9de7d14af6fe5",
+      "execution": {
+        "duration_seconds": 0.5079778134822845,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "duration_seconds": 0.069798918440938,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "duration_seconds": 0.09004201181232929,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "duration_seconds": 0.11783864349126816,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "duration_seconds": 0.09826845861971378,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "duration_seconds": 0.13165348395705223,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def by_length(arr):\n    digits_to_names = {\n        1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\",\n        5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"\n    }\n    filtered_sorted_arr = sorted([num for num in arr if 1 <= num <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    result = [digits_to_names[num] for num in reversed_arr]\n    return result\n\ndef process_arrays(arrays):\n    processed_arrays = [by_length(array) for array in arrays]\n    flattened_result = [item for sublist in processed_arrays for item in sublist]\n    return flattened_result",
+        "completion_tokens": 261,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 440,
+        "raw_text": "```python\ndef by_length(arr):\n    digits_to_names = {\n        1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\",\n        5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"\n    }\n    filtered_sorted_arr = sorted([num for num in arr if 1 <= num <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    result = [digits_to_names[num] for num in reversed_arr]\n    return result\n\ndef process_arrays(arrays):\n    processed_arrays = [by_length(array) for array in arrays]\n    flattened_result = [item for sublist in processed_arrays for item in sublist]\n    return flattened_result\n```\n\nThis solution includes two functions: `by_length` and `process_arrays`. The `by_length` function takes an array of integers, filters out numbers not between 1 and 9, sorts the remaining numbers, reverses the sorted list, and replaces each digit with its corresponding name. The `process_arrays` function applies `by_length` to each subarray within the input list of arrays, concatenates the results into a single list, and returns this concatenated list.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.5079778134822845,
+        "generation_seconds": 7.231412945315242
+      }
+    },
+    {
+      "code_hash": "239d565fe891f38dbc49552f3899d0b1af1ff7189b3f98fb89649eb7aedee4cc",
+      "execution": {
+        "duration_seconds": 0.47107561118900776,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "duration_seconds": 0.07194539345800877,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "duration_seconds": 0.09377159178256989,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "duration_seconds": 0.09789830073714256,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "duration_seconds": 0.11643043532967567,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "duration_seconds": 0.09064414724707603,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def by_length(arr):\n    digit_names = {\n        1: \"One\",\n        2: \"Two\",\n        3: \"Three\",\n        4: \"Four\",\n        5: \"Five\",\n        6: \"Six\",\n        7: \"Seven\",\n        8: \"Eight\",\n        9: \"Nine\"\n    }\n    filtered_sorted_arr = sorted([x for x in arr if 1 <= x <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    return [digit_names[x] for x in reversed_arr]\n\ndef process_arrays(arrays):\n    result = []\n    for arr in arrays:\n        result.extend(by_length(arr))\n    return result",
+        "completion_tokens": 151,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 440,
+        "raw_text": "```python\ndef by_length(arr):\n    digit_names = {\n        1: \"One\",\n        2: \"Two\",\n        3: \"Three\",\n        4: \"Four\",\n        5: \"Five\",\n        6: \"Six\",\n        7: \"Seven\",\n        8: \"Eight\",\n        9: \"Nine\"\n    }\n    filtered_sorted_arr = sorted([x for x in arr if 1 <= x <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    return [digit_names[x] for x in reversed_arr]\n\ndef process_arrays(arrays):\n    result = []\n    for arr in arrays:\n        result.extend(by_length(arr))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.47107561118900776,
+        "generation_seconds": 4.210153436288238
+      }
+    },
+    {
+      "code_hash": "014735d68cc856e7c88dde5c69fdce2c761a8f2ed0808db364919c5aa1ed8720",
+      "execution": {
+        "duration_seconds": 0.49368881434202194,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "duration_seconds": 0.07146081700921059,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[2, 1, 1, 4, 5, 8, 2, 3], [9, 7, 6], [1, -1, 55]]) == ['Eight', 'Five', 'Four', 'Three', 'Two', 'Two', 'One', 'One', 'Nine', 'Seven', 'Six', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "duration_seconds": 0.08754629455506802,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[], [1, 2, 3], [4, 5, 6]]) == ['Three', 'Two', 'One', 'Six', 'Five', 'Four']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "duration_seconds": 0.11441164650022984,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[9, 9, 9], [1, 1, 1]]) == ['Nine', 'Nine', 'Nine', 'One', 'One', 'One']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "duration_seconds": 0.1053568422794342,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[7, 7, 7], []]) == ['Seven', 'Seven', 'Seven']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "duration_seconds": 0.11451769433915615,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_arrays([[8, 8, 8], [2, 2, 2]]) == ['Eight', 'Eight', 'Eight', 'Two', 'Two', 'Two']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def by_length(arr):\n    digit_names = [\"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\"]\n    filtered_sorted_arr = sorted([num for num in arr if 1 <= num <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    named_arr = [digit_names[num - 1] for num in reversed_arr]\n    return named_arr\n\ndef process_arrays(arrays):\n    result = []\n    for array in arrays:\n        result.extend(by_length(array))\n    return result",
+        "completion_tokens": 122,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 440,
+        "raw_text": "```python\ndef by_length(arr):\n    digit_names = [\"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\"]\n    filtered_sorted_arr = sorted([num for num in arr if 1 <= num <= 9])\n    reversed_arr = filtered_sorted_arr[::-1]\n    named_arr = [digit_names[num - 1] for num in reversed_arr]\n    return named_arr\n\ndef process_arrays(arrays):\n    result = []\n    for array in arrays:\n        result.extend(by_length(array))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef by_length(arr):\n    \"\"\"\n    Given an array of integers, sort the integers that are between 1 and 9 inclusive,\n    reverse the resulting array, and then replace each digit by its corresponding name from\n    \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\".\n\n    For example:\n      arr = [2, 1, 1, 4, 5, 8, 2, 3]   \n            -> sort arr -> [1, 1, 2, 2, 3, 4, 5, 8] \n            -> reverse arr -> [8, 5, 4, 3, 2, 2, 1, 1]\n      return [\"Eight\", \"Five\", \"Four\", \"Three\", \"Two\", \"Two\", \"One\", \"One\"]\n    \n      If the array is empty, return an empty array:\n      arr = []\n      return []\n    \n      If the array has any strange number ignore it:\n      arr = [1, -1 , 55] \n            -> sort arr -> [-1, 1, 55]\n            -> reverse arr -> [55, 1, -1]\n      return = ['One']\n    \"\"\"\n\n# Given a list of arrays of integers, each containing integers between 1 and 9 inclusive, sort each array, reverse the resulting array, and then replace each digit by its corresponding name from 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'. Finally, concatenate all the transformed arrays into a single array and return it.\ndef process_arrays(arrays):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.49368881434202194,
+        "generation_seconds": 3.407958049327135
+      }
+    }
+  ],
+  "duration_seconds": 39.96684295870364,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/105",
+  "unique_code_count": 5
+}

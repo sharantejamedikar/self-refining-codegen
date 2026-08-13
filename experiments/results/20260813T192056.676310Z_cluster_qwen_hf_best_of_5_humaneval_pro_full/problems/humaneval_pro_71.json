@@ -1,0 +1,707 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "4bc86ad4618a11b1fdbc9c761b5b0f90b81446dea4bb14898521ae1fa73fc1bd",
+      "execution": {
+        "duration_seconds": 0.3577682487666607,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "duration_seconds": 0.07905363291501999,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "duration_seconds": 0.08570858277380466,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "duration_seconds": 0.09783513471484184,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "duration_seconds": 0.09490622393786907,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return round(total_area, 2) if total_area > 0 else -1",
+        "completion_tokens": 260,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 272,
+        "raw_text": "```python\nimport math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return round(total_area, 2) if total_area > 0 else -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3577682487666607,
+        "generation_seconds": 7.4356084410101175
+      }
+    },
+    {
+      "code_hash": "2eb84414cde502679a979ab1ca44663c5c954d17611aee5590608234848e1523",
+      "execution": {
+        "duration_seconds": 0.34838299825787544,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "duration_seconds": 0.07206585444509983,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "duration_seconds": 0.08720250800251961,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "duration_seconds": 0.09375439211726189,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "duration_seconds": 0.09502511285245419,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    '''\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, \n    return the total area of all valid triangles. If no valid triangles are found, return -1.\n    Each tuple should be processed using the `triangle_area` function to determine if it forms a valid \n    triangle and to calculate its area.\n    \n    :param triangles: List[Tuple[int, int, int]]\n    :return: float\n    '''\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1",
+        "completion_tokens": 469,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 272,
+        "raw_text": "```python\nimport math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    '''\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, \n    return the total area of all valid triangles. If no valid triangles are found, return -1.\n    Each tuple should be processed using the `triangle_area` function to determine if it forms a valid \n    triangle and to calculate its area.\n    \n    :param triangles: List[Tuple[int, int, int]]\n    :return: float\n    '''\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1\n```\nThis solution includes two functions:\n1. `triangle_area(a, b, c)`: Calculates the area of a triangle given the lengths of its three sides, rounding the result to 2 decimal places. Returns -1 if the sides do not form a valid triangle.\n2. `total_triangle_area(triangles)`: Takes a list of tuples, each containing the lengths of the three sides of a triangle. It calculates the total area of all valid triangles by summing up the areas calculated by `triangle_area`. If no valid triangles are found, it returns -1.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.34838299825787544,
+        "generation_seconds": 12.840261440724134
+      }
+    },
+    {
+      "code_hash": "90a9632c5bf0f98b7aa395a9058358ac8e7fa59b37d3f3781c0f3234db5fea3f",
+      "execution": {
+        "duration_seconds": 0.4468523673713207,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "duration_seconds": 0.11462588794529438,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "duration_seconds": 0.10375934280455112,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "duration_seconds": 0.11857563443481922,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "duration_seconds": 0.10953772813081741,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    # Check if the sides form a valid triangle\n    if a + b > c and a + c > b and b + c > a:\n        # Calculate semi-perimeter\n        s = (a + b + c) / 2\n        # Calculate area using Heron's formula\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    '''\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, \n    return the total area of all valid triangles. If no valid triangles are found, return -1.\n    Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle \n    and to calculate its area.\n    '''\n    total_area = 0\n    valid_found = False\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n            valid_found = True\n    return total_area if valid_found else -1",
+        "completion_tokens": 368,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 272,
+        "raw_text": "```python\nimport math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    # Check if the sides form a valid triangle\n    if a + b > c and a + c > b and b + c > a:\n        # Calculate semi-perimeter\n        s = (a + b + c) / 2\n        # Calculate area using Heron's formula\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    '''\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, \n    return the total area of all valid triangles. If no valid triangles are found, return -1.\n    Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle \n    and to calculate its area.\n    '''\n    total_area = 0\n    valid_found = False\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n            valid_found = True\n    return total_area if valid_found else -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4468523673713207,
+        "generation_seconds": 10.06597674638033
+      }
+    },
+    {
+      "code_hash": "ef9b8a607a701a2fb29c918cae2c0ab5eef248ec7ca7cab708085f1084cf2390",
+      "execution": {
+        "duration_seconds": 0.4285204950720072,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "duration_seconds": 0.0725391898304224,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "duration_seconds": 0.1193753071129322,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "duration_seconds": 0.11792078614234924,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "duration_seconds": 0.11829251796007156,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from math import sqrt\n\ndef triangle_area(a, b, c):\n    \"\"\"\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    \"\"\"\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = round(sqrt(s * (s - a) * (s - b) * (s - c)), 2)\n        return area\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    \"\"\"\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\n    \"\"\"\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1",
+        "completion_tokens": 327,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 272,
+        "raw_text": "```python\nfrom math import sqrt\n\ndef triangle_area(a, b, c):\n    \"\"\"\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    \"\"\"\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = round(sqrt(s * (s - a) * (s - b) * (s - c)), 2)\n        return area\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    \"\"\"\n    Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\n    \"\"\"\n    total_area = 0\n    for triangle in triangles:\n        area = triangle_area(*triangle)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4285204950720072,
+        "generation_seconds": 8.93248293735087
+      }
+    },
+    {
+      "code_hash": "caef869fac5a1f877cf3fd1c1879729edf048da602467edd39b1a03e7ad0e12a",
+      "execution": {
+        "duration_seconds": 0.4660553466528654,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "duration_seconds": 0.11524337530136108,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(3, 4, 5), (1, 2, 10)]) == 6.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "duration_seconds": 0.11737294122576714,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(5, 12, 13), (7, 24, 25)]) == 114.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "duration_seconds": 0.11972349509596825,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 3), (1, 1, 1)]) == 0.43",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "duration_seconds": 0.11334932036697865,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert total_triangle_area([(1, 2, 10), (10, 20, 30)]) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    total_area = 0\n    for sides in triangles:\n        area = triangle_area(*sides)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1",
+        "completion_tokens": 256,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 272,
+        "raw_text": "```python\nimport math\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a + b > c and a + c > b and b + c > a:\n        s = (a + b + c) / 2\n        area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n        return round(area, 2)\n    else:\n        return -1\n\ndef total_triangle_area(triangles):\n    total_area = 0\n    for sides in triangles:\n        area = triangle_area(*sides)\n        if area != -1:\n            total_area += area\n    return total_area if total_area > 0 else -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n\n# Given a list of tuples, where each tuple contains the lengths of the three sides of a triangle, return the total area of all valid triangles. If no valid triangles are found, return -1. Each tuple should be processed using the `triangle_area` function to determine if it forms a valid triangle and to calculate its area.\ndef total_triangle_area(triangles):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4660553466528654,
+        "generation_seconds": 6.990734234452248
+      }
+    }
+  ],
+  "duration_seconds": 48.316474014893174,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/71",
+  "unique_code_count": 5
+}
