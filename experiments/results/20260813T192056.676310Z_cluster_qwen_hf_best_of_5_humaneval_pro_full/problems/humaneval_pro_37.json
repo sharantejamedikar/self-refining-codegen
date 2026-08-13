@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d0cd7c5312cfe16605989b7bb6b4a036e6ca1393f4e8582b2cbfa114f2cb0bc9",
+      "execution": {
+        "duration_seconds": 0.2513206358999014,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "duration_seconds": 0.07176116108894348,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "duration_seconds": 0.06792477890849113,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "duration_seconds": 0.11141027137637138,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def sort_even(l: list) -> list:\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indices, while its values at the even indices are equal\n    to the values of the even indices of l, but sorted.\"\"\"\n    even_indices_values = sorted([l[i] for i in range(len(l)) if i % 2 == 0])\n    result = []\n    even_idx = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(even_indices_values[even_idx])\n            even_idx += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]",
+        "completion_tokens": 234,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 261,
+        "raw_text": "```python\ndef sort_even(l: list) -> list:\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indices, while its values at the even indices are equal\n    to the values of the even indices of l, but sorted.\"\"\"\n    even_indices_values = sorted([l[i] for i in range(len(l)) if i % 2 == 0])\n    result = []\n    even_idx = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(even_indices_values[even_idx])\n            even_idx += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.2513206358999014,
+        "generation_seconds": 6.7470361683517694
+      }
+    },
+    {
+      "code_hash": "abc3ad0efd019294e013244328146baddd05e231d0a84678985bb23d5072df11",
+      "execution": {
+        "duration_seconds": 0.2759978584945202,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "duration_seconds": 0.07047971896827221,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "duration_seconds": 0.09009227901697159,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "duration_seconds": 0.1151590347290039,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def sort_even(l: list):\n    \"\"\"Sorts elements at even indices while keeping odd indices unchanged.\"\"\"\n    sorted_evens = sorted(l[i] for i in range(0, len(l), 2))\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Applies sort_even to each sublist in the given list of lists.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]",
+        "completion_tokens": 208,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 261,
+        "raw_text": "```python\ndef sort_even(l: list):\n    \"\"\"Sorts elements at even indices while keeping odd indices unchanged.\"\"\"\n    sorted_evens = sorted(l[i] for i in range(0, len(l), 2))\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Applies sort_even to each sublist in the given list of lists.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n```\n\nExplanation:\n- `sort_even` function sorts elements at even indices (considering the first index as 0) while keeping the elements at odd indices unchanged.\n- `transform_sublists` function applies the `sort_even` function to each sublist within the given list of lists.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2759978584945202,
+        "generation_seconds": 5.665021628141403
+      }
+    },
+    {
+      "code_hash": "59a39a3cea0f1cce4d5a3fcc6a58f755eccb3b1f777f3a7171041ea6cb7b4383",
+      "execution": {
+        "duration_seconds": 0.24875497072935104,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "duration_seconds": 0.07134296745061874,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "duration_seconds": 0.08403017930686474,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "duration_seconds": 0.09319708310067654,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n    even_indices = l[::2]\n    sorted_evens = sorted(even_indices)\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers,\n    return a new list of lists where each sublist is transformed\n    such that the even indexed elements are sorted and the odd indexed\n    elements remain the same. The transformation should be applied to\n    each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]",
+        "completion_tokens": 287,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 261,
+        "raw_text": "```python\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n    even_indices = l[::2]\n    sorted_evens = sorted(even_indices)\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers,\n    return a new list of lists where each sublist is transformed\n    such that the even indexed elements are sorted and the odd indexed\n    elements remain the same. The transformation should be applied to\n    each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.24875497072935104,
+        "generation_seconds": 7.8386312164366245
+      }
+    },
+    {
+      "code_hash": "594036c48f591e1da47f336f8ffa5b55f90fb37c1f1ad48294394e9351fe33f7",
+      "execution": {
+        "duration_seconds": 0.32289915904402733,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "duration_seconds": 0.07152806967496872,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[1, 2, 3]\n[3, 6, 5, 4]\n[[5, 6], [3, 7], [8, 9]]\n",
+            "test_case": "assert transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "duration_seconds": 0.12105570361018181,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[1, 2, 3]\n[3, 6, 5, 4]\n[[5, 6], [3, 7], [8, 9]]\n",
+            "test_case": "assert transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "duration_seconds": 0.1300506591796875,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[1, 2, 3]\n[3, 6, 5, 4]\n[[5, 6], [3, 7], [8, 9]]\n",
+            "test_case": "assert transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def sort_even(l: list):\n    \"\"\"Sorts the even indices of a list while keeping the odd indices unchanged.\"\"\"\n    even_indices_values = sorted(l[i] for i in range(0, len(l), 2))\n    result = l[:]\n    even_index = 0\n    for i in range(0, len(result), 2):\n        result[i] = even_indices_values[even_index]\n        even_index += 1\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Transforms each sublist by sorting the even indices while keeping the odd indices unchanged.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n\n# Test cases\nprint(sort_even([1, 2, 3]))  # Output: [1, 2, 3]\nprint(sort_even([5, 6, 3, 4]))  # Output: [3, 6, 5, 4]\nprint(transform_sublists([[5, 6], [3, 7], [8, 9]]))  # Output: [[3, 6], [5, 7], [8, 9]]",
+        "completion_tokens": 251,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 261,
+        "raw_text": "```python\ndef sort_even(l: list):\n    \"\"\"Sorts the even indices of a list while keeping the odd indices unchanged.\"\"\"\n    even_indices_values = sorted(l[i] for i in range(0, len(l), 2))\n    result = l[:]\n    even_index = 0\n    for i in range(0, len(result), 2):\n        result[i] = even_indices_values[even_index]\n        even_index += 1\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Transforms each sublist by sorting the even indices while keeping the odd indices unchanged.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n\n# Test cases\nprint(sort_even([1, 2, 3]))  # Output: [1, 2, 3]\nprint(sort_even([5, 6, 3, 4]))  # Output: [3, 6, 5, 4]\nprint(transform_sublists([[5, 6], [3, 7], [8, 9]]))  # Output: [[3, 6], [5, 7], [8, 9]]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.32289915904402733,
+        "generation_seconds": 6.859742853790522
+      }
+    },
+    {
+      "code_hash": "fa3f575f5cbca138ec02a990db4f9afbfc20e6e47da24e5f86f85f6ea54e16d9",
+      "execution": {
+        "duration_seconds": 0.29874835908412933,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "duration_seconds": 0.06947507709264755,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 6, 5, 4], [7, 8, 9, 2]]\n",
+            "test_case": "assert transform_sublists([[1, 2, 3], [5, 6, 3, 4]]) == [[1, 2, 3], [3, 6, 5, 4]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "duration_seconds": 0.1051071509718895,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 6, 5, 4], [7, 8, 9, 2]]\n",
+            "test_case": "assert transform_sublists([[7, 8, 9], [10, 11, 12, 13]]) == [[7, 8, 9], [10, 11, 12, 13]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "duration_seconds": 0.12390042468905449,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 6, 5, 4], [7, 8, 9, 2]]\n",
+            "test_case": "assert transform_sublists([[4, 3, 2, 1], [8, 7, 6, 5]]) == [[2, 3, 4, 1], [6, 7, 8, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indices, while its values at the even indices are equal\n    to the values of the even indices of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n    sorted_evens = sorted(l[::2])\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n\n# Example usage:\nprint(transform_sublists([[5, 6, 3, 4], [9, 8, 7, 2]]))  # Output: [[3, 6, 5, 4], [2, 8, 7, 9]]",
+        "completion_tokens": 330,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 261,
+        "raw_text": "```python\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indices, while its values at the even indices are equal\n    to the values of the even indices of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n    sorted_evens = sorted(l[::2])\n    result = []\n    even_index = 0\n    for i in range(len(l)):\n        if i % 2 == 0:\n            result.append(sorted_evens[even_index])\n            even_index += 1\n        else:\n            result.append(l[i])\n    return result\n\ndef transform_sublists(list_of_lists: list) -> list:\n    \"\"\"Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\"\"\"\n    return [sort_even(sublist) for sublist in list_of_lists]\n\n# Example usage:\nprint(transform_sublists([[5, 6, 3, 4], [9, 8, 7, 2]]))  # Output: [[3, 6, 5, 4], [2, 8, 7, 9]]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the even indicies are equal\n    to the values of the even indicies of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n\n# Given a list of lists, where each sublist contains integers, return a new list of lists where each sublist is transformed such that the even indexed elements are sorted and the odd indexed elements remain the same. The transformation should be applied to each sublist individually.\ndef transform_sublists(list_of_lists: list) -> list:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.29874835908412933,
+        "generation_seconds": 9.048069966956973
+      }
+    }
+  ],
+  "duration_seconds": 37.56007651053369,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/37",
+  "unique_code_count": 5
+}

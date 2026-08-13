@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "444325d3d7197a4cbe1b59682b379dfb7a6c15abe0a7a982897e50dc8b24671b",
+      "execution": {
+        "duration_seconds": 0.3247959818691015,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "duration_seconds": 0.09616747684776783,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "duration_seconds": 0.09505680203437805,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "duration_seconds": 0.1333182528614998,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    # Convert inputs to floats for comparison\n    def to_float(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n        return float(value)\n    \n    fa, fb = to_float(a), to_float(b)\n    \n    if fa == fb:\n        return None\n    elif fa > fb:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    \"\"\"\n    Takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair.\n    If the values in a pair are equal, the corresponding element in the result list should be None.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    return [compare_one(a, b) for a, b in pairs]",
+        "completion_tokens": 255,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 299,
+        "raw_text": "```python\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    # Convert inputs to floats for comparison\n    def to_float(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n        return float(value)\n    \n    fa, fb = to_float(a), to_float(b)\n    \n    if fa == fb:\n        return None\n    elif fa > fb:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    \"\"\"\n    Takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair.\n    If the values in a pair are equal, the corresponding element in the result list should be None.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    return [compare_one(a, b) for a, b in pairs]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3247959818691015,
+        "generation_seconds": 6.980089472606778
+      }
+    },
+    {
+      "code_hash": "a97d467574ab473ce73ef67e92a2ad99ab11a5eb832ecbf470d3d62d885ac8fa",
+      "execution": {
+        "duration_seconds": 0.34534607268869877,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "duration_seconds": 0.10241781547665596,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "duration_seconds": 0.12300773151218891,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "duration_seconds": 0.1196802370250225,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def compare_one(a, b):\n    def parse_number(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return value\n    \n    num_a = parse_number(a)\n    num_b = parse_number(b)\n    \n    if num_a == num_b:\n        return None\n    elif num_a > num_b:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    return [compare_one(a, b) for a, b in pairs]",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 299,
+        "raw_text": "```python\ndef compare_one(a, b):\n    def parse_number(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n            return float(value)\n        return value\n    \n    num_a = parse_number(a)\n    num_b = parse_number(b)\n    \n    if num_a == num_b:\n        return None\n    elif num_a > num_b:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    return [compare_one(a, b) for a, b in pairs]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.34534607268869877,
+        "generation_seconds": 3.0991104543209076
+      }
+    },
+    {
+      "code_hash": "488abb1c8d76e01c01b4006583a485f746f1688d43ed8dc2f28da0fc61d1b3c3",
+      "execution": {
+        "duration_seconds": 0.3681932855397463,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "duration_seconds": 0.12960526160895824,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "duration_seconds": 0.12734179943799973,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "duration_seconds": 0.11100279726088047,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef convert_to_float(value):\n    if isinstance(value, str):\n        value = re.sub(r',', '.', value)\n        return float(value)\n    return float(value)\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n    a_float = convert_to_float(a)\n    b_float = convert_to_float(b)\n    \n    if a_float == b_float:\n        return None\n    elif a_float > b_float:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    \"\"\"\n    Create a function that takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair. If the values in a pair\n    are equal, the corresponding element in the result list should be None. Note: If a real number is represented\n    as a string, the floating point might be . or ,\n    \"\"\"\n    result = []\n    for pair in pairs:\n        a, b = pair\n        larger_value = compare_one(a, b)\n        result.append(larger_value)\n    return result",
+        "completion_tokens": 358,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 299,
+        "raw_text": "```python\nimport re\n\ndef convert_to_float(value):\n    if isinstance(value, str):\n        value = re.sub(r',', '.', value)\n        return float(value)\n    return float(value)\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n    a_float = convert_to_float(a)\n    b_float = convert_to_float(b)\n    \n    if a_float == b_float:\n        return None\n    elif a_float > b_float:\n        return a\n    else:\n        return b\n\ndef compare_many(pairs):\n    \"\"\"\n    Create a function that takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair. If the values in a pair\n    are equal, the corresponding element in the result list should be None. Note: If a real number is represented\n    as a string, the floating point might be . or ,\n    \"\"\"\n    result = []\n    for pair in pairs:\n        a, b = pair\n        larger_value = compare_one(a, b)\n        result.append(larger_value)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3681932855397463,
+        "generation_seconds": 9.808006908744574
+      }
+    },
+    {
+      "code_hash": "f65f72c5f9b9d561c599884103b6b46b296a106b77689e3ce54b490269bfd5bb",
+      "execution": {
+        "duration_seconds": 0.28103906475007534,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "duration_seconds": 0.07158803194761276,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "duration_seconds": 0.08509882539510727,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "duration_seconds": 0.1241278126835823,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def compare_one(a, b):\n    # Helper function to convert string to float if necessary\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n        return float(value)\n    \n    # Convert both values to floats for comparison\n    parsed_a = parse_value(a)\n    parsed_b = parse_value(b)\n    \n    # Compare the values and return the appropriate result\n    if parsed_a > parsed_b:\n        return a\n    elif parsed_b > parsed_a:\n        return b\n    else:\n        return None\n\ndef compare_many(pairs):\n    # Use list comprehension to apply compare_one to each pair\n    return [compare_one(a, b) for a, b in pairs]",
+        "completion_tokens": 155,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 299,
+        "raw_text": "```python\ndef compare_one(a, b):\n    # Helper function to convert string to float if necessary\n    def parse_value(value):\n        if isinstance(value, str):\n            value = value.replace(',', '.')\n        return float(value)\n    \n    # Convert both values to floats for comparison\n    parsed_a = parse_value(a)\n    parsed_b = parse_value(b)\n    \n    # Compare the values and return the appropriate result\n    if parsed_a > parsed_b:\n        return a\n    elif parsed_b > parsed_a:\n        return b\n    else:\n        return None\n\ndef compare_many(pairs):\n    # Use list comprehension to apply compare_one to each pair\n    return [compare_one(a, b) for a, b in pairs]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.28103906475007534,
+        "generation_seconds": 4.247997112572193
+      }
+    },
+    {
+      "code_hash": "535c6b5e925d51eadeeb46bf68fb92f629b7f591e9fc29e3cfc79dfe3e851752",
+      "execution": {
+        "duration_seconds": 0.3777727596461773,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "duration_seconds": 0.12165459431707859,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(1, 2.5), (1, '2,3'), ('5,1', '6'), ('1', 1)]) == [2.5, '2,3', '6', None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "duration_seconds": 0.13155223615467548,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([(3, 3), ('4', '4'), (5.5, 5.5)]) == [None, None, None]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "duration_seconds": 0.124313959851861,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert compare_many([('7', 8), (9.9, '9,9'), (10, '10,1')]) == [8, None, '10,1']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n    # Convert inputs to float if they are strings, replacing ',' with '.'\n    num_a = float(str(a).replace(',', '.'))\n    num_b = float(str(b).replace(',', '.'))\n    \n    # Compare the numbers\n    if num_a > num_b:\n        return a\n    elif num_b > num_a:\n        return b\n    else:\n        return None\n\ndef compare_many(pairs):\n    \"\"\"\n    Takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair.\n    If the values in a pair are equal, the corresponding element in the result list should be None.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    # Use list comprehension to apply compare_one to each pair\n    return [compare_one(a, b) for a, b in pairs]",
+        "completion_tokens": 399,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 299,
+        "raw_text": "```python\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n    # Convert inputs to float if they are strings, replacing ',' with '.'\n    num_a = float(str(a).replace(',', '.'))\n    num_b = float(str(b).replace(',', '.'))\n    \n    # Compare the numbers\n    if num_a > num_b:\n        return a\n    elif num_b > num_a:\n        return b\n    else:\n        return None\n\ndef compare_many(pairs):\n    \"\"\"\n    Takes a list of pairs of integers, floats, or strings representing real numbers,\n    and returns a list of the larger variables in their given variable type for each pair.\n    If the values in a pair are equal, the corresponding element in the result list should be None.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n    \"\"\"\n    # Use list comprehension to apply compare_one to each pair\n    return [compare_one(a, b) for a, b in pairs]\n```\n\nThis solution includes two functions: `compare_one` and `compare_many`. The `compare_one` function compares two values and returns the larger one while preserving its type. The `compare_many` function uses `compare_one` to process a list of pairs, returning a list of the larger values from each pair.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef compare_one(a, b):\n    \"\"\"\n    Create a function that takes integers, floats, or strings representing\n    real numbers, and returns the larger variable in its given variable type.\n    Return None if the values are equal.\n    Note: If a real number is represented as a string, the floating point might be . or ,\n\n    compare_one(1, 2.5) \u279e 2.5\n    compare_one(1, \"2,3\") \u279e \"2,3\"\n    compare_one(\"5,1\", \"6\") \u279e \"6\"\n    compare_one(\"1\", 1) \u279e None\n    \"\"\"\n\n# Create a function that takes a list of pairs of integers, floats, or strings representing real numbers, and returns a list of the larger variables in their given variable type for each pair. If the values in a pair are equal, the corresponding element in the result list should be None. Note: If a real number is represented as a string, the floating point might be . or ,\ndef compare_many(pairs):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3777727596461773,
+        "generation_seconds": 10.929253054782748
+      }
+    }
+  ],
+  "duration_seconds": 36.76513017900288,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/137",
+  "unique_code_count": 5
+}

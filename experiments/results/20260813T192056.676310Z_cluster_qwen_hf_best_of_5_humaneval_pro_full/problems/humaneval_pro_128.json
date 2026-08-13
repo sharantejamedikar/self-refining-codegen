@@ -1,0 +1,782 @@
+{
+  "all_candidates_unique": false,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b876ec8b16dd11d786375f656aa7e5c99d418df849c9d3dcaebe91253dd6214f",
+      "execution": {
+        "duration_seconds": 0.48171629942953587,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "duration_seconds": 0.07147889770567417,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "duration_seconds": 0.09010476991534233,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[], [], []]) == 0",
+            "duration_seconds": 0.09754132851958275,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[], [], []]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "duration_seconds": 0.09631164185702801,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "duration_seconds": 0.12585931457579136,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        elif num < 0:\n            sign_product *= -1\n        magnitude_sum += abs(num)\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum",
+        "completion_tokens": 132,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        elif num < 0:\n            sign_product *= -1\n        magnitude_sum += abs(num)\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.48171629942953587,
+        "generation_seconds": 3.629880962893367
+      }
+    },
+    {
+      "code_hash": "0890eed0c8f17a4eee7422c1cef9eeb0ded238a14761005a89dd290f133a4726",
+      "execution": {
+        "duration_seconds": 0.5557429883629084,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "duration_seconds": 0.07577424868941307,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "duration_seconds": 0.11932486668229103,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[], [], []]) == 0",
+            "duration_seconds": 0.12328791245818138,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[], [], []]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "duration_seconds": 0.12067374959588051,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "duration_seconds": 0.11622348241508007,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n        elif num == 0:\n            sign_product = 0\n            break\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum",
+        "completion_tokens": 137,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n        elif num == 0:\n            sign_product = 0\n            break\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5557429883629084,
+        "generation_seconds": 3.788115730509162
+      }
+    },
+    {
+      "code_hash": "7256c9c7b6c1796949a74d420d84e15c247ebbf5f85b6a1b4d26189c028e6c93",
+      "execution": {
+        "duration_seconds": 0.5273502711206675,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "duration_seconds": 0.0750095434486866,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "duration_seconds": 0.10460213012993336,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[], [], []]) == 0",
+            "duration_seconds": 0.12007514387369156,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[], [], []]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "duration_seconds": 0.1100952047854662,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "duration_seconds": 0.11711622588336468,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    result_sum = 0\n    for sublist in list_of_lists:\n        if sublist:\n            result_sum += prod_signs(sublist)\n    return result_sum",
+        "completion_tokens": 124,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    result_sum = 0\n    for sublist in list_of_lists:\n        if sublist:\n            result_sum += prod_signs(sublist)\n    return result_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.5273502711206675,
+        "generation_seconds": 3.511218322440982
+      }
+    },
+    {
+      "code_hash": "0890eed0c8f17a4eee7422c1cef9eeb0ded238a14761005a89dd290f133a4726",
+      "execution": {
+        "duration_seconds": 0.4914909955114126,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "duration_seconds": 0.07062336057424545,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "duration_seconds": 0.08932735957205296,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[], [], []]) == 0",
+            "duration_seconds": 0.10386217199265957,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[], [], []]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "duration_seconds": 0.10807997547090054,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "duration_seconds": 0.11921370588243008,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n        elif num == 0:\n            sign_product = 0\n            break\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum",
+        "completion_tokens": 137,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        magnitude_sum += abs(num)\n        if num < 0:\n            sign_product *= -1\n        elif num == 0:\n            sign_product = 0\n            break\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    total_sum = 0\n    for sublist in list_of_lists:\n        result = prod_signs(sublist)\n        if result is not None:\n            total_sum += result\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4914909955114126,
+        "generation_seconds": 4.306283760815859
+      }
+    },
+    {
+      "code_hash": "c811e469aca0a47ddaba5e08d87ec0c63a0c3d3d1b56fba059e3036e9f76b562",
+      "execution": {
+        "duration_seconds": 0.5543049052357674,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "duration_seconds": 0.07126388140022755,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 2, -4], [0, 1], []]) == -9",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "duration_seconds": 0.11909511312842369,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, 2, 3], [-1, -2, -3], [0, 0, 0]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[], [], []]) == 0",
+            "duration_seconds": 0.12069080397486687,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[], [], []]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "duration_seconds": 0.1145510096102953,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[1, -1, 1, -1], [2, -2, 2, -2]]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "duration_seconds": 0.12829512730240822,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_prod_signs([[10, -20, 30], [40, -50, 60], [70, -80, 90]]) == -450",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        elif num < 0:\n            sign_product *= -1\n        magnitude_sum += abs(num)\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    result = 0\n    for sublist in list_of_lists:\n        if sublist:\n            result += prod_signs(sublist)\n    return result",
+        "completion_tokens": 121,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 288,
+        "raw_text": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    magnitude_sum = 0\n    for num in arr:\n        if num == 0:\n            return 0\n        elif num < 0:\n            sign_product *= -1\n        magnitude_sum += abs(num)\n    return magnitude_sum * sign_product\n\ndef sum_prod_signs(list_of_lists):\n    result = 0\n    for sublist in list_of_lists:\n        if sublist:\n            result += prod_signs(sublist)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\n# Given a list of lists of integers, calculate the sum of the results of the 'prod_signs' function applied to each sublist. If any sublist is empty, it should be ignored in the sum. The 'prod_signs' function returns the sum of magnitudes of integers multiplied by the product of all signs of each number in the array, represented by 1, -1, or 0.\ndef sum_prod_signs(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5543049052357674,
+        "generation_seconds": 3.331754542887211
+      }
+    }
+  ],
+  "duration_seconds": 21.182244796305895,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/128",
+  "unique_code_count": 4
+}

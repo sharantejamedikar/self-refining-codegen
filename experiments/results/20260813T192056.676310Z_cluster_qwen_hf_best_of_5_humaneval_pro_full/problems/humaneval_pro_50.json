@@ -1,0 +1,630 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "85fe196f54b65e45b18253719111683bc3ebc0232c00424952fbd0df55ba64a1",
+      "execution": {
+        "duration_seconds": 0.31527295894920826,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "duration_seconds": 0.09080955013632774,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "duration_seconds": 0.12296487390995026,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['xyz']) == 'xyz'",
+            "duration_seconds": 0.10125898569822311,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['xyz']) == 'xyz'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encode_shift(s: str) -> str:\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str) -> str:\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    # Decode all messages and concatenate the results\n    decoded_string = \"\".join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Encode the concatenated string again\n    final_encoded_string = encode_shift(decoded_string)\n    \n    return final_encoded_string",
+        "completion_tokens": 195,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "raw_text": "```python\ndef encode_shift(s: str) -> str:\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str) -> str:\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    # Decode all messages and concatenate the results\n    decoded_string = \"\".join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Encode the concatenated string again\n    final_encoded_string = encode_shift(decoded_string)\n    \n    return final_encoded_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.31527295894920826,
+        "generation_seconds": 5.308344138786197
+      }
+    },
+    {
+      "code_hash": "184541397a596f6bf303c6bdfa747dd48b94befd02e1fea2f8d0a642cc9ab783",
+      "execution": {
+        "duration_seconds": 0.3403091598302126,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "duration_seconds": 0.08509188331663609,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-04phyv9n/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['fgh', 'klm'])\n  File \"/tmp/srcg-04phyv9n/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-04phyv9n/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['fgh', 'klm'])\n  File \"/tmp/srcg-04phyv9n/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "duration_seconds": 0.10549705289304256,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_fwn54tv/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['abc', 'def'])\n  File \"/tmp/srcg-_fwn54tv/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_fwn54tv/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['abc', 'def'])\n  File \"/tmp/srcg-_fwn54tv/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['xyz']) == 'xyz'",
+            "duration_seconds": 0.14951142109930515,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-st19qe_p/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['xyz'])\n  File \"/tmp/srcg-st19qe_p/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['xyz']) == 'xyz'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-st19qe_p/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['xyz'])\n  File \"/tmp/srcg-st19qe_p/program.py\", line 27, in decode_and_reencode\n    return encode_shift(decoded_string)\n           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    decoded_string = \"\".join(decode_shift(msg) for msg in encoded_messages)\n    return encode_shift(decoded_string)",
+        "completion_tokens": 101,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "raw_text": "```python\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    decoded_string = \"\".join(decode_shift(msg) for msg in encoded_messages)\n    return encode_shift(decoded_string)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3403091598302126,
+        "generation_seconds": 2.7595101669430733
+      }
+    },
+    {
+      "code_hash": "19a247a786463c4e7192653c128da5a21d8787951637d7144e88e8aacfe3b3ee",
+      "execution": {
+        "duration_seconds": 0.26099076122045517,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "duration_seconds": 0.07335338369011879,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "duration_seconds": 0.09304252825677395,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['xyz']) == 'xyz'",
+            "duration_seconds": 0.0943240225315094,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['xyz']) == 'xyz'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    # Concatenate all decoded messages\n    decoded_concat = ''.join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Reencode the concatenated decoded string\n    final_encoded = encode_shift(decoded_concat)\n    \n    return final_encoded",
+        "completion_tokens": 214,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "raw_text": "```python\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    # Concatenate all decoded messages\n    decoded_concat = ''.join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Reencode the concatenated decoded string\n    final_encoded = encode_shift(decoded_concat)\n    \n    return final_encoded\n```\n\nThis solution includes the implementation of `encode_shift`, `decode_shift`, and `decode_and_reencode` functions as per the requirements.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.26099076122045517,
+        "generation_seconds": 5.830433409661055
+      }
+    },
+    {
+      "code_hash": "ec28b5c156b07fe936ef427be925b0fb1c1f67a6ab040822f0487c1295aec3b4",
+      "execution": {
+        "duration_seconds": 0.33234829269349575,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "duration_seconds": 0.0775163508951664,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "duration_seconds": 0.13657529279589653,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['xyz']) == 'xyz'",
+            "duration_seconds": 0.11796530149877071,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['xyz']) == 'xyz'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef encode_shift(s: str) -> str:\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_shift(s: str) -> str:\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: List[str]) -> str:\n    # Decode all messages and concatenate the results\n    decoded_string = ''.join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Encode the concatenated string again\n    final_encoded_string = encode_shift(decoded_string)\n    \n    return final_encoded_string",
+        "completion_tokens": 201,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "raw_text": "```python\nfrom typing import List\n\ndef encode_shift(s: str) -> str:\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_shift(s: str) -> str:\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: List[str]) -> str:\n    # Decode all messages and concatenate the results\n    decoded_string = ''.join(decode_shift(msg) for msg in encoded_messages)\n    \n    # Encode the concatenated string again\n    final_encoded_string = encode_shift(decoded_string)\n    \n    return final_encoded_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.33234829269349575,
+        "generation_seconds": 5.4608034156262875
+      }
+    },
+    {
+      "code_hash": "1b55e680e43c1f00bcea077c0cdc14f377b836f27bdbaf9f7b30ee57e1958216",
+      "execution": {
+        "duration_seconds": 0.39700773172080517,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "duration_seconds": 0.11742106080055237,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-htov_u_s/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['fgh', 'klm'])\n  File \"/tmp/srcg-htov_u_s/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['fgh', 'klm']) == 'fghklm'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-htov_u_s/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['fgh', 'klm'])\n  File \"/tmp/srcg-htov_u_s/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "duration_seconds": 0.14343725331127644,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-gy63wcp1/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['abc', 'def'])\n  File \"/tmp/srcg-gy63wcp1/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['abc', 'def']) == 'abcdef'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-gy63wcp1/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['abc', 'def'])\n  File \"/tmp/srcg-gy63wcp1/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "decode_and_reencode(['xyz']) == 'xyz'",
+            "duration_seconds": 0.13588451780378819,
+            "exception_message": "name 'encode_shift' is not defined. Did you mean: 'decode_shift'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-52ti2tja/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['xyz'])\n  File \"/tmp/srcg-52ti2tja/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n",
+            "stdout": "",
+            "test_case": "assert decode_and_reencode(['xyz']) == 'xyz'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-52ti2tja/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = decode_and_reencode(['xyz'])\n  File \"/tmp/srcg-52ti2tja/program.py\", line 27, in decode_and_reencode\n    final_encoded_string = encode_shift(decoded_string)\n                           ^^^^^^^^^^^^\nNameError: name 'encode_shift' is not defined. Did you mean: 'decode_shift'?\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    decoded_string = ''.join(decode_shift(msg) for msg in encoded_messages)\n    final_encoded_string = encode_shift(decoded_string)\n    return final_encoded_string",
+        "completion_tokens": 110,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 229,
+        "raw_text": "```python\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\ndef decode_and_reencode(encoded_messages: list) -> str:\n    decoded_string = ''.join(decode_shift(msg) for msg in encoded_messages)\n    final_encoded_string = encode_shift(decoded_string)\n    return final_encoded_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\n# Given a list of encoded messages, each encoded with the `encode_shift` function, decode all messages and concatenate the results into a single string. Then, encode this concatenated string using the `encode_shift` function again. Return the final encoded string.\ndef decode_and_reencode(encoded_messages: list) -> str:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.39700773172080517,
+        "generation_seconds": 2.988382924348116
+      }
+    }
+  ],
+  "duration_seconds": 23.99687953852117,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2,
+    3
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/50",
+  "unique_code_count": 5
+}

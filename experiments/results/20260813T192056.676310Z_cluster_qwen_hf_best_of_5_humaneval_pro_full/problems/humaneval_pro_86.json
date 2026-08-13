@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "a684adb0a049c21bdcc3d28c19d8e81020129d341c5f68f1115492d50a0d1e45",
+      "execution": {
+        "duration_seconds": 0.3181387223303318,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "duration_seconds": 0.07356720604002476,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "duration_seconds": 0.13155596144497395,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle([]) == ([], '')",
+            "duration_seconds": 0.11274343729019165,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle([]) == ([], '')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    For example:\n    multi_anti_shuffle(['Hi', 'hello']) returns (['Hi', 'ehllo'], 'Hi ehllo')\n    multi_anti_shuffle(['Hello World!!!']) returns (['Helo !!!Wdlor'], 'Helo !!!Wdlor')\n    multi_anti_shuffle([]) returns ([], '')\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string",
+        "completion_tokens": 359,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "raw_text": "```python\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    For example:\n    multi_anti_shuffle(['Hi', 'hello']) returns (['Hi', 'ehllo'], 'Hi ehllo')\n    multi_anti_shuffle(['Hello World!!!']) returns (['Helo !!!Wdlor'], 'Helo !!!Wdlor')\n    multi_anti_shuffle([]) returns ([], '')\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3181387223303318,
+        "generation_seconds": 9.827241463586688
+      }
+    },
+    {
+      "code_hash": "e61477790932e0a50695b1069a43e2b71322896e400d913ea514458f41963f26",
+      "execution": {
+        "duration_seconds": 0.34682631865143776,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "duration_seconds": 0.11658371426165104,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "duration_seconds": 0.11416925676167011,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle([]) == ([], '')",
+            "duration_seconds": 0.11582725122570992,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle([]) == ([], '')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. \n    Also returns a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space.\n    Handles lists of varying lengths, including empty lists.\n    \"\"\"\n    result_list = [anti_shuffle(s) for s in string_list]\n    result_str = ' '.join(result_list)\n    return result_list, result_str",
+        "completion_tokens": 272,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "raw_text": "```python\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. \n    Also returns a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space.\n    Handles lists of varying lengths, including empty lists.\n    \"\"\"\n    result_list = [anti_shuffle(s) for s in string_list]\n    result_str = ' '.join(result_list)\n    return result_list, result_str\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.34682631865143776,
+        "generation_seconds": 7.462983969599009
+      }
+    },
+    {
+      "code_hash": "b5c754ba8adfae48aee776054f10617bfd7012099ef95b324a57266a277e976a",
+      "execution": {
+        "duration_seconds": 0.24972702749073505,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "duration_seconds": 0.07165751047432423,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "duration_seconds": 0.09134445525705814,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle([]) == ([], '')",
+            "duration_seconds": 0.08649590238928795,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle([]) == ([], '')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    Example:\n    multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) \n    returns (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string",
+        "completion_tokens": 338,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "raw_text": "```python\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    words = s.split()\n    ordered_words = [''.join(sorted(word)) for word in words]\n    return ' '.join(ordered_words)\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    Example:\n    multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) \n    returns (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.24972702749073505,
+        "generation_seconds": 9.252453641965985
+      }
+    },
+    {
+      "code_hash": "07df7a2164653e9652c9fb9b271b7b0d2e6e1c3ed2437bae11a28ed7de136036",
+      "execution": {
+        "duration_seconds": 0.25616010278463364,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "duration_seconds": 0.07033638283610344,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "duration_seconds": 0.08557689562439919,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle([]) == ([], '')",
+            "duration_seconds": 0.09996651858091354,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle([]) == ([], '')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    return ' '.join([''.join(sorted(word)) for word in s.split(' ')])\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    :param string_list: List of strings to be anti-shuffled\n    :return: Tuple containing a list of anti-shuffled strings and a concatenated string\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string",
+        "completion_tokens": 367,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "raw_text": "```python\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    return ' '.join([''.join(sorted(word)) for word in s.split(' ')])\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \n    :param string_list: List of strings to be anti-shuffled\n    :return: Tuple containing a list of anti-shuffled strings and a concatenated string\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string\n```\n\nThis solution includes two functions: `anti_shuffle` which processes a single string to reorder its characters within each word, and `multi_anti_shuffle` which applies `anti_shuffle` to each string in a list, returning both the list of processed strings and their concatenated form.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.25616010278463364,
+        "generation_seconds": 10.037603713572025
+      }
+    },
+    {
+      "code_hash": "8bfc138b019562eec6540c7c075d64f10cf0f72beaac276c8d9786c6036f6d2b",
+      "execution": {
+        "duration_seconds": 0.25537578016519547,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "duration_seconds": 0.06989030167460442,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['Hi', 'hello', 'Hello World!!!']) == (['Hi', 'ehllo', 'Hello !!!Wdlor'], 'Hi ehllo Hello !!!Wdlor')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "duration_seconds": 0.08664164319634438,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle(['', 'a', 'ab', 'abc']) == (['', 'a', 'ab', 'abc'], ' a ab abc')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_anti_shuffle([]) == ([], '')",
+            "duration_seconds": 0.09860637597739697,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_anti_shuffle([]) == ([], '')",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    return ' '.join([''.join(sorted(word)) for word in s.split(' ')])\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string",
+        "completion_tokens": 277,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 289,
+        "raw_text": "```python\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n    return ' '.join([''.join(sorted(word)) for word in s.split(' ')])\n\ndef multi_anti_shuffle(string_list):\n    \"\"\"\n    Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\n    \"\"\"\n    anti_shuffled_list = [anti_shuffle(s) for s in string_list]\n    concatenated_string = ' '.join(anti_shuffled_list)\n    return anti_shuffled_list, concatenated_string\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\n# Write a function that takes a list of strings and returns a new list where each string is the anti-shuffled version of the corresponding string in the input list. Additionally, the function should also return a single string that is the concatenation of all the anti-shuffled strings, with each string separated by a space. The function should handle lists of varying lengths, including empty lists.\ndef multi_anti_shuffle(string_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.25537578016519547,
+        "generation_seconds": 7.651811331510544
+      }
+    }
+  ],
+  "duration_seconds": 45.66190399043262,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/86",
+  "unique_code_count": 5
+}

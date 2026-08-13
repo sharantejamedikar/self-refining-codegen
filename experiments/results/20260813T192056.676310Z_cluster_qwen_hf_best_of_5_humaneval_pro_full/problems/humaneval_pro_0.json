@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "988faf22a4a0f98ba13a4381a9902a9479c33e05953ca01c3b8d9e9ab53233f2",
+      "execution": {
+        "duration_seconds": 0.2950806189328432,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "duration_seconds": 0.07364488206803799,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "duration_seconds": 0.09437286108732224,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "duration_seconds": 0.12676672637462616,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    \"\"\" Determine if there exists any list where at least two numbers are closer to each other than a given threshold.\n    If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\n    \"\"\"\n    close_indices = []\n    for i, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            close_indices.append(i)\n    return close_indices",
+        "completion_tokens": 206,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 278,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    \"\"\"\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if abs(numbers[i] - numbers[j]) < threshold:\n                return True\n    return False\n\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    \"\"\" Determine if there exists any list where at least two numbers are closer to each other than a given threshold.\n    If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\n    \"\"\"\n    close_indices = []\n    for i, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            close_indices.append(i)\n    return close_indices\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.2950806189328432,
+        "generation_seconds": 12.6118583958596
+      }
+    },
+    {
+      "code_hash": "d5acca41c225c813bfbfce987ad667a95f691921d55a9a338afaef96344895d8",
+      "execution": {
+        "duration_seconds": 0.34271700121462345,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "duration_seconds": 0.09321130439639091,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "duration_seconds": 0.11439305543899536,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "duration_seconds": 0.13486268930137157,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    sorted_numbers = sorted(numbers)\n    for i in range(len(sorted_numbers) - 1):\n        if abs(sorted_numbers[i] - sorted_numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            result.append(index)\n    return result",
+        "completion_tokens": 126,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 278,
+        "raw_text": "```python\nfrom typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    sorted_numbers = sorted(numbers)\n    for i in range(len(sorted_numbers) - 1):\n        if abs(sorted_numbers[i] - sorted_numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            result.append(index)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.34271700121462345,
+        "generation_seconds": 3.4270117674022913
+      }
+    },
+    {
+      "code_hash": "e9a2e0629c2dba27623fd0ca3f33e3862a196b38adee75c562f98795e2727630",
+      "execution": {
+        "duration_seconds": 0.35523772798478603,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "duration_seconds": 0.11094058305025101,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "duration_seconds": 0.12400038167834282,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "duration_seconds": 0.12001508474349976,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    numbers.sort()\n    for i in range(len(numbers) - 1):\n        if abs(numbers[i] - numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            result.append(index)\n    return result",
+        "completion_tokens": 217,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 278,
+        "raw_text": "```python\nfrom typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    numbers.sort()\n    for i in range(len(numbers) - 1):\n        if abs(numbers[i] - numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            result.append(index)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.35523772798478603,
+        "generation_seconds": 6.470861125737429
+      }
+    },
+    {
+      "code_hash": "d54118baa51e565b5864f764c41e030818e87a7b156a3e05e4db5a70c31a345d",
+      "execution": {
+        "duration_seconds": 0.33910081908106804,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "duration_seconds": 0.10262562520802021,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "duration_seconds": 0.11979120969772339,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "duration_seconds": 0.1164043340831995,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    sorted_numbers = sorted(numbers)\n    for i in range(len(sorted_numbers) - 1):\n        if abs(sorted_numbers[i] - sorted_numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    \"\"\" Determine if there exists any list where at least two numbers are closer to each other than a given threshold.\n    If such a list exists, return the indices of the lists where this condition is met. If no such list exists,\n    return an empty list.\n    \n    >>> find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0], [6.0, 7.0]], 0.3)\n    [1]\n    >>> find_close_elements_lists([[1.0, 2.0, 3.0], [6.0, 7.0]], 0.5)\n    []\n    \"\"\"\n    close_indices = []\n    for i, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            close_indices.append(i)\n    return close_indices",
+        "completion_tokens": 391,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 278,
+        "raw_text": "```python\nfrom typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    sorted_numbers = sorted(numbers)\n    for i in range(len(sorted_numbers) - 1):\n        if abs(sorted_numbers[i] - sorted_numbers[i + 1]) < threshold:\n            return True\n    return False\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    \"\"\" Determine if there exists any list where at least two numbers are closer to each other than a given threshold.\n    If such a list exists, return the indices of the lists where this condition is met. If no such list exists,\n    return an empty list.\n    \n    >>> find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0], [6.0, 7.0]], 0.3)\n    [1]\n    >>> find_close_elements_lists([[1.0, 2.0, 3.0], [6.0, 7.0]], 0.5)\n    []\n    \"\"\"\n    close_indices = []\n    for i, lst in enumerate(list_of_lists):\n        if has_close_elements(lst, threshold):\n            close_indices.append(i)\n    return close_indices\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.33910081908106804,
+        "generation_seconds": 11.646402360871434
+      }
+    },
+    {
+      "code_hash": "c585734d5888c2d3740789c23784b8be2d65d7974b72088593432964b96ecbd4",
+      "execution": {
+        "duration_seconds": 0.3060323689132929,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "duration_seconds": 0.07339668273925781,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [1.0, 2.8, 3.0, 4.0, 5.0, 2.0]], 0.5) == [1]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "duration_seconds": 0.10397210717201233,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.3) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "duration_seconds": 0.12838663533329964,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_close_elements_lists([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]], 0.5) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    numbers.sort()\n    for i in range(len(numbers) - 1):\n        if abs(numbers[i] - numbers[i + 1]) < threshold:\n            return True\n    return False\n\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, numbers in enumerate(list_of_lists):\n        if has_close_elements(numbers, threshold):\n            result.append(index)\n    return result",
+        "completion_tokens": 217,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 278,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n    numbers.sort()\n    for i in range(len(numbers) - 1):\n        if abs(numbers[i] - numbers[i + 1]) < threshold:\n            return True\n    return False\n\n\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n    result = []\n    for index, numbers in enumerate(list_of_lists):\n        if has_close_elements(numbers, threshold):\n            result.append(index)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer to each other than\n    given threshold.\n    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)\n    False\n    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)\n    True\n    \"\"\"\n\n# Given a list of lists of floats, determine if there exists any list where at least two numbers are closer to each other than a given threshold. If such a list exists, return the indices of the lists where this condition is met. If no such list exists, return an empty list.\ndef find_close_elements_lists(list_of_lists: List[List[float]], threshold: float) -> List[int]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3060323689132929,
+        "generation_seconds": 5.919180380180478
+      }
+    }
+  ],
+  "duration_seconds": 41.717712150886655,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/0",
+  "unique_code_count": 5
+}

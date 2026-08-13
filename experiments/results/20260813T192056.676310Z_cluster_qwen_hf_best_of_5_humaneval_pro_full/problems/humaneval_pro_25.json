@@ -1,0 +1,707 @@
+{
+  "all_candidates_unique": false,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "259786168867215b1f05351e3ea97ce0dca38148f758f4a400f5e0f89be10fc4",
+      "execution": {
+        "duration_seconds": 0.40676580742001534,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "duration_seconds": 0.0728211011737585,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "duration_seconds": 0.09675338864326477,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "duration_seconds": 0.11937084421515465,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "duration_seconds": 0.11751282960176468,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor * divisor:\n        if n % divisor:\n            divisor += 1\n        else:\n            n //= divisor\n            factors.append(divisor)\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]",
+        "completion_tokens": 221,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 279,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor * divisor:\n        if n % divisor:\n            divisor += 1\n        else:\n            n //= divisor\n            factors.append(divisor)\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.40676580742001534,
+        "generation_seconds": 6.0242998749017715
+      }
+    },
+    {
+      "code_hash": "d5b5cf457c777f4a70a45a88051637fae3d3e0b543ce732d4fdcdc48d66fab07",
+      "execution": {
+        "duration_seconds": 0.38449886441230774,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "duration_seconds": 0.07081031426787376,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "duration_seconds": 0.10488659702241421,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "duration_seconds": 0.10010072402656078,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "duration_seconds": 0.10834887623786926,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    \"\"\"\n    factors = []\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(number) for number in numbers]",
+        "completion_tokens": 242,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 279,
+        "raw_text": "```python\nfrom typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    \"\"\"\n    factors = []\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(number) for number in numbers]\n```\n\nThis solution includes two functions as specified. The `factorize` function takes an integer and returns its prime factors in ascending order. The `factorize_list` function takes a list of integers and returns a list of lists containing the prime factors of each integer in the input list. Both functions utilize the `factorize` function internally to compute the prime factors of individual numbers.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.38449886441230774,
+        "generation_seconds": 6.592605568468571
+      }
+    },
+    {
+      "code_hash": "c8556e174a0368176ad049a359a7a3fee3d5dab2574a0db622db31a8e2623313",
+      "execution": {
+        "duration_seconds": 0.4083654657006264,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "duration_seconds": 0.07252545654773712,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "duration_seconds": 0.10737179778516293,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "duration_seconds": 0.1163651067763567,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "duration_seconds": 0.11173109151422977,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]",
+        "completion_tokens": 271,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 279,
+        "raw_text": "```python\nfrom typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]\n```\n\nThis solution includes two functions: `factorize` which returns the prime factors of a single integer, and `factorize_list` which uses the `factorize` function to return the prime factors of a list of integers.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4083654657006264,
+        "generation_seconds": 8.00467356480658
+      }
+    },
+    {
+      "code_hash": "3e96211c7c1074cc1ddf1d6493a1f62a88291a96ddf4592805e62ff279de0c9b",
+      "execution": {
+        "duration_seconds": 0.46684563159942627,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "duration_seconds": 0.12839223071932793,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "duration_seconds": 0.12238636799156666,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "duration_seconds": 0.10334446467459202,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "duration_seconds": 0.11237090267241001,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]",
+        "completion_tokens": 216,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 279,
+        "raw_text": "```python\nfrom typing import List\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    divisor = 2\n    while n >= divisor ** 2:\n        if n % divisor == 0:\n            factors.append(divisor)\n            n //= divisor\n        else:\n            divisor += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.46684563159942627,
+        "generation_seconds": 6.000916309654713
+      }
+    },
+    {
+      "code_hash": "259786168867215b1f05351e3ea97ce0dca38148f758f4a400f5e0f89be10fc4",
+      "execution": {
+        "duration_seconds": 0.467353830114007,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "duration_seconds": 0.0901403110474348,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([8, 25, 70]) == [[2, 2, 2], [5, 5], [2, 5, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "duration_seconds": 0.12375588528811932,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([10, 12, 14]) == [[2, 5], [2, 2, 3], [2, 7]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "duration_seconds": 0.13349496386945248,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([1, 2, 3]) == [[], [2], [3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "duration_seconds": 0.1195803377777338,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert factorize_list([49, 64, 81]) == [[7, 7], [2, 2, 2, 2, 2, 2], [3, 3, 3, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor * divisor:\n        if n % divisor:\n            divisor += 1\n        else:\n            n //= divisor\n            factors.append(divisor)\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]",
+        "completion_tokens": 221,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 279,
+        "raw_text": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appears in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n    factors = []\n    # Start with the smallest prime number\n    divisor = 2\n    while n >= divisor * divisor:\n        if n % divisor:\n            divisor += 1\n        else:\n            n //= divisor\n            factors.append(divisor)\n    if n > 1:\n        factors.append(n)\n    return factors\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n    return [factorize(num) for num in numbers]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    \"\"\" Return list of prime factors of given integer in the order from smallest to largest.\n    Each of the factors should be listed number of times corresponding to how many times it appeares in factorization.\n    Input number should be equal to the product of all factors\n    >>> factorize(8)\n    [2, 2, 2]\n    >>> factorize(25)\n    [5, 5]\n    >>> factorize(70)\n    [2, 5, 7]\n    \"\"\"\n\n# Given a list of integers, return a list of lists where each sublist contains the prime factors of the corresponding integer in the original list. The prime factors should be listed in ascending order, and each factor should appear as many times as it does in the factorization of the integer.\nfrom typing import List\n\n\ndef factorize_list(numbers: List[int]) -> List[List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.467353830114007,
+        "generation_seconds": 6.248577497899532
+      }
+    }
+  ],
+  "duration_seconds": 35.0084372702986,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/25",
+  "unique_code_count": 4
+}

@@ -1,0 +1,626 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "f060a347167b8fc124817d76c03d57677961115b7566952ceee898188446a90a",
+      "execution": {
+        "duration_seconds": 0.3177330084145069,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "duration_seconds": 0.08731650188565254,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bj9m1cvx/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-bj9m1cvx/program.py\", line 40, in smallest_change_2d\n    transposed_arr = [[arr[j][i] for j in range(rows)] for i in range(cols)]\n                       ~~~~~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bj9m1cvx/program.py\", line 47, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-bj9m1cvx/program.py\", line 40, in smallest_change_2d\n    transposed_arr = [[arr[j][i] for j in range(rows)] for i in range(cols)]\n                       ~~~~~~^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "duration_seconds": 0.11547108553349972,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "duration_seconds": 0.11471201293170452,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def smallest_change(arr):\n    left = 0\n    right = len(arr) - 1\n    changes = 0\n    \n    while left < right:\n        if arr[left] != arr[right]:\n            changes += 1\n        left += 1\n        right -= 1\n    \n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    for i in range(rows):\n        total_changes += smallest_change(arr[i])\n    \n    transposed_arr = [[arr[j][i] for j in range(rows)] for i in range(cols)]\n    \n    for i in range(cols):\n        total_changes += smallest_change(transposed_arr[i])\n    \n    return total_changes",
+        "completion_tokens": 163,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef smallest_change(arr):\n    left = 0\n    right = len(arr) - 1\n    changes = 0\n    \n    while left < right:\n        if arr[left] != arr[right]:\n            changes += 1\n        left += 1\n        right -= 1\n    \n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    for i in range(rows):\n        total_changes += smallest_change(arr[i])\n    \n    transposed_arr = [[arr[j][i] for j in range(rows)] for i in range(cols)]\n    \n    for i in range(cols):\n        total_changes += smallest_change(transposed_arr[i])\n    \n    return total_changes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3177330084145069,
+        "generation_seconds": 4.4672494269907475
+      }
+    },
+    {
+      "code_hash": "5de9c88def3913c1317fcce74bd85d4ea3cc6faae69d956b5b0dc76b1a871cd4",
+      "execution": {
+        "duration_seconds": 0.38311044685542583,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "duration_seconds": 0.1453251838684082,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bxmaf69q/program.py\", line 40, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-bxmaf69q/program.py\", line 29, in smallest_change_2d\n    cols = [[arr[j][i] for j in range(len(arr))] for i in range(len(arr[0]))]\n             ~~~~~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bxmaf69q/program.py\", line 40, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-bxmaf69q/program.py\", line 29, in smallest_change_2d\n    cols = [[arr[j][i] for j in range(len(arr))] for i in range(len(arr[0]))]\n             ~~~~~~^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "duration_seconds": 0.10487890057265759,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "duration_seconds": 0.13263479992747307,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = [arr[i][:] for i in range(len(arr))]\n    cols = [[arr[j][i] for j in range(len(arr))] for i in range(len(arr[0]))]\n    total_changes = 0\n    \n    for row in rows:\n        total_changes += smallest_change(row)\n    \n    for col in cols:\n        total_changes += smallest_change(col)\n    \n    return total_changes",
+        "completion_tokens": 147,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = [arr[i][:] for i in range(len(arr))]\n    cols = [[arr[j][i] for j in range(len(arr))] for i in range(len(arr[0]))]\n    total_changes = 0\n    \n    for row in rows:\n        total_changes += smallest_change(row)\n    \n    for col in cols:\n        total_changes += smallest_change(col)\n    \n    return total_changes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.38311044685542583,
+        "generation_seconds": 4.036948449909687
+      }
+    },
+    {
+      "code_hash": "83f5f827b06d7d27e272d61b426ce479f6295366f4fcdd5d6c503c047b2ad930",
+      "execution": {
+        "duration_seconds": 0.2670984957367182,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "duration_seconds": 0.08505371399223804,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i6uoxc_b/program.py\", line 43, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-i6uoxc_b/program.py\", line 38, in smallest_change_2d\n    column = [arr[row][col] for row in range(rows)]\n              ~~~~~~~~^^^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i6uoxc_b/program.py\", line 43, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-i6uoxc_b/program.py\", line 38, in smallest_change_2d\n    column = [arr[row][col] for row in range(rows)]\n              ~~~~~~~~^^^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "duration_seconds": 0.08692984655499458,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "duration_seconds": 0.09484892524778843,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    # Check rows for palindromes\n    for row in arr:\n        total_changes += smallest_change(row)\n    \n    # Check columns for palindromes\n    for col in range(cols):\n        column = [arr[row][col] for row in range(rows)]\n        total_changes += smallest_change(column)\n    \n    return total_changes",
+        "completion_tokens": 156,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    # Check rows for palindromes\n    for row in arr:\n        total_changes += smallest_change(row)\n    \n    # Check columns for palindromes\n    for col in range(cols):\n        column = [arr[row][col] for row in range(rows)]\n        total_changes += smallest_change(column)\n    \n    return total_changes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2670984957367182,
+        "generation_seconds": 4.2900584395974874
+      }
+    },
+    {
+      "code_hash": "1e2bc2abda3c8791126d9fc88671856850932bf3f1ba52d22b7c8250d165baa9",
+      "execution": {
+        "duration_seconds": 0.2773211617022753,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "duration_seconds": 0.08671721443533897,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9hvdhsyi/program.py\", line 48, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-9hvdhsyi/program.py\", line 43, in smallest_change_2d\n    col = [arr[i][j] for i in range(rows)]\n           ~~~~~~^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9hvdhsyi/program.py\", line 48, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-9hvdhsyi/program.py\", line 43, in smallest_change_2d\n    col = [arr[i][j] for i in range(rows)]\n           ~~~~~~^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "duration_seconds": 0.08500561490654945,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "duration_seconds": 0.10532999597489834,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def smallest_change(arr):\n    left = 0\n    right = len(arr) - 1\n    changes = 0\n\n    while left < right:\n        if arr[left] != arr[right]:\n            changes += 1\n        left += 1\n        right -= 1\n\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n\n    # Check each row\n    for i in range(rows):\n        total_changes += smallest_change(arr[i])\n\n    # Check each column\n    for j in range(cols):\n        col = [arr[i][j] for i in range(rows)]\n        total_changes += smallest_change(col)\n\n    return total_changes",
+        "completion_tokens": 161,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef smallest_change(arr):\n    left = 0\n    right = len(arr) - 1\n    changes = 0\n\n    while left < right:\n        if arr[left] != arr[right]:\n            changes += 1\n        left += 1\n        right -= 1\n\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n\n    # Check each row\n    for i in range(rows):\n        total_changes += smallest_change(arr[i])\n\n    # Check each column\n    for j in range(cols):\n        col = [arr[i][j] for i in range(rows)]\n        total_changes += smallest_change(col)\n\n    return total_changes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2773211617022753,
+        "generation_seconds": 4.418723106384277
+      }
+    },
+    {
+      "code_hash": "ef34477716462725cea3a36fb98da46edf2928339401ebbeaa21704fa38aa6e7",
+      "execution": {
+        "duration_seconds": 0.27219616435468197,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "duration_seconds": 0.08679044060409069,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ejb03aad/program.py\", line 43, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-ejb03aad/program.py\", line 38, in smallest_change_2d\n    column = [arr[row][col] for row in range(rows)]\n              ~~~~~~~~^^^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ejb03aad/program.py\", line 43, in <module>\n    __srcg_assertion_actual_7f31 = smallest_change_2d([[1, 2, 3, 5, 4, 7, 9, 6], [1, 2, 3, 4, 3, 2, 2], [1, 2, 3, 2, 1]])\n  File \"/tmp/srcg-ejb03aad/program.py\", line 38, in smallest_change_2d\n    column = [arr[row][col] for row in range(rows)]\n              ~~~~~~~~^^^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "duration_seconds": 0.08879169262945652,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 4], [4, 3, 2, 1], [1, 2, 2, 1], [1, 2, 3, 4]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "duration_seconds": 0.0963070560246706,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_change_2d([[1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1], [1, 2, 3, 2, 1]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    # Check rows\n    for row in arr:\n        total_changes += smallest_change(row)\n    \n    # Check columns\n    for col in range(cols):\n        column = [arr[row][col] for row in range(rows)]\n        total_changes += smallest_change(column)\n    \n    return total_changes",
+        "completion_tokens": 146,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 311,
+        "raw_text": "```python\ndef smallest_change(arr):\n    n = len(arr)\n    changes = 0\n    for i in range(n // 2):\n        if arr[i] != arr[n - i - 1]:\n            changes += 1\n    return changes\n\ndef smallest_change_2d(arr):\n    rows = len(arr)\n    cols = len(arr[0])\n    total_changes = 0\n    \n    # Check rows\n    for row in arr:\n        total_changes += smallest_change(row)\n    \n    # Check columns\n    for col in range(cols):\n        column = [arr[row][col] for row in range(rows)]\n        total_changes += smallest_change(column)\n    \n    return total_changes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef smallest_change(arr):\n    \"\"\"\n    Given an array arr of integers, find the minimum number of elements that\n    need to be changed to make the array palindromic. A palindromic array is an array that\n    is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n    For example:\n    smallest_change([1,2,3,5,4,7,9,6]) == 4\n    smallest_change([1, 2, 3, 4, 3, 2, 2]) == 1\n    smallest_change([1, 2, 3, 2, 1]) == 0\n    \"\"\"\n\n# Given a 2D array of integers, find the minimum number of elements that need to be changed to make each row and each column of the array palindromic. A palindromic row or column is a row or column that is read the same backwards and forwards. In one change, you can change one element to any other element.\n\n\ndef smallest_change_2d(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.27219616435468197,
+        "generation_seconds": 4.056605491787195
+      }
+    }
+  ],
+  "duration_seconds": 22.790600441396236,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/73",
+  "unique_code_count": 5
+}
