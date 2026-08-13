@@ -1,0 +1,148 @@
+{
+  "duration_seconds": 21.374894846230745,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.3575220014899969,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": "['string', 'name', 'aaaaaaa']",
+            "assertion_expression": "find_max_in_categories([['name', 'of', 'string'], ['name', 'enam', 'game'], ['aaaaaaa', 'bb', 'cc']]) == ['string', 'enam', 'aaaaaaa']",
+            "duration_seconds": 0.10137090645730495,
+            "exception_message": "assertion comparison failed: actual=['string', 'name', 'aaaaaaa']; expected=['string', 'enam', 'aaaaaaa']",
+            "exception_type": "AssertionError",
+            "expected_value": "['string', 'enam', 'aaaaaaa']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9_zivkoa/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['string', 'name', 'aaaaaaa']\", \"['string', 'enam', 'aaaaaaa']\")\n",
+            "stdout": "",
+            "test_case": "assert find_max_in_categories([['name', 'of', 'string'], ['name', 'enam', 'game'], ['aaaaaaa', 'bb', 'cc']]) == ['string', 'enam', 'aaaaaaa']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9_zivkoa/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['string', 'name', 'aaaaaaa']\", \"['string', 'enam', 'aaaaaaa']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_max_in_categories([[], ['apple', 'banana', 'cherry'], ['dog', 'elephant']]) == ['None', 'cherry', 'elephant']",
+            "duration_seconds": 0.13978002965450287,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_max_in_categories([[], ['apple', 'banana', 'cherry'], ['dog', 'elephant']]) == ['None', 'cherry', 'elephant']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_max_in_categories([['a', 'b', 'c'], [], ['x', 'y', 'z']]) == ['a', 'None', 'x']",
+            "duration_seconds": 0.11608444526791573,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_max_in_categories([['a', 'b', 'c'], [], ['x', 'y', 'z']]) == ['a', 'None', 'x']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_max(words):\n    max_unique_chars = 0\n    max_word = None\n    for word in words:\n        unique_chars = len(set(word))\n        if unique_chars > max_unique_chars:\n            max_unique_chars = unique_chars\n            max_word = word\n    return max_word\n\ndef find_max_in_categories(categories):\n    result = []\n    for category in categories:\n        if not category:\n            result.append('None')\n            continue\n        max_word = find_max(category)\n        result.append(max_word)\n    return result",
+        "completion_tokens": 160,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 326,
+        "raw_text": " ```\ndef find_max(words):\n    max_unique_chars = 0\n    max_word = None\n    for word in words:\n        unique_chars = len(set(word))\n        if unique_chars > max_unique_chars:\n            max_unique_chars = unique_chars\n            max_word = word\n    return max_word\n\ndef find_max_in_categories(categories):\n    result = []\n    for category in categories:\n        if not category:\n            result.append('None')\n            continue\n        max_word = find_max(category)\n        result.append(max_word)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n\n# Given a list of lists of strings, where each sublist represents a category of words, write a function that returns a list of the words with the maximum number of unique characters from each category. If multiple words in a category have the maximum number of unique characters, return the one which comes first in lexicographical order. If a category is empty, append 'None' to the result list.\ndef find_max_in_categories(categories):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n\n# Given a list of lists of strings, where each sublist represents a category of words, write a function that returns a list of the words with the maximum number of unique characters from each category. If multiple words in a category have the maximum number of unique characters, return the one which comes first in lexicographical order. If a category is empty, append 'None' to the result list.\ndef find_max_in_categories(categories):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.3575220014899969,
+        "generation_seconds": 21.01662515103817
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "humaneval_pro/158"
+}
