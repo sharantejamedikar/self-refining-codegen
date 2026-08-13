@@ -103,3 +103,42 @@ def test_runner_rejects_empty_problem_list(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="At least one"):
         runner.run([])
+
+
+def test_single_pass_resumes_and_skips_complete_records(tmp_path: Path) -> None:
+    problems = _problems()
+    destination = tmp_path / "single-pass-resume"
+    initial = SinglePassRunner(
+        MockGenerator.canned_correct(problems),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        _config(tmp_path / "runs"),
+    )
+    initial.run(problems[:2], destination)
+
+    outputs = {problem.prompt: problem.canonical_solution for problem in problems[1:]}
+    resumed_generator = MockGenerator(outputs)
+    resumed = SinglePassRunner(
+        resumed_generator,
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        _config(tmp_path / "runs"),
+    ).run(problems, destination)
+
+    assert resumed == destination
+    assert len(list((destination / "problems").glob("*.json"))) == 3
+
+
+def test_single_pass_resume_rejects_config_mismatch(tmp_path: Path) -> None:
+    problems = _problems()
+    destination = tmp_path / "single-pass-mismatch"
+    SinglePassRunner(
+        MockGenerator.canned_correct(problems),
+        SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+        _config(tmp_path / "first"),
+    ).run(problems[:1], destination)
+
+    with pytest.raises(ValueError, match="Resume config"):
+        SinglePassRunner(
+            MockGenerator.canned_correct(problems),
+            SubprocessExecutor(timeout_seconds=1, memory_limit_mb=None),
+            _config(tmp_path / "second"),
+        ).run(problems, destination)
