@@ -1,0 +1,112 @@
+{
+  "duration_seconds": 12.254519488662481,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.15887045674026012,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.15877163782715797,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-59cxsokn/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-59cxsokn/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import numpy as np\n\ndef maxAverageOfPath(cost):\n    n = len(cost)\n    dp = [[[-float('inf')] * n for _ in range(n)] for _ in range(2)]\n    dp[0][0][0] = cost[0][0]\n\n    for i in range(n):\n        for j in range(n):\n            if i > 0:\n                dp[i % 2][i][j] = max(dp[i % 2][i][j], dp[(i - 1) % 2][i - 1][j] + cost[i][j])\n            if j > 0:\n                dp[i % 2][i][j] = max(dp[i % 2][i][j], dp[i % 2][i][j - 1] + cost[i][j])\n\n    return dp[(n - 1) % 2][n - 1][n - 1] / (2 * n - 1)\n\ndef maxAverageOf3DPath(cost):\n    n = len(cost)\n    dp = [[[-float('inf')] * n for _ in range(n)] for _ in range(n)]\n    dp[0][0][0] = cost[0][0][0]\n\n    for k in range(n):\n        for i in range(n):\n            for j in range(n):\n                if i > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k][i - 1][j] + cost[k][i][j])\n                if j > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k][i][j - 1] + cost[k][i][j])\n                if k > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k - 1][i][j] + cost[k][i][j])\n\n    return dp[n - 1][n - 1][n - 1] / (3 * n - 2)",
+        "completion_tokens": 442,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 267,
+        "raw_text": "```python\nimport numpy as np\n\ndef maxAverageOfPath(cost):\n    n = len(cost)\n    dp = [[[-float('inf')] * n for _ in range(n)] for _ in range(2)]\n    dp[0][0][0] = cost[0][0]\n\n    for i in range(n):\n        for j in range(n):\n            if i > 0:\n                dp[i % 2][i][j] = max(dp[i % 2][i][j], dp[(i - 1) % 2][i - 1][j] + cost[i][j])\n            if j > 0:\n                dp[i % 2][i][j] = max(dp[i % 2][i][j], dp[i % 2][i][j - 1] + cost[i][j])\n\n    return dp[(n - 1) % 2][n - 1][n - 1] / (2 * n - 1)\n\ndef maxAverageOf3DPath(cost):\n    n = len(cost)\n    dp = [[[-float('inf')] * n for _ in range(n)] for _ in range(n)]\n    dp[0][0][0] = cost[0][0][0]\n\n    for k in range(n):\n        for i in range(n):\n            for j in range(n):\n                if i > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k][i - 1][j] + cost[k][i][j])\n                if j > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k][i][j - 1] + cost[k][i][j])\n                if k > 0:\n                    dp[k][i][j] = max(dp[k][i][j], dp[k - 1][i][j] + cost[k][i][j])\n\n    return dp[n - 1][n - 1][n - 1] / (3 * n - 2)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.15887045674026012,
+        "generation_seconds": 12.095062114298344
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "mbpp_pro/304"
+}
