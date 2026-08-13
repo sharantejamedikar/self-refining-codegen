@@ -1,0 +1,157 @@
+{
+  "duration_seconds": 8.83769565448165,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.4458553344011307,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": "9",
+            "assertion_expression": "maxSubArraySumGreaterThanT([2, 3, 4, 1, 2, 4], 5) == 16",
+            "duration_seconds": 0.0991248432546854,
+            "exception_message": "assertion comparison failed: actual=9; expected=16",
+            "exception_type": "AssertionError",
+            "expected_value": "16",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-s7_43ezp/program.py\", line 62, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '16')\n",
+            "stdout": "",
+            "test_case": "assert maxSubArraySumGreaterThanT([2, 3, 4, 1, 2, 4], 5) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-s7_43ezp/program.py\", line 62, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '16')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxSubArraySumGreaterThanT([-1, -2, -3], -5) == -1",
+            "duration_seconds": 0.09152216836810112,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxSubArraySumGreaterThanT([-1, -2, -3], -5) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxSubArraySumGreaterThanT([1, 2, 3, 4, 5], 10) == 15",
+            "duration_seconds": 0.11160639300942421,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert maxSubArraySumGreaterThanT([1, 2, 3, 4, 5], 10) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "maxSubArraySumGreaterThanT([1, -1, 1, -1, 1], 2) == -1",
+            "duration_seconds": 0.1433008499443531,
+            "exception_message": "pop from empty list",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-e0k9gn27/program.py\", line 60, in <module>\n    __srcg_assertion_actual_7f31 = maxSubArraySumGreaterThanT([1, -1, 1, -1, 1], 2)\n  File \"/tmp/srcg-e0k9gn27/program.py\", line 56, in maxSubArraySumGreaterThanT\n    current_sum -= nums.pop(0)\n                   ~~~~~~~~^^^\nIndexError: pop from empty list\n",
+            "stdout": "",
+            "test_case": "assert maxSubArraySumGreaterThanT([1, -1, 1, -1, 1], 2) == -1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-e0k9gn27/program.py\", line 60, in <module>\n    __srcg_assertion_actual_7f31 = maxSubArraySumGreaterThanT([1, -1, 1, -1, 1], 2)\n  File \"/tmp/srcg-e0k9gn27/program.py\", line 56, in maxSubArraySumGreaterThanT\n    current_sum -= nums.pop(0)\n                   ~~~~~~~~^^^\nIndexError: pop from empty list\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n    if not nums:\n        return 0\n    \n    min_sum = float('inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum = min(num, current_sum + num)\n        min_sum = min(min_sum, current_sum)\n    \n    return min_sum\n\ndef maxSubArraySumGreaterThanT(nums, T):\n    \"\"\"\n    Given an array of integers nums, find the maximum sum of any non-empty sub-array of nums that is greater than a given threshold T. If no such sub-array exists, return -1.\n    \"\"\"\n    min_sum = minSubArraySum(nums)\n    target_sum = T + min_sum\n    \n    if target_sum <= 0:\n        return -1\n    \n    max_sum = float('-inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum += num\n        while current_sum >= target_sum:\n            max_sum = max(max_sum, current_sum)\n            current_sum -= nums.pop(0)\n    \n    return max_sum if max_sum != float('-inf') else -1",
+        "completion_tokens": 306,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 248,
+        "raw_text": "```python\ndef minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n    if not nums:\n        return 0\n    \n    min_sum = float('inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum = min(num, current_sum + num)\n        min_sum = min(min_sum, current_sum)\n    \n    return min_sum\n\ndef maxSubArraySumGreaterThanT(nums, T):\n    \"\"\"\n    Given an array of integers nums, find the maximum sum of any non-empty sub-array of nums that is greater than a given threshold T. If no such sub-array exists, return -1.\n    \"\"\"\n    min_sum = minSubArraySum(nums)\n    target_sum = T + min_sum\n    \n    if target_sum <= 0:\n        return -1\n    \n    max_sum = float('-inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum += num\n        while current_sum >= target_sum:\n            max_sum = max(max_sum, current_sum)\n            current_sum -= nums.pop(0)\n    \n    return max_sum if max_sum != float('-inf') else -1\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n\n# Given an array of integers nums, find the maximum sum of any non-empty sub-array of nums that is greater than a given threshold T. If no such sub-array exists, return -1. To solve this problem, you need to first find the minimum sum of any non-empty sub-array of nums, then use this information to determine the maximum sum greater than T.\ndef maxSubArraySumGreaterThanT(nums, T):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n\n# Given an array of integers nums, find the maximum sum of any non-empty sub-array of nums that is greater than a given threshold T. If no such sub-array exists, return -1. To solve this problem, you need to first find the minimum sum of any non-empty sub-array of nums, then use this information to determine the maximum sum greater than T.\ndef maxSubArraySumGreaterThanT(nums, T):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.4458553344011307,
+        "generation_seconds": 8.391053041443229
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "humaneval_pro/114"
+}

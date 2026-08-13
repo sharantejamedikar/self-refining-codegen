@@ -1,0 +1,157 @@
+{
+  "duration_seconds": 6.661343678832054,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.5386552233248949,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([13195, 2048]) == 58",
+            "duration_seconds": 0.08507061004638672,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([13195, 2048]) == 58",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "5",
+            "assertion_expression": "product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "duration_seconds": 0.16891705989837646,
+            "exception_message": "assertion comparison failed: actual=5; expected=2",
+            "exception_type": "AssertionError",
+            "expected_value": "2",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-y9i7nb92/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('5', '2')\n",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([1, 2, 3, 4, 5]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-y9i7nb92/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('5', '2')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "duration_seconds": 0.14048677869141102,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([10, 15, 21, 25, 30]) == 4375",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "11495315",
+            "assertion_expression": "product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "duration_seconds": 0.14382118731737137,
+            "exception_message": "assertion comparison failed: actual=11495315; expected=1105",
+            "exception_type": "AssertionError",
+            "expected_value": "1105",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jat3_k3h/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('11495315', '1105')\n",
+            "stdout": "",
+            "test_case": "assert product_of_largest_prime_factors([100, 101, 102, 103, 104]) == 1105",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jat3_k3h/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('11495315', '1105')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from functools import reduce\nimport operator\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    factor = 2\n    last_factor = 1\n    while n >= factor * factor:\n        if n % factor:\n            factor += 1\n        else:\n            n //= factor\n            last_factor = factor\n    if n > 1:\n        last_factor = n\n    return last_factor\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\"\"\"\n    def product(l): return reduce(operator.mul, l, 1)\n    return product(largest_prime_factor(num) for num in numbers if num > 1 and not all(num % i == 0 for i in range(2, int(num**0.5) + 1)))",
+        "completion_tokens": 201,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 212,
+        "raw_text": "```python\nfrom functools import reduce\nimport operator\n\ndef largest_prime_factor(n: int) -> int:\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\"\"\"\n    factor = 2\n    last_factor = 1\n    while n >= factor * factor:\n        if n % factor:\n            factor += 1\n        else:\n            n //= factor\n            last_factor = factor\n    if n > 1:\n        last_factor = n\n    return last_factor\n\ndef product_of_largest_prime_factors(numbers: list) -> int:\n    \"\"\"Find the product of the largest prime factors of each integer in the list.\"\"\"\n    def product(l): return reduce(operator.mul, l, 1)\n    return product(largest_prime_factor(num) for num in numbers if num > 1 and not all(num % i == 0 for i in range(2, int(num**0.5) + 1)))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\n# Given a list of integers, find the product of the largest prime factors of each integer. If an integer is less than or equal to 1 or is a prime number, ignore it. The function should return the product of the largest prime factors of the valid integers in the list.\ndef product_of_largest_prime_factors(numbers: list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.5386552233248949,
+        "generation_seconds": 6.121924322098494
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "humaneval_pro/59"
+}

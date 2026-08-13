@@ -1,0 +1,142 @@
+{
+  "duration_seconds": 9.518885495141149,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.36481812596321106,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rolling_max_across_lists([[1, 2, 3, 2, 3, 4, 2], [5, 6, 2, 8, 3, 1, 9]]) == ([[1, 2, 3, 3, 3, 4, 4], [5, 6, 6, 8, 8, 8, 9]], [5, 6, 6, 8, 8, 8, 9])",
+            "duration_seconds": 0.11280419304966927,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rolling_max_across_lists([[1, 2, 3, 2, 3, 4, 2], [5, 6, 2, 8, 3, 1, 9]]) == ([[1, 2, 3, 3, 3, 4, 4], [5, 6, 6, 8, 8, 8, 9]], [5, 6, 6, 8, 8, 8, 9])",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rolling_max_across_lists([[4, 3, 2, 1], [1, 2, 3, 4]]) == ([[4, 4, 4, 4], [1, 2, 3, 4]], [4, 4, 4, 4])",
+            "duration_seconds": 0.1365120578557253,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rolling_max_across_lists([[4, 3, 2, 1], [1, 2, 3, 4]]) == ([[4, 4, 4, 4], [1, 2, 3, 4]], [4, 4, 4, 4])",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rolling_max_across_lists([[1], [1]]) == ([[1], [1]], [1])",
+            "duration_seconds": 0.11517221108078957,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rolling_max_across_lists([[1], [1]]) == ([[1], [1]], [1])",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List, Tuple\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n    if not numbers:\n        return []\n    \n    result = []\n    current_max = float('-inf')\n    for number in numbers:\n        current_max = max(current_max, number)\n        result.append(current_max)\n    \n    return result\n\ndef rolling_max_across_lists(list_of_lists: List[List[int]]) -> Tuple[List[List[int]], List[int]]:\n    \"\"\" Given a list of lists of integers, generate a list of lists where each sublist contains the rolling maximum elements for the corresponding sublist in the input. Additionally, find the maximum element across all sublists at each rolling position and return this as a single list.\"\"\"\n    if not list_of_lists:\n        return ([], [])\n    \n    # Get the rolling max for each individual list\n    rolling_maxes = [rolling_max(sublist) for sublist in list_of_lists]\n    \n    # Find the rolling max across all sublists at each position\n    max_across_all = []\n    for i in range(len(rolling_maxes[0])):\n        max_at_position = max(row[i] for row in rolling_maxes)\n        max_across_all.append(max_at_position)\n    \n    return (rolling_maxes, max_across_all)",
+        "completion_tokens": 339,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 255,
+        "raw_text": "```python\nfrom typing import List, Tuple\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n    if not numbers:\n        return []\n    \n    result = []\n    current_max = float('-inf')\n    for number in numbers:\n        current_max = max(current_max, number)\n        result.append(current_max)\n    \n    return result\n\ndef rolling_max_across_lists(list_of_lists: List[List[int]]) -> Tuple[List[List[int]], List[int]]:\n    \"\"\" Given a list of lists of integers, generate a list of lists where each sublist contains the rolling maximum elements for the corresponding sublist in the input. Additionally, find the maximum element across all sublists at each rolling position and return this as a single list.\"\"\"\n    if not list_of_lists:\n        return ([], [])\n    \n    # Get the rolling max for each individual list\n    rolling_maxes = [rolling_max(sublist) for sublist in list_of_lists]\n    \n    # Find the rolling max across all sublists at each position\n    max_across_all = []\n    for i in range(len(rolling_maxes[0])):\n        max_at_position = max(row[i] for row in rolling_maxes)\n        max_across_all.append(max_at_position)\n    \n    return (rolling_maxes, max_across_all)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n\n# Given a list of lists of integers, generate a list of lists where each sublist contains the rolling maximum elements for the corresponding sublist in the input. Additionally, find the maximum element across all sublists at each rolling position and return this as a single list.\nfrom typing import List\n\n\ndef rolling_max_across_lists(list_of_lists: List[List[int]]) -> Tuple[List[List[int]], List[int]]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\nfrom typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n\n# Given a list of lists of integers, generate a list of lists where each sublist contains the rolling maximum elements for the corresponding sublist in the input. Additionally, find the maximum element across all sublists at each rolling position and return this as a single list.\nfrom typing import List\n\n\ndef rolling_max_across_lists(list_of_lists: List[List[int]]) -> Tuple[List[List[int]], List[int]]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.36481812596321106,
+        "generation_seconds": 9.153324054554105
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": true,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "humaneval_pro/9"
+}
