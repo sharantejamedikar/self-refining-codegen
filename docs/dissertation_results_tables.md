@@ -12,13 +12,13 @@ ever-solved score; its final-iteration-only diagnostic is reported separately
 in Table 3. “Compute ratio” is generation calls divided by the corresponding
 best-of-5 call count, so lower values indicate fewer model calls.
 
-The cross-model replication in Table 5 adds
-`codellama/CodeLlama-13b-Instruct-hf` on HumanEval-164. CodeLlama used
+The cross-model replication in Tables 5 and 6 adds
+`codellama/CodeLlama-13b-Instruct-hf` on both benchmarks. CodeLlama used
 bitsandbytes 8-bit quantization, whereas Qwen used full-precision
 `bfloat16`. Consequently, the cross-model results are an end-to-end
 configuration comparison, not a precision-controlled estimate of model-family
-effects. Table 6 extends the descriptive comparison with CodeLlama's
-single-pass result on MBPP-427.
+effects. The complete frozen matrix contains 16 configurations: four methods
+for each model-benchmark pair.
 
 ## Table 1. Main Tier 1 results
 
@@ -117,23 +117,23 @@ supports success-priority stopping. It does not establish a model-specific
 rate difference: there is only one run per configuration, and model family,
 model size, and precision are confounded.[^cross-model]
 
-## Table 6. Cross-model MBPP-427 single-pass extension
+## Table 6. Cross-model MBPP-427 replication
 
-| Model configuration | `pass@1_single` | Wall clock | Prompt tokens | Completion tokens | Total tokens | Source |
-|---|---:|---:|---:|---:|---:|---:|
-| CodeLlama-13B, bitsandbytes 8-bit | 0.4496 (192/427) | 3,389.17 s | 43,492 | 23,935 | 67,427 | C-M-S[^c-m-s] |
-| Qwen-7B, full-precision `bfloat16` | 0.7190 (307/427) | — | — | — | — | M-S[^m-s] |
-| Qwen-7B, Ollama Q4_K_M | 0.7283 (311/427) | — | — | — | — | Q4-M-S[^q4-m-s] |
+| Configuration | Qwen full-precision pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
+|---|---:|---:|---:|---:|---:|
+| Single-pass | 0.7190 (307/427) | 427 | 0.4496 (192/427) | 427 | M-S + C-M-S[^m-s][^c-m-s] |
+| Best-of-5 | 0.7892 (337/427) | 2,135 | **0.6159 (263/427)** | 2,135 | M-B + C-M-B[^m-b][^c-m-b] |
+| Adaptive hybrid refinement | **0.8244 (352/427)** | **647** | 0.6019 (257/427) | **821** | M-A + C-M-A[^m-a][^c-m-a] |
+| Fixed-*k*=5 hybrid refinement (ever solved) | 0.8244 (352/427) | 2,135 | 0.6019 (257/427) | 2,135 | M-F + C-M-F[^m-f][^c-m-f] |
+| Fixed-*k*=5 hybrid refinement (final only) | 0.7822 (334/427) | 2,135 | 0.4941 (211/427) | 2,135 | M-F + C-M-F[^m-f][^c-m-f] |
 
-**Table note.** CodeLlama's MBPP score is 3.50 percentage points above its own
-HumanEval single-pass score (0.4496 versus 0.4146), but cross-benchmark
-difficulty cannot be inferred because the task sets, tests, prompts, and
-denominators differ. On the same MBPP-427 set, CodeLlama trails full-precision
-Qwen by 115 solves (26.93 percentage points) and Q4_K_M Qwen by 119 solves
-(27.87 percentage points). These comparisons do not isolate model family:
-model size, numerical precision, quantization format, and—in the Q4_K_M
-comparison—inference backend are confounded. Each result is one fixed-seed
-run, so run-to-run variability is unmeasured.[^cross-model]
+**Table note.** On CodeLlama, adaptive refinement improved on single-pass by
+65 problems but trailed best-of-5 by six (1.41 percentage points), while using
+61.55% fewer calls. Fixed continuation recovered no task beyond adaptive
+stopping and produced 46 final-state regressions: 46/257 (17.90%) of tasks
+ever solved in that run. All 46 exhibit the documented contradictory
+post-success prompt pattern.[^c-m-fixed-analysis] As in Table 5, model family,
+size, and precision are confounded, and each cell is one fixed-seed run.
 
 ## Artifact and commit references
 
@@ -156,5 +156,9 @@ files.
 [^c-a]: **C-A:** git commit `e5a829b5c10d4c8edde7f61eb87ff438c25f1d86`; [`experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/`](../experiments/results/20260810T164232.226049Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_full/).
 [^c-f]: **C-F:** git commit `1dfc96c9436db2a8f04dfb2d209004fee2d9a94a`; [`experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/`](../experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/).
 [^c-m-s]: **C-M-S:** git commit `b24f31bc468c81706844aa4f01c4c376c15a9e37`; [`experiments/results/20260811T125007.528701Z_cluster_codellama_13b_bnb_8bit_zero_shot_mbpp_full/`](../experiments/results/20260811T125007.528701Z_cluster_codellama_13b_bnb_8bit_zero_shot_mbpp_full/).
+[^c-m-b]: **C-M-B:** git commit `e95775a190342203dbedf6ff639fec5742ff82ea`; [`experiments/results/20260811T185140.732397Z_cluster_codellama_13b_bnb_8bit_best_of_5_mbpp_full/`](../experiments/results/20260811T185140.732397Z_cluster_codellama_13b_bnb_8bit_best_of_5_mbpp_full/).
+[^c-m-a]: **C-M-A:** git commit `20b161898692443e3aa32b5c83338841beb4753b`; [`experiments/results/20260812T222900Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_mbpp_full/`](../experiments/results/20260812T222900Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_mbpp_full/).
+[^c-m-f]: **C-M-F:** git commit `80bde190b03b441b7e2328b8b8475cd8353c440f`; [`experiments/results/20260813T005000Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_mbpp_full/`](../experiments/results/20260813T005000Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_mbpp_full/).
+[^c-m-fixed-analysis]: Fixed-run validation: [`docs/validation/codellama_mbpp_fixed_refinement_analysis.md`](validation/codellama_mbpp_fixed_refinement_analysis.md).
 [^q4-m-s]: **Q4-M-S:** [`experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/`](../experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/).
 [^cross-model]: Cross-model synthesis: git commit `a5d1574`; [`docs/validation/cross_model_summary.md`](validation/cross_model_summary.md).
