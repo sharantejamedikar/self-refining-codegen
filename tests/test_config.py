@@ -43,6 +43,7 @@ def test_load_config_auto_detection_and_profile(
     assert automatic.experiment.seed == 7
     assert automatic.experiment.feedback_strategy == "template"
     assert automatic.experiment.convergence_mode == "adaptive"
+    assert automatic.experiment.feedback_max_words is None
     assert not automatic.execution.collect_trace
 
 
@@ -147,4 +148,16 @@ def test_load_config_validates_convergence_mode(tmp_path: Path) -> None:
     )
     path.write_text(text, encoding="utf-8")
     with pytest.raises(ValueError, match="convergence_mode"):
+        load_config(path)
+
+
+def test_load_config_validates_feedback_word_limit(tmp_path: Path) -> None:
+    path = tmp_path / "config.yaml"
+    _write_config(path)
+    text = path.read_text(encoding="utf-8").replace(
+        "experiment: {name: test, seed: 7, output_dir: runs}",
+        "experiment: {name: test, seed: 7, output_dir: runs, feedback_max_words: 0}",
+    )
+    path.write_text(text, encoding="utf-8")
+    with pytest.raises(ValueError, match="feedback_max_words"):
         load_config(path)

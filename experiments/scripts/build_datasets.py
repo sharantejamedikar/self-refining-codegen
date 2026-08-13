@@ -11,12 +11,15 @@ from pathlib import Path
 from typing import Any
 
 from data import (
+    HUMANEVAL_PRO_URL,
     HUMANEVAL_URL,
+    MBPP_PRO_URL,
     MBPP_SANITIZED_URL,
     AtomicSplitReport,
     Problem,
     create_stratified_dev_split,
     download_file,
+    load_codeeval_pro,
     load_humaneval_with_report,
     load_mbpp_sanitized,
     validate_problems,
@@ -29,6 +32,9 @@ HUMANEVAL_COUNT = 164
 MBPP_SANITIZED_COUNT = 427
 HUMANEVAL_DEV_COUNT = 20
 MBPP_DEV_COUNT = 50
+HUMANEVAL_PRO_COUNT = 164
+MBPP_PRO_COUNT = 378
+HUMANEVAL_ABLATION_COUNT = 100
 DEFAULT_SEED = 42
 
 
@@ -115,11 +121,19 @@ def main() -> None:
         MBPP_SANITIZED_URL,
         raw_dir / "sanitized-mbpp.json",
     )
+    humaneval_pro_source = download_file(
+        HUMANEVAL_PRO_URL, raw_dir / "humaneval_pro.json"
+    )
+    mbpp_pro_source = download_file(MBPP_PRO_URL, raw_dir / "mbpp_pro.json")
 
     humaneval, humaneval_records = _load_historical_humaneval(humaneval_source)
     mbpp = load_mbpp_sanitized(mbpp_source)
+    humaneval_pro = load_codeeval_pro(humaneval_pro_source, "humaneval_pro")
+    mbpp_pro = load_codeeval_pro(mbpp_pro_source, "mbpp_pro")
     _require_count("HumanEval", len(humaneval), HUMANEVAL_COUNT)
     _require_count("sanitized MBPP", len(mbpp), MBPP_SANITIZED_COUNT)
+    _require_count("HumanEval Pro", len(humaneval_pro), HUMANEVAL_PRO_COUNT)
+    _require_count("MBPP Pro", len(mbpp_pro), MBPP_PRO_COUNT)
 
     executor = SubprocessExecutor(
         timeout_seconds=args.timeout_seconds,
@@ -131,11 +145,24 @@ def main() -> None:
     mbpp_validation = validate_problems(
         mbpp, executor, validation_dir / "mbpp_sanitized_quarantine.jsonl"
     )
-    if humaneval_validation.quarantined or mbpp_validation.quarantined:
+    humaneval_pro_validation = validate_problems(
+        humaneval_pro, executor, validation_dir / "humaneval_pro_quarantine.jsonl"
+    )
+    mbpp_pro_validation = validate_problems(
+        mbpp_pro, executor, validation_dir / "mbpp_pro_quarantine.jsonl"
+    )
+    if (
+        humaneval_validation.quarantined
+        or mbpp_validation.quarantined
+        or humaneval_pro_validation.quarantined
+        or mbpp_pro_validation.quarantined
+    ):
         raise RuntimeError(
             "Canonical validation failed: "
             f"HumanEval={len(humaneval_validation.quarantined)}, "
             f"MBPP={len(mbpp_validation.quarantined)} quarantined; "
+            f"HumanEval Pro={len(humaneval_pro_validation.quarantined)}, "
+            f"MBPP Pro={len(mbpp_pro_validation.quarantined)} quarantined; "
             f"see {validation_dir}"
         )
 
@@ -174,6 +201,12 @@ def main() -> None:
     mbpp_normalized = write_jsonl(
         mbpp_validation.valid, normalized_dir / "mbpp_sanitized.jsonl"
     )
+    humaneval_pro_normalized = write_jsonl(
+        humaneval_pro_validation.valid, normalized_dir / "humaneval_pro.jsonl"
+    )
+    mbpp_pro_normalized = write_jsonl(
+        mbpp_pro_validation.valid, normalized_dir / "mbpp_pro.jsonl"
+    )
     humaneval_dev = list(humaneval_dev_validation.valid)
     write_jsonl(
         humaneval_dev,
@@ -184,6 +217,12 @@ def main() -> None:
         MBPP_DEV_COUNT,
         args.seed,
         dev_dir / "mbpp_dev.jsonl",
+    )
+    humaneval_ablation = create_stratified_dev_split(
+        humaneval_validation.valid,
+        HUMANEVAL_ABLATION_COUNT,
+        args.seed,
+        dev_dir / "humaneval_ablation_100.jsonl",
     )
 
     print(
@@ -196,6 +235,14 @@ def main() -> None:
     )
     print(f"HumanEval-Dev: {len(humaneval_dev)} (seed {args.seed})")
     print(f"MBPP-Dev: {len(mbpp_dev)} (seed {args.seed})")
+    print(
+        f"HumanEval Pro: {len(humaneval_pro_validation.valid)} validated -> "
+        f"{humaneval_pro_normalized}"
+    )
+    print(
+        f"MBPP Pro: {len(mbpp_pro_validation.valid)} validated -> {mbpp_pro_normalized}"
+    )
+    print(f"HumanEval ablation: {len(humaneval_ablation)} (seed {args.seed})")
     print(f"Validation reports: {validation_dir}")
 
 

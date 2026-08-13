@@ -56,7 +56,10 @@ def main() -> None:
     destination = RefinementRunner(
         generator,
         executor,
-        create_feedback_generator(config.experiment.feedback_strategy),
+        create_feedback_generator(
+            config.experiment.feedback_strategy,
+            config.experiment.feedback_max_words,
+        ),
         config,
     ).run(problems, run_dir=args.run_dir)
     print(destination)

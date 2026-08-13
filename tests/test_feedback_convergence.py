@@ -89,6 +89,17 @@ def test_template_feedback_includes_assertion_actual_and_expected() -> None:
     assert "Passed 1/2" in feedback
 
 
+def test_feedback_factory_applies_configured_word_ceiling() -> None:
+    execution = _execution(_test_result(), _test_result())
+    classification = classify_execution(execution)
+    generator = create_feedback_generator("hybrid", max_words=7)
+
+    feedback = generator.generate(classification, execution)
+
+    assert len(feedback.split()) == 7
+    assert generator.strategy_for(classification, execution) == "trace"
+
+
 def test_feedback_uses_traceback_matched_assertion_for_compound_harness() -> None:
     """Report the later assertion that failed, not the harness's first assertion."""
 

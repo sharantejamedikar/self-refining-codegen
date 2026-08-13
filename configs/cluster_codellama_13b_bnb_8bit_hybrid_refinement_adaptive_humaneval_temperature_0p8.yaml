@@ -1,0 +1,42 @@
+# Quantized-first Tier 2 hybrid refinement run approved by the supervisor.
+# Restrict the process with CUDA_VISIBLE_DEVICES=0 on the shared host.
+model:
+  name: codellama/CodeLlama-13b-Instruct-hf
+  backend: huggingface
+  revision: 745795438019e47e4dad1347a0093e11deee4c68
+  backend_model: codellama/CodeLlama-13b-Instruct-hf
+  quantization: bitsandbytes_8bit
+  request_timeout_seconds: 300.0
+  prompt_strategy: zero_shot
+  few_shot_examples: 2
+  temperature: 0.8
+  top_p: 0.95
+  max_new_tokens: 512
+  repetition_penalty: 1.1
+dataset:
+  name: humaneval_ablation_100
+  source_url: https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz
+  data_dir: data
+  split: ablation_100
+  path: data/dev/humaneval_ablation_100.jsonl
+execution:
+  backend: subprocess
+  timeout_seconds: 10.0
+  memory_limit_mb: 512
+  python_executable: python3
+  collect_trace: true
+experiment:
+  name: cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p8
+  seed: 42
+  output_dir: experiments/results
+  max_iterations: 5
+  stagnation_patience: 2
+  oscillation_window: 3
+  feedback_strategy: hybrid
+  convergence_mode: adaptive
+device:
+  profile: cluster
+  accelerator: cuda
+profiles:
+  cluster:
+    device: {accelerator: cuda}
