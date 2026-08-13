@@ -8,7 +8,7 @@ problem that passed at least one iteration before iteration 5 but failed at
 iteration 5. The unit counted below is a problem-run observation, because the
 same task can regress independently under two inference configurations.
 
-The committed fixed-run evidence comprises four benchmark/configuration
+The committed fixed-run evidence comprises six benchmark/configuration
 datasets:
 
 | Dataset | Authoritative artifact | Regressions | Unique task IDs |
@@ -17,7 +17,9 @@ datasets:
 | Q4_K_M MBPP-427 | [`20260721...fixed_mbpp_full`](../../experiments/results/20260721T102049.383499Z_m7_quantized_local_development_hybrid_refinement_fixed_mbpp_full/) | 13 | 13 |
 | Full-precision HumanEval-164 | [`20260808...fixed_humaneval_full`](../../experiments/results/20260808T220435.152210Z_cluster_qwen_hf_hybrid_refinement_fixed_humaneval_full/) | 5 | 5 |
 | Full-precision MBPP-427 | [`20260809...fixed_mbpp_full`](../../experiments/results/20260809T162731.848774Z_cluster_qwen_hf_hybrid_refinement_fixed_mbpp_full/) | 18 | 18 |
-| **Total** |  | **41 observations** | **33 tasks** |
+| CodeLlama 8-bit HumanEval-164 | [`20260810...fixed_humaneval_full`](../../experiments/results/20260810T220239.789427Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_humaneval_full/) | 9 | 9 |
+| CodeLlama 8-bit MBPP-427 | [`20260813...fixed_mbpp_full`](../../experiments/results/20260813T005000Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_mbpp_full/) | 46 | 46 |
+| **Total** |  | **96 observations** | **81 tasks** |
 
 The Q4_K_M artifacts are labelled `quantized_local_development` because
 Q4_K_M was explicitly a local-development configuration, although these two
@@ -46,7 +48,7 @@ line diff. Character and line changes are final minus last-successful code.
 
 The feedback signal was audited in two places: the `feedback` stored on the
 last-successful iteration and the next generation's rendered prompt. In every
-one of the 41 observations, the feedback was `All assertions passed.` and was
+one of the 96 observations, the feedback was `All assertions passed.` and was
 present in the next prompt, immediately followed by the instruction `Return a
 corrected complete solution.` Thus the execution result itself was accurate;
 the misleading signal came from asking for a correction despite success.
@@ -141,11 +143,27 @@ not make the two backend/precision runs independent replications. As in the
 other conditions, every successful iteration supplied `All assertions
 passed.` before the next prompt nevertheless requested a correction.
 
+### CodeLlama 8-bit HumanEval-164
+
+The fixed run solved 87/164 at least once but only 78/164 at iteration 5. Its
+nine regressions were HumanEval/0, /19, /43, /52, /57, /133, /149, /151, and
+/157. All nine contain the same contradictory post-success prompt sequence.
+
+### CodeLlama 8-bit MBPP-427
+
+The fixed run solved 257/427 at least once but only 211/427 at iteration 5,
+producing 46 regressions. It used 2,135 calls versus adaptive's 821 (2.60x;
+1,314 extra), although the ever-solved task sets were identical. All 46 next
+prompts contain `All assertions passed.` followed by `Return a corrected
+complete solution.` The complete task list, trajectories, classifier outcomes,
+resource comparison, and provenance are in
+[`codellama_mbpp_fixed_refinement_analysis.md`](codellama_mbpp_fixed_refinement_analysis.md).
+
 ## Cross-dataset patterns
 
 ### 1. Prompt semantics are the only universal correlate
 
-All 41 observations share the same causal precondition visible in the logs:
+All 96 observations share the same causal precondition visible in the logs:
 fixed mode continues after success, reports that all assertions passed, and
 still asks for a “corrected” solution. There is no new failing assertion,
 traceback, error category, or counterexample to condition the next generation.
@@ -154,14 +172,15 @@ interpretation under an instruction that presupposes a defect. This is best
 described as **uninformed post-success mutation**, not erroneous execution
 feedback.
 
-The resulting failures are exclusively logic (31/41) or edge-case (10/41).
-None is syntax, runtime, or timeout. That is consistent with all final programs
-remaining executable while a small semantic choice changes.
+Across all six conditions, the final failures are logic (61/96), edge-case
+(25/96), or runtime (10/96). The original four Qwen conditions contained only
+logic and edge-case failures; CodeLlama adds runtime regressions. None is
+syntax or timeout.
 
 ### 2. Regression position is bimodal and dataset-dependent
 
-The last successful iteration was iteration 4 in 26/41 cases, iteration 1 in
-11/41, iteration 2 in 2/41, and iteration 3 in 2/41. This is not evidence that
+The last successful iteration was iteration 4 in 54/96 cases, iteration 1 in
+23/96, iteration 2 in 11/96, and iteration 3 in 8/96. This is not evidence that
 a particular iteration intrinsically causes regression: the endpoint is
 defined as a failure at forced iteration 5, and the benchmark trajectories
 differ.
@@ -175,6 +194,10 @@ differ.
   4.
 - Full-precision MBPP: 14/18 last passed at iteration 4; 13/18 trajectories
   alternated between failure and success before the final failure.
+- CodeLlama HumanEval: 2/9 last passed at iteration 4; the other seven last
+  passed at iterations 1--3.
+- CodeLlama MBPP: 26/46 last passed at iteration 4; ten last passed at
+  iteration 1 and five each at iterations 2 and 3.
 
 The meaningful timing result is therefore that damage can occur immediately
 after success and can also recur after later recovery. Success-priority
@@ -182,14 +205,14 @@ stopping prevents both.
 
 ### 3. Most regressions need only a small semantic mutation
 
-Across the 41 observations, median character edit distance is 28 (range
+Across the original 41 Qwen observations, median character edit distance is 28 (range
 1–564); 14/41 are at most 10 edits and 28/41 are at most 50. Median net length
 change is zero characters. Twenty final programs are longer, 19 are shorter,
 and two are unchanged in character count. There is consequently no
 consistent length direction.
 
 Two large rewrites (Q4 HumanEval/100 and MBPP/160) inflate the mean edit
-distance; across all 41 cases the mean is 69 characters. These rewrites show
+distance; across those 41 cases the mean is 69 characters. These rewrites show
 that gratuitous elaboration can regress. However, the one-character
 regressions in MBPP/809, HumanEval/74, and
 HumanEval/81 demonstrate that complexity growth is not required. Most errors
@@ -197,17 +220,20 @@ are boundary/operator, return-shape, ordering, or interpretation changes.
 
 ### 4. Initial error category differs by benchmark
 
-Fifteen of 41 observations had already succeeded at iteration 1; the other 26
-began as logic (17), edge-case (8), or runtime (1). Among ever-solved
+For the original Qwen subset, fifteen of 41 observations had already succeeded
+at iteration 1; the other 26 began as logic (17), edge-case (8), or runtime
+(1). Among ever-solved
 candidates in each run, the observed regression proportions by initial
 classifier category were:
 
-| Dataset | Initial success | Initial logic | Initial edge-case | Initial runtime |
-|---|---:|---:|---:|---:|
-| Q4_K_M HumanEval | 5/136 (3.7%) | 0/4 | — | 0/3 |
-| Q4_K_M MBPP | 4/310 (1.3%) | 6/22 (27.3%) | 3/12 (25.0%) | 0/6 |
-| Full-precision HumanEval | 5/141 (3.5%) | 0/4 | — | 0/3 |
-| Full-precision MBPP | 1/307 (0.3%) | 11/24 (45.8%) | 5/14 (35.7%) | 1/7 (14.3%) |
+| Dataset | Initial success | Initial logic | Initial edge-case | Initial runtime | Initial syntax |
+|---|---:|---:|---:|---:|---:|
+| Q4_K_M HumanEval | 5/136 (3.7%) | 0/4 | — | 0/3 | — |
+| Q4_K_M MBPP | 4/310 (1.3%) | 6/22 (27.3%) | 3/12 (25.0%) | 0/6 | — |
+| Full-precision HumanEval | 5/141 (3.5%) | 0/4 | — | 0/3 | — |
+| Full-precision MBPP | 1/307 (0.3%) | 11/24 (45.8%) | 5/14 (35.7%) | 1/7 (14.3%) | — |
+| CodeLlama 8-bit HumanEval | 6/78 (7.7%) | 2/6 (33.3%) | — | 1/3 (33.3%) | — |
+| CodeLlama 8-bit MBPP | 14/192 (7.3%) | 12/22 (54.5%) | 9/13 (69.2%) | 10/29 (34.5%) | 1/1 (100%) |
 
 These denominators are restricted to problems that succeeded at least once,
 because never-solved problems cannot exhibit success regression. The MBPP
@@ -224,18 +250,18 @@ subjective annotation layer, so this report does not do so.
 
 ### 5. Apparent benchmark trend
 
-MBPP has more raw regressions than HumanEval at both configurations: 13 versus
-5 under Q4_K_M and 18 versus 5 under full precision. Among ever-solved tasks,
-the corresponding proportions are 13/350 (3.7%) versus 5/143 (3.5%), and
-18/352 (5.1%) versus 5/148 (3.4%). Thus the full-precision pair shows a larger
-rate as well as a larger count, whereas the Q4_K_M rates are nearly equal.
+MBPP has more raw regressions than HumanEval in all three paired configurations:
+13 versus 5 under Q4_K_M, 18 versus 5 under full precision, and 46 versus 9
+under CodeLlama 8-bit. Among ever-solved tasks, the corresponding proportions
+are 13/350 (3.7%) versus 5/143 (3.5%), 18/352 (5.1%) versus 5/148 (3.4%), and
+46/257 (17.9%) versus 9/87 (10.3%).
 
 This apparent benchmark difference is worth further investigation, especially
 because MBPP exposes atomic tests and more initially failing candidates later
 recover. It is not evidence that benchmark identity causes regression. MBPP
-has 427 tasks versus HumanEval's 164, the outcome sample contains only 41
-selected cases, HumanEval uses a compound harness, and all observations come
-from one model family, temperature, and seed. A controlled follow-up would
+has 427 tasks versus HumanEval's 164, the outcome sample contains 96 selected
+cases, and HumanEval uses a compound harness. All observations use one
+temperature and seed, with only two model families. A controlled follow-up would
 compare regression proportions with uncertainty intervals across additional
 seeds while holding the execution and inference stack fixed.
 
@@ -243,14 +269,14 @@ seeds while holding the execution and inference stack fixed.
 
 The evidence strongly supports the protocol decision to rank success above
 all other convergence criteria. Under the ever-solved metric, fixed iteration
-does not erase a prior success; under final-only evaluation it creates 41
+does not erase a prior success; under final-only evaluation it creates 96
 observed failures that adaptive success stopping would have prevented. The
 logs identify a concrete mechanism: correct success feedback is paired with a
 contradictory request for correction and no new diagnostic information.
 
-This is a small, selected sample: 41 problem-run observations and 33
-unique tasks across only two benchmarks, one model family, one temperature,
-and two end-to-end inference configurations. The cases are selected on the
+This is a selected sample: 96 problem-run observations and 81 unique tasks
+across two benchmarks, two model families, one temperature, one seed, and
+three end-to-end inference configurations. The cases are selected on the
 outcome being explained, so their internal frequencies are descriptive, not
 population estimates. Q4_K_M versus full precision is also confounded by
 backend and hardware. Repeated tasks show reproducibility of the phenomenon,
@@ -265,4 +291,4 @@ or task complexity.
 This analysis uses only persisted JSON fields (`iterations`, `classification`,
 `execution`, `feedback`, `generation.code`, and the rendered prompt); no
 generated code was re-executed during analysis. Before analysis, the CPU-only
-repository test suite completed with 128 passing tests in 6.14 seconds.
+repository test suite completed with 147 passing tests in 6.78 seconds.
