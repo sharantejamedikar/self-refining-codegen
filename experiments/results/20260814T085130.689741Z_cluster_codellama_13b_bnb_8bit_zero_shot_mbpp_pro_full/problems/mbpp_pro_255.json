@@ -1,0 +1,133 @@
+{
+  "duration_seconds": 15.550961071625352,
+  "iterations": [
+    {
+      "convergence_decision": "single_pass_complete",
+      "execution": {
+        "duration_seconds": 0.25483541190624237,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[300, 200]",
+            "assertion_expression": "most_expensive_items_across_datasets([[{'name': 'item1', 'price': 100}, {'name': 'item2', 'price': 200}], [{'name': 'item3', 'price': 150}, {'name': 'item4', 'price': 300}]], 2) == [{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]",
+            "duration_seconds": 0.126115582883358,
+            "exception_message": "assertion comparison failed: actual=[300, 200]; expected=[{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]",
+            "exception_type": "AssertionError",
+            "expected_value": "[{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tmf53l58/program.py\", line 32, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[300, 200]', \"[{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]\")\n",
+            "stdout": "",
+            "test_case": "assert most_expensive_items_across_datasets([[{'name': 'item1', 'price': 100}, {'name': 'item2', 'price': 200}], [{'name': 'item3', 'price': 150}, {'name': 'item4', 'price': 300}]], 2) == [{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tmf53l58/program.py\", line 32, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[300, 200]', \"[{'name': 'item4', 'price': 300}, {'name': 'item2', 'price': 200}]\")\n"
+          },
+          {
+            "actual_value": "[100]",
+            "assertion_expression": "most_expensive_items_across_datasets([[{'name': 'item1', 'price': 50}, {'name': 'item2', 'price': 75}], [{'name': 'item3', 'price': 100}]], 1) == [{'name': 'item3', 'price': 100}]",
+            "duration_seconds": 0.12850582413375378,
+            "exception_message": "assertion comparison failed: actual=[100]; expected=[{'name': 'item3', 'price': 100}]",
+            "exception_type": "AssertionError",
+            "expected_value": "[{'name': 'item3', 'price': 100}]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-v0gu_lps/program.py\", line 32, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[100]', \"[{'name': 'item3', 'price': 100}]\")\n",
+            "stdout": "",
+            "test_case": "assert most_expensive_items_across_datasets([[{'name': 'item1', 'price': 50}, {'name': 'item2', 'price': 75}], [{'name': 'item3', 'price': 100}]], 1) == [{'name': 'item3', 'price': 100}]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-v0gu_lps/program.py\", line 32, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[100]', \"[{'name': 'item3', 'price': 100}]\")\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "feedback": null,
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "import heapq\n\ndef expensive_items(items, n):\n    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]\n\ndef most_expensive_items_across_datasets(datasets, n):\n    prices = []\n    for dataset in datasets:\n        prices += [item['price'] for item in dataset]\n    return heapq.nlargest(n, prices)",
+        "completion_tokens": 104,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": " ```\nimport heapq\n\ndef expensive_items(items, n):\n    return sorted(items, key=lambda x: x['price'], reverse=True)[:n]\n\ndef most_expensive_items_across_datasets(datasets, n):\n    prices = []\n    for dataset in datasets:\n        prices += [item['price'] for item in dataset]\n    return heapq.nlargest(n, prices)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the n most expensive items in a given dataset.\nimport heapq\ndef expensive_items(items,n):\n\n# Given a list of datasets, each containing items with a 'price' attribute, write a function to find the n most expensive items across all datasets.\n\ndef most_expensive_items_across_datasets(datasets, n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the n most expensive items in a given dataset.\nimport heapq\ndef expensive_items(items,n):\n\n# Given a list of datasets, each containing items with a 'price' attribute, write a function to find the n most expensive items across all datasets.\n\ndef most_expensive_items_across_datasets(datasets, n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "timing": {
+        "execution_seconds": 0.25483541190624237,
+        "generation_seconds": 15.295782005414367
+      }
+    }
+  ],
+  "metric": "pass@1_single",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "mbpp_pro/255"
+}
