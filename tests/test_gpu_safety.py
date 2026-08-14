@@ -6,6 +6,7 @@ import subprocess
 
 import pytest
 
+from experiments.scripts.check_gpu_preflight import parse_args
 from generation.gpu_safety import (
     GPUPreflightRefused,
     GPUReading,
@@ -51,3 +52,15 @@ def test_query_failure_is_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
 
     with pytest.raises(GPUPreflightRefused, match="refusing multi-GPU"):
         query_gpu_reading(1)
+
+
+def test_gpu_preflight_cli_uses_authorized_gpu1_defaults() -> None:
+    """The operator-facing gate defaults to the approved GPU 1 policy."""
+
+    args = parse_args([])
+
+    assert args.gpu_index == 1
+    assert args.samples == 3
+    assert args.interval_seconds == 3.0
+    assert args.utilization_threshold_percent == 25.0
+    assert args.memory_threshold_mb == 500.0
