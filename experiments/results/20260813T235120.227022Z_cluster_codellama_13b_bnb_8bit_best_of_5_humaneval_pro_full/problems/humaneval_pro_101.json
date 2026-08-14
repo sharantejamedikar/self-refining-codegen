@@ -1,0 +1,573 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "dc48b9c691f03c2ab5a0964bfc090b9c56197ce6e8840df5a6ff106409b30155",
+      "execution": {
+        "duration_seconds": 0.21303636766970158,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "assertion_expression": "sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "duration_seconds": 0.09296100586652756,
+            "exception_message": "assertion comparison failed: actual=[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]; expected=[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-q6hp8s3m/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-q6hp8s3m/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "duration_seconds": 0.11989211477339268,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def words_string(s):\n    return s.split(', ') if ',' in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [words_string(s) for s in sentences.split('\\n')]",
+        "completion_tokens": 63,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 286,
+        "raw_text": " ```\ndef words_string(s):\n    return s.split(', ') if ',' in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [words_string(s) for s in sentences.split('\\n')]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.21303636766970158,
+        "generation_seconds": 8.0699751265347
+      }
+    },
+    {
+      "code_hash": "813b67d47107d879903aad76bf23564f4598168b11da44db0f043fcd3e3ddd23",
+      "execution": {
+        "duration_seconds": 0.27172310650348663,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[['H'], ['i'], ['', ''], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], ['', ''], [], ['t'], ['w'], ['o'], ['', ''], [], ['t'], ['h'], ['r'], ['e'], ['e'], ['', ''], [], ['f'], ['o'], ['u'], ['r'], ['', ''], [], ['f'], ['i'], ['v'], ['e'], ['', ''], [], ['s'], ['i'], ['x']]",
+            "assertion_expression": "sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "duration_seconds": 0.09791167825460434,
+            "exception_message": "assertion comparison failed: actual=[['H'], ['i'], ['', ''], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], ['', ''], [], ['t'], ['w'], ['o'], ['', ''], [], ['t'], ['h'], ['r'], ['e'], ['e'], ['', ''], [], ['f'], ['o'], ['u'], ['r'], ['', ''], [], ['f'], ['i'], ['v'], ['e'], ['', ''], [], ['s'], ['i'], ['x']]; expected=[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bbbvmk91/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['i'], ['', ''], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], ['', ''], [], ['t'], ['w'], ['o'], ['', ''], [], ['t'], ['h'], ['r'], ['e'], ['e'], ['', ''], [], ['f'], ['o'], ['u'], ['r'], ['', ''], [], ['f'], ['i'], ['v'], ['e'], ['', ''], [], ['s'], ['i'], ['x']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bbbvmk91/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['i'], ['', ''], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], ['', ''], [], ['t'], ['w'], ['o'], ['', ''], [], ['t'], ['h'], ['r'], ['e'], ['e'], ['', ''], [], ['f'], ['o'], ['u'], ['r'], ['', ''], [], ['f'], ['i'], ['v'], ['e'], ['', ''], [], ['s'], ['i'], ['x']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n"
+          },
+          {
+            "actual_value": "[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]",
+            "assertion_expression": "sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "duration_seconds": 0.1736272294074297,
+            "exception_message": "assertion comparison failed: actual=[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]; expected=[['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4f0wclw2/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]\", \"[['Hello', 'world'], ['This', 'is', 'a', 'test']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4f0wclw2/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]\", \"[['Hello', 'world'], ['This', 'is', 'a', 'test']]\")\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def words_string(s):\n    return s.split(',') if ',' in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [word for word in map(words_string, sentences)]",
+        "completion_tokens": 60,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 286,
+        "raw_text": " ```python\ndef words_string(s):\n    return s.split(',') if ',' in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [word for word in map(words_string, sentences)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.27172310650348663,
+        "generation_seconds": 7.8591849729418755
+      }
+    },
+    {
+      "code_hash": "c4028e63bc5a122862dd2e75b42b759cb237a6d0dfb3f7065ff2e0a84f1b35b7",
+      "execution": {
+        "duration_seconds": 0.2859973553568125,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "assertion_expression": "sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "duration_seconds": 0.15886563248932362,
+            "exception_message": "assertion comparison failed: actual=[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]; expected=[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-gfpkyw9o/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-gfpkyw9o/program.py\", line 27, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['Hi', 'my name is John'], ['One', 'two', 'three', 'four', 'five', 'six']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "duration_seconds": 0.12701006792485714,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def words_string(s):\n    return s.split(\", \") if \",\" in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [words_string(sentence) for sentence in sentences.split(\"\\n\")]",
+        "completion_tokens": 62,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 286,
+        "raw_text": " ```\ndef words_string(s):\n    return s.split(\", \") if \",\" in s else s.split()\n\ndef sentences_to_words(sentences):\n    return [words_string(sentence) for sentence in sentences.split(\"\\n\")]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2859973553568125,
+        "generation_seconds": 8.281471805647016
+      }
+    },
+    {
+      "code_hash": "6756beb3d931e9e1d53ad92b39444853e393b388ec3fa5afbf40fd342ed428a6",
+      "execution": {
+        "duration_seconds": 0.27076621167361736,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[['H'], ['i'], [','], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], [','], [], ['t'], ['w'], ['o'], [','], [], ['t'], ['h'], ['r'], ['e'], ['e'], [','], [], ['f'], ['o'], ['u'], ['r'], [','], [], ['f'], ['i'], ['v'], ['e'], [','], [], ['s'], ['i'], ['x']]",
+            "assertion_expression": "sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "duration_seconds": 0.13496096059679985,
+            "exception_message": "assertion comparison failed: actual=[['H'], ['i'], [','], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], [','], [], ['t'], ['w'], ['o'], [','], [], ['t'], ['h'], ['r'], ['e'], ['e'], [','], [], ['f'], ['o'], ['u'], ['r'], [','], [], ['f'], ['i'], ['v'], ['e'], [','], [], ['s'], ['i'], ['x']]; expected=[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-j1ys89wl/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['i'], [','], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], [','], [], ['t'], ['w'], ['o'], [','], [], ['t'], ['h'], ['r'], ['e'], ['e'], [','], [], ['f'], ['o'], ['u'], ['r'], [','], [], ['f'], ['i'], ['v'], ['e'], [','], [], ['s'], ['i'], ['x']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-j1ys89wl/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['i'], [','], [], ['m'], ['y'], [], ['n'], ['a'], ['m'], ['e'], [], ['i'], ['s'], [], ['J'], ['o'], ['h'], ['n'], [], ['O'], ['n'], ['e'], [','], [], ['t'], ['w'], ['o'], [','], [], ['t'], ['h'], ['r'], ['e'], ['e'], [','], [], ['f'], ['o'], ['u'], ['r'], [','], [], ['f'], ['i'], ['v'], ['e'], [','], [], ['s'], ['i'], ['x']]\", \"[['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]\")\n"
+          },
+          {
+            "actual_value": "[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]",
+            "assertion_expression": "sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "duration_seconds": 0.13571631908416748,
+            "exception_message": "assertion comparison failed: actual=[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]; expected=[['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "exception_type": "AssertionError",
+            "expected_value": "[['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-x6ivtzw_/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]\", \"[['Hello', 'world'], ['This', 'is', 'a', 'test']]\")\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-x6ivtzw_/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[['H'], ['e'], ['l'], ['l'], ['o'], [], ['w'], ['o'], ['r'], ['l'], ['d'], [], ['T'], ['h'], ['i'], ['s'], [], ['i'], ['s'], [], ['a'], [], ['t'], ['e'], ['s'], ['t']]\", \"[['Hello', 'world'], ['This', 'is', 'a', 'test']]\")\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def words_string(s):\n    return s.split(',')\n\ndef sentences_to_words(sentences):\n    words = []\n    for sentence in sentences:\n        words.append(sentence.split())\n    return words",
+        "completion_tokens": 60,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 286,
+        "raw_text": " ```\ndef words_string(s):\n    return s.split(',')\n\ndef sentences_to_words(sentences):\n    words = []\n    for sentence in sentences:\n        words.append(sentence.split())\n    return words\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.27076621167361736,
+        "generation_seconds": 7.720460254698992
+      }
+    },
+    {
+      "code_hash": "ee06cc6500f5ffd6eada8a322df7d5e9e50cf18194e8a4e13f8cf2800aef6774",
+      "execution": {
+        "duration_seconds": 0.2418961599469185,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "duration_seconds": 0.11131210997700691,
+            "exception_message": "name 'sentences_to_words' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bhojr5w5/program.py\", line 22, in <module>\n    __srcg_assertion_actual_7f31 = sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six')\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'sentences_to_words' is not defined\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six') == [['Hi', 'my', 'name', 'is', 'John'], ['One', 'two', 'three', 'four', 'five', 'six']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bhojr5w5/program.py\", line 22, in <module>\n    __srcg_assertion_actual_7f31 = sentences_to_words('Hi, my name is John\\nOne, two, three, four, five, six')\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'sentences_to_words' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "duration_seconds": 0.13043457828462124,
+            "exception_message": "name 'sentences_to_words' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kfw10cjf/program.py\", line 22, in <module>\n    __srcg_assertion_actual_7f31 = sentences_to_words('Hello world\\nThis is a test')\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'sentences_to_words' is not defined\n",
+            "stdout": "",
+            "test_case": "assert sentences_to_words('Hello world\\nThis is a test') == [['Hello', 'world'], ['This', 'is', 'a', 'test']]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kfw10cjf/program.py\", line 22, in <module>\n    __srcg_assertion_actual_7f31 = sentences_to_words('Hello world\\nThis is a test')\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'sentences_to_words' is not defined\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def words_string(s):\n    return s.split(',') if ',' in s else s.split()",
+        "completion_tokens": 88,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 286,
+        "raw_text": " ```python\ndef words_string(s):\n    return s.split(',') if ',' in s else s.split()\n```\n```python\ndef sentences_to_words(sentences):\n    return [[word for word in sent.split(',')] if ',' in sent else [word for word in sent.split()] for sent in sentences.split('\\n')]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n\n# Given a list of sentences, each separated by a newline character, your task is to split each sentence into words and return a list of lists where each inner list contains the words of a sentence. The sentences may contain words separated by commas or spaces.\ndef sentences_to_words(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.2418961599469185,
+        "generation_seconds": 11.255191657692194
+      }
+    }
+  ],
+  "duration_seconds": 44.47260469943285,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/101",
+  "unique_code_count": 5
+}

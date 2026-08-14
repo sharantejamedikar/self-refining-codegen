@@ -1,0 +1,801 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "c99e5faab01169a6afaa5bcdd553b092ff68a2bcb11dc4b305037fa5a16738d9",
+      "execution": {
+        "duration_seconds": 0.606573972851038,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "duration_seconds": 0.10958991572260857,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "duration_seconds": 0.11519864574074745,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "duration_seconds": 0.1382864024490118,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "duration_seconds": 0.12494345754384995,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "duration_seconds": 0.11810401454567909,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def monotonic(l: list):\n    return all(l[i] <= l[i+1] for i in range(len(l)-1)) or all(l[i] >= l[i+1] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_mono = [monotonic(sublist) for sublist in lists]\n    concat_mono = monotonic(sum(lists, []))\n    return sublist_mono, concat_mono",
+        "completion_tokens": 145,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 287,
+        "raw_text": " ```\ndef monotonic(l: list):\n    return all(l[i] <= l[i+1] for i in range(len(l)-1)) or all(l[i] >= l[i+1] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_mono = [monotonic(sublist) for sublist in lists]\n    concat_mono = monotonic(sum(lists, []))\n    return sublist_mono, concat_mono\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.606573972851038,
+        "generation_seconds": 18.72524674795568
+      }
+    },
+    {
+      "code_hash": "77866eca16813264319720bdc5164993e520d9a3388e5fa6af33b43d2b54bec9",
+      "execution": {
+        "duration_seconds": 0.5120856016874313,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "duration_seconds": 0.07745693251490593,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "duration_seconds": 0.12121766991913319,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "duration_seconds": 0.09689139947295189,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "duration_seconds": 0.08945921435952187,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "duration_seconds": 0.12662066519260406,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def monotonic(l: list) -> bool:\n    return all(l[i] <= l[i+1] for i in range(len(l)-1)) or all(l[i] >= l[i+1] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_is_monotonic = []\n    for sublist in lists:\n        sublist_is_monotonic.append(monotonic(sublist))\n    concatenated_list = [item for sublist in lists for item in sublist]\n    return (sublist_is_monotonic, monotonic(concatenated_list))",
+        "completion_tokens": 179,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 287,
+        "raw_text": " ```python\ndef monotonic(l: list) -> bool:\n    return all(l[i] <= l[i+1] for i in range(len(l)-1)) or all(l[i] >= l[i+1] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_is_monotonic = []\n    for sublist in lists:\n        sublist_is_monotonic.append(monotonic(sublist))\n    concatenated_list = [item for sublist in lists for item in sublist]\n    return (sublist_is_monotonic, monotonic(concatenated_list))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5120856016874313,
+        "generation_seconds": 22.73222248815
+      }
+    },
+    {
+      "code_hash": "91b7262a83d71553e171f76b170c29d2914939e242a2023db120f1d55377e2a4",
+      "execution": {
+        "duration_seconds": 0.6233678236603737,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "([True, False], False)",
+            "assertion_expression": "check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "duration_seconds": 0.0937790498137474,
+            "exception_message": "assertion comparison failed: actual=([True, False], False); expected=([True, True], False)",
+            "exception_type": "AssertionError",
+            "expected_value": "([True, True], False)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tesozsfp/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, False], False)', '([True, True], False)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tesozsfp/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, False], False)', '([True, True], False)')\n"
+          },
+          {
+            "actual_value": "([False, False], False)",
+            "assertion_expression": "check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "duration_seconds": 0.105240847915411,
+            "exception_message": "assertion comparison failed: actual=([False, False], False); expected=([False, True], False)",
+            "exception_type": "AssertionError",
+            "expected_value": "([False, True], False)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-p167wkne/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([False, False], False)', '([False, True], False)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-p167wkne/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([False, False], False)', '([False, True], False)')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "duration_seconds": 0.11345467902719975,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "([False, False, False], False)",
+            "assertion_expression": "check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "duration_seconds": 0.14367437735199928,
+            "exception_message": "assertion comparison failed: actual=([False, False, False], False); expected=([True, True, True], True)",
+            "exception_type": "AssertionError",
+            "expected_value": "([True, True, True], True)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-d7dlw_7p/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([False, False, False], False)', '([True, True, True], True)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-d7dlw_7p/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([False, False, False], False)', '([True, True, True], True)')\n"
+          },
+          {
+            "actual_value": "([True, False, True], False)",
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "duration_seconds": 0.16682506166398525,
+            "exception_message": "assertion comparison failed: actual=([True, False, True], False); expected=([True, True, True], False)",
+            "exception_type": "AssertionError",
+            "expected_value": "([True, True, True], False)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-9xoes6c2/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, False, True], False)', '([True, True, True], False)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-9xoes6c2/program.py\", line 28, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, False, True], False)', '([True, True, True], False)')\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def monotonic(l: list):\n    return all(l[i+1] >= l[i] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_is_monotonic = [monotonic(sublist) for sublist in lists]\n    return sublist_is_monotonic, monotonic(sum(lists, []))",
+        "completion_tokens": 113,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 287,
+        "raw_text": " ```\ndef monotonic(l: list):\n    return all(l[i+1] >= l[i] for i in range(len(l)-1))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublist_is_monotonic = [monotonic(sublist) for sublist in lists]\n    return sublist_is_monotonic, monotonic(sum(lists, []))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.6233678236603737,
+        "generation_seconds": 14.157724652439356
+      }
+    },
+    {
+      "code_hash": "eadb2c7db73d299e1adc86c2142868fae510b6ba773d21e712abd4d07010def0",
+      "execution": {
+        "duration_seconds": 0.5846364945173264,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": "([True, True], True)",
+            "assertion_expression": "check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "duration_seconds": 0.09515435993671417,
+            "exception_message": "assertion comparison failed: actual=([True, True], True); expected=([True, True], False)",
+            "exception_type": "AssertionError",
+            "expected_value": "([True, True], False)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tu21keqc/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, True], True)', '([True, True], False)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tu21keqc/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, True], True)', '([True, True], False)')\n"
+          },
+          {
+            "actual_value": "([True, True], True)",
+            "assertion_expression": "check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "duration_seconds": 0.14543556235730648,
+            "exception_message": "assertion comparison failed: actual=([True, True], True); expected=([False, True], False)",
+            "exception_type": "AssertionError",
+            "expected_value": "([False, True], False)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-c4anvsan/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, True], True)', '([False, True], False)')\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-c4anvsan/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('([True, True], True)', '([False, True], False)')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "duration_seconds": 0.11828469671308994,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "duration_seconds": 0.12109214067459106,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "duration_seconds": 0.10424964688718319,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def monotonic(l: list):\n    return all((x < y) == (x <= y) for x, y in zip(l, l[1:]))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    result = []\n    for lst in lists:\n        result.append(monotonic(lst))\n    return result, monotonic(sum(lists, []))",
+        "completion_tokens": 107,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 287,
+        "raw_text": " ```\ndef monotonic(l: list):\n    return all((x < y) == (x <= y) for x, y in zip(l, l[1:]))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    result = []\n    for lst in lists:\n        result.append(monotonic(lst))\n    return result, monotonic(sum(lists, []))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.5846364945173264,
+        "generation_seconds": 13.499226335436106
+      }
+    },
+    {
+      "code_hash": "d552f4633eebbbbe504d777a986fca8e0ee80b946e472ccc0fc88919ffeb6640",
+      "execution": {
+        "duration_seconds": 0.6398804616183043,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "duration_seconds": 0.1558517012745142,
+            "exception_message": "name 'j' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]])\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]]) == ([True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 4, 20], [4, 1, 0, -10]])\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-exx0_s8z/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "duration_seconds": 0.14277774654328823,
+            "exception_message": "name 'j' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-webq5im7/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]])\n  File \"/tmp/srcg-webq5im7/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-webq5im7/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-webq5im7/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]]) == ([False, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-webq5im7/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 20, 4, 10], [4, 1, 0, -10]])\n  File \"/tmp/srcg-webq5im7/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-webq5im7/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-webq5im7/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "duration_seconds": 0.12082335539162159,
+            "exception_message": "name 'j' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-jk9iz1oo/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "duration_seconds": 0.10558351501822472,
+            "exception_message": "name 'j' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]])\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]]) == ([True, True, True], True)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[9, 8, 7], [6, 5, 4], [3, 2, 1]])\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-6ek7p7fq/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "duration_seconds": 0.11451282165944576,
+            "exception_message": "name 'j' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-doq324xp/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]])\n  File \"/tmp/srcg-doq324xp/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-doq324xp/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-doq324xp/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n",
+            "stdout": "",
+            "test_case": "assert check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]]) == ([True, True, True], False)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-doq324xp/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = check_monotonic_lists([[1, 2, 3], [3, 2, 1], [1, 2, 3]])\n  File \"/tmp/srcg-doq324xp/program.py\", line 23, in check_monotonic_lists\n    sublists = [monotonic(sublist) for sublist in lists]\n                ~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-doq324xp/program.py\", line 20, in monotonic\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n           ^^^\n  File \"/tmp/srcg-doq324xp/program.py\", line 20, in <genexpr>\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n                    ^\nNameError: name 'j' is not defined\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def monotonic(l: list) -> bool:\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublists = [monotonic(sublist) for sublist in lists]\n    concatenated = sum(sublists, [])\n    return sublists, monotonic(concatenated)",
+        "completion_tokens": 127,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 287,
+        "raw_text": " ```python\ndef monotonic(l: list) -> bool:\n    return all((i < j) if l[i-1] != l[i] else (i == j) for i in range(1, len(l)))\n\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n    sublists = [monotonic(sublist) for sublist in lists]\n    concatenated = sum(sublists, [])\n    return sublists, monotonic(concatenated)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\n# Given a list of lists, determine if each sublist is monotonic and if the entire list of lists is also monotonic when concatenated. Return a tuple where the first element is a list of boolean values indicating whether each sublist is monotonic, and the second element is a boolean indicating whether the concatenated list is monotonic.\ndef check_monotonic_lists(lists: list[list]) -> tuple[list[bool], bool]:\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.6398804616183043,
+        "generation_seconds": 16.23707703500986
+      }
+    }
+  ],
+  "duration_seconds": 88.32185435853899,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/57",
+  "unique_code_count": 5
+}

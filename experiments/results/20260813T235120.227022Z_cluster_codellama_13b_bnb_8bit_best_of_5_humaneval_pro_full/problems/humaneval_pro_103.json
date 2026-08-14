@@ -1,0 +1,502 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "8ca070ae0725c7ebf7e09f84be9abe6235bfd09ac17d3c1bbfdb04119009f5c6",
+      "execution": {
+        "duration_seconds": 0.07741080224514008,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "duration_seconds": 0.07730594091117382,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    \n    sum = 0\n    for i in range(n, m+1):\n        sum += i\n    \n    avg = sum / (m-n+1)\n    rounded_avg = round(avg)\n    \n    return bin(rounded_avg)[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        n = t[0]\n        m = t[1]\n        if n > m:\n            result += '-1'\n        else:\n            result += rounded_avg(n, m)\n    \n    return result",
+        "completion_tokens": 174,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 351,
+        "raw_text": " ```\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    \n    sum = 0\n    for i in range(n, m+1):\n        sum += i\n    \n    avg = sum / (m-n+1)\n    rounded_avg = round(avg)\n    \n    return bin(rounded_avg)[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        n = t[0]\n        m = t[1]\n        if n > m:\n            result += '-1'\n        else:\n            result += rounded_avg(n, m)\n    \n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.07741080224514008,
+        "generation_seconds": 22.827536089345813
+      }
+    },
+    {
+      "code_hash": "ea9936959f988a29e37bf7bd16a0ccdc6f8c9cd3c4666dbcbf42633c04febc49",
+      "execution": {
+        "duration_seconds": 0.07941475324332714,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "duration_seconds": 0.07932249829173088,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    avg = (n + m) / 2\n    return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for n, m in tuples:\n        avg = rounded_avg(n, m)\n        if avg == -1:\n            result += '-1'\n        else:\n            result += avg\n    return result",
+        "completion_tokens": 125,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 351,
+        "raw_text": " ```python\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    avg = (n + m) / 2\n    return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for n, m in tuples:\n        avg = rounded_avg(n, m)\n        if avg == -1:\n            result += '-1'\n        else:\n            result += avg\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.07941475324332714,
+        "generation_seconds": 16.017251985147595
+      }
+    },
+    {
+      "code_hash": "7e5daafe18218bf7619728b20cf0fdef8174f898ebad53d10f45098d6cae31e5",
+      "execution": {
+        "duration_seconds": 0.09542390890419483,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "duration_seconds": 0.0953335352241993,
+            "exception_message": "unsupported operand type(s) for +: 'int' and 'str'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kia8h36y/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)])\n  File \"/tmp/srcg-kia8h36y/program.py\", line 30, in process_tuples\n    result += rounded_avg(*t) + ' '\n              ~~~~~~~~~~~~~~~~^~~~~\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+            "stdout": "",
+            "test_case": "assert process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kia8h36y/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)])\n  File \"/tmp/srcg-kia8h36y/program.py\", line 30, in process_tuples\n    result += rounded_avg(*t) + ' '\n              ~~~~~~~~~~~~~~~~^~~~~\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    else:\n        total = sum(range(n, m+1))\n        avg = total / len(range(n, m+1))\n        return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        result += rounded_avg(*t) + ' '\n    return result.strip()",
+        "completion_tokens": 121,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 351,
+        "raw_text": " ```\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    else:\n        total = sum(range(n, m+1))\n        avg = total / len(range(n, m+1))\n        return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        result += rounded_avg(*t) + ' '\n    return result.strip()\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.09542390890419483,
+        "generation_seconds": 15.49031619541347
+      }
+    },
+    {
+      "code_hash": "0d8414fea1a6c21237295a46b2b631de3f7cde111b58184e257c340122295c21",
+      "execution": {
+        "duration_seconds": 0.08015383593738079,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "duration_seconds": 0.0800809245556593,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    avg = (n + m) / 2\n    return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = \"\"\n    for t in tuples:\n        avg = rounded_avg(*t)\n        if avg == -1:\n            result += \"-1\"\n        else:\n            result += avg\n    return result",
+        "completion_tokens": 120,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 351,
+        "raw_text": " ```\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    avg = (n + m) / 2\n    return bin(round(avg))[2:]\n\ndef process_tuples(tuples):\n    result = \"\"\n    for t in tuples:\n        avg = rounded_avg(*t)\n        if avg == -1:\n            result += \"-1\"\n        else:\n            result += avg\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.08015383593738079,
+        "generation_seconds": 15.489723535254598
+      }
+    },
+    {
+      "code_hash": "ec186af087795df5ff65a2bf16107e31eb77fdf971d97c98809903885f222140",
+      "execution": {
+        "duration_seconds": 0.13352898135781288,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "'b10-1b11b100'",
+            "assertion_expression": "process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "duration_seconds": 0.13343925587832928,
+            "exception_message": "assertion comparison failed: actual='b10-1b11b100'; expected='11-1111111010'",
+            "exception_type": "AssertionError",
+            "expected_value": "'11-1111111010'",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kxlnx3ap/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'b10-1b11b100'\", \"'11-1111111010'\")\n",
+            "stdout": "",
+            "test_case": "assert process_tuples([(1, 5), (7, 5), (10, 20), (20, 33)]) == '11-1111111010'",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kxlnx3ap/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"'b10-1b11b100'\", \"'11-1111111010'\")\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def rounded_avg(n, m):\n    if n > m:\n        return -1\n    sum = n + m\n    count = n - m\n    avg = sum / count\n    rounded_avg = round(avg)\n    binary_string = bin(rounded_avg)[2:]\n    return binary_string\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        binary_string = rounded_avg(*t)\n        if binary_string == -1:\n            result += '-1'\n        else:\n            result += binary_string\n    return result",
+        "completion_tokens": 154,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 351,
+        "raw_text": " ```python\ndef rounded_avg(n, m):\n    if n > m:\n        return -1\n    sum = n + m\n    count = n - m\n    avg = sum / count\n    rounded_avg = round(avg)\n    binary_string = bin(rounded_avg)[2:]\n    return binary_string\n\ndef process_tuples(tuples):\n    result = ''\n    for t in tuples:\n        binary_string = rounded_avg(*t)\n        if binary_string == -1:\n            result += '-1'\n        else:\n            result += binary_string\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef rounded_avg(n, m):\n    \"\"\"You are given two positive integers n and m, and your task is to compute the\n    average of the integers from n through m (including n and m). \n    Round the answer to the nearest integer and convert that to binary.\n    If n is greater than m, return -1.\n    Example:\n    rounded_avg(1, 5) => \"0b11\"\n    rounded_avg(7, 5) => -1\n    rounded_avg(10, 20) => \"0b1111\"\n    rounded_avg(20, 33) => \"0b11010\"\n    \"\"\"\n\n# You are given a list of tuples, where each tuple contains two positive integers. Your task is to compute the rounded average for each tuple, convert the result to binary, and then concatenate all the binary strings together. If any tuple contains a first integer greater than the second, append '-1' to the result string instead. Finally, return the resulting concatenated string.\ndef process_tuples(tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.13352898135781288,
+        "generation_seconds": 20.275862073525786
+      }
+    }
+  ],
+  "duration_seconds": 90.56960337422788,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    3
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/103",
+  "unique_code_count": 5
+}
