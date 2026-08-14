@@ -1,0 +1,701 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "5493816a3cb95aa29d7340fce5c8998a3896065cd229780eb42b625b4968f56d",
+      "execution": {
+        "duration_seconds": 0.4415321182459593,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "duration_seconds": 0.07153796777129173,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "duration_seconds": 0.10160045884549618,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "duration_seconds": 0.12763884663581848,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "duration_seconds": 0.14037986658513546,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-nk7fvmy9/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-nk7fvmy9/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors: List[str], patterns: List[str]) -> bool:\n    if len(colors) != len(patterns):\n        return False\n    \n    color_to_pattern = {}\n    pattern_to_color = {}\n    \n    for color, pattern in zip(colors, patterns):\n        if color in color_to_pattern and color_to_pattern[color] != pattern:\n            return False\n        if pattern in pattern_to_color and pattern_to_color[pattern] != color:\n            return False\n        \n        color_to_pattern[color] = pattern\n        pattern_to_color[pattern] = color\n    \n    return True\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list: List[List[str]], patterns_list: List[List[str]]) -> bool:\n    if len(colors_list) != len(patterns_list):\n        return False\n    \n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    \n    return True",
+        "completion_tokens": 272,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "raw_text": "```python\nfrom typing import List\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors: List[str], patterns: List[str]) -> bool:\n    if len(colors) != len(patterns):\n        return False\n    \n    color_to_pattern = {}\n    pattern_to_color = {}\n    \n    for color, pattern in zip(colors, patterns):\n        if color in color_to_pattern and color_to_pattern[color] != pattern:\n            return False\n        if pattern in pattern_to_color and pattern_to_color[pattern] != color:\n            return False\n        \n        color_to_pattern[color] = pattern\n        pattern_to_color[pattern] = color\n    \n    return True\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list: List[List[str]], patterns_list: List[List[str]]) -> bool:\n    if len(colors_list) != len(patterns_list):\n        return False\n    \n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    \n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4415321182459593,
+        "generation_seconds": 7.416687428951263
+      }
+    },
+    {
+      "code_hash": "764d8e362ff5dec0b290e68c29ffff2d189493db72383734a8abbbabf925ea00",
+      "execution": {
+        "duration_seconds": 0.4267792794853449,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "duration_seconds": 0.06690001487731934,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "duration_seconds": 0.11651797592639923,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "duration_seconds": 0.10890089347958565,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "duration_seconds": 0.13407306745648384,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-j3k4hax1/program.py\", line 49, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-j3k4hax1/program.py\", line 49, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    \n    pattern_to_color = {}\n    used_colors = set()\n    \n    for color, pattern in zip(colors, patterns):\n        if pattern not in pattern_to_color:\n            if color in used_colors:\n                return False\n            pattern_to_color[pattern] = color\n            used_colors.add(color)\n        elif pattern_to_color[pattern] != color:\n            return False\n    \n    return True\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    if len(colors_list) != len(patterns_list):\n        return False\n    \n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    \n    return True",
+        "completion_tokens": 164,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "raw_text": "```python\ndef is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    \n    pattern_to_color = {}\n    used_colors = set()\n    \n    for color, pattern in zip(colors, patterns):\n        if pattern not in pattern_to_color:\n            if color in used_colors:\n                return False\n            pattern_to_color[pattern] = color\n            used_colors.add(color)\n        elif pattern_to_color[pattern] != color:\n            return False\n    \n    return True\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    if len(colors_list) != len(patterns_list):\n        return False\n    \n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    \n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.4267792794853449,
+        "generation_seconds": 4.431205814704299
+      }
+    },
+    {
+      "code_hash": "07cf81b8833a0e168335fcadc373627329c69304145dbcb21cac9cd0eef6e206",
+      "execution": {
+        "duration_seconds": 0.44032299891114235,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "duration_seconds": 0.09475586004555225,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "duration_seconds": 0.1048543956130743,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "duration_seconds": 0.10554433055222034,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "duration_seconds": 0.13478602655231953,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-w6bs95aa/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-w6bs95aa/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    color_to_pattern = {}\n    pattern_to_color = {}\n    for color, pattern in zip(colors, patterns):\n        if color in color_to_pattern and color_to_pattern[color] != pattern:\n            return False\n        if pattern in pattern_to_color and pattern_to_color[pattern] != color:\n            return False\n        color_to_pattern[color] = pattern\n        pattern_to_color[pattern] = color\n    return True\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    if len(colors_list) != len(patterns_list):\n        return False\n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    return True",
+        "completion_tokens": 172,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "raw_text": "```python\ndef is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    color_to_pattern = {}\n    pattern_to_color = {}\n    for color, pattern in zip(colors, patterns):\n        if color in color_to_pattern and color_to_pattern[color] != pattern:\n            return False\n        if pattern in pattern_to_color and pattern_to_color[pattern] != color:\n            return False\n        color_to_pattern[color] = pattern\n        pattern_to_color[pattern] = color\n    return True\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    if len(colors_list) != len(patterns_list):\n        return False\n    for i in range(len(colors_list)):\n        if not is_samepatterns(colors_list[i], patterns_list[i]):\n            return False\n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.44032299891114235,
+        "generation_seconds": 4.739931335672736
+      }
+    },
+    {
+      "code_hash": "4563c272e2b9c926455a398921079c9d7d9527c61db7129a995ee658946767e0",
+      "execution": {
+        "duration_seconds": 0.4268002584576607,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "duration_seconds": 0.078757019713521,
+            "exception_message": "list.index(x): x not in list",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-h91xswhf/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']])\n  File \"/tmp/srcg-h91xswhf/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-h91xswhf/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']])\n  File \"/tmp/srcg-h91xswhf/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "duration_seconds": 0.11405364982783794,
+            "exception_message": "list.index(x): x not in list",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-w94xr05x/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']])\n  File \"/tmp/srcg-w94xr05x/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-w94xr05x/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']])\n  File \"/tmp/srcg-w94xr05x/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "duration_seconds": 0.09086467139422894,
+            "exception_message": "list.index(x): x not in list",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dgptc1w9/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']])\n  File \"/tmp/srcg-dgptc1w9/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dgptc1w9/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']])\n  File \"/tmp/srcg-dgptc1w9/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "duration_seconds": 0.14276368357241154,
+            "exception_message": "list.index(x): x not in list",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ij1ucyjf/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']])\n  File \"/tmp/srcg-ij1ucyjf/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ij1ucyjf/program.py\", line 55, in <module>\n    __srcg_assertion_actual_7f31 = is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']])\n  File \"/tmp/srcg-ij1ucyjf/program.py\", line 47, in is_consistent_patterns\n    pattern_map[pattern].append(colors.index(pattern))\n                                ~~~~~~~~~~~~^^^^^^^^^\nValueError: list.index(x): x not in list\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from collections import defaultdict\n\n# Function to check whether a sequence of colors matches a sequence of patterns\ndef is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    pattern_to_color = {}\n    used_colors = set()\n    \n    for color, pattern in zip(colors, patterns):\n        if pattern not in pattern_to_color:\n            if color in used_colors:\n                return False\n            pattern_to_color[pattern] = color\n            used_colors.add(color)\n        elif pattern_to_color[pattern] != color:\n            return False\n    \n    return True\n\n# Function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color\ndef is_consistent_patterns(colors_list, patterns_list):\n    pattern_map = defaultdict(list)\n    \n    for colors, patterns in zip(colors_list, patterns_list):\n        if not is_samepatterns(colors, patterns):\n            return False\n        for pattern in patterns:\n            pattern_map[pattern].append(colors.index(pattern))\n    \n    for _, indices in pattern_map.items():\n        if len(set(indices)) != 1:\n            return False\n    \n    return True",
+        "completion_tokens": 243,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "raw_text": "```python\nfrom collections import defaultdict\n\n# Function to check whether a sequence of colors matches a sequence of patterns\ndef is_samepatterns(colors, patterns):\n    if len(colors) != len(patterns):\n        return False\n    pattern_to_color = {}\n    used_colors = set()\n    \n    for color, pattern in zip(colors, patterns):\n        if pattern not in pattern_to_color:\n            if color in used_colors:\n                return False\n            pattern_to_color[pattern] = color\n            used_colors.add(color)\n        elif pattern_to_color[pattern] != color:\n            return False\n    \n    return True\n\n# Function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color\ndef is_consistent_patterns(colors_list, patterns_list):\n    pattern_map = defaultdict(list)\n    \n    for colors, patterns in zip(colors_list, patterns_list):\n        if not is_samepatterns(colors, patterns):\n            return False\n        for pattern in patterns:\n            pattern_map[pattern].append(colors.index(pattern))\n    \n    for _, indices in pattern_map.items():\n        if len(set(indices)) != 1:\n            return False\n    \n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4268002584576607,
+        "generation_seconds": 6.553260074928403
+      }
+    },
+    {
+      "code_hash": "99bf0d193f3a55e79d45d11b8318e966fe89049773584aab1dcca65bcde86319",
+      "execution": {
+        "duration_seconds": 0.4166847560554743,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "duration_seconds": 0.08007166348397732,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8nyy4fi5/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'b']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8nyy4fi5/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          },
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "duration_seconds": 0.11246435716748238,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-sy7lq25p/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['a', 'b', 'a']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-sy7lq25p/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "duration_seconds": 0.09311333298683167,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'a']]) == False",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "False",
+            "assertion_expression": "is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "duration_seconds": 0.1307310312986374,
+            "exception_message": "assertion comparison failed: actual=False; expected=True",
+            "exception_type": "AssertionError",
+            "expected_value": "True",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pbc6vto8/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n",
+            "stdout": "",
+            "test_case": "assert is_consistent_patterns([['red', 'blue', 'red'], ['blue', 'red', 'blue']], [['a', 'b', 'a'], ['b', 'a', 'c']]) == True",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pbc6vto8/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('False', 'True')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def is_samepatterns(colors, patterns):\n    return len(set(zip(colors, patterns))) == min(len(colors), len(patterns))\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    color_pattern_map = {}\n    pattern_count = {}\n\n    for colors, patterns in zip(colors_list, patterns_list):\n        if not is_samepatterns(colors, patterns):\n            return False\n\n        for color, pattern in zip(colors, patterns):\n            if pattern not in color_pattern_map:\n                color_pattern_map[pattern] = color\n                pattern_count[pattern] = 1\n            else:\n                if color_pattern_map[pattern] != color:\n                    return False\n                pattern_count[pattern] += 1\n\n    # Ensure each pattern maps to exactly one color across all lists\n    for count in pattern_count.values():\n        if count > 1:\n            return False\n\n    return True",
+        "completion_tokens": 185,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 173,
+        "raw_text": "```python\ndef is_samepatterns(colors, patterns):\n    return len(set(zip(colors, patterns))) == min(len(colors), len(patterns))\n\ndef is_consistent_patterns(colors_list, patterns_list):\n    color_pattern_map = {}\n    pattern_count = {}\n\n    for colors, patterns in zip(colors_list, patterns_list):\n        if not is_samepatterns(colors, patterns):\n            return False\n\n        for color, pattern in zip(colors, patterns):\n            if pattern not in color_pattern_map:\n                color_pattern_map[pattern] = color\n                pattern_count[pattern] = 1\n            else:\n                if color_pattern_map[pattern] != color:\n                    return False\n                pattern_count[pattern] += 1\n\n    # Ensure each pattern maps to exactly one color across all lists\n    for count in pattern_count.values():\n        if count > 1:\n            return False\n\n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to check whether it follows the sequence given in the patterns array.\ndef is_samepatterns(colors, patterns):\n\n# Given a list of colors and a list of patterns, write a function to check if there exists a valid sequence of colors for each pattern such that each pattern is uniquely mapped to a color. Additionally, ensure that the sequence of patterns is consistent across multiple lists of colors and patterns.\ndef is_consistent_patterns(colors_list, patterns_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4166847560554743,
+        "generation_seconds": 4.9909888580441475
+      }
+    }
+  ],
+  "duration_seconds": 30.287681818008423,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/31",
+  "unique_code_count": 5
+}

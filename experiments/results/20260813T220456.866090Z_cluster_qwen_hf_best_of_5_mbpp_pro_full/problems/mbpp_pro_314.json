@@ -1,0 +1,704 @@
+{
+  "all_candidates_unique": false,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "64c1fcdc74aca9b0b68d0629f211bc9a6a2b1e5bb744958cd8ac94260e234f4f",
+      "execution": {
+        "duration_seconds": 0.3923655338585377,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "duration_seconds": 0.07918458618223667,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "duration_seconds": 0.09069708734750748,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "duration_seconds": 0.0948318112641573,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "duration_seconds": 0.1273466031998396,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n            \n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    for i in range(len(A)):\n        complement = target_sum - A[i]\n        j = find_first_occurrence(A, complement)\n        \n        if j != -1 and i != j:\n            return [i, j]\n            \n    return []",
+        "completion_tokens": 167,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 172,
+        "raw_text": "```python\ndef find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n            \n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    for i in range(len(A)):\n        complement = target_sum - A[i]\n        j = find_first_occurrence(A, complement)\n        \n        if j != -1 and i != j:\n            return [i, j]\n            \n    return []\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3923655338585377,
+        "generation_seconds": 4.543456947430968
+      }
+    },
+    {
+      "code_hash": "69c2791562ea2780ff1230face961d7c536b8e6552a912dc3a2a6584e981a2d1",
+      "execution": {
+        "duration_seconds": 0.42908475920557976,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "duration_seconds": 0.07808097638189793,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[2, 3]",
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "duration_seconds": 0.11401022225618362,
+            "exception_message": "assertion comparison failed: actual=[2, 3]; expected=[1, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[1, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8rvvd3oj/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8rvvd3oj/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "duration_seconds": 0.12084199488162994,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[1, 2]",
+            "assertion_expression": "find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "duration_seconds": 0.11589523032307625,
+            "exception_message": "assertion comparison failed: actual=[1, 2]; expected=[0, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[0, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-3rywqmvw/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-3rywqmvw/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    seen = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+        "completion_tokens": 388,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 172,
+        "raw_text": "```python\ndef find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    seen = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n```\n\nExplanation:\n- `find_first_occurrence`: This function performs a binary search on a sorted array `A` to find the first occurrence of the element `x`. It initializes two pointers, `left` and `right`, to the start and end of the array, respectively. It iteratively adjusts these pointers based on the comparison between the middle element and `x`. If `x` is found, it updates the result with the current middle index and continues searching in the left half to ensure the first occurrence is found. If `x` is not found, it returns `-1`.\n- `find_two_indices_for_sum`: This function uses a hash map (`seen`) to store the numbers encountered along with their indices as it iterates through the array. For each element `num` at index `i`, it calculates its complement with respect to the `target_sum`. If this complement exists in the hash map, it means a pair has been found whose sum equals the `target_sum`, and the indices are returned. If no such pair is found by the end of the iteration, an empty list is returned.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.42908475920557976,
+        "generation_seconds": 10.497046390548348
+      }
+    },
+    {
+      "code_hash": "7d187959a2d9f3cbcbae8f625db213caf53e4f53cc58f484f15c76aaf23b1af0",
+      "execution": {
+        "duration_seconds": 0.3754755109548569,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "duration_seconds": 0.07963030971586704,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "4\n[4, 9]\n",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "duration_seconds": 0.09921509772539139,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "4\n[4, 9]\n",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "duration_seconds": 0.09343367628753185,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "4\n[4, 9]\n",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "duration_seconds": 0.10278485715389252,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "4\n[4, 9]\n",
+            "test_case": "assert find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    for i in range(len(A)):\n        complement = target_sum - A[i]\n        j = find_first_occurrence(A, complement)\n        if j != -1 and j != i:\n            return [i, j]\n    return []\n\n# Example usage:\nA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nx = 5\nprint(find_first_occurrence(A, x))  # Output: 4\n\ntarget_sum = 15\nprint(find_two_indices_for_sum(A, target_sum))  # Output: [4, 8]",
+        "completion_tokens": 251,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 172,
+        "raw_text": "```python\ndef find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    for i in range(len(A)):\n        complement = target_sum - A[i]\n        j = find_first_occurrence(A, complement)\n        if j != -1 and j != i:\n            return [i, j]\n    return []\n\n# Example usage:\nA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\nx = 5\nprint(find_first_occurrence(A, x))  # Output: 4\n\ntarget_sum = 15\nprint(find_two_indices_for_sum(A, target_sum))  # Output: [4, 8]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3754755109548569,
+        "generation_seconds": 6.764665488153696
+      }
+    },
+    {
+      "code_hash": "2a67fed66d008248e3c81c8f114421f14c6bea0de7b96351ecb2f1b6ffede01b",
+      "execution": {
+        "duration_seconds": 0.4935389757156372,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "duration_seconds": 0.08336871862411499,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[2, 3]",
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "duration_seconds": 0.11096501909196377,
+            "exception_message": "assertion comparison failed: actual=[2, 3]; expected=[1, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[1, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ptgu6nm1/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ptgu6nm1/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "duration_seconds": 0.13178965263068676,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[1, 2]",
+            "assertion_expression": "find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "duration_seconds": 0.16711278446018696,
+            "exception_message": "assertion comparison failed: actual=[1, 2]; expected=[0, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[0, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dttrccct/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dttrccct/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    num_to_index = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in num_to_index:\n            return [num_to_index[complement], i]\n        num_to_index[num] = i\n    return []",
+        "completion_tokens": 171,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 172,
+        "raw_text": "```python\ndef find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    num_to_index = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in num_to_index:\n            return [num_to_index[complement], i]\n        num_to_index[num] = i\n    return []\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4935389757156372,
+        "generation_seconds": 4.699023654684424
+      }
+    },
+    {
+      "code_hash": "69c2791562ea2780ff1230face961d7c536b8e6552a912dc3a2a6584e981a2d1",
+      "execution": {
+        "duration_seconds": 0.3934742100536823,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "duration_seconds": 0.07724487408995628,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 9) == [3, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[2, 3]",
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "duration_seconds": 0.11319269612431526,
+            "exception_message": "assertion comparison failed: actual=[2, 3]; expected=[1, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[1, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yiibzx86/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 7) == [1, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yiibzx86/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[2, 3]', '[1, 4]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "duration_seconds": 0.09252789989113808,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 2, 3, 4, 5], 10) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[1, 2]",
+            "assertion_expression": "find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "duration_seconds": 0.11014741472899914,
+            "exception_message": "assertion comparison failed: actual=[1, 2]; expected=[0, 4]",
+            "exception_type": "AssertionError",
+            "expected_value": "[0, 4]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0iqmcfna/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n",
+            "stdout": "",
+            "test_case": "assert find_two_indices_for_sum([1, 3, 3, 4, 5], 6) == [0, 4]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0iqmcfna/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2]', '[0, 4]')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    seen = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+        "completion_tokens": 163,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 172,
+        "raw_text": "```python\ndef find_first_occurrence(A, x):\n    left, right = 0, len(A) - 1\n    result = -1\n    while left <= right:\n        mid = (left + right) // 2\n        if A[mid] == x:\n            result = mid\n            right = mid - 1\n        elif A[mid] < x:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return result\n\ndef find_two_indices_for_sum(A, target_sum):\n    seen = {}\n    for i, num in enumerate(A):\n        complement = target_sum - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the index of the first occurrence of a given number in a sorted array.\ndef find_first_occurrence(A, x):\n\n# Given a sorted array of integers and a target sum, find two distinct indices in the array such that the elements at these indices add up to the target sum. If such indices exist, return them in a list; otherwise, return an empty list.\ndef find_two_indices_for_sum(A, target_sum):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3934742100536823,
+        "generation_seconds": 4.413439305499196
+      }
+    }
+  ],
+  "duration_seconds": 33.00508466362953,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/314",
+  "unique_code_count": 4
+}

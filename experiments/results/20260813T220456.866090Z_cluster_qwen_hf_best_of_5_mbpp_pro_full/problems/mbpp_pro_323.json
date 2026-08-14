@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "2439492a5f927ff975bf65c3dbb2c0a00135f4af5c513afe153240a5477b25df",
+      "execution": {
+        "duration_seconds": 0.36099618300795555,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "duration_seconds": 0.11738894693553448,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 1, 2], [6, 7, 4, 5], [8, 9]]\n",
+            "test_case": "assert rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "duration_seconds": 0.11032578349113464,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 1, 2], [6, 7, 4, 5], [8, 9]]\n",
+            "test_case": "assert rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "duration_seconds": 0.13299497589468956,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "[[3, 1, 2], [6, 7, 4, 5], [8, 9]]\n",
+            "test_case": "assert rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def rotate_right(l, m):\n    \"\"\"\n    Rotate a given list by specified number of items to the right direction.\n    \"\"\"\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    \"\"\"\n    Given a list of lists, rotate each sublist by a specified number of items to the right direction.\n    The number of rotations for each sublist is given in another list, where the index of the number of rotations\n    corresponds to the index of the sublist in the list of lists.\n    \"\"\"\n    result = []\n    for i, sublist in enumerate(list_of_lists):\n        num_rotations = rotations[i]\n        rotated_sublist = rotate_right(sublist, num_rotations)\n        result.append(rotated_sublist)\n    return result\n\n# Example usage:\nlist_of_lists = [[1, 2, 3], [4, 5, 6, 7], [8, 9]]\nrotations = [1, 2, 3]\nprint(rotate_sublists(list_of_lists, rotations))  # Output: [[3, 1, 2], [7, 4, 5, 6], [9, 8]]",
+        "completion_tokens": 312,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 187,
+        "raw_text": "```python\ndef rotate_right(l, m):\n    \"\"\"\n    Rotate a given list by specified number of items to the right direction.\n    \"\"\"\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    \"\"\"\n    Given a list of lists, rotate each sublist by a specified number of items to the right direction.\n    The number of rotations for each sublist is given in another list, where the index of the number of rotations\n    corresponds to the index of the sublist in the list of lists.\n    \"\"\"\n    result = []\n    for i, sublist in enumerate(list_of_lists):\n        num_rotations = rotations[i]\n        rotated_sublist = rotate_right(sublist, num_rotations)\n        result.append(rotated_sublist)\n    return result\n\n# Example usage:\nlist_of_lists = [[1, 2, 3], [4, 5, 6, 7], [8, 9]]\nrotations = [1, 2, 3]\nprint(rotate_sublists(list_of_lists, rotations))  # Output: [[3, 1, 2], [7, 4, 5, 6], [9, 8]]\n```\n\nThis solution includes both functions as required. The `rotate_right` function rotates a single list to the right by a specified number of positions. The `rotate_sublists` function uses this helper function to rotate each sublist in a list of lists according to the corresponding rotation value provided in another list.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.36099618300795555,
+        "generation_seconds": 8.512877758592367
+      }
+    },
+    {
+      "code_hash": "a884d2bbfa57928628d8f1c877066fd1659b3a0de5a20c659160fd0be2555d3a",
+      "execution": {
+        "duration_seconds": 0.3643817510455847,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "duration_seconds": 0.10622577741742134,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "duration_seconds": 0.12010948732495308,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "duration_seconds": 0.13773563876748085,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def rotate_right(l, m):\n    n = len(l)\n    m = m % n  # Ensure rotation is within the bounds of the list length\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    result = []\n    for i, sublist in enumerate(list_of_lists):\n        num_rotations = rotations[i]\n        rotated_sublist = rotate_right(sublist, num_rotations)\n        result.append(rotated_sublist)\n    return result",
+        "completion_tokens": 107,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 187,
+        "raw_text": "```python\ndef rotate_right(l, m):\n    n = len(l)\n    m = m % n  # Ensure rotation is within the bounds of the list length\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    result = []\n    for i, sublist in enumerate(list_of_lists):\n        num_rotations = rotations[i]\n        rotated_sublist = rotate_right(sublist, num_rotations)\n        result.append(rotated_sublist)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3643817510455847,
+        "generation_seconds": 2.8979938309639692
+      }
+    },
+    {
+      "code_hash": "39999fe65b729faf275f7b7d71841da0765b2629c079aad9ceeab3bedabd602f",
+      "execution": {
+        "duration_seconds": 0.26474110409617424,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "duration_seconds": 0.07819914072751999,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "duration_seconds": 0.09445683285593987,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "duration_seconds": 0.09188800305128098,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def rotate_right(l, m):\n    \"\"\"\n    Rotate a given list by specified number of items to the right direction.\n    \"\"\"\n    m = m % len(l)  # Handle cases where m is larger than the length of the list\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    \"\"\"\n    Given a list of lists, rotate each sublist by a specified number of items to the right direction.\n    The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\n    \"\"\"\n    rotated_lists = []\n    for i, sublist in enumerate(list_of_lists):\n        if i < len(rotations):\n            num_rotations = rotations[i]\n            rotated_lists.append(rotate_right(sublist, num_rotations))\n        else:\n            rotated_lists.append(sublist)\n    return rotated_lists",
+        "completion_tokens": 196,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 187,
+        "raw_text": "```python\ndef rotate_right(l, m):\n    \"\"\"\n    Rotate a given list by specified number of items to the right direction.\n    \"\"\"\n    m = m % len(l)  # Handle cases where m is larger than the length of the list\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    \"\"\"\n    Given a list of lists, rotate each sublist by a specified number of items to the right direction.\n    The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\n    \"\"\"\n    rotated_lists = []\n    for i, sublist in enumerate(list_of_lists):\n        if i < len(rotations):\n            num_rotations = rotations[i]\n            rotated_lists.append(rotate_right(sublist, num_rotations))\n        else:\n            rotated_lists.append(sublist)\n    return rotated_lists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.26474110409617424,
+        "generation_seconds": 5.292722709476948
+      }
+    },
+    {
+      "code_hash": "a06c80557c511debe603e867326ab923d27e31b5bb8e6bd118b9ad69bef49700",
+      "execution": {
+        "duration_seconds": 0.27864028699696064,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "duration_seconds": 0.0824096854776144,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "duration_seconds": 0.09386098384857178,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "duration_seconds": 0.10217376425862312,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef rotate_right(l: List[int], m: int) -> List[int]:\n    n = len(l)\n    m = m % n  # Handle cases where m > n\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists: List[List[int]], rotations: List[int]) -> List[List[int]]:\n    result = []\n    for sublist, rotation in zip(list_of_lists, rotations):\n        rotated_sublist = rotate_right(sublist, rotation)\n        result.append(rotated_sublist)\n    return result",
+        "completion_tokens": 121,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 187,
+        "raw_text": "```python\nfrom typing import List\n\ndef rotate_right(l: List[int], m: int) -> List[int]:\n    n = len(l)\n    m = m % n  # Handle cases where m > n\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists: List[List[int]], rotations: List[int]) -> List[List[int]]:\n    result = []\n    for sublist, rotation in zip(list_of_lists, rotations):\n        rotated_sublist = rotate_right(sublist, rotation)\n        result.append(rotated_sublist)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.27864028699696064,
+        "generation_seconds": 3.2690680995583534
+      }
+    },
+    {
+      "code_hash": "66c3e4411bb2a4f4ea3b24a6d5b218667c3c042d38d499b1f7b1a00c9d10434f",
+      "execution": {
+        "duration_seconds": 0.2712589893490076,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "duration_seconds": 0.07800082303583622,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3]) == [[3, 1, 2], [5, 6, 4], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "duration_seconds": 0.09715712442994118,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[10, 20], [30, 40, 50]], [0, 1]) == [[10, 20], [50, 30, 40]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "duration_seconds": 0.09581150859594345,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert rotate_sublists([[1, 2, 3, 4], [5, 6, 7, 8]], [2, 0]) == [[3, 4, 1, 2], [5, 6, 7, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def rotate_right(l, m):\n    # Calculate effective rotations needed (in case m > len(l))\n    m = m % len(l)\n    # Rotate the list by slicing it at the point len(l) - m\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    # Ensure that the lengths of both lists match\n    if len(list_of_lists) != len(rotations):\n        raise ValueError(\"The length of list_of_lists and rotations must be the same.\")\n    \n    # Apply rotation to each sublist using the corresponding value from rotations\n    return [rotate_right(sublist, num_rotations) for sublist, num_rotations in zip(list_of_lists, rotations)]",
+        "completion_tokens": 264,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 187,
+        "raw_text": "```python\ndef rotate_right(l, m):\n    # Calculate effective rotations needed (in case m > len(l))\n    m = m % len(l)\n    # Rotate the list by slicing it at the point len(l) - m\n    return l[-m:] + l[:-m]\n\ndef rotate_sublists(list_of_lists, rotations):\n    # Ensure that the lengths of both lists match\n    if len(list_of_lists) != len(rotations):\n        raise ValueError(\"The length of list_of_lists and rotations must be the same.\")\n    \n    # Apply rotation to each sublist using the corresponding value from rotations\n    return [rotate_right(sublist, num_rotations) for sublist, num_rotations in zip(list_of_lists, rotations)]\n```\n\nThis solution consists of two functions as described in the problem statement. The `rotate_right` function takes a list `l` and an integer `m`, and rotates the list `m` positions to the right. The `rotate_sublists` function takes a list of lists `list_of_lists` and a list of integers `rotations`. It applies the `rotate_right` function to each sublist according to the corresponding number of rotations specified in `rotations`. The solution ensures that the lengths of the input lists match before proceeding with the rotations.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to rotate a given list by specified number of items to the right direction. https://www.geeksforgeeks.org/python-program-right-rotate-list-n/\ndef rotate_right(l, m):\n\n# Given a list of lists, rotate each sublist by a specified number of items to the right direction. The number of rotations for each sublist is given in another list, where the index of the number of rotations corresponds to the index of the sublist in the list of lists.\ndef rotate_sublists(list_of_lists, rotations):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.2712589893490076,
+        "generation_seconds": 7.126709423959255
+      }
+    }
+  ],
+  "duration_seconds": 28.64224998652935,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/323",
+  "unique_code_count": 5
+}

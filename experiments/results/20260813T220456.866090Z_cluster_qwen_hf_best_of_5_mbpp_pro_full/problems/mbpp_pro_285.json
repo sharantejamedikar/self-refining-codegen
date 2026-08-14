@@ -1,0 +1,705 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d85f133c5debfbd60faebdaa9bd51a236997dbf408ee1434193d6e3e401a0d8f",
+      "execution": {
+        "duration_seconds": 0.3921125903725624,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "duration_seconds": 0.08306464739143848,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "duration_seconds": 0.09174907021224499,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "duration_seconds": 0.0925642903894186,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "duration_seconds": 0.12445477209985256,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef largest_subset(a: List[int]) -> int:\n    if not a:\n        return 0\n    \n    a.sort()\n    n = len(a)\n    dp = [1] * n\n    \n    for i in range(1, n):\n        for j in range(i):\n            if a[i] % a[j] == 0:\n                dp[i] = max(dp[i], dp[j] + 1)\n    \n    return max(dp)\n\ndef sum_of_largest_subsets(lists: List[List[int]]) -> int:\n    total_size = 0\n    for sublist in lists:\n        total_size += largest_subset(sublist)\n    return total_size",
+        "completion_tokens": 270,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 161,
+        "raw_text": "```python\nfrom typing import List\n\ndef largest_subset(a: List[int]) -> int:\n    if not a:\n        return 0\n    \n    a.sort()\n    n = len(a)\n    dp = [1] * n\n    \n    for i in range(1, n):\n        for j in range(i):\n            if a[i] % a[j] == 0:\n                dp[i] = max(dp[i], dp[j] + 1)\n    \n    return max(dp)\n\ndef sum_of_largest_subsets(lists: List[List[int]]) -> int:\n    total_size = 0\n    for sublist in lists:\n        total_size += largest_subset(sublist)\n    return total_size\n```\nThis solution consists of two functions:\n\n1. `largest_subset`: This function takes a list of integers as input and returns the size of the largest subset where every pair of elements is divisible by each other. It uses dynamic programming to solve this problem efficiently.\n\n2. `sum_of_largest_subsets`: This function takes a list of lists of integers and calculates the sum of the sizes of the largest subsets for each sublist. It iterates through each sublist and uses the `largest_subset` function to get the size of the largest subset for that sublist, then sums these sizes to produce the final result.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3921125903725624,
+        "generation_seconds": 7.271944802254438
+      }
+    },
+    {
+      "code_hash": "01a7a4400d6e72418072729b5797588bc2d2efae13793e0d894a8e9e7b039ef6",
+      "execution": {
+        "duration_seconds": 0.5490252636373043,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "duration_seconds": 0.09376591816544533,
+            "exception_message": "division by zero",
+            "exception_type": "ZeroDivisionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-zoag4g5m/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "duration_seconds": 0.14734900370240211,
+            "exception_message": "division by zero",
+            "exception_type": "ZeroDivisionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]])\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]])\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-iqrd1wrh/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "duration_seconds": 0.1557865273207426,
+            "exception_message": "division by zero",
+            "exception_type": "ZeroDivisionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-a8g025vt/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]])\n  File \"/tmp/srcg-a8g025vt/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-a8g025vt/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-a8g025vt/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]])\n  File \"/tmp/srcg-a8g025vt/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-a8g025vt/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "duration_seconds": 0.15177346020936966,
+            "exception_message": "division by zero",
+            "exception_type": "ZeroDivisionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m3qibarw/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]])\n  File \"/tmp/srcg-m3qibarw/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-m3qibarw/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m3qibarw/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]])\n  File \"/tmp/srcg-m3qibarw/program.py\", line 45, in sum_of_largest_subsets\n    total_sum += largest_subset(sublist)\n                 ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-m3qibarw/program.py\", line 32, in largest_subset\n    if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n       ~~~~^~~\nZeroDivisionError: division by zero\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def largest_subset(a):\n    from collections import defaultdict\n    \n    # Create a dictionary to store the largest subset size for each remainder when divided by 2\n    remainder_sizes = defaultdict(int)\n    \n    # Sort the array to process numbers in increasing order\n    a.sort()\n    \n    # Iterate through each number in the sorted array\n    for num in a:\n        # For each number, check all smaller numbers\n        for i in range(num - 1, -1, -1):\n            if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n                remainder_sizes[num] = remainder_sizes[i] + 1\n    \n    # Find the maximum size of any subset found\n    max_size = max(remainder_sizes.values())\n    \n    return max_size\n\ndef sum_of_largest_subsets(lists):\n    total_sum = 0\n    \n    # Iterate through each sublist and calculate the largest subset size\n    for sublist in lists:\n        total_sum += largest_subset(sublist)\n    \n    return total_sum",
+        "completion_tokens": 310,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 161,
+        "raw_text": "```python\ndef largest_subset(a):\n    from collections import defaultdict\n    \n    # Create a dictionary to store the largest subset size for each remainder when divided by 2\n    remainder_sizes = defaultdict(int)\n    \n    # Sort the array to process numbers in increasing order\n    a.sort()\n    \n    # Iterate through each number in the sorted array\n    for num in a:\n        # For each number, check all smaller numbers\n        for i in range(num - 1, -1, -1):\n            if num % i == 0 and remainder_sizes[i] + 1 > remainder_sizes[num]:\n                remainder_sizes[num] = remainder_sizes[i] + 1\n    \n    # Find the maximum size of any subset found\n    max_size = max(remainder_sizes.values())\n    \n    return max_size\n\ndef sum_of_largest_subsets(lists):\n    total_sum = 0\n    \n    # Iterate through each sublist and calculate the largest subset size\n    for sublist in lists:\n        total_sum += largest_subset(sublist)\n    \n    return total_sum\n```\n\nThis solution includes two functions: `largest_subset` and `sum_of_largest_subsets`. The `largest_subset` function calculates the size of the largest subset where every pair of numbers is divisible by finding the longest increasing subsequence based on divisibility criteria. The `sum_of_largest_subsets` function uses the `largest_subset` function to compute the sum of the largest subset sizes for each sublist in the given list of lists.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5490252636373043,
+        "generation_seconds": 8.49266616255045
+      }
+    },
+    {
+      "code_hash": "c292e2741e1208bdbf48d3c9aae5033ca367af00d288dbba781b3f6d734fa53e",
+      "execution": {
+        "duration_seconds": 0.4918457381427288,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "duration_seconds": 0.12816357053816319,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "duration_seconds": 0.11061657778918743,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "duration_seconds": 0.13323166593909264,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "duration_seconds": 0.11943762376904488,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def largest_subset(a):\n    if not a:\n        return 0\n    \n    a.sort()\n    dp = [1] * len(a)\n    max_size = 1\n    \n    for i in range(1, len(a)):\n        for j in range(i):\n            if a[i] % a[j] == 0 and dp[i] < dp[j] + 1:\n                dp[i] = dp[j] + 1\n        max_size = max(max_size, dp[i])\n    \n    return max_size\n\ndef sum_of_largest_subsets(lists):\n    total_sum = 0\n    for sublist in lists:\n        total_sum += largest_subset(sublist)\n    return total_sum",
+        "completion_tokens": 149,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 161,
+        "raw_text": "```python\ndef largest_subset(a):\n    if not a:\n        return 0\n    \n    a.sort()\n    dp = [1] * len(a)\n    max_size = 1\n    \n    for i in range(1, len(a)):\n        for j in range(i):\n            if a[i] % a[j] == 0 and dp[i] < dp[j] + 1:\n                dp[i] = dp[j] + 1\n        max_size = max(max_size, dp[i])\n    \n    return max_size\n\ndef sum_of_largest_subsets(lists):\n    total_sum = 0\n    for sublist in lists:\n        total_sum += largest_subset(sublist)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4918457381427288,
+        "generation_seconds": 4.006384873762727
+      }
+    },
+    {
+      "code_hash": "efcac4df706d1544ed8356a330f38f8774574a2e8cb9d47759488c9eb537fbc0",
+      "execution": {
+        "duration_seconds": 0.44857617281377316,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "duration_seconds": 0.07967615127563477,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "duration_seconds": 0.1323389746248722,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "duration_seconds": 0.11157722026109695,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "duration_seconds": 0.12462116405367851,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef largest_subset(a: List[int]) -> int:\n    if not a:\n        return 0\n    \n    a.sort()\n    dp = [1] * len(a)\n    \n    for i in range(1, len(a)):\n        for j in range(i):\n            if a[i] % a[j] == 0:\n                dp[i] = max(dp[i], dp[j] + 1)\n                \n    return max(dp)\n\ndef sum_of_largest_subsets(lists: List[List[int]]) -> int:\n    total_size = 0\n    for sublist in lists:\n        total_size += largest_subset(sublist)\n    return total_size",
+        "completion_tokens": 143,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 161,
+        "raw_text": "```python\nfrom typing import List\n\ndef largest_subset(a: List[int]) -> int:\n    if not a:\n        return 0\n    \n    a.sort()\n    dp = [1] * len(a)\n    \n    for i in range(1, len(a)):\n        for j in range(i):\n            if a[i] % a[j] == 0:\n                dp[i] = max(dp[i], dp[j] + 1)\n                \n    return max(dp)\n\ndef sum_of_largest_subsets(lists: List[List[int]]) -> int:\n    total_size = 0\n    for sublist in lists:\n        total_size += largest_subset(sublist)\n    return total_size\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.44857617281377316,
+        "generation_seconds": 3.8927649334073067
+      }
+    },
+    {
+      "code_hash": "5a07cfed6820d4aedd049c72a76bd4e1701e9258cc21f3a83f38f22fa98166b1",
+      "execution": {
+        "duration_seconds": 0.5199377592653036,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "duration_seconds": 0.15236782282590866,
+            "exception_message": "'int' object has no attribute 'sort'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-axom8pyf/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-axom8pyf/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-axom8pyf/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-axom8pyf/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-axom8pyf/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-axom8pyf/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-axom8pyf/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  File \"/tmp/srcg-axom8pyf/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-axom8pyf/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-axom8pyf/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-axom8pyf/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-axom8pyf/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "duration_seconds": 0.14773725159466267,
+            "exception_message": "'int' object has no attribute 'sort'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-piwnthn0/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]])\n  File \"/tmp/srcg-piwnthn0/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-piwnthn0/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-piwnthn0/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-piwnthn0/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-piwnthn0/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]]) == 4",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-piwnthn0/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[10, 20, 30], [40, 50, 60], [70, 80, 90]])\n  File \"/tmp/srcg-piwnthn0/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-piwnthn0/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-piwnthn0/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-piwnthn0/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-piwnthn0/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "duration_seconds": 0.11269438080489635,
+            "exception_message": "'int' object has no attribute 'sort'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ezsedjas/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]])\n  File \"/tmp/srcg-ezsedjas/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-ezsedjas/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-ezsedjas/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-ezsedjas/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-ezsedjas/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]]) == 5",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ezsedjas/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 3, 5], [2, 4, 6], [7, 8, 9]])\n  File \"/tmp/srcg-ezsedjas/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-ezsedjas/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-ezsedjas/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-ezsedjas/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-ezsedjas/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "duration_seconds": 0.10679701529443264,
+            "exception_message": "'int' object has no attribute 'sort'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]])\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n",
+            "stdout": "",
+            "test_case": "assert sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]]) == 8",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 38, in <module>\n    __srcg_assertion_actual_7f31 = sum_of_largest_subsets([[1, 2, 4], [3, 6, 9], [5, 10, 20]])\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 36, in sum_of_largest_subsets\n    return sum(largest_subset(sublist) for sublist in lists)\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 36, in <genexpr>\n    return sum(largest_subset(sublist) for sublist in lists)\n               ~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 33, in largest_subset\n    return sum(helper(sublist) for sublist in a)\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 33, in <genexpr>\n    return sum(helper(sublist) for sublist in a)\n               ~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-7ltgfsj4/program.py\", line 24, in helper\n    arr.sort()\n    ^^^^^^^^\nAttributeError: 'int' object has no attribute 'sort'\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def largest_subset(a):\n    def helper(arr):\n        if not arr:\n            return 0\n        max_size = 1\n        arr.sort()\n        dp = [1] * len(arr)\n        for i in range(1, len(arr)):\n            for j in range(i):\n                if arr[i] % arr[j] == 0:\n                    dp[i] = max(dp[i], dp[j] + 1)\n            max_size = max(max_size, dp[i])\n        return max_size\n\n    return sum(helper(sublist) for sublist in a)\n\ndef sum_of_largest_subsets(lists):\n    return sum(largest_subset(sublist) for sublist in lists)",
+        "completion_tokens": 243,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 161,
+        "raw_text": "```python\ndef largest_subset(a):\n    def helper(arr):\n        if not arr:\n            return 0\n        max_size = 1\n        arr.sort()\n        dp = [1] * len(arr)\n        for i in range(1, len(arr)):\n            for j in range(i):\n                if arr[i] % arr[j] == 0:\n                    dp[i] = max(dp[i], dp[j] + 1)\n            max_size = max(max_size, dp[i])\n        return max_size\n\n    return sum(helper(sublist) for sublist in a)\n\ndef sum_of_largest_subsets(lists):\n    return sum(largest_subset(sublist) for sublist in lists)\n```\n\nThis solution includes the implementation of two functions: `largest_subset` and `sum_of_largest_subsets`. The `largest_subset` function finds the size of the largest subset of a given list where every pair of elements is divisible. It uses dynamic programming to solve this problem efficiently. The `sum_of_largest_subsets` function then applies `largest_subset` to each sublist in the provided list of lists and returns the sum of the sizes of these largest subsets.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the size of the largest subset of a list of numbers so that every pair is divisible.\ndef largest_subset(a):\n\n# Given a list of lists of numbers, find the size of the largest subset of each sublist such that every pair in the subset is divisible. Then, return the sum of the sizes of these largest subsets.\ndef sum_of_largest_subsets(lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5199377592653036,
+        "generation_seconds": 6.56545209698379
+      }
+    }
+  ],
+  "duration_seconds": 32.63435819558799,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2,
+    3
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/285",
+  "unique_code_count": 5
+}

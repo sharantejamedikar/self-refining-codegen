@@ -1,0 +1,701 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "58bb74fbb0fc0e5324e473d04a6ef242bdeff7ad4ce2505dc50864bca6785180",
+      "execution": {
+        "duration_seconds": 0.4140337910503149,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "duration_seconds": 0.06498522870242596,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "duration_seconds": 0.11310169100761414,
+            "exception_message": "assertion comparison failed: actual=-1; expected=0",
+            "exception_type": "AssertionError",
+            "expected_value": "0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8bcoa3dy/program.py\", line 55, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8bcoa3dy/program.py\", line 55, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "duration_seconds": 0.12101743370294571,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "duration_seconds": 0.11462291330099106,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n    \n    for i in range(0, size):\n        max_ending_here += a[i]\n        \n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n        \n        if max_ending_here < 0:\n            max_ending_here = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            current_max = max_sub_array_sum(temp, rows)\n            \n            if current_max > max_sum:\n                max_sum = current_max\n                \n    return max_sum",
+        "completion_tokens": 204,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "raw_text": "```python\ndef max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n    \n    for i in range(0, size):\n        max_ending_here += a[i]\n        \n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n        \n        if max_ending_here < 0:\n            max_ending_here = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            current_max = max_sub_array_sum(temp, rows)\n            \n            if current_max > max_sum:\n                max_sum = current_max\n                \n    return max_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4140337910503149,
+        "generation_seconds": 5.512205321341753
+      }
+    },
+    {
+      "code_hash": "12c610c5e513780aa12cb91c7c2a70adfcc89e13ebeb6add7ce3b7a23912b401",
+      "execution": {
+        "duration_seconds": 0.42179335094988346,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "duration_seconds": 0.06701720878481865,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "duration_seconds": 0.12926621548831463,
+            "exception_message": "assertion comparison failed: actual=-1; expected=0",
+            "exception_type": "AssertionError",
+            "expected_value": "0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-st6dvuuq/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-st6dvuuq/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "duration_seconds": 0.11036411486566067,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "duration_seconds": 0.1147870160639286,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n    \n    for i in range(0, size):\n        max_ending_here += a[i]\n        \n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n            \n        if max_ending_here < 0:\n            max_ending_here = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            current_max = max_sub_array_sum(temp, rows)\n            max_sum = max(max_sum, current_max)\n    \n    return max_sum",
+        "completion_tokens": 294,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "raw_text": "```python\ndef max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n    \n    for i in range(0, size):\n        max_ending_here += a[i]\n        \n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n            \n        if max_ending_here < 0:\n            max_ending_here = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            current_max = max_sub_array_sum(temp, rows)\n            max_sum = max(max_sum, current_max)\n    \n    return max_sum\n```\nThis solution consists of two functions. The `max_sub_array_sum` function calculates the maximum sum of a contiguous subarray using Kadane's algorithm. The `max_submatrix_sum` function uses this helper function to calculate the maximum sum of a contiguous submatrix by iterating over all possible pairs of columns and treating each pair as the left and right boundaries of a vertical slice, then applying the `max_sub_array_sum` function to the sum array of that slice.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.42179335094988346,
+        "generation_seconds": 7.956485951319337
+      }
+    },
+    {
+      "code_hash": "e12fff6c289258574be32f4729202e3c8a600db618af88194282385b3d57e39f",
+      "execution": {
+        "duration_seconds": 0.4353716839104891,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "duration_seconds": 0.06447701901197433,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "duration_seconds": 0.13618691451847553,
+            "exception_message": "assertion comparison failed: actual=-1; expected=0",
+            "exception_type": "AssertionError",
+            "expected_value": "0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-orybjdha/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-orybjdha/program.py\", line 58, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "duration_seconds": 0.12571816705167294,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "duration_seconds": 0.10868189111351967,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum(a, size):\n    current_max = float('-inf')\n    global_max = float('-inf')\n    \n    for i in range(0, size):\n        current_sum = 0\n        \n        for j in range(i, size):\n            current_sum += a[j]\n            \n            if(current_sum > global_max):\n                global_max = current_sum\n                \n            if(current_sum < 0):\n                current_sum = 0\n                \n    return global_max\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n                \n            current_max = max_sub_array_sum(temp, rows)\n            \n            if(current_max > max_sum):\n                max_sum = current_max\n                \n    return max_sum",
+        "completion_tokens": 206,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "raw_text": "```python\ndef max_sub_array_sum(a, size):\n    current_max = float('-inf')\n    global_max = float('-inf')\n    \n    for i in range(0, size):\n        current_sum = 0\n        \n        for j in range(i, size):\n            current_sum += a[j]\n            \n            if(current_sum > global_max):\n                global_max = current_sum\n                \n            if(current_sum < 0):\n                current_sum = 0\n                \n    return global_max\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n                \n            current_max = max_sub_array_sum(temp, rows)\n            \n            if(current_max > max_sum):\n                max_sum = current_max\n                \n    return max_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4353716839104891,
+        "generation_seconds": 5.554593946784735
+      }
+    },
+    {
+      "code_hash": "084ff07bfb3fa3b57aa64e41e3244d45284454ba4d4f6d8540283e9d17187c04",
+      "execution": {
+        "duration_seconds": 0.4169399570673704,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "duration_seconds": 0.06595313735306263,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "duration_seconds": 0.13991002552211285,
+            "exception_message": "assertion comparison failed: actual=-1; expected=0",
+            "exception_type": "AssertionError",
+            "expected_value": "0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-j1ddrrri/program.py\", line 59, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-j1ddrrri/program.py\", line 59, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "duration_seconds": 0.12481683306396008,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "duration_seconds": 0.0859699547290802,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    curr_max = 0\n    \n    for i in range(0, size):\n        curr_max += a[i]\n        \n        if(max_so_far < curr_max):\n            max_so_far = curr_max\n        \n        if(curr_max < 0):\n            curr_max = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    # Iterate over all possible left and right columns\n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            # Update the temporary array by adding elements from the current column\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            # Find the maximum sum subarray in the temporary array\n            current_sum = max_sub_array_sum(temp, rows)\n            \n            # Update the global maximum sum\n            if(current_sum > max_sum):\n                max_sum = current_sum\n                \n    return max_sum",
+        "completion_tokens": 238,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "raw_text": "```python\ndef max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    curr_max = 0\n    \n    for i in range(0, size):\n        curr_max += a[i]\n        \n        if(max_so_far < curr_max):\n            max_so_far = curr_max\n        \n        if(curr_max < 0):\n            curr_max = 0\n            \n    return max_so_far\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n    \n    # Iterate over all possible left and right columns\n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            # Update the temporary array by adding elements from the current column\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n            \n            # Find the maximum sum subarray in the temporary array\n            current_sum = max_sub_array_sum(temp, rows)\n            \n            # Update the global maximum sum\n            if(current_sum > max_sum):\n                max_sum = current_sum\n                \n    return max_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4169399570673704,
+        "generation_seconds": 6.40750833787024
+      }
+    },
+    {
+      "code_hash": "e9c8fa3f04e978ed09587b95e917657dc76b63ffb390c759cdf783dcfe85d878",
+      "execution": {
+        "duration_seconds": 0.47242151759564877,
+        "passed": false,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "duration_seconds": 0.09542065486311913,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, -1], [-3, 4, 5], [6, -7, 8]]) == 15",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "-1",
+            "assertion_expression": "max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "duration_seconds": 0.1512398887425661,
+            "exception_message": "assertion comparison failed: actual=-1; expected=0",
+            "exception_type": "AssertionError",
+            "expected_value": "0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zmonvrjy/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[-1, -2, -3], [-4, -5, -6], [-7, -8, -9]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zmonvrjy/program.py\", line 54, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('-1', '0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "duration_seconds": 0.11325003392994404,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 45",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "duration_seconds": 0.11214296706020832,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_submatrix_sum([[1, -2, 3], [4, 5, -6], [-7, 8, 9]]) == 17",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n\n    for i in range(size):\n        max_ending_here += a[i]\n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n        if max_ending_here < 0:\n            max_ending_here = 0\n\n    return max_so_far\n\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n\n    # Iterate over all possible left and right columns\n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n\n            current_max = max_sub_array_sum(temp, rows)\n            if current_max > max_sum:\n                max_sum = current_max\n\n    return max_sum",
+        "completion_tokens": 208,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 152,
+        "raw_text": "```python\ndef max_sub_array_sum(a, size):\n    max_so_far = float('-inf')\n    max_ending_here = 0\n\n    for i in range(size):\n        max_ending_here += a[i]\n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n        if max_ending_here < 0:\n            max_ending_here = 0\n\n    return max_so_far\n\n\ndef max_submatrix_sum(matrix):\n    rows = len(matrix)\n    cols = len(matrix[0])\n    max_sum = float('-inf')\n\n    # Iterate over all possible left and right columns\n    for left in range(cols):\n        temp = [0] * rows\n        \n        for right in range(left, cols):\n            for i in range(rows):\n                temp[i] += matrix[i][right]\n\n            current_max = max_sub_array_sum(temp, rows)\n            if current_max > max_sum:\n                max_sum = current_max\n\n    return max_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the sum of the largest contiguous sublist in the given list.\ndef max_sub_array_sum(a, size):\n\n# Given a 2D list (matrix) of integers, find the sum of the largest contiguous submatrix. A submatrix is defined as any rectangular subarray of the given matrix.\ndef max_submatrix_sum(matrix):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.47242151759564877,
+        "generation_seconds": 5.592908043414354
+      }
+    }
+  ],
+  "duration_seconds": 33.18782430328429,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/236",
+  "unique_code_count": 5
+}

@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "033272c36e8f18054dba7302652db380a86868d3a56972a174679281e80d905c",
+      "execution": {
+        "duration_seconds": 0.32458764128386974,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "duration_seconds": 0.10432533919811249,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "duration_seconds": 0.09845752082765102,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "duration_seconds": 0.12156753428280354,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    # Find the leftmost index of x in arr\n    left_index = bisect_left(arr, x)\n    # Find the rightmost index of x in arr\n    right_index = bisect_right(arr, x)\n    \n    # Calculate the number of occurrences of x\n    count = right_index - left_index\n    \n    # Check if x is the majority element\n    return count > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results",
+        "completion_tokens": 272,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 224,
+        "raw_text": "```python\nfrom bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    # Find the leftmost index of x in arr\n    left_index = bisect_left(arr, x)\n    # Find the rightmost index of x in arr\n    right_index = bisect_right(arr, x)\n    \n    # Calculate the number of occurrences of x\n    count = right_index - left_index\n    \n    # Check if x is the majority element\n    return count > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results\n```\nThis solution consists of two functions. The `is_majority` function uses binary search via `bisect_left` and `bisect_right` to find the number of occurrences of the target element in a sorted array. It then checks if this count exceeds half the length of the array, returning `True` if it does and `False` otherwise. The `is_majority_in_arrays` function iterates over a list of sorted arrays and their lengths, applying the `is_majority` function to each, and collects the results into a list of booleans.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.32458764128386974,
+        "generation_seconds": 7.378652801737189
+      }
+    },
+    {
+      "code_hash": "398132572b629956fca6dc615b34cd55caeb396330bff654f944c8102f0e2620",
+      "execution": {
+        "duration_seconds": 0.3433495480567217,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "duration_seconds": 0.12118882313370705,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "duration_seconds": 0.11810930445790291,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "duration_seconds": 0.10378183238208294,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, length in zip(arrays, lengths):\n        results.append(is_majority(arr, length, target))\n    return results",
+        "completion_tokens": 109,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 224,
+        "raw_text": "```python\nfrom bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, length in zip(arrays, lengths):\n        results.append(is_majority(arr, length, target))\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3433495480567217,
+        "generation_seconds": 2.9627242404967546
+      }
+    },
+    {
+      "code_hash": "8a4b704c4c44b3c13e25552656ca3a1d3b55cb0195c8b3e95c58ed4f00cc006a",
+      "execution": {
+        "duration_seconds": 0.24673081003129482,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "duration_seconds": 0.06709501519799232,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "duration_seconds": 0.08603450283408165,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "duration_seconds": 0.09328658506274223,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    # Find the leftmost index of x in arr using binary search\n    left_index = bisect_left(arr, x)\n    \n    # Find the rightmost index of x in arr using binary search\n    right_index = bisect_right(arr, x)\n    \n    # Check if the count of x is more than n/2\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for i in range(len(arrays)):\n        n = lengths[i]\n        arr = arrays[i]\n        # Use the is_majority function to check if target is a majority element in the current array\n        results.append(is_majority(arr, n, target))\n    return results",
+        "completion_tokens": 244,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 224,
+        "raw_text": "```python\nfrom bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    # Find the leftmost index of x in arr using binary search\n    left_index = bisect_left(arr, x)\n    \n    # Find the rightmost index of x in arr using binary search\n    right_index = bisect_right(arr, x)\n    \n    # Check if the count of x is more than n/2\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for i in range(len(arrays)):\n        n = lengths[i]\n        arr = arrays[i]\n        # Use the is_majority function to check if target is a majority element in the current array\n        results.append(is_majority(arr, n, target))\n    return results\n```\n\nThis solution includes the implementation of the `is_majority` function which determines if a given element is the majority element in a sorted array using binary search. The `is_majority_in_arrays` function then uses this helper function to check multiple arrays and returns a list of boolean results.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.24673081003129482,
+        "generation_seconds": 6.614731343463063
+      }
+    },
+    {
+      "code_hash": "16b490452a0b8dbe23b3bc2709785dfe4b52e8790a542a81914e96060d4f8400",
+      "execution": {
+        "duration_seconds": 0.26091928966343403,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "duration_seconds": 0.06615128368139267,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "duration_seconds": 0.09883414208889008,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "duration_seconds": 0.0957387313246727,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    \n    # Check if the element is present and if it is a majority element\n    return left_index < n and (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results",
+        "completion_tokens": 131,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 224,
+        "raw_text": "```python\nfrom bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    \n    # Check if the element is present and if it is a majority element\n    return left_index < n and (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.26091928966343403,
+        "generation_seconds": 3.557067846879363
+      }
+    },
+    {
+      "code_hash": "8a6338396b34111f095a3db3c5eb15e39cbf3bdd8335113f3b239935f1a1225e",
+      "execution": {
+        "duration_seconds": 0.33530207723379135,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "duration_seconds": 0.11368067748844624,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 2, 2, 3], [1, 1, 2, 2, 3]], [5, 5], 2) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "duration_seconds": 0.10760704055428505,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 1, 1, 2, 3], [1, 2, 2, 2, 3]], [5, 5], 1) == [True, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "duration_seconds": 0.11375498957931995,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert is_majority_in_arrays([[1, 2, 3, 4, 5], [1, 1, 1, 2, 3]], [5, 5], 3) == [False, False]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results",
+        "completion_tokens": 109,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 224,
+        "raw_text": "```python\nfrom bisect import bisect_left, bisect_right\n\ndef is_majority(arr, n, x):\n    left_index = bisect_left(arr, x)\n    right_index = bisect_right(arr, x)\n    return (right_index - left_index) > n // 2\n\ndef is_majority_in_arrays(arrays, lengths, target):\n    results = []\n    for arr, n in zip(arrays, lengths):\n        results.append(is_majority(arr, n, target))\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)\nfrom bisect import bisect_left, bisect_right\ndef is_majority(arr, n, x):\n\n# Given a list of sorted arrays, each with its length, and a target element, determine if the target element is the majority element in any of the given sorted arrays. Return a list of boolean values corresponding to each array, indicating whether the target element is the majority element in that array.\ndef is_majority_in_arrays(arrays, lengths, target):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.33530207723379135,
+        "generation_seconds": 2.959009224548936
+      }
+    }
+  ],
+  "duration_seconds": 24.986208567395806,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/98",
+  "unique_code_count": 5
+}

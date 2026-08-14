@@ -1,0 +1,632 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "25608956625f3e7443bcc584dc839f20e4c8bb7af946d98a6464e7e8533599b8",
+      "execution": {
+        "duration_seconds": 0.294526357203722,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "duration_seconds": 0.06615967489778996,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "duration_seconds": 0.10496252961456776,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "duration_seconds": 0.12312375009059906,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List, Tuple\n\ndef tuple_intersection(test_list1: List[Tuple], test_list2: List[Tuple]) -> set:\n    # Convert each tuple in the lists to frozensets for unordered comparison\n    set1 = {frozenset(t) for t in test_list1}\n    set2 = {frozenset(t) for t in test_list2}\n    \n    # Find the intersection of the sets\n    intersecting_tuples = set1 & set2\n    \n    # Convert the frozensets back to tuples\n    result = [tuple(t) for t in intersecting_tuples]\n    \n    return set(result)\n\ndef tuple_intersection_of_lists(tuple_lists: List[List[Tuple]]) -> set:\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two tuple lists\n    common_elements = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the tuple lists\n    for lst in tuple_lists[2:]:\n        common_elements = tuple_intersection(list(common_elements), lst)\n    \n    return common_elements",
+        "completion_tokens": 285,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 153,
+        "raw_text": "```python\nfrom typing import List, Tuple\n\ndef tuple_intersection(test_list1: List[Tuple], test_list2: List[Tuple]) -> set:\n    # Convert each tuple in the lists to frozensets for unordered comparison\n    set1 = {frozenset(t) for t in test_list1}\n    set2 = {frozenset(t) for t in test_list2}\n    \n    # Find the intersection of the sets\n    intersecting_tuples = set1 & set2\n    \n    # Convert the frozensets back to tuples\n    result = [tuple(t) for t in intersecting_tuples]\n    \n    return set(result)\n\ndef tuple_intersection_of_lists(tuple_lists: List[List[Tuple]]) -> set:\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two tuple lists\n    common_elements = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the tuple lists\n    for lst in tuple_lists[2:]:\n        common_elements = tuple_intersection(list(common_elements), lst)\n    \n    return common_elements\n```\n\nThis solution defines two functions: `tuple_intersection` which finds the intersection of two tuple lists, and `tuple_intersection_of_lists` which finds the intersection of a list of tuple lists. The helper function uses frozensets to handle unordered tuples effectively.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.294526357203722,
+        "generation_seconds": 7.725291378796101
+      }
+    },
+    {
+      "code_hash": "de1dc7f5e741b8fd1a73222ec0932492c9c0852563e33e84759149015116cae7",
+      "execution": {
+        "duration_seconds": 0.33991782180964947,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "duration_seconds": 0.11148004420101643,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "duration_seconds": 0.09854710288345814,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "duration_seconds": 0.12963556125760078,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in the lists to sorted tuples to ensure order doesn't matter\n    sorted_tuples1 = {tuple(sorted(tup)) for tup in test_list1}\n    sorted_tuples2 = {tuple(sorted(tup)) for tup in test_list2}\n    \n    # Find the intersection of the two sets of sorted tuples\n    intersection = sorted_tuples1 & sorted_tuples2\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists):\n    # Check if the input list is empty\n    if not tuple_lists:\n        return set()\n    \n    # Initialize the result with the intersection of the first two tuple lists\n    result = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Iterate through the remaining tuple lists and update the intersection\n    for i in range(2, len(tuple_lists)):\n        result &= tuple_intersection(result, tuple_lists[i])\n    \n    # Return the final intersection as a set\n    return result",
+        "completion_tokens": 280,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 153,
+        "raw_text": "```python\ndef tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in the lists to sorted tuples to ensure order doesn't matter\n    sorted_tuples1 = {tuple(sorted(tup)) for tup in test_list1}\n    sorted_tuples2 = {tuple(sorted(tup)) for tup in test_list2}\n    \n    # Find the intersection of the two sets of sorted tuples\n    intersection = sorted_tuples1 & sorted_tuples2\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists):\n    # Check if the input list is empty\n    if not tuple_lists:\n        return set()\n    \n    # Initialize the result with the intersection of the first two tuple lists\n    result = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Iterate through the remaining tuple lists and update the intersection\n    for i in range(2, len(tuple_lists)):\n        result &= tuple_intersection(result, tuple_lists[i])\n    \n    # Return the final intersection as a set\n    return result\n```\n\nThis solution provides two functions:\n1. `tuple_intersection` that takes two lists of tuples and returns their intersection irrespective of the order of elements within the tuples.\n2. `tuple_intersection_of_lists` that takes a list of tuple lists and returns the intersection of all these tuple lists. If there is no intersection, it returns an empty set.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.33991782180964947,
+        "generation_seconds": 7.804654123261571
+      }
+    },
+    {
+      "code_hash": "f564a0ac5d8c02a5919b0191441efdbcafe7e5963b3cbefb032621fddb03e6ba",
+      "execution": {
+        "duration_seconds": 0.2632320299744606,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "duration_seconds": 0.06457281857728958,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "duration_seconds": 0.10316675715148449,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "duration_seconds": 0.09524751082062721,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in the lists to a sorted tuple to ensure order doesn't matter\n    test_list1 = [tuple(sorted(tup)) for tup in test_list1]\n    test_list2 = [tuple(sorted(tup)) for tup in test_list2]\n    \n    # Find the intersection of the sets created from the tuple lists\n    result_set = set.intersection(*map(set, (test_list1, test_list2)))\n    \n    # Convert the result back to a list of tuples\n    return [tup for tup in result_set]\n\ndef tuple_intersection_of_lists(tuple_lists):\n    if not tuple_lists:\n        return set()\n    \n    # Use the helper function to find the intersection of the first two tuple lists\n    intersected_tuples = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Recursively find the intersection with the rest of the tuple lists\n    for i in range(2, len(tuple_lists)):\n        intersected_tuples = tuple_intersection(intersected_tuples, tuple_lists[i])\n    \n    # Return the final intersection as a set\n    return set(intersected_tuples)",
+        "completion_tokens": 327,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 153,
+        "raw_text": "```python\ndef tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in the lists to a sorted tuple to ensure order doesn't matter\n    test_list1 = [tuple(sorted(tup)) for tup in test_list1]\n    test_list2 = [tuple(sorted(tup)) for tup in test_list2]\n    \n    # Find the intersection of the sets created from the tuple lists\n    result_set = set.intersection(*map(set, (test_list1, test_list2)))\n    \n    # Convert the result back to a list of tuples\n    return [tup for tup in result_set]\n\ndef tuple_intersection_of_lists(tuple_lists):\n    if not tuple_lists:\n        return set()\n    \n    # Use the helper function to find the intersection of the first two tuple lists\n    intersected_tuples = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Recursively find the intersection with the rest of the tuple lists\n    for i in range(2, len(tuple_lists)):\n        intersected_tuples = tuple_intersection(intersected_tuples, tuple_lists[i])\n    \n    # Return the final intersection as a set\n    return set(intersected_tuples)\n```\n\nThis solution includes two functions: `tuple_intersection` and `tuple_intersection_of_lists`. The `tuple_intersection` function takes two lists of tuples and returns their intersection, ignoring the order of elements within the tuples. The `tuple_intersection_of_lists` function extends this by finding the intersection of multiple lists of tuples, using the first function internally. If any input list is empty, it returns an empty set.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2632320299744606,
+        "generation_seconds": 8.99479367211461
+      }
+    },
+    {
+      "code_hash": "34887907e6ff695a281b40c0be8283d8980f687c6a832617c11664dfa7427897",
+      "execution": {
+        "duration_seconds": 0.25907223485410213,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "duration_seconds": 0.06745625473558903,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "duration_seconds": 0.08699472434818745,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "duration_seconds": 0.104337178170681,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List, Tuple\n\ndef tuple_intersection(test_list1: List[Tuple], test_list2: List[Tuple]) -> set:\n    # Convert each tuple in both lists to sorted tuples for consistent comparison\n    sorted_tuples1 = [tuple(sorted(tup)) for tup in test_list1]\n    sorted_tuples2 = [tuple(sorted(tup)) for tup in test_list2]\n    \n    # Find the intersection of the sets created from the sorted tuples\n    intersection = set(sorted_tuples1) & set(sorted_tuples2)\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists: List[List[Tuple]]) -> set:\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two tuple lists\n    common_elements = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the tuple lists\n    for lst in tuple_lists[2:]:\n        common_elements &= tuple_intersection(common_elements, lst)\n    \n    return common_elements",
+        "completion_tokens": 301,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 153,
+        "raw_text": "```python\nfrom typing import List, Tuple\n\ndef tuple_intersection(test_list1: List[Tuple], test_list2: List[Tuple]) -> set:\n    # Convert each tuple in both lists to sorted tuples for consistent comparison\n    sorted_tuples1 = [tuple(sorted(tup)) for tup in test_list1]\n    sorted_tuples2 = [tuple(sorted(tup)) for tup in test_list2]\n    \n    # Find the intersection of the sets created from the sorted tuples\n    intersection = set(sorted_tuples1) & set(sorted_tuples2)\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists: List[List[Tuple]]) -> set:\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two tuple lists\n    common_elements = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the tuple lists\n    for lst in tuple_lists[2:]:\n        common_elements &= tuple_intersection(common_elements, lst)\n    \n    return common_elements\n```\n\nThis solution includes two functions as specified. The `tuple_intersection` function finds the intersection of two lists of tuples by converting each tuple to a sorted tuple (to ensure order doesn't matter), then finding the intersection of the resulting sets. The `tuple_intersection_of_lists` function uses the `tuple_intersection` function repeatedly to find the intersection of multiple lists of tuples. If the input list is empty, it returns an empty set.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.25907223485410213,
+        "generation_seconds": 8.11140857078135
+      }
+    },
+    {
+      "code_hash": "d10aaccc4e865292a40ac6a478fc3e8527fc8c00dba6eee2eb81e9ade3531386",
+      "execution": {
+        "duration_seconds": 0.299551360309124,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "duration_seconds": 0.06714198179543018,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (5, 6)], [(1, 2), (6, 7)]]) == {(1, 2)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "duration_seconds": 0.11591860465705395,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(5, 6), (7, 8)], [(9, 10), (11, 12)]]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "duration_seconds": 0.11619784124195576,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert tuple_intersection_of_lists([[(1, 2), (3, 4)], [(2, 1), (3, 4)], [(1, 2), (4, 3)]]) == {(1, 2), (3, 4)}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in lists to sorted tuples to ensure order doesn't matter\n    set1 = {tuple(sorted(tup)) for tup in test_list1}\n    set2 = {tuple(sorted(tup)) for tup in test_list2}\n    \n    # Find intersection\n    intersection = set1 & set2\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists):\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two sets\n    result = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the sets\n    for lst in tuple_lists[2:]:\n        result = tuple_intersection(result, lst)\n    \n    return result",
+        "completion_tokens": 167,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 153,
+        "raw_text": "```python\ndef tuple_intersection(test_list1, test_list2):\n    # Convert each tuple in lists to sorted tuples to ensure order doesn't matter\n    set1 = {tuple(sorted(tup)) for tup in test_list1}\n    set2 = {tuple(sorted(tup)) for tup in test_list2}\n    \n    # Find intersection\n    intersection = set1 & set2\n    \n    return intersection\n\ndef tuple_intersection_of_lists(tuple_lists):\n    if not tuple_lists:\n        return set()\n    \n    # Start with the intersection of the first two sets\n    result = tuple_intersection(tuple_lists[0], tuple_lists[1])\n    \n    # Intersect with the rest of the sets\n    for lst in tuple_lists[2:]:\n        result = tuple_intersection(result, lst)\n    \n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the tuple intersection of elements in the given tuple list irrespective of their order.\ndef tuple_intersection(test_list1, test_list2):\n\n# Given a list of tuple lists, find the tuple intersection of all the tuple lists irrespective of their order. If there is no intersection, return an empty set.\ndef tuple_intersection_of_lists(tuple_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.299551360309124,
+        "generation_seconds": 4.494278943166137
+      }
+    }
+  ],
+  "duration_seconds": 38.59031582437456,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/224",
+  "unique_code_count": 5
+}
