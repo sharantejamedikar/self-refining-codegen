@@ -1,0 +1,194 @@
+{
+  "convergence_reason": "success",
+  "duration_seconds": 4.257502345368266,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "success",
+      "convergence_state": {
+        "code_hash": "435d46b6f6c174d9e29a757dd03e72a87ed6233cf2309af41c26b4086b18d787",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 1,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.07782335951924324,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.077742675319314,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('03-11-2000') == True\n\n    assert candidate('15-01-2012') == False\n\n    assert candidate('04-0-2040') == False\n\n    assert candidate('06-04-2020') == True\n\n    assert candidate('01-01-2007') == True\n\n    assert candidate('03-32-2011') == False\n\n    assert candidate('') == False\n\n    assert candidate('04-31-3000') == False\n\n    assert candidate('06-06-2005') == True\n\n    assert candidate('21-31-2000') == False\n\n    assert candidate('04-12-2003') == True\n\n    assert candidate('04122003') == False\n\n    assert candidate('20030412') == False\n\n    assert candidate('2003-04') == False\n\n    assert candidate('2003-04-12') == False\n\n    assert candidate('04-2003') == False\n\ncheck(valid_date)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "valid_date",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "valid_date",
+                  "line_number": 24,
+                  "source": "except ValueError:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 25,
+                  "source": "return False"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 4,
+                  "source": "if not date:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 7,
+                  "source": "try:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 8,
+                  "source": "month, day, year = map(int, date.split('-'))"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 9,
+                  "source": "if month < 1 or month > 12:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 10,
+                  "source": "return False"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 4,
+                  "source": "if not date:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 7,
+                  "source": "try:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 8,
+                  "source": "month, day, year = map(int, date.split('-'))"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 24,
+                  "source": "except ValueError:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 25,
+                  "source": "return False"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from datetime import datetime\n\ndef valid_date(date):\n    if not date:\n        return False\n    \n    try:\n        month, day, year = map(int, date.split('-'))\n        if month < 1 or month > 12:\n            return False\n        if day < 1:\n            return False\n        if month == 2:\n            if day > 29:\n                return False\n        elif month in [4, 6, 9, 11]:\n            if day > 30:\n                return False\n        else:\n            if day > 31:\n                return False\n        datetime(year, month, day)\n        return True\n    except ValueError:\n        return False",
+        "completion_tokens": 152,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 330,
+        "raw_text": "```python\nfrom datetime import datetime\n\ndef valid_date(date):\n    if not date:\n        return False\n    \n    try:\n        month, day, year = map(int, date.split('-'))\n        if month < 1 or month > 12:\n            return False\n        if day < 1:\n            return False\n        if month == 2:\n            if day > 29:\n                return False\n        elif month in [4, 6, 9, 11]:\n            if day > 30:\n                return False\n        else:\n            if day > 31:\n                return False\n        datetime(year, month, day)\n        return True\n    except ValueError:\n        return False\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef valid_date(date):\n    \"\"\"You have to write a function which validates a given date string and\n    returns True if the date is valid otherwise False.\n    The date is valid if all of the following rules are satisfied:\n    1. The date string is not empty.\n    2. The number of days is not less than 1 or higher than 31 days for months 1,3,5,7,8,10,12. And the number of days is not less than 1 or higher than 30 days for months 4,6,9,11. And, the number of days is not less than 1 or higher than 29 for the month 2.\n    3. The months should not be less than 1 or higher than 12.\n    4. The date should be in the format: mm-dd-yyyy\n\n    for example: \n    valid_date('03-11-2000') => True\n\n    valid_date('15-01-2012') => False\n\n    valid_date('04-0-2040') => False\n\n    valid_date('06-04-2020') => True\n\n    valid_date('06/04/2020') => False\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef valid_date(date):\n    \"\"\"You have to write a function which validates a given date string and\n    returns True if the date is valid otherwise False.\n    The date is valid if all of the following rules are satisfied:\n    1. The date string is not empty.\n    2. The number of days is not less than 1 or higher than 31 days for months 1,3,5,7,8,10,12. And the number of days is not less than 1 or higher than 30 days for months 4,6,9,11. And, the number of days is not less than 1 or higher than 29 for the month 2.\n    3. The months should not be less than 1 or higher than 12.\n    4. The date should be in the format: mm-dd-yyyy\n\n    for example: \n    valid_date('03-11-2000') => True\n\n    valid_date('15-01-2012') => False\n\n    valid_date('04-0-2040') => False\n\n    valid_date('06-04-2020') => True\n\n    valid_date('06/04/2020') => False\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.07782335951924324,
+        "generation_seconds": 4.178539104759693
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/124"
+}
