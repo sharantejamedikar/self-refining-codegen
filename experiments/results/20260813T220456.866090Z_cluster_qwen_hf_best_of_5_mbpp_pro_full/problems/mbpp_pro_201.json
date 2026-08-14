@@ -1,0 +1,630 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "700b0910da1ee484c0933fedf5c2d0faa6b5626d5477e056d34ddf8d7cc757ab",
+      "execution": {
+        "duration_seconds": 0.26890105195343494,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "duration_seconds": 0.06816079281270504,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "duration_seconds": 0.09380999766290188,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "duration_seconds": 0.10669908672571182,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef find_adverb_position(text):\n    adverbs = re.findall(r\"\\w+ly\", text)\n    positions = [(m.start(), m.end(), word) for m, word in zip(re.finditer(r\"\\w+ly\", text), adverbs)]\n    if positions:\n        return positions[0]\n    else:\n        return None\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = re.findall(r\"\\w+ly\", sentence)\n        positions = [(m.start(), m.end(), word) for m, word in zip(re.finditer(r\"\\w+ly\", sentence), adverbs)]\n        results.extend(positions)\n    return results",
+        "completion_tokens": 153,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 163,
+        "raw_text": "```python\nimport re\n\ndef find_adverb_position(text):\n    adverbs = re.findall(r\"\\w+ly\", text)\n    positions = [(m.start(), m.end(), word) for m, word in zip(re.finditer(r\"\\w+ly\", text), adverbs)]\n    if positions:\n        return positions[0]\n    else:\n        return None\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = re.findall(r\"\\w+ly\", sentence)\n        positions = [(m.start(), m.end(), word) for m, word in zip(re.finditer(r\"\\w+ly\", sentence), adverbs)]\n        results.extend(positions)\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.26890105195343494,
+        "generation_seconds": 4.1231153178960085
+      }
+    },
+    {
+      "code_hash": "b6e953445b7169d1b44028b6a650a13441081a2f5b6f8957c3e5109ca2b2aac4",
+      "execution": {
+        "duration_seconds": 0.2951709646731615,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "duration_seconds": 0.07791512832045555,
+            "exception_message": "'list' object has no attribute 'split'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-1wo5f7ys/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.'])\n  File \"/tmp/srcg-1wo5f7ys/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-1wo5f7ys/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.'])\n  File \"/tmp/srcg-1wo5f7ys/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "duration_seconds": 0.10824223980307579,
+            "exception_message": "'list' object has no attribute 'split'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8zff2cnw/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.'])\n  File \"/tmp/srcg-8zff2cnw/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8zff2cnw/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.'])\n  File \"/tmp/srcg-8zff2cnw/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "duration_seconds": 0.10874713025987148,
+            "exception_message": "'list' object has no attribute 'split'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_o70jsv9/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['There was no adverb in this sentence.'])\n  File \"/tmp/srcg-_o70jsv9/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_o70jsv9/program.py\", line 41, in <module>\n    __srcg_assertion_actual_7f31 = find_all_adverbs_positions(['There was no adverb in this sentence.'])\n  File \"/tmp/srcg-_o70jsv9/program.py\", line 30, in find_all_adverbs_positions\n    sentences_list = sentences.split('.')\n                     ^^^^^^^^^^^^^^^\nAttributeError: 'list' object has no attribute 'split'\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef find_adverb_position(text):\n    # Regular expression pattern to match adverbs ending in \"ly\"\n    pattern = r\"\\b\\w+ly\\b\"\n    matches = re.finditer(pattern, text)\n    adverbs_with_positions = [(match.start(), match.end(), match.group()) for match in matches]\n    return adverbs_with_positions\n\ndef find_all_adverbs_positions(sentences):\n    # Split the input text into individual sentences\n    sentences_list = sentences.split('.')\n    results = []\n    \n    # Process each sentence\n    for sentence in sentences_list:\n        if sentence.strip():  # Ensure the sentence is not empty\n            adverbs = find_adverb_position(sentence)\n            results.extend([(i + len('.'.join(sentences_list[:sentences_list.index(sentence)])), j + i + len('.'.join(sentences_list[:sentences_list.index(sentence)])), k) for i, j, k in adverbs])\n    \n    return results",
+        "completion_tokens": 314,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 163,
+        "raw_text": "```python\nimport re\n\ndef find_adverb_position(text):\n    # Regular expression pattern to match adverbs ending in \"ly\"\n    pattern = r\"\\b\\w+ly\\b\"\n    matches = re.finditer(pattern, text)\n    adverbs_with_positions = [(match.start(), match.end(), match.group()) for match in matches]\n    return adverbs_with_positions\n\ndef find_all_adverbs_positions(sentences):\n    # Split the input text into individual sentences\n    sentences_list = sentences.split('.')\n    results = []\n    \n    # Process each sentence\n    for sentence in sentences_list:\n        if sentence.strip():  # Ensure the sentence is not empty\n            adverbs = find_adverb_position(sentence)\n            results.extend([(i + len('.'.join(sentences_list[:sentences_list.index(sentence)])), j + i + len('.'.join(sentences_list[:sentences_list.index(sentence)])), k) for i, j, k in adverbs])\n    \n    return results\n```\n\nThis solution includes two functions as described. The `find_adverb_position` function uses regular expressions to identify adverbs ending in \"ly\" within a single sentence and returns their starting and ending positions along with the adverb itself. The `find_all_adverbs_positions` function processes a string containing multiple sentences, splits it into individual sentences, and applies the first function to each sentence. It adjusts the positions to account for the entire text by adding cumulative offsets for preceding sentences, returning a list of tuples for all adverbs found across all sentences.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2951709646731615,
+        "generation_seconds": 8.491501808166504
+      }
+    },
+    {
+      "code_hash": "c50af1ae038c00bc1cf6cb3fca77590ff5cfe8020537c41277e14ba9cb28ed10",
+      "execution": {
+        "duration_seconds": 0.2853062395006418,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "duration_seconds": 0.06637576967477798,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "duration_seconds": 0.1166261974722147,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "duration_seconds": 0.10203907638788223,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef find_adverb_position(text):\n    matches = []\n    for match in re.finditer(r\"\\w+ly\", text):\n        start, end = match.span()\n        matches.append((start, end, match.group()))\n    return matches\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = find_adverb_position(sentence)\n        results.extend(adverbs)\n    return results",
+        "completion_tokens": 96,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 163,
+        "raw_text": "```python\nimport re\n\ndef find_adverb_position(text):\n    matches = []\n    for match in re.finditer(r\"\\w+ly\", text):\n        start, end = match.span()\n        matches.append((start, end, match.group()))\n    return matches\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = find_adverb_position(sentence)\n        results.extend(adverbs)\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2853062395006418,
+        "generation_seconds": 2.6391892954707146
+      }
+    },
+    {
+      "code_hash": "3ae864a6b53cc7cedec93b06039e14164b62598484063be2507254495e79c978",
+      "execution": {
+        "duration_seconds": 0.29148868285119534,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[(4, 11, 'quickly'), (203, 209, 'slowly')]",
+            "assertion_expression": "find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "duration_seconds": 0.07922176644206047,
+            "exception_message": "assertion comparison failed: actual=[(4, 11, 'quickly'), (203, 209, 'slowly')]; expected=[(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "exception_type": "AssertionError",
+            "expected_value": "[(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-__vfs2nz/program.py\", line 35, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[(4, 11, 'quickly'), (203, 209, 'slowly')]\", \"[(4, 11, 'quickly'), (3, 9, 'slowly')]\")\n",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-__vfs2nz/program.py\", line 35, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[(4, 11, 'quickly'), (203, 209, 'slowly')]\", \"[(4, 11, 'quickly'), (3, 9, 'slowly')]\")\n"
+          },
+          {
+            "actual_value": "[(15, 21, 'loudly'), (215, 221, 'softly')]",
+            "assertion_expression": "find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "duration_seconds": 0.10245428048074245,
+            "exception_message": "assertion comparison failed: actual=[(15, 21, 'loudly'), (215, 221, 'softly')]; expected=[(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "exception_type": "AssertionError",
+            "expected_value": "[(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-a4qb2j2b/program.py\", line 35, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[(15, 21, 'loudly'), (215, 221, 'softly')]\", \"[(15, 21, 'loudly'), (15, 21, 'softly')]\")\n",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-a4qb2j2b/program.py\", line 35, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"[(15, 21, 'loudly'), (215, 221, 'softly')]\", \"[(15, 21, 'loudly'), (15, 21, 'softly')]\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "duration_seconds": 0.1096034124493599,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef find_adverb_position(text):\n    adverbs = re.findall(r\"\\w+ly\", text)\n    positions = [(match.start(), match.end(), match.group(0)) for match in re.finditer(r\"\\w+ly\", text)]\n    return adverbs, positions\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for i, sentence in enumerate(sentences):\n        adverbs, positions = find_adverb_position(sentence)\n        results.extend([(i * 200 + pos[0], i * 200 + pos[1], pos[2]) for pos in positions])\n    return results",
+        "completion_tokens": 139,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 163,
+        "raw_text": "```python\nimport re\n\ndef find_adverb_position(text):\n    adverbs = re.findall(r\"\\w+ly\", text)\n    positions = [(match.start(), match.end(), match.group(0)) for match in re.finditer(r\"\\w+ly\", text)]\n    return adverbs, positions\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for i, sentence in enumerate(sentences):\n        adverbs, positions = find_adverb_position(sentence)\n        results.extend([(i * 200 + pos[0], i * 200 + pos[1], pos[2]) for pos in positions])\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.29148868285119534,
+        "generation_seconds": 3.842609528452158
+      }
+    },
+    {
+      "code_hash": "d4b75df9f947108d8dea0df228f317725435b3469447665960fa968dabc8c910",
+      "execution": {
+        "duration_seconds": 0.26804509200155735,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "duration_seconds": 0.06882465071976185,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['She quickly ran to the store.', 'He slowly walked home.']) == [(4, 11, 'quickly'), (3, 9, 'slowly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "duration_seconds": 0.09204655513167381,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['The dog barked loudly.', 'The cat meowed softly.']) == [(15, 21, 'loudly'), (15, 21, 'softly')]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "duration_seconds": 0.10691250674426556,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_all_adverbs_positions(['There was no adverb in this sentence.']) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\n\ndef find_adverb_position(text):\n    adverbs = []\n    matches = re.finditer(r'\\b\\w+ly\\b', text)\n    for match in matches:\n        adverbs.append((match.start(), match.end(), match.group()))\n    return adverbs\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = find_adverb_position(sentence)\n        results.extend(adverbs)\n    return results",
+        "completion_tokens": 101,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 163,
+        "raw_text": "```python\nimport re\n\ndef find_adverb_position(text):\n    adverbs = []\n    matches = re.finditer(r'\\b\\w+ly\\b', text)\n    for match in matches:\n        adverbs.append((match.start(), match.end(), match.group()))\n    return adverbs\n\ndef find_all_adverbs_positions(sentences):\n    results = []\n    for sentence in sentences:\n        adverbs = find_adverb_position(sentence)\n        results.extend(adverbs)\n    return results\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the first adverb and their positions in a given sentence.\nimport re\ndef find_adverb_position(text):\n\n# Write a function to find all adverbs and their positions in multiple sentences. The function should return a list of tuples where each tuple contains the start position, end position, and the adverb for each sentence.\nimport re\n\ndef find_all_adverbs_positions(sentences):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.26804509200155735,
+        "generation_seconds": 2.7332401033490896
+      }
+    }
+  ],
+  "duration_seconds": 23.242272002622485,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/201",
+  "unique_code_count": 5
+}

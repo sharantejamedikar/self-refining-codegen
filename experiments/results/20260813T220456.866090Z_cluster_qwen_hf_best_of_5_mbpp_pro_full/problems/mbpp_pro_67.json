@@ -1,0 +1,631 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "002707fc396f70407ad74f5271f80b782214cf91f3486e166f4f72420a22242f",
+      "execution": {
+        "duration_seconds": 0.26341410353779793,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "duration_seconds": 0.06339426711201668,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "duration_seconds": 0.08854035660624504,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "duration_seconds": 0.1112359594553709,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product_tuple(list1):\n    \"\"\"\n    Finds the maximum absolute product between numbers in pairs of tuples within a given list.\n\n    :param list1: List of tuples, each containing two numbers.\n    :return: Maximum absolute product found among all pairs of tuples.\n    \"\"\"\n    max_product = float('-inf')\n    for tup in list1:\n        if len(tup) == 2:\n            product = abs(tup[0] * tup[1])\n            if product > max_product:\n                max_product = product\n    return max_product\n\ndef max_product_nested_list(nested_list):\n    \"\"\"\n    Finds the maximum absolute product between numbers in pairs of tuples across all sublists.\n\n    :param nested_list: List of lists, each sublist containing tuples with two numbers.\n    :return: Maximum product found among all pairs of tuples across all sublists.\n    \"\"\"\n    max_product = float('-inf')\n    for sublist in nested_list:\n        sublist_max_product = max_product_tuple(sublist)\n        if sublist_max_product > max_product:\n            max_product = sublist_max_product\n    return max_product",
+        "completion_tokens": 293,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 162,
+        "raw_text": "```python\ndef max_product_tuple(list1):\n    \"\"\"\n    Finds the maximum absolute product between numbers in pairs of tuples within a given list.\n\n    :param list1: List of tuples, each containing two numbers.\n    :return: Maximum absolute product found among all pairs of tuples.\n    \"\"\"\n    max_product = float('-inf')\n    for tup in list1:\n        if len(tup) == 2:\n            product = abs(tup[0] * tup[1])\n            if product > max_product:\n                max_product = product\n    return max_product\n\ndef max_product_nested_list(nested_list):\n    \"\"\"\n    Finds the maximum absolute product between numbers in pairs of tuples across all sublists.\n\n    :param nested_list: List of lists, each sublist containing tuples with two numbers.\n    :return: Maximum product found among all pairs of tuples across all sublists.\n    \"\"\"\n    max_product = float('-inf')\n    for sublist in nested_list:\n        sublist_max_product = max_product_tuple(sublist)\n        if sublist_max_product > max_product:\n            max_product = sublist_max_product\n    return max_product\n```\n\nThis solution consists of two functions: `max_product_tuple` which calculates the maximum absolute product from a list of tuples, and `max_product_nested_list` which iterates through a nested list to apply the `max_product_tuple` function on each sublist, keeping track of the overall maximum product found.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.26341410353779793,
+        "generation_seconds": 7.952080637216568
+      }
+    },
+    {
+      "code_hash": "f8667f596d80c8b7279c28bd54c31f5751d76405c793bebf6c980a7387723651",
+      "execution": {
+        "duration_seconds": 0.2443141471594572,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "duration_seconds": 0.06540549360215664,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "duration_seconds": 0.08808359131217003,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "duration_seconds": 0.09064244478940964,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    \"\"\"\n    :type list1: List[Tuple[int]]\n    :rtype: int\n    \"\"\"\n    max_product = float('-inf')\n    for tup in list1:\n        if len(tup) == 2:\n            current_product = abs(tup[0] * tup[1])\n            if current_product > max_product:\n                max_product = current_product\n    return max_product\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    \"\"\"\n    :type nested_list: List[List[Tuple[int]]]\n    :rtype: int\n    \"\"\"\n    overall_max_product = float('-inf')\n    for sublist in nested_list:\n        sublist_max_product = max_product_tuple(sublist)\n        if sublist_max_product > overall_max_product:\n            overall_max_product = sublist_max_product\n    return overall_max_product",
+        "completion_tokens": 241,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 162,
+        "raw_text": "```python\n# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    \"\"\"\n    :type list1: List[Tuple[int]]\n    :rtype: int\n    \"\"\"\n    max_product = float('-inf')\n    for tup in list1:\n        if len(tup) == 2:\n            current_product = abs(tup[0] * tup[1])\n            if current_product > max_product:\n                max_product = current_product\n    return max_product\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    \"\"\"\n    :type nested_list: List[List[Tuple[int]]]\n    :rtype: int\n    \"\"\"\n    overall_max_product = float('-inf')\n    for sublist in nested_list:\n        sublist_max_product = max_product_tuple(sublist)\n        if sublist_max_product > overall_max_product:\n            overall_max_product = sublist_max_product\n    return overall_max_product\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2443141471594572,
+        "generation_seconds": 6.498348820954561
+      }
+    },
+    {
+      "code_hash": "b50cca2dc821edadad9e62f858689e5bf608b492216d39bbb14067d9a1fcd171",
+      "execution": {
+        "duration_seconds": 0.2617772277444601,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "duration_seconds": 0.07001629658043385,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "duration_seconds": 0.09148713946342468,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "duration_seconds": 0.10001359134912491,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    # Initialize the maximum product to a very small number\n    max_product = float('-inf')\n    \n    # Iterate through each tuple in the list\n    for tup in list1:\n        # Calculate the absolute product of the tuple\n        product = abs(tup[0] * tup[1])\n        \n        # Update the maximum product if the current product is greater\n        if product > max_product:\n            max_product = product\n    \n    # Return the maximum product found\n    return max_product\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    # Initialize the maximum product to a very small number\n    max_product = float('-inf')\n    \n    # Iterate through each sublist in the nested list\n    for sublist in nested_list:\n        # Find the maximum product in the current sublist using the max_product_tuple function\n        sublist_max_product = max_product_tuple(sublist)\n        \n        # Update the overall maximum product if the current sublist's maximum product is greater\n        if sublist_max_product > max_product:\n            max_product = sublist_max_product\n    \n    # Return the overall maximum product found\n    return max_product",
+        "completion_tokens": 363,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 162,
+        "raw_text": "```python\n# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    # Initialize the maximum product to a very small number\n    max_product = float('-inf')\n    \n    # Iterate through each tuple in the list\n    for tup in list1:\n        # Calculate the absolute product of the tuple\n        product = abs(tup[0] * tup[1])\n        \n        # Update the maximum product if the current product is greater\n        if product > max_product:\n            max_product = product\n    \n    # Return the maximum product found\n    return max_product\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    # Initialize the maximum product to a very small number\n    max_product = float('-inf')\n    \n    # Iterate through each sublist in the nested list\n    for sublist in nested_list:\n        # Find the maximum product in the current sublist using the max_product_tuple function\n        sublist_max_product = max_product_tuple(sublist)\n        \n        # Update the overall maximum product if the current sublist's maximum product is greater\n        if sublist_max_product > max_product:\n            max_product = sublist_max_product\n    \n    # Return the overall maximum product found\n    return max_product\n```\n\nThis solution includes two functions: `max_product_tuple` which calculates the maximum absolute product from pairs of tuples in a single list, and `max_product_nested_list` which uses multiple calls to `max_product_tuple` to find the maximum absolute product across all sublists in a nested list structure.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.2617772277444601,
+        "generation_seconds": 9.805813059210777
+      }
+    },
+    {
+      "code_hash": "d1d6da734166f75d3ffc9d46cbdba81c8225eb6f59dedf10127c53b92e7c7e91",
+      "execution": {
+        "duration_seconds": 0.3048251401633024,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "duration_seconds": 0.07993014715611935,
+            "exception_message": "cannot unpack non-iterable int object",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]])\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]])\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-jt0uxccs/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "duration_seconds": 0.11640082113444805,
+            "exception_message": "cannot unpack non-iterable int object",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]])\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]])\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-wrikqdd6/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "duration_seconds": 0.10828305035829544,
+            "exception_message": "cannot unpack non-iterable int object",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]])\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]])\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 27, in max_product_nested_list\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 27, in <genexpr>\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n               ~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 23, in max_product_tuple\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n  File \"/tmp/srcg-it7hs6hf/program.py\", line 23, in <genexpr>\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n                              ^^^^\nTypeError: cannot unpack non-iterable int object\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    if not list1:\n        return None\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    return max(max_product_tuple(sublist) for sublist in nested_list)",
+        "completion_tokens": 137,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 162,
+        "raw_text": "```python\n# Function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n    if not list1:\n        return None\n    return max(abs(a * b) for a, b in [tuple1 for sublist in list1 for tuple1 in sublist])\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n    return max(max_product_tuple(sublist) for sublist in nested_list)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3048251401633024,
+        "generation_seconds": 3.6911261957138777
+      }
+    },
+    {
+      "code_hash": "6c8a04dd774a2f237c5bc262456c18af03f856f40fe4d82850801e998c061025",
+      "execution": {
+        "duration_seconds": 0.2566876448690891,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "duration_seconds": 0.0704557690769434,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, 2), (3, 4)], [(5, 6), (7, 8)]]) == 56",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "duration_seconds": 0.08744321390986443,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(1, -1), (2, -2)], [(3, -3), (4, -4)]]) == 16",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "duration_seconds": 0.09857004508376122,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_nested_list([[(0, 0), (0, 0)], [(0, 0), (0, 0)]]) == 0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product_tuple(lst):\n    \"\"\"\n    Find the maximum absolute product between numbers in pairs of tuples within a given list.\n    \n    Parameters:\n    lst (list): A list of tuples containing two numbers.\n    \n    Returns:\n    int: The maximum absolute product.\n    \"\"\"\n    return max(abs(a * b) for a, b in lst)\n\ndef max_product_nested_list(nested_lst):\n    \"\"\"\n    Find the maximum absolute product between numbers in pairs of tuples across all sublists.\n    \n    Parameters:\n    nested_lst (list): A list of lists of tuples, where each tuple contains two numbers.\n    \n    Returns:\n    int: The maximum product found.\n    \"\"\"\n    return max(max_product_tuple(sublist) for sublist in nested_lst)",
+        "completion_tokens": 157,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 162,
+        "raw_text": "```python\ndef max_product_tuple(lst):\n    \"\"\"\n    Find the maximum absolute product between numbers in pairs of tuples within a given list.\n    \n    Parameters:\n    lst (list): A list of tuples containing two numbers.\n    \n    Returns:\n    int: The maximum absolute product.\n    \"\"\"\n    return max(abs(a * b) for a, b in lst)\n\ndef max_product_nested_list(nested_lst):\n    \"\"\"\n    Find the maximum absolute product between numbers in pairs of tuples across all sublists.\n    \n    Parameters:\n    nested_lst (list): A list of lists of tuples, where each tuple contains two numbers.\n    \n    Returns:\n    int: The maximum product found.\n    \"\"\"\n    return max(max_product_tuple(sublist) for sublist in nested_lst)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum absolute product between numbers in pairs of tuples within a given list.\ndef max_product_tuple(list1):\n\n# Given a list of lists of tuples, where each tuple contains two numbers, write a function to find the maximum absolute product between numbers in pairs of tuples across all sublists. The function should return the maximum product found.\ndef max_product_nested_list(nested_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.2566876448690891,
+        "generation_seconds": 4.225219184532762
+      }
+    }
+  ],
+  "duration_seconds": 33.506562968716025,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/67",
+  "unique_code_count": 5
+}

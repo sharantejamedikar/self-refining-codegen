@@ -1,0 +1,706 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "0ae8eb2218e8f2f682e389a0502d816847ffc188bfe9579acecb73283853194c",
+      "execution": {
+        "duration_seconds": 0.3983571343123913,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([2, 3]) == 18",
+            "duration_seconds": 0.07760935090482235,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "18\n",
+            "test_case": "assert sum_of_indices([2, 3]) == 18",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([1, 4]) == 46",
+            "duration_seconds": 0.09654731675982475,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "18\n",
+            "test_case": "assert sum_of_indices([1, 4]) == 46",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([5, 6]) == 588",
+            "duration_seconds": 0.10064301639795303,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "18\n",
+            "test_case": "assert sum_of_indices([5, 6]) == 588",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([7, 8]) == 5886",
+            "duration_seconds": 0.12319717183709145,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "18\n",
+            "test_case": "assert sum_of_indices([7, 8]) == 5886",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef find_Index(n):\n    # Calculate the minimum and maximum values for n-digit numbers\n    min_val = 10**(n-1)\n    max_val = 10**n - 1\n    \n    # Find the smallest triangular number greater than or equal to min_val\n    k = math.ceil((math.sqrt(8 * min_val + 1) - 1) / 2)\n    \n    # Check if the calculated triangular number has exactly n digits\n    while True:\n        triangular_number = (k * (k + 1)) // 2\n        if min_val <= triangular_number <= max_val:\n            return k\n        elif triangular_number > max_val:\n            break\n        k += 1\n\ndef sum_of_indices(n_list):\n    # Sum the indices of the smallest triangular numbers with n digits for each value in n_list\n    return sum(find_Index(n) for n in n_list)\n\n# Example usage:\nprint(sum_of_indices([2, 3]))  # Output will depend on the implementation of find_Index",
+        "completion_tokens": 294,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 196,
+        "raw_text": "```python\nimport math\n\ndef find_Index(n):\n    # Calculate the minimum and maximum values for n-digit numbers\n    min_val = 10**(n-1)\n    max_val = 10**n - 1\n    \n    # Find the smallest triangular number greater than or equal to min_val\n    k = math.ceil((math.sqrt(8 * min_val + 1) - 1) / 2)\n    \n    # Check if the calculated triangular number has exactly n digits\n    while True:\n        triangular_number = (k * (k + 1)) // 2\n        if min_val <= triangular_number <= max_val:\n            return k\n        elif triangular_number > max_val:\n            break\n        k += 1\n\ndef sum_of_indices(n_list):\n    # Sum the indices of the smallest triangular numbers with n digits for each value in n_list\n    return sum(find_Index(n) for n in n_list)\n\n# Example usage:\nprint(sum_of_indices([2, 3]))  # Output will depend on the implementation of find_Index\n```\n\nThis solution includes two functions:\n1. `find_Index(n)` which calculates the index of the smallest triangular number with exactly `n` digits.\n2. `sum_of_indices(n_list)` which sums the indices of the smallest triangular numbers for each digit length specified in `n_list`. This function uses the `find_Index(n)` function internally.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3983571343123913,
+        "generation_seconds": 7.986263409256935
+      }
+    },
+    {
+      "code_hash": "e892d15a1d57a3a5b3e05c619b298f04175e47fa0b09812860e4d461ce73b89a",
+      "execution": {
+        "duration_seconds": 0.3782484158873558,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([2, 3]) == 18",
+            "duration_seconds": 0.09168455563485622,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([2, 3]) == 18",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([1, 4]) == 46",
+            "duration_seconds": 0.08925556391477585,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([1, 4]) == 46",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([5, 6]) == 588",
+            "duration_seconds": 0.10246858932077885,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([5, 6]) == 588",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([7, 8]) == 5886",
+            "duration_seconds": 0.09456630051136017,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([7, 8]) == 5886",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest triangular number with n digits\n    lower_bound = 10**(n-1)\n    # Using the inverse formula for triangular numbers to find the index\n    index = math.ceil((math.sqrt(8 * lower_bound + 1) - 1) / 2)\n    return index\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        total_sum += find_Index(n)\n    return total_sum",
+        "completion_tokens": 117,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 196,
+        "raw_text": "```python\nimport math\n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest triangular number with n digits\n    lower_bound = 10**(n-1)\n    # Using the inverse formula for triangular numbers to find the index\n    index = math.ceil((math.sqrt(8 * lower_bound + 1) - 1) / 2)\n    return index\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        total_sum += find_Index(n)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3782484158873558,
+        "generation_seconds": 3.181822534650564
+      }
+    },
+    {
+      "code_hash": "51dd40105598d4fd5bee841974e98e949d4001ff618ad29588d1150232ea292e",
+      "execution": {
+        "duration_seconds": 0.47672845236957073,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([2, 3]) == 18",
+            "duration_seconds": 0.08109772019088268,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([2, 3]) == 18",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([1, 4]) == 46",
+            "duration_seconds": 0.1253221333026886,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([1, 4]) == 46",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([5, 6]) == 588",
+            "duration_seconds": 0.13519578240811825,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([5, 6]) == 588",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([7, 8]) == 5886",
+            "duration_seconds": 0.13472764566540718,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([7, 8]) == 5886",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math \n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest n-digit number\n    lower_bound = 10**(n-1)\n    # Use the quadratic formula to find the smallest integer k such that k*(k+1)/2 >= lower_bound\n    k = math.ceil((-1 + math.sqrt(1 + 8 * lower_bound)) / 2)\n    # Verify that this k indeed gives an n-digit number\n    while True:\n        triangular_number = k * (k + 1) // 2\n        if len(str(triangular_number)) == n:\n            return k\n        elif len(str(triangular_number)) > n:\n            break\n        k += 1\n    raise ValueError(\"No triangular number with {} digits found\".format(n))\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        try:\n            index = find_Index(n)\n            total_sum += index\n        except ValueError as e:\n            print(e)\n    return total_sum",
+        "completion_tokens": 334,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 196,
+        "raw_text": "```python\nimport math \n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest n-digit number\n    lower_bound = 10**(n-1)\n    # Use the quadratic formula to find the smallest integer k such that k*(k+1)/2 >= lower_bound\n    k = math.ceil((-1 + math.sqrt(1 + 8 * lower_bound)) / 2)\n    # Verify that this k indeed gives an n-digit number\n    while True:\n        triangular_number = k * (k + 1) // 2\n        if len(str(triangular_number)) == n:\n            return k\n        elif len(str(triangular_number)) > n:\n            break\n        k += 1\n    raise ValueError(\"No triangular number with {} digits found\".format(n))\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        try:\n            index = find_Index(n)\n            total_sum += index\n        except ValueError as e:\n            print(e)\n    return total_sum\n```\n\nThis solution includes two functions:\n1. `find_Index(n)` which calculates the index of the smallest triangular number with exactly `n` digits.\n2. `sum_of_indices(n_list)` which computes the sum of the indices of the smallest triangular numbers for each digit count specified in the input list `n_list`. It uses the `find_Index` function internally for each value in `n_list`. If no triangular number with the required number of digits is found, it prints an error message but does not include that value's contribution to the sum.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.47672845236957073,
+        "generation_seconds": 9.067271143198013
+      }
+    },
+    {
+      "code_hash": "0f722dee029190e9bce3e0ef69611ccbeea52dbaee1e094b5a00e540b989fa82",
+      "execution": {
+        "duration_seconds": 0.49834173545241356,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "29",
+            "assertion_expression": "sum_of_indices([2, 3]) == 18",
+            "duration_seconds": 0.1552021224051714,
+            "exception_message": "assertion comparison failed: actual=29; expected=18",
+            "exception_type": "AssertionError",
+            "expected_value": "18",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8t9jsh9w/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('29', '18')\n",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([2, 3]) == 18",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8t9jsh9w/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('29', '18')\n"
+          },
+          {
+            "actual_value": "72",
+            "assertion_expression": "sum_of_indices([1, 4]) == 46",
+            "duration_seconds": 0.12640449777245522,
+            "exception_message": "assertion comparison failed: actual=72; expected=46",
+            "exception_type": "AssertionError",
+            "expected_value": "46",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-rfy8_pju/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('72', '46')\n",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([1, 4]) == 46",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-rfy8_pju/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('72', '46')\n"
+          },
+          {
+            "actual_value": "930",
+            "assertion_expression": "sum_of_indices([5, 6]) == 588",
+            "duration_seconds": 0.11343957856297493,
+            "exception_message": "assertion comparison failed: actual=930; expected=588",
+            "exception_type": "AssertionError",
+            "expected_value": "588",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n12jbcpy/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('930', '588')\n",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([5, 6]) == 588",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n12jbcpy/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('930', '588')\n"
+          },
+          {
+            "actual_value": "9307",
+            "assertion_expression": "sum_of_indices([7, 8]) == 5886",
+            "duration_seconds": 0.10294337570667267,
+            "exception_message": "assertion comparison failed: actual=9307; expected=5886",
+            "exception_type": "AssertionError",
+            "expected_value": "5886",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-x9zhw11h/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9307', '5886')\n",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([7, 8]) == 5886",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-x9zhw11h/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9307', '5886')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef find_Index(n):\n    # Calculate the lower bound using the formula derived from the properties of triangular numbers\n    lower_bound = ((10**(n-1) - 1) * 2)\n    # Calculate the upper bound using the formula derived from the properties of triangular numbers\n    upper_bound = ((10**n - 1) * 2)\n    \n    # Use binary search to find the smallest triangular number within the range\n    low, high = 0, int(math.sqrt(upper_bound))\n    while low <= high:\n        mid = (low + high) // 2\n        triangular_num = (mid * (mid + 1)) // 2\n        \n        if triangular_num >= lower_bound and triangular_num <= upper_bound:\n            return mid\n        elif triangular_num < lower_bound:\n            low = mid + 1\n        else:\n            high = mid - 1\n    \n    return -1\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        index = find_Index(n)\n        if index != -1:\n            total_sum += index\n    return total_sum",
+        "completion_tokens": 360,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 196,
+        "raw_text": "```python\nimport math\n\ndef find_Index(n):\n    # Calculate the lower bound using the formula derived from the properties of triangular numbers\n    lower_bound = ((10**(n-1) - 1) * 2)\n    # Calculate the upper bound using the formula derived from the properties of triangular numbers\n    upper_bound = ((10**n - 1) * 2)\n    \n    # Use binary search to find the smallest triangular number within the range\n    low, high = 0, int(math.sqrt(upper_bound))\n    while low <= high:\n        mid = (low + high) // 2\n        triangular_num = (mid * (mid + 1)) // 2\n        \n        if triangular_num >= lower_bound and triangular_num <= upper_bound:\n            return mid\n        elif triangular_num < lower_bound:\n            low = mid + 1\n        else:\n            high = mid - 1\n    \n    return -1\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        index = find_Index(n)\n        if index != -1:\n            total_sum += index\n    return total_sum\n```\n\nThis solution includes two functions:\n1. `find_Index(n)`: This function calculates the index of the smallest triangular number with exactly `n` digits. It uses mathematical formulas to determine the bounds and then applies binary search to efficiently find the correct index.\n2. `sum_of_indices(n_list)`: This function takes a list of digit counts (`n_list`) and returns the sum of the indices of the smallest triangular numbers corresponding to each digit count. It iterates through the list, calls `find_Index` for each value, and accumulates the results.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.49834173545241356,
+        "generation_seconds": 9.855983905494213
+      }
+    },
+    {
+      "code_hash": "ddcbc57c7368f8cd4ef72ee959694c7b5223beac118ebe00829a5c1a28ada768",
+      "execution": {
+        "duration_seconds": 0.43350562267005444,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([2, 3]) == 18",
+            "duration_seconds": 0.07922517135739326,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([2, 3]) == 18",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([1, 4]) == 46",
+            "duration_seconds": 0.09492803923785686,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([1, 4]) == 46",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([5, 6]) == 588",
+            "duration_seconds": 0.12253299541771412,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([5, 6]) == 588",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_of_indices([7, 8]) == 5886",
+            "duration_seconds": 0.13648374192416668,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_of_indices([7, 8]) == 5886",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import math\n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest n-digit number\n    lower_bound = 10**(n-1)\n    # Calculate the upper bound for the largest (n-1)-digit number\n    upper_bound = 10**n - 1\n    \n    # Find the smallest triangular number greater than or equal to lower_bound\n    t_index = int((math.ceil(((8 * lower_bound + 1) ** 0.5 - 1) / 2)))\n    \n    # Ensure that the found triangular number has exactly n digits\n    while True:\n        triangular_number = t_index * (t_index + 1) // 2\n        if len(str(triangular_number)) == n:\n            break\n        t_index += 1\n    \n    return t_index\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        total_sum += find_Index(n)\n    return total_sum",
+        "completion_tokens": 298,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 196,
+        "raw_text": "```python\nimport math\n\ndef find_Index(n):\n    # Calculate the lower bound for the smallest n-digit number\n    lower_bound = 10**(n-1)\n    # Calculate the upper bound for the largest (n-1)-digit number\n    upper_bound = 10**n - 1\n    \n    # Find the smallest triangular number greater than or equal to lower_bound\n    t_index = int((math.ceil(((8 * lower_bound + 1) ** 0.5 - 1) / 2)))\n    \n    # Ensure that the found triangular number has exactly n digits\n    while True:\n        triangular_number = t_index * (t_index + 1) // 2\n        if len(str(triangular_number)) == n:\n            break\n        t_index += 1\n    \n    return t_index\n\ndef sum_of_indices(n_list):\n    total_sum = 0\n    for n in n_list:\n        total_sum += find_Index(n)\n    return total_sum\n```\n\nThis solution includes two functions: `find_Index` and `sum_of_indices`. The `find_Index` function calculates the index of the smallest triangular number with exactly `n` digits. It uses the mathematical formula for triangular numbers and checks if the resulting number has the correct number of digits. The `sum_of_indices` function iterates over a list of digit counts, calling `find_Index` for each and summing the results.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to find the index of smallest triangular number with n digits. https://www.geeksforgeeks.org/index-of-smallest-triangular-number-with-n-digits/\nimport math \ndef find_Index(n):\n\n# Write a Python function to find the sum of the indices of the smallest triangular numbers with n digits for a list of n values. For example, if the list is [2, 3], the function should return the sum of the indices of the smallest triangular numbers with 2 and 3 digits respectively.\ndef sum_of_indices(n_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.43350562267005444,
+        "generation_seconds": 8.054408749565482
+      }
+    }
+  ],
+  "duration_seconds": 40.334924491122365,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/319",
+  "unique_code_count": 5
+}

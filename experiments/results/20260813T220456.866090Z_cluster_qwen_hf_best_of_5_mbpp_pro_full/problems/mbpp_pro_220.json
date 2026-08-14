@@ -1,0 +1,626 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b3cd1cd3db7762f2f872c80b7fdfe71bb39afbdad985b3f02f66f75a72332286",
+      "execution": {
+        "duration_seconds": 0.33656517416238785,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "duration_seconds": 0.09004024416208267,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "duration_seconds": 0.11526485346257687,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "36",
+            "assertion_expression": "max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "duration_seconds": 0.13100665248930454,
+            "exception_message": "assertion comparison failed: actual=36; expected=6",
+            "exception_type": "AssertionError",
+            "expected_value": "6",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-w62tdvhy/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-w62tdvhy/program.py\", line 38, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product(arr):\n    if not arr:\n        return 0\n    max_ending = min_ending = res = arr[0]\n    for n in arr[1:]:\n        temp_max = max(n, max_ending * n, min_ending * n)\n        min_ending = min(n, max_ending * n, min_ending * n)\n        max_ending = temp_max\n        res = max(res, max_ending)\n    return res\n\ndef max_product_sum(arr):\n    total_product = 0\n    for sub_arr in arr:\n        total_product += max_product(sub_arr)\n    return total_product",
+        "completion_tokens": 138,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 207,
+        "raw_text": "```python\ndef max_product(arr):\n    if not arr:\n        return 0\n    max_ending = min_ending = res = arr[0]\n    for n in arr[1:]:\n        temp_max = max(n, max_ending * n, min_ending * n)\n        min_ending = min(n, max_ending * n, min_ending * n)\n        max_ending = temp_max\n        res = max(res, max_ending)\n    return res\n\ndef max_product_sum(arr):\n    total_product = 0\n    for sub_arr in arr:\n        total_product += max_product(sub_arr)\n    return total_product\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.33656517416238785,
+        "generation_seconds": 3.7444965448230505
+      }
+    },
+    {
+      "code_hash": "3cb6ea9cf1a5922bfe212ad92925993e0cb1f1ddcf6195cd60ae09cc1f58a5eb",
+      "execution": {
+        "duration_seconds": 0.3289416432380676,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "duration_seconds": 0.06857151351869106,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "duration_seconds": 0.1128729023039341,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "36",
+            "assertion_expression": "max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "duration_seconds": 0.14723933674395084,
+            "exception_message": "assertion comparison failed: actual=36; expected=6",
+            "exception_type": "AssertionError",
+            "expected_value": "6",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pn06soaf/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pn06soaf/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product(arr):\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        if n < 0:\n            max_ending, min_ending = min_ending, max_ending\n        \n        max_ending = max(n, max_ending * n)\n        min_ending = min(n, min_ending * n)\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr):\n    total_sum = 0\n    \n    for sub_arr in arr:\n        total_sum += max_product(sub_arr)\n    \n    return total_sum",
+        "completion_tokens": 147,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 207,
+        "raw_text": "```python\ndef max_product(arr):\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        if n < 0:\n            max_ending, min_ending = min_ending, max_ending\n        \n        max_ending = max(n, max_ending * n)\n        min_ending = min(n, min_ending * n)\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr):\n    total_sum = 0\n    \n    for sub_arr in arr:\n        total_sum += max_product(sub_arr)\n    \n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3289416432380676,
+        "generation_seconds": 3.983212163671851
+      }
+    },
+    {
+      "code_hash": "eade43226c1abe2f00e7d31cc22cddeea8ecc4e8b667209e2f6ed589ea89dff9",
+      "execution": {
+        "duration_seconds": 0.35131235606968403,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "duration_seconds": 0.07912682555615902,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "duration_seconds": 0.11654742062091827,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "36",
+            "assertion_expression": "max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "duration_seconds": 0.15536268800497055,
+            "exception_message": "assertion comparison failed: actual=36; expected=6",
+            "exception_type": "AssertionError",
+            "expected_value": "6",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dxmwdw0o/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dxmwdw0o/program.py\", line 46, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product(arr):\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        temp_max = max(n * max_ending, n * min_ending, n)\n        temp_min = min(n * max_ending, n * min_ending, n)\n        \n        max_ending = temp_max\n        min_ending = temp_min\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr):\n    total_sum = 0\n    \n    for subarr in arr:\n        total_sum += max_product(subarr)\n    \n    return total_sum",
+        "completion_tokens": 149,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 207,
+        "raw_text": "```python\ndef max_product(arr):\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        temp_max = max(n * max_ending, n * min_ending, n)\n        temp_min = min(n * max_ending, n * min_ending, n)\n        \n        max_ending = temp_max\n        min_ending = temp_min\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr):\n    total_sum = 0\n    \n    for subarr in arr:\n        total_sum += max_product(subarr)\n    \n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.35131235606968403,
+        "generation_seconds": 4.042433576658368
+      }
+    },
+    {
+      "code_hash": "6fce9fce7d47a0591effbcf9676c3dc414dd9682c6ed8412153bc4dc4d9d961e",
+      "execution": {
+        "duration_seconds": 0.30457694083452225,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "duration_seconds": 0.06907794252038002,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "duration_seconds": 0.08553593419492245,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "36",
+            "assertion_expression": "max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "duration_seconds": 0.14969292655587196,
+            "exception_message": "assertion comparison failed: actual=36; expected=6",
+            "exception_type": "AssertionError",
+            "expected_value": "6",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-945r8bwg/program.py\", line 50, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-945r8bwg/program.py\", line 50, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef max_product(arr: List[int]) -> int:\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        if n > 0:\n            max_ending = max(max_ending * n, n)\n            min_ending = min(min_ending * n, n)\n        elif n < 0:\n            max_ending, min_ending = min(min_ending * n, n), max(max_ending * n, n)\n        else:\n            max_ending = min_ending = 0\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr: List[List[int]]) -> int:\n    total_max_product = 0\n    \n    for subarr in arr:\n        total_max_product += max_product(subarr)\n    \n    return total_max_product",
+        "completion_tokens": 199,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 207,
+        "raw_text": "```python\nfrom typing import List\n\ndef max_product(arr: List[int]) -> int:\n    if not arr:\n        return 0\n    \n    ret = max_ending = min_ending = arr[0]\n    \n    for n in arr[1:]:\n        if n > 0:\n            max_ending = max(max_ending * n, n)\n            min_ending = min(min_ending * n, n)\n        elif n < 0:\n            max_ending, min_ending = min(min_ending * n, n), max(max_ending * n, n)\n        else:\n            max_ending = min_ending = 0\n        \n        ret = max(ret, max_ending)\n    \n    return ret\n\ndef max_product_sum(arr: List[List[int]]) -> int:\n    total_max_product = 0\n    \n    for subarr in arr:\n        total_max_product += max_product(subarr)\n    \n    return total_max_product\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.30457694083452225,
+        "generation_seconds": 5.384400883689523
+      }
+    },
+    {
+      "code_hash": "6954e7a51bfa421f1c338366e7c67d525fe61a26ea741cd7bb5b67e317363c8b",
+      "execution": {
+        "duration_seconds": 0.30522344820201397,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "duration_seconds": 0.07660016044974327,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == 630",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "duration_seconds": 0.09274719841778278,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[10, 20], [30, 40], [50, 60]]) == 4400",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "36",
+            "assertion_expression": "max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "duration_seconds": 0.1356001365929842,
+            "exception_message": "assertion comparison failed: actual=36; expected=6",
+            "exception_type": "AssertionError",
+            "expected_value": "6",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-h5rb56mb/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n",
+            "stdout": "",
+            "test_case": "assert max_product_sum([[1, 1, 1], [2, 2, 2], [3, 3, 3]]) == 6",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-h5rb56mb/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('36', '6')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_product(arr):\n    def helper(subarr):\n        if not subarr:\n            return 0\n        ret = max_ending = min_ending = subarr[0]\n        for n in subarr[1:]:\n            if n > 0:\n                max_end = max(max_ending * n, n)\n                min_end = min(min_ending * n, n)\n            elif n < 0:\n                max_end = max(min_ending * n, n)\n                min_end = min(max_ending * n, n)\n            else:\n                max_end = min_end = 0\n            ret = max(ret, max_end)\n            max_ending, min_ending = max_end, min_end\n        return ret\n    \n    return helper(arr)\n\ndef max_product_sum(arr):\n    return sum(max_product(subarr) for subarr in arr)",
+        "completion_tokens": 184,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 207,
+        "raw_text": "```python\ndef max_product(arr):\n    def helper(subarr):\n        if not subarr:\n            return 0\n        ret = max_ending = min_ending = subarr[0]\n        for n in subarr[1:]:\n            if n > 0:\n                max_end = max(max_ending * n, n)\n                min_end = min(min_ending * n, n)\n            elif n < 0:\n                max_end = max(min_ending * n, n)\n                min_end = min(max_ending * n, n)\n            else:\n                max_end = min_end = 0\n            ret = max(ret, max_end)\n            max_ending, min_ending = max_end, min_end\n        return ret\n    \n    return helper(arr)\n\ndef max_product_sum(arr):\n    return sum(max_product(subarr) for subarr in arr)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product formed by multiplying numbers of an increasing subsequence of that array.\ndef max_product(arr):   \n  # record the correspond ending element to maintain the increasing subsequence\n  ret = max_ending = min_ending = (arr[0], arr[0])\n  for n in arr[1:]:\n\n# Given a 2D array where each subarray contains integers, find the maximum product formed by multiplying numbers of an increasing subsequence for each subarray. Then, sum all the maximum products obtained from each subarray to get the final result.\ndef max_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.30522344820201397,
+        "generation_seconds": 4.978679273277521
+      }
+    }
+  ],
+  "duration_seconds": 23.76340769790113,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/220",
+  "unique_code_count": 5
+}

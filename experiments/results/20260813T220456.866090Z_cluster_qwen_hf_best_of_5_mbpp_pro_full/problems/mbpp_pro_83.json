@@ -1,0 +1,857 @@
+{
+  "all_candidates_unique": false,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "989f4a12c926a158d316831059444a061cea9ad0f4956419197fbd76f3f0f8bd",
+      "execution": {
+        "duration_seconds": 0.6314825899899006,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.06536410935223103,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.11013030260801315,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.11432707868516445,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.11008941568434238,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.10519497096538544,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.12581813894212246,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def extract_singly(test_list):\n    \"\"\"\n    Flattens a list of lists into a single set of numbers.\n\n    :param test_list: List of lists containing numbers\n    :return: Set of numbers\n    \"\"\"\n    return set(num for sublist in test_list for num in sublist)\n\ndef deep_extract_singly(test_list):\n    \"\"\"\n    Flattens a list of lists of lists into a single set of numbers.\n\n    :param test_list: Nested list of lists containing numbers\n    :return: Set of numbers\n    \"\"\"\n    def helper(sub_list):\n        for item in sub_list:\n            if isinstance(item, list):\n                yield from helper(item)\n            else:\n                yield item\n    \n    return set(helper(test_list))",
+        "completion_tokens": 232,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef extract_singly(test_list):\n    \"\"\"\n    Flattens a list of lists into a single set of numbers.\n\n    :param test_list: List of lists containing numbers\n    :return: Set of numbers\n    \"\"\"\n    return set(num for sublist in test_list for num in sublist)\n\ndef deep_extract_singly(test_list):\n    \"\"\"\n    Flattens a list of lists of lists into a single set of numbers.\n\n    :param test_list: Nested list of lists containing numbers\n    :return: Set of numbers\n    \"\"\"\n    def helper(sub_list):\n        for item in sub_list:\n            if isinstance(item, list):\n                yield from helper(item)\n            else:\n                yield item\n    \n    return set(helper(test_list))\n```\n\nThis solution includes two functions: `extract_singly` which flattens a list of lists into a single set of numbers, and `deep_extract_singly` which handles any level of nested lists by using a generator function `helper`. The `deep_extract_singly` function uses recursion via `yield from` to traverse through all levels of nesting and collect numbers into a set.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.6314825899899006,
+        "generation_seconds": 6.233821207657456
+      }
+    },
+    {
+      "code_hash": "2b9592ec9668abcd1bd05dbbd53700b31ec594e39a79e7a50d9325fa6390765d",
+      "execution": {
+        "duration_seconds": 0.5720414239913225,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.06620326824486256,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.10213333740830421,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.0979619137942791,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.10074781067669392,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.1049247682094574,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.09957018308341503,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result",
+        "completion_tokens": 75,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.5720414239913225,
+        "generation_seconds": 2.027925942093134
+      }
+    },
+    {
+      "code_hash": "2b9592ec9668abcd1bd05dbbd53700b31ec594e39a79e7a50d9325fa6390765d",
+      "execution": {
+        "duration_seconds": 0.5454457867890596,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.06677464582026005,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.09387003257870674,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.09274531155824661,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.08099261857569218,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.10886603035032749,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.10169471241533756,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result",
+        "completion_tokens": 75,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.5454457867890596,
+        "generation_seconds": 2.0225840974599123
+      }
+    },
+    {
+      "code_hash": "f7a0bb772bf511ee77fa147e7f3f0ec93bac35deecba9b87a53cbc2c885b0413",
+      "execution": {
+        "duration_seconds": 0.6428641770035028,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.10391463153064251,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.10931952856481075,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.09982116892933846,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.10310315899550915,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.11138937063515186,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.1148480661213398,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n    flat_set = set()\n    for sublist in test_list:\n        for item in sublist:\n            flat_set.add(item)\n    return flat_set\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n    flat_set = set()\n    def helper(sublist):\n        for item in sublist:\n            if isinstance(item, list):\n                helper(item)\n            else:\n                flat_set.add(item)\n    helper(test_list)\n    return flat_set",
+        "completion_tokens": 147,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n    flat_set = set()\n    for sublist in test_list:\n        for item in sublist:\n            flat_set.add(item)\n    return flat_set\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n    flat_set = set()\n    def helper(sublist):\n        for item in sublist:\n            if isinstance(item, list):\n                helper(item)\n            else:\n                flat_set.add(item)\n    helper(test_list)\n    return flat_set\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.6428641770035028,
+        "generation_seconds": 3.9485077559947968
+      }
+    },
+    {
+      "code_hash": "aab533a117b873eae1a56b725c39064034e6efa6668ab3b3833b1112e5520285",
+      "execution": {
+        "duration_seconds": 0.6397015023976564,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.0821818895637989,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.11124935559928417,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.11121135391294956,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.11014897935092449,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.10863590613007545,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.11575621366500854,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "{1, 2, 3, 4, 5, 6}\n{1, 2, 3, 4, 5, 6, 7}\n",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result\n\n# Example usage:\ntest_list_1 = [[1, 2], [3, 4], [5, 6]]\nprint(extract_singly(test_list_1))  # Output: {1, 2, 3, 4, 5, 6}\n\ntest_list_2 = [[[1, 2]], [3, [4, 5]], [6, 7]]\nprint(deep_extract_singly(test_list_2))  # Output: {1, 2, 3, 4, 5, 6, 7}",
+        "completion_tokens": 196,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 144,
+        "raw_text": "```python\ndef extract_singly(test_list):\n    return set(item for sublist in test_list for item in sublist)\n\ndef deep_extract_singly(test_list):\n    result = set()\n    for item in test_list:\n        if isinstance(item, list):\n            result.update(deep_extract_singly(item))\n        else:\n            result.add(item)\n    return result\n\n# Example usage:\ntest_list_1 = [[1, 2], [3, 4], [5, 6]]\nprint(extract_singly(test_list_1))  # Output: {1, 2, 3, 4, 5, 6}\n\ntest_list_2 = [[[1, 2]], [3, [4, 5]], [6, 7]]\nprint(deep_extract_singly(test_list_2))  # Output: {1, 2, 3, 4, 5, 6, 7}\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.6397015023976564,
+        "generation_seconds": 5.296351082623005
+      }
+    }
+  ],
+  "duration_seconds": 22.56405390240252,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/83",
+  "unique_code_count": 4
+}

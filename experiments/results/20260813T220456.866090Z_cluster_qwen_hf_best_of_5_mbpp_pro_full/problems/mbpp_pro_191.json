@@ -1,0 +1,704 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "3f53f89df5ebabed6e56c347a1da7c1e0156bf87366bd8d24d1ef8b4a43c3071",
+      "execution": {
+        "duration_seconds": 0.4418754708021879,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "duration_seconds": 0.07162470184266567,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "duration_seconds": 0.13031514920294285,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates([]) == []",
+            "duration_seconds": 0.11623962596058846,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "duration_seconds": 0.12335875630378723,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Convert a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n\n    :param dt: str - Date string in 'yyyy-mm-dd' format\n    :return: str - Date string in 'dd-mm-yyyy' format\n    \"\"\"\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\ndef filter_weekend_dates(dates):\n    \"\"\"\n    Convert a list of dates in 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filter out weekend dates.\n\n    :param dates: List[str] - List of date strings in 'yyyy-mm-dd' format\n    :return: List[str] - List of date strings in 'dd-mm-yyyy' format that are not weekends\n    \"\"\"\n    result = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        weekday = datetime.strptime(formatted_date, '%d-%m-%Y').weekday()\n        if weekday < 5:  # Monday to Friday are 0-4 respectively\n            result.append(formatted_date)\n    return result",
+        "completion_tokens": 340,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Convert a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n\n    :param dt: str - Date string in 'yyyy-mm-dd' format\n    :return: str - Date string in 'dd-mm-yyyy' format\n    \"\"\"\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\ndef filter_weekend_dates(dates):\n    \"\"\"\n    Convert a list of dates in 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filter out weekend dates.\n\n    :param dates: List[str] - List of date strings in 'yyyy-mm-dd' format\n    :return: List[str] - List of date strings in 'dd-mm-yyyy' format that are not weekends\n    \"\"\"\n    result = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        weekday = datetime.strptime(formatted_date, '%d-%m-%Y').weekday()\n        if weekday < 5:  # Monday to Friday are 0-4 respectively\n            result.append(formatted_date)\n    return result\n```\n\nThis solution includes two functions:\n1. `change_date_format`: Converts a single date string from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n2. `filter_weekend_dates`: Converts a list of date strings from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filters out any dates that fall on weekends (Saturday or Sunday). It uses the `change_date_format` function internally to perform the conversion before filtering.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4418754708021879,
+        "generation_seconds": 9.184646425768733
+      }
+    },
+    {
+      "code_hash": "f6707c5be364e015337f35576ab98100ab16e562ece1aa56a117582cc16d1982",
+      "execution": {
+        "duration_seconds": 0.517186239361763,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "['06-10-2023']",
+            "assertion_expression": "filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "duration_seconds": 0.1466617938131094,
+            "exception_message": "assertion comparison failed: actual=['06-10-2023']; expected=['06-10-2023', '09-10-2023']",
+            "exception_type": "AssertionError",
+            "expected_value": "['06-10-2023', '09-10-2023']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-y2c95vjm/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['06-10-2023']\", \"['06-10-2023', '09-10-2023']\")\n",
+            "stdout": "['04-04-2023', '05-04-2023']\n",
+            "test_case": "assert filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-y2c95vjm/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__(\"['06-10-2023']\", \"['06-10-2023', '09-10-2023']\")\n"
+          },
+          {
+            "actual_value": "[]",
+            "assertion_expression": "filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "duration_seconds": 0.1327071189880371,
+            "exception_message": "assertion comparison failed: actual=[]; expected=['02-01-2023']",
+            "exception_type": "AssertionError",
+            "expected_value": "['02-01-2023']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0zvz0sj_/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', \"['02-01-2023']\")\n",
+            "stdout": "['04-04-2023', '05-04-2023']\n",
+            "test_case": "assert filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0zvz0sj_/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', \"['02-01-2023']\")\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates([]) == []",
+            "duration_seconds": 0.10249555110931396,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "['04-04-2023', '05-04-2023']\n",
+            "test_case": "assert filter_weekend_dates([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[]",
+            "assertion_expression": "filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "duration_seconds": 0.13502169772982597,
+            "exception_message": "assertion comparison failed: actual=[]; expected=['25-12-2023']",
+            "exception_type": "AssertionError",
+            "expected_value": "['25-12-2023']",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-hp00o2ie/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', \"['25-12-2023']\")\n",
+            "stdout": "['04-04-2023', '05-04-2023']\n",
+            "test_case": "assert filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-hp00o2ie/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', \"['25-12-2023']\")\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\nfrom datetime import datetime\n\n# Problem 1: Convert a date of yyyy-mm-dd format to dd-mm-yyyy format\ndef change_date_format(dt):\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\n# Problem 2: Convert list of dates to dd-mm-yyyy format and filter out weekend dates\ndef filter_weekend_dates(date_list):\n    formatted_dates = [change_date_format(date) for date in date_list]\n    week_days = [datetime.strptime(date, '%d-%m-%Y').weekday() for date in formatted_dates]\n    weekdays = {0: False, 1: True, 2: True, 3: True, 4: True, 5: False, 6: False}\n    filtered_dates = [date for date, day in zip(formatted_dates, week_days) if weekdays[day]]\n    return filtered_dates\n\n# Example usage:\ndates = ['2023-04-01', '2023-04-02', '2023-04-03', '2023-04-04', '2023-04-05']\nfiltered = filter_weekend_dates(dates)\nprint(filtered)  # Output should exclude Saturdays and Sundays",
+        "completion_tokens": 339,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\nimport re\nfrom datetime import datetime\n\n# Problem 1: Convert a date of yyyy-mm-dd format to dd-mm-yyyy format\ndef change_date_format(dt):\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\n# Problem 2: Convert list of dates to dd-mm-yyyy format and filter out weekend dates\ndef filter_weekend_dates(date_list):\n    formatted_dates = [change_date_format(date) for date in date_list]\n    week_days = [datetime.strptime(date, '%d-%m-%Y').weekday() for date in formatted_dates]\n    weekdays = {0: False, 1: True, 2: True, 3: True, 4: True, 5: False, 6: False}\n    filtered_dates = [date for date, day in zip(formatted_dates, week_days) if weekdays[day]]\n    return filtered_dates\n\n# Example usage:\ndates = ['2023-04-01', '2023-04-02', '2023-04-03', '2023-04-04', '2023-04-05']\nfiltered = filter_weekend_dates(dates)\nprint(filtered)  # Output should exclude Saturdays and Sundays\n```\nThis solution includes two functions: `change_date_format` which converts a single date from 'yyyy-mm-dd' to 'dd-mm-yyyy' format, and `filter_weekend_dates` which applies this conversion to a list of dates and filters out any dates that fall on weekends.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.517186239361763,
+        "generation_seconds": 9.16820802539587
+      }
+    },
+    {
+      "code_hash": "b44640d3a7b7773b7faeebc001e5396a2b75042c4b144804f7ad38fa663c2dc5",
+      "execution": {
+        "duration_seconds": 0.4337578471750021,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "duration_seconds": 0.08094610832631588,
+            "exception_message": "'str' object has no attribute 'strftime'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09'])\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09'])\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-i9ug7a4u/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "duration_seconds": 0.10894919745624065,
+            "exception_message": "'str' object has no attribute 'strftime'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-19h95ifd/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-01-01', '2023-01-02'])\n  File \"/tmp/srcg-19h95ifd/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-19h95ifd/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-19h95ifd/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-01-01', '2023-01-02'])\n  File \"/tmp/srcg-19h95ifd/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-19h95ifd/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates([]) == []",
+            "duration_seconds": 0.1140187531709671,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "duration_seconds": 0.1295219101011753,
+            "exception_message": "'str' object has no attribute 'strftime'",
+            "exception_type": "AttributeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-12-25'])\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-12-25'])\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 28, in filter_weekend_dates\n    formatted_date = change_date_format(date)\n  File \"/tmp/srcg-ek9ulj_m/program.py\", line 23, in change_date_format\n    return dt.strftime('%d-%m-%Y')\n           ^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'strftime'\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    return dt.strftime('%d-%m-%Y')\n\ndef filter_weekend_dates(dates):\n    filtered_dates = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        if formatted_date.split('-')[0] not in ['06', '07']:\n            filtered_dates.append(formatted_date)\n    return filtered_dates",
+        "completion_tokens": 90,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    return dt.strftime('%d-%m-%Y')\n\ndef filter_weekend_dates(dates):\n    filtered_dates = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        if formatted_date.split('-')[0] not in ['06', '07']:\n            filtered_dates.append(formatted_date)\n    return filtered_dates\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4337578471750021,
+        "generation_seconds": 2.427569329738617
+      }
+    },
+    {
+      "code_hash": "7aa95375a98bb50e1e0aaea3609a899f36e0d61ca22a43b983d52f499bcc14fa",
+      "execution": {
+        "duration_seconds": 0.4629703648388386,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "duration_seconds": 0.12794079445302486,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "duration_seconds": 0.1126150544732809,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates([]) == []",
+            "duration_seconds": 0.09722866863012314,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "duration_seconds": 0.12485126592218876,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Convert a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n    \n    :param dt: str, a date string in 'yyyy-mm-dd' format\n    :return: str, the date string in 'dd-mm-yyyy' format\n    \"\"\"\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\ndef filter_weekend_dates(date_list):\n    \"\"\"\n    Convert a list of dates from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filter out weekend dates.\n    \n    :param date_list: list of str, a list of dates in 'yyyy-mm-dd' format\n    :return: list of str, a list of dates in 'dd-mm-yyyy' format excluding weekends\n    \"\"\"\n    formatted_dates = [change_date_format(date) for date in date_list]\n    filtered_dates = [date for date in formatted_dates if datetime.strptime(date, '%d-%m-%Y').weekday() < 5]\n    return filtered_dates",
+        "completion_tokens": 323,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Convert a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n    \n    :param dt: str, a date string in 'yyyy-mm-dd' format\n    :return: str, the date string in 'dd-mm-yyyy' format\n    \"\"\"\n    return dt[8:] + '-' + dt[5:7] + '-' + dt[:4]\n\ndef filter_weekend_dates(date_list):\n    \"\"\"\n    Convert a list of dates from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filter out weekend dates.\n    \n    :param date_list: list of str, a list of dates in 'yyyy-mm-dd' format\n    :return: list of str, a list of dates in 'dd-mm-yyyy' format excluding weekends\n    \"\"\"\n    formatted_dates = [change_date_format(date) for date in date_list]\n    filtered_dates = [date for date in formatted_dates if datetime.strptime(date, '%d-%m-%Y').weekday() < 5]\n    return filtered_dates\n```\n\nThis solution includes two functions:\n1. `change_date_format`: Converts a single date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n2. `filter_weekend_dates`: Converts a list of dates from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filters out any dates that fall on weekends (Saturday or Sunday). It uses the `change_date_format` function internally to perform the initial conversion.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.4629703648388386,
+        "generation_seconds": 8.797252833843231
+      }
+    },
+    {
+      "code_hash": "667c9940e41de00b94cc481cb2591c032064b4a576972baa5de2ed001ed3d1b2",
+      "execution": {
+        "duration_seconds": 0.4379265531897545,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "duration_seconds": 0.08008664287626743,
+            "exception_message": "name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cw_fa0p0/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09']) == ['06-10-2023', '09-10-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cw_fa0p0/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-10-06', '2023-10-07', '2023-10-08', '2023-10-09'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "duration_seconds": 0.10243850015103817,
+            "exception_message": "name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-uwszl5db/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-01-01', '2023-01-02'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-01-01', '2023-01-02']) == ['02-01-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-uwszl5db/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-01-01', '2023-01-02'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates([]) == []",
+            "duration_seconds": 0.1400908175855875,
+            "exception_message": "name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-sui7cvdr/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates([])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates([]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-sui7cvdr/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates([])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "duration_seconds": 0.11496572941541672,
+            "exception_message": "name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4u39b75u/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-12-25'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n",
+            "stdout": "",
+            "test_case": "assert filter_weekend_dates(['2023-12-25']) == ['25-12-2023']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4u39b75u/program.py\", line 52, in <module>\n    __srcg_assertion_actual_7f31 = filter_weekend_dates(['2023-12-25'])\n                                   ^^^^^^^^^^^^^^^^^^^^\nNameError: name 'filter_weekend_dates' is not defined. Did you mean: 'filter_weekends'?\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Converts a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n    \n    Args:\n    dt (str): A string representing a date in 'yyyy-mm-dd' format.\n    \n    Returns:\n    str: The date in 'dd-mm-yyyy' format.\n    \"\"\"\n    return re.sub(r'(\\d{4})-(\\d{2})-(\\d{2})', r'\\3-\\2-\\1', dt)\n\ndef filter_weekends(dates):\n    \"\"\"\n    Converts a list of dates from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filters out the weekends.\n    \n    Args:\n    dates (list): A list of strings representing dates in 'yyyy-mm-dd' format.\n    \n    Returns:\n    list: A list of dates in 'dd-mm-yyyy' format that do not fall on weekends.\n    \"\"\"\n    filtered_dates = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        day_of_week = datetime.strptime(formatted_date, '%d-%m-%Y').weekday()\n        if day_of_week < 5:  # Monday to Friday\n            filtered_dates.append(formatted_date)\n    return filtered_dates",
+        "completion_tokens": 268,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 169,
+        "raw_text": "```python\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n    \"\"\"\n    Converts a date from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format.\n    \n    Args:\n    dt (str): A string representing a date in 'yyyy-mm-dd' format.\n    \n    Returns:\n    str: The date in 'dd-mm-yyyy' format.\n    \"\"\"\n    return re.sub(r'(\\d{4})-(\\d{2})-(\\d{2})', r'\\3-\\2-\\1', dt)\n\ndef filter_weekends(dates):\n    \"\"\"\n    Converts a list of dates from 'yyyy-mm-dd' format to 'dd-mm-yyyy' format and filters out the weekends.\n    \n    Args:\n    dates (list): A list of strings representing dates in 'yyyy-mm-dd' format.\n    \n    Returns:\n    list: A list of dates in 'dd-mm-yyyy' format that do not fall on weekends.\n    \"\"\"\n    filtered_dates = []\n    for date in dates:\n        formatted_date = change_date_format(date)\n        day_of_week = datetime.strptime(formatted_date, '%d-%m-%Y').weekday()\n        if day_of_week < 5:  # Monday to Friday\n            filtered_dates.append(formatted_date)\n    return filtered_dates\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to convert a date of yyyy-mm-dd format to dd-mm-yyyy format.\nimport re\ndef change_date_format(dt):\n\n# Given a list of dates in 'yyyy-mm-dd' format, write a function to convert them to a list of dates in 'dd-mm-yyyy' format and then filter out the dates that fall on weekends (Saturday or Sunday).\nimport re\nfrom datetime import datetime\n\ndef change_date_format(dt):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4379265531897545,
+        "generation_seconds": 7.229364056140184
+      }
+    }
+  ],
+  "duration_seconds": 39.10481166280806,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    3
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/191",
+  "unique_code_count": 5
+}

@@ -1,0 +1,626 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "07d6480fd4299599a4e1181b93b3b0defe559d17c1c0e089a9da9b5eae00afea",
+      "execution": {
+        "duration_seconds": 0.3379445653408766,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "duration_seconds": 0.0644554141908884,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "56",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "duration_seconds": 0.15008582174777985,
+            "exception_message": "assertion comparison failed: actual=56; expected=41",
+            "exception_type": "AssertionError",
+            "expected_value": "41",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-hytjmqlz/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('56', '41')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-hytjmqlz/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('56', '41')\n"
+          },
+          {
+            "actual_value": "19",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "duration_seconds": 0.12314343266189098,
+            "exception_message": "assertion comparison failed: actual=19; expected=12",
+            "exception_type": "AssertionError",
+            "expected_value": "12",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-t7o8kl9c/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('19', '12')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-t7o8kl9c/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('19', '12')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum_increasing_subseq(a, n, index, k):\n    if index >= n:\n        return 0\n    \n    # Initialize the result with the current element itself\n    result = a[index]\n    \n    # Iterate through all elements after the current index\n    for i in range(index + 1, n):\n        # Check if the current element is greater than the previous element and included element\n        if a[i] > a[index] and i == k:\n            result = max(result, a[index] + max_sum_increasing_subseq(a, n, i, -1))\n        elif a[i] > a[index]:\n            result = max(result, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return result\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_result = 0\n    \n    # Process each range\n    for start, end in ranges:\n        # Ensure the range is valid\n        if start < end:\n            # Find the maximum sum of increasing subsequence for the end element of the range\n            max_sum = max_sum_increasing_subseq(a, len(a), start, end)\n            total_result += max_sum\n    \n    return total_result",
+        "completion_tokens": 341,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 241,
+        "raw_text": "```python\ndef max_sum_increasing_subseq(a, n, index, k):\n    if index >= n:\n        return 0\n    \n    # Initialize the result with the current element itself\n    result = a[index]\n    \n    # Iterate through all elements after the current index\n    for i in range(index + 1, n):\n        # Check if the current element is greater than the previous element and included element\n        if a[i] > a[index] and i == k:\n            result = max(result, a[index] + max_sum_increasing_subseq(a, n, i, -1))\n        elif a[i] > a[index]:\n            result = max(result, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return result\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_result = 0\n    \n    # Process each range\n    for start, end in ranges:\n        # Ensure the range is valid\n        if start < end:\n            # Find the maximum sum of increasing subsequence for the end element of the range\n            max_sum = max_sum_increasing_subseq(a, len(a), start, end)\n            total_result += max_sum\n    \n    return total_result\n```\n\nThis solution includes two functions as described. The first function `max_sum_increasing_subseq` calculates the maximum sum of an increasing subsequence up to a specified index, including an optional k-th element. The second function `max_sum_increasing_subseq_multiple_ranges` uses the first function to calculate the maximum sum for each range provided and returns the total sum of these maximum sums.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3379445653408766,
+        "generation_seconds": 9.254997607320547
+      }
+    },
+    {
+      "code_hash": "1f1a320c8f3e7ccaa37a225b16d776855b4078b411b1c985b3d5f0e328f4aaef",
+      "execution": {
+        "duration_seconds": 0.290155241265893,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "10",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "duration_seconds": 0.08228252828121185,
+            "exception_message": "assertion comparison failed: actual=10; expected=220",
+            "exception_type": "AssertionError",
+            "expected_value": "220",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-r1q7uukn/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', '220')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-r1q7uukn/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', '220')\n"
+          },
+          {
+            "actual_value": "12",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "duration_seconds": 0.10797371342778206,
+            "exception_message": "assertion comparison failed: actual=12; expected=41",
+            "exception_type": "AssertionError",
+            "expected_value": "41",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-owq7ubpv/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('12', '41')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-owq7ubpv/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('12', '41')\n"
+          },
+          {
+            "actual_value": "19",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "duration_seconds": 0.09973319619894028,
+            "exception_message": "assertion comparison failed: actual=19; expected=12",
+            "exception_type": "AssertionError",
+            "expected_value": "12",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-7ix32hcb/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('19', '12')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-7ix32hcb/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('19', '12')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum_increasing_subseq(a, n, index, k):\n    if index == n - 1 or k <= index:\n        return 0\n    \n    max_sum = a[index]\n    \n    for i in range(index + 1, n):\n        if a[i] > a[index]:\n            max_sum = max(max_sum, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return max_sum\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_max_sum = 0\n    \n    for start, end in ranges:\n        if end < len(a):\n            max_sum = max_sum_increasing_subseq(a, len(a), start, end)\n            total_max_sum += max_sum\n    \n    return total_max_sum",
+        "completion_tokens": 277,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 241,
+        "raw_text": "```python\ndef max_sum_increasing_subseq(a, n, index, k):\n    if index == n - 1 or k <= index:\n        return 0\n    \n    max_sum = a[index]\n    \n    for i in range(index + 1, n):\n        if a[i] > a[index]:\n            max_sum = max(max_sum, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return max_sum\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_max_sum = 0\n    \n    for start, end in ranges:\n        if end < len(a):\n            max_sum = max_sum_increasing_subseq(a, len(a), start, end)\n            total_max_sum += max_sum\n    \n    return total_max_sum\n```\nThis solution consists of two functions. The first function `max_sum_increasing_subseq` calculates the maximum sum of an increasing subsequence up to a given index `index`, including a specific element at index `k`. It recursively finds the maximum sum by considering all possible increasing subsequences that include the current element. The second function `max_sum_increasing_subseq_multiple_ranges` iterates over a list of ranges and uses the first function to calculate the maximum sum for each range, summing these values to get the total maximum sum.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.290155241265893,
+        "generation_seconds": 7.510549068450928
+      }
+    },
+    {
+      "code_hash": "1fb8b04ddc0ff500ca47b5438e5ff70b178a562e50cdae55e1333f719efbd0d2",
+      "execution": {
+        "duration_seconds": 0.3138625603169203,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "duration_seconds": 0.08437494561076164,
+            "exception_message": "assertion comparison failed: actual=0; expected=220",
+            "exception_type": "AssertionError",
+            "expected_value": "220",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-buvq6kdo/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '220')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-buvq6kdo/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '220')\n"
+          },
+          {
+            "actual_value": "0",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "duration_seconds": 0.10972425527870655,
+            "exception_message": "assertion comparison failed: actual=0; expected=41",
+            "exception_type": "AssertionError",
+            "expected_value": "41",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_08jtt5k/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '41')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_08jtt5k/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '41')\n"
+          },
+          {
+            "actual_value": "0",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "duration_seconds": 0.1194945964962244,
+            "exception_message": "assertion comparison failed: actual=0; expected=12",
+            "exception_type": "AssertionError",
+            "expected_value": "12",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ko6ne937/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '12')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ko6ne937/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '12')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum_increasing_subseq(a, n, index, k):\n    if n == 0 or index >= n or k <= index:\n        return 0\n\n    # Initialize the DP array to store maximum sum of increasing subsequence ending at each index\n    dp = [a[i] for i in range(n)]\n\n    # Fill the DP array\n    for i in range(1, n):\n        for j in range(i):\n            if a[i] > a[j] and dp[i] < dp[j] + a[i]:\n                dp[i] = dp[j] + a[i]\n\n    # If k is not included in the current subsequence, we exclude it from the consideration\n    if k != -1 and dp[k] < dp[index] + a[k]:\n        dp[k] = dp[index] + a[k]\n\n    return max(dp)\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_max_sum = 0\n    for start, end in ranges:\n        if end < len(a):\n            max_sum = max_sum_increasing_subseq(a, len(a), end, end)\n            total_max_sum += max_sum\n    return total_max_sum",
+        "completion_tokens": 360,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 241,
+        "raw_text": "```python\ndef max_sum_increasing_subseq(a, n, index, k):\n    if n == 0 or index >= n or k <= index:\n        return 0\n\n    # Initialize the DP array to store maximum sum of increasing subsequence ending at each index\n    dp = [a[i] for i in range(n)]\n\n    # Fill the DP array\n    for i in range(1, n):\n        for j in range(i):\n            if a[i] > a[j] and dp[i] < dp[j] + a[i]:\n                dp[i] = dp[j] + a[i]\n\n    # If k is not included in the current subsequence, we exclude it from the consideration\n    if k != -1 and dp[k] < dp[index] + a[k]:\n        dp[k] = dp[index] + a[k]\n\n    return max(dp)\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_max_sum = 0\n    for start, end in ranges:\n        if end < len(a):\n            max_sum = max_sum_increasing_subseq(a, len(a), end, end)\n            total_max_sum += max_sum\n    return total_max_sum\n```\n\nThis solution consists of two functions. The first function `max_sum_increasing_subseq` calculates the maximum sum of an increasing subsequence up to a specified index `index` and optionally includes an element at index `k`. It uses dynamic programming to build up the solution. The second function `max_sum_increasing_subseq_multiple_ranges` iterates over multiple ranges provided in the input and calculates the maximum sum of increasing subsequences for each range using the first function. The results are summed up and returned as the final answer.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3138625603169203,
+        "generation_seconds": 9.788594583049417
+      }
+    },
+    {
+      "code_hash": "7420f49044d033dc85e3fc1d16e4947625a9c0052f1d83b0a9ba15fa42ec58de",
+      "execution": {
+        "duration_seconds": 0.3509741723537445,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": "223",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "duration_seconds": 0.13315272890031338,
+            "exception_message": "assertion comparison failed: actual=223; expected=220",
+            "exception_type": "AssertionError",
+            "expected_value": "220",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jrm0yk0j/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('223', '220')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jrm0yk0j/program.py\", line 52, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('223', '220')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "duration_seconds": 0.08943227119743824,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "duration_seconds": 0.12817559763789177,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List, Tuple\n\ndef max_sum_increasing_subseq(a: List[int], n: int, index: int, k: int) -> int:\n    if index >= n or k < 0:\n        return 0\n    \n    # Initialize with the value at the current index\n    max_sum = a[index]\n    \n    # Iterate through possible previous indices to form an increasing subsequence\n    for prev in range(index):\n        if a[prev] < a[index]:\n            max_sum = max(max_sum, a[index] + max_sum_increasing_subseq(a, n, prev, k-1))\n    \n    return max_sum\n\ndef max_sum_increasing_subseq_multiple_ranges(a: List[int], ranges: List[Tuple[int, int]]) -> int:\n    total_max_sum = 0\n    \n    for start, end in ranges:\n        if start < 0 or end >= len(a):\n            continue\n        \n        # Find the maximum sum of increasing subsequence ending at the 'end' index\n        max_sum = max_sum_increasing_subseq(a, len(a), end, end)\n        \n        # Add this to the total sum\n        total_max_sum += max_sum\n    \n    return total_max_sum",
+        "completion_tokens": 368,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 241,
+        "raw_text": "```python\nfrom typing import List, Tuple\n\ndef max_sum_increasing_subseq(a: List[int], n: int, index: int, k: int) -> int:\n    if index >= n or k < 0:\n        return 0\n    \n    # Initialize with the value at the current index\n    max_sum = a[index]\n    \n    # Iterate through possible previous indices to form an increasing subsequence\n    for prev in range(index):\n        if a[prev] < a[index]:\n            max_sum = max(max_sum, a[index] + max_sum_increasing_subseq(a, n, prev, k-1))\n    \n    return max_sum\n\ndef max_sum_increasing_subseq_multiple_ranges(a: List[int], ranges: List[Tuple[int, int]]) -> int:\n    total_max_sum = 0\n    \n    for start, end in ranges:\n        if start < 0 or end >= len(a):\n            continue\n        \n        # Find the maximum sum of increasing subsequence ending at the 'end' index\n        max_sum = max_sum_increasing_subseq(a, len(a), end, end)\n        \n        # Add this to the total sum\n        total_max_sum += max_sum\n    \n    return total_max_sum\n```\n\nThis solution includes two functions:\n1. `max_sum_increasing_subseq`: This function calculates the maximum sum of an increasing subsequence from the start of the array up to a specified index, including a specific element at a later index.\n2. `max_sum_increasing_subseq_multiple_ranges`: This function uses the first function to calculate the maximum sum of increasing subsequences for multiple ranges specified by a list of tuples. Each tuple contains a start and end index, and the function finds the maximum sum for each range and returns their total sum.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3509741723537445,
+        "generation_seconds": 10.137420058250427
+      }
+    },
+    {
+      "code_hash": "638a2ff4fc0b2829946809d6eb97cad02043969cafac14164a58693518619e14",
+      "execution": {
+        "duration_seconds": 0.3277305457741022,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "205",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "duration_seconds": 0.08102439157664776,
+            "exception_message": "assertion comparison failed: actual=205; expected=220",
+            "exception_type": "AssertionError",
+            "expected_value": "220",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pu7xxmu7/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('205', '220')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([1, 101, 2, 3, 100, 4, 5], [(0, 1), (2, 4), (5, 6)]) == 220",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pu7xxmu7/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('205', '220')\n"
+          },
+          {
+            "actual_value": "17",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "duration_seconds": 0.1075382437556982,
+            "exception_message": "assertion comparison failed: actual=17; expected=41",
+            "exception_type": "AssertionError",
+            "expected_value": "41",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mq8zy96k/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('17', '41')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([3, 4, 5, 10], [(0, 1), (1, 2), (2, 3)]) == 41",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mq8zy96k/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('17', '41')\n"
+          },
+          {
+            "actual_value": "30",
+            "assertion_expression": "max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "duration_seconds": 0.13894746266305447,
+            "exception_message": "assertion comparison failed: actual=30; expected=12",
+            "exception_type": "AssertionError",
+            "expected_value": "12",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-sg4nmihs/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('30', '12')\n",
+            "stdout": "",
+            "test_case": "assert max_sum_increasing_subseq_multiple_ranges([10, 5, 4, 3], [(0, 1), (1, 2), (2, 3)]) == 12",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-sg4nmihs/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('30', '12')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sum_increasing_subseq(a, n, index, k):\n    # Base case: if index is out of bounds or k is not greater than index\n    if index >= n or k <= index:\n        return 0\n    \n    # Initialize the result with the current element value at index\n    res = a[index]\n    \n    # Iterate through the array to find the maximum sum of increasing subsequence\n    for i in range(index + 1, n):\n        if a[i] > a[index]:\n            res = max(res, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return res\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_sum = 0\n    \n    # Process each range provided in the input\n    for start, end in ranges:\n        # Ensure the range is valid\n        if start < 0 or end >= len(a) or start > end:\n            raise ValueError(\"Invalid range\")\n        \n        # Find the maximum sum of increasing subsequence for the given range\n        max_sum = max_sum_increasing_subseq(a, end - start + 1, 0, end)\n        \n        # Add the maximum sum to the total sum\n        total_sum += max_sum\n    \n    return total_sum",
+        "completion_tokens": 363,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 241,
+        "raw_text": "```python\ndef max_sum_increasing_subseq(a, n, index, k):\n    # Base case: if index is out of bounds or k is not greater than index\n    if index >= n or k <= index:\n        return 0\n    \n    # Initialize the result with the current element value at index\n    res = a[index]\n    \n    # Iterate through the array to find the maximum sum of increasing subsequence\n    for i in range(index + 1, n):\n        if a[i] > a[index]:\n            res = max(res, a[index] + max_sum_increasing_subseq(a, n, i, k))\n    \n    return res\n\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n    total_sum = 0\n    \n    # Process each range provided in the input\n    for start, end in ranges:\n        # Ensure the range is valid\n        if start < 0 or end >= len(a) or start > end:\n            raise ValueError(\"Invalid range\")\n        \n        # Find the maximum sum of increasing subsequence for the given range\n        max_sum = max_sum_increasing_subseq(a, end - start + 1, 0, end)\n        \n        # Add the maximum sum to the total sum\n        total_sum += max_sum\n    \n    return total_sum\n```\n\nThis solution provides two functions as requested. The first function `max_sum_increasing_subseq` calculates the maximum sum of an increasing subsequence up to a specified index, including a specific element. The second function `max_sum_increasing_subseq_multiple_ranges` uses the first function to calculate the total maximum sum of increasing subsequences for multiple non-overlapping ranges. Each range's end element is included in its respective subsequence sum calculation.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .\ndef max_sum_increasing_subseq(a, n, index, k):\n\n# Given an array of integers, find the maximum sum of increasing subsequences that can be formed by including elements from multiple non-overlapping ranges. Specifically, you are given a list of tuples where each tuple contains two indices (start, end) representing a range. For each range, you need to find the maximum sum of increasing subsequences that includes the element at the 'end' index. The final result should be the sum of the maximum sums obtained from each range.\ndef max_sum_increasing_subseq_multiple_ranges(a, ranges):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3277305457741022,
+        "generation_seconds": 9.875448850914836
+      }
+    }
+  ],
+  "duration_seconds": 48.19070917926729,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/159",
+  "unique_code_count": 5
+}

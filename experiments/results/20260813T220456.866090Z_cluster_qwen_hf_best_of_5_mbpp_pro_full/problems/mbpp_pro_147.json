@@ -1,0 +1,556 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "b8671b0afac18addb2dce106bf96c348e5048a6ced97e87369bce9180041387f",
+      "execution": {
+        "duration_seconds": 0.20356140285730362,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "duration_seconds": 0.0851836372166872,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3])\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 42, in max_sub_array_sum_repeated_multiple\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 37, in max_sub_array_sum_repeated\n    current_sum -= repeated_array[j*n]\n                   ~~~~~~~~~~~~~~^^^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3])\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 42, in max_sub_array_sum_repeated_multiple\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-ydaaotg9/program.py\", line 37, in max_sub_array_sum_repeated\n    current_sum -= repeated_array[j*n]\n                   ~~~~~~~~~~~~~~^^^^^\nIndexError: list index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "duration_seconds": 0.1181920412927866,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-2dxjan59/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2])\n  File \"/tmp/srcg-2dxjan59/program.py\", line 42, in max_sub_array_sum_repeated_multiple\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-2dxjan59/program.py\", line 37, in max_sub_array_sum_repeated\n    current_sum -= repeated_array[j*n]\n                   ~~~~~~~~~~~~~~^^^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-2dxjan59/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2])\n  File \"/tmp/srcg-2dxjan59/program.py\", line 42, in max_sub_array_sum_repeated_multiple\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-2dxjan59/program.py\", line 37, in max_sub_array_sum_repeated\n    current_sum -= repeated_array[j*n]\n                   ~~~~~~~~~~~~~~^^^^^\nIndexError: list index out of range\n"
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef max_sub_array_sum_repeated(a: List[int], n: int, k: int) -> int:\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for x in arr[1:]:\n            max_current = max(x, max_current + x)\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_sum = float('-inf')\n    for i in range(n):\n        repeated_array = a[i:] + a[:i]\n        current_sum = 0\n        for j in range(k):\n            current_sum += sum(repeated_array)\n            max_sum = max(max_sum, kadane([current_sum]))\n            current_sum -= repeated_array[j*n]\n    \n    return max_sum\n\ndef max_sub_array_sum_repeated_multiple(arrays: List[List[int]], ks: List[int]) -> int:\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n    return max(max_sums)",
+        "completion_tokens": 229,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": "```python\nfrom typing import List\n\ndef max_sub_array_sum_repeated(a: List[int], n: int, k: int) -> int:\n    def kadane(arr):\n        max_current = max_global = arr[0]\n        for x in arr[1:]:\n            max_current = max(x, max_current + x)\n            if max_current > max_global:\n                max_global = max_current\n        return max_global\n    \n    max_sum = float('-inf')\n    for i in range(n):\n        repeated_array = a[i:] + a[:i]\n        current_sum = 0\n        for j in range(k):\n            current_sum += sum(repeated_array)\n            max_sum = max(max_sum, kadane([current_sum]))\n            current_sum -= repeated_array[j*n]\n    \n    return max_sum\n\ndef max_sub_array_sum_repeated_multiple(arrays: List[List[int]], ks: List[int]) -> int:\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n    return max(max_sums)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.20356140285730362,
+        "generation_seconds": 6.235771048814058
+      }
+    },
+    {
+      "code_hash": "2226acfa179507dec6b2563ff654715d2b1519e7ac7279089d7c74ddb9e71f3d",
+      "execution": {
+        "duration_seconds": 0.14699105359613895,
+        "passed": true,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "duration_seconds": 0.06287202052772045,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "duration_seconds": 0.08392233960330486,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def max_sub_array_sum_repeated(a, n, k):\n    # Function to find the largest sum of a contiguous subarray using Kadane's algorithm\n    def kadanes_max_sum(sub_arr):\n        current_sum = max_sum = sub_arr[0]\n        for num in sub_arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    # Create the repeated array\n    repeated_a = a * k\n    \n    # Find the maximum sum of any contiguous subarray in the repeated array\n    return kadanes_max_sum(repeated_a)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    # Initialize the maximum sum found across all modified arrays\n    global_max_sum = float('-inf')\n    \n    # Iterate through each array and its corresponding k value\n    for array, k in zip(arrays, ks):\n        # Find the maximum sum for the current modified array\n        local_max_sum = max_sub_array_sum_repeated(array, len(array), k)\n        \n        # Update the global maximum sum if the local sum is greater\n        global_max_sum = max(global_max_sum, local_max_sum)\n    \n    return global_max_sum",
+        "completion_tokens": 261,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": "```python\ndef max_sub_array_sum_repeated(a, n, k):\n    # Function to find the largest sum of a contiguous subarray using Kadane's algorithm\n    def kadanes_max_sum(sub_arr):\n        current_sum = max_sum = sub_arr[0]\n        for num in sub_arr[1:]:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n        return max_sum\n    \n    # Create the repeated array\n    repeated_a = a * k\n    \n    # Find the maximum sum of any contiguous subarray in the repeated array\n    return kadanes_max_sum(repeated_a)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    # Initialize the maximum sum found across all modified arrays\n    global_max_sum = float('-inf')\n    \n    # Iterate through each array and its corresponding k value\n    for array, k in zip(arrays, ks):\n        # Find the maximum sum for the current modified array\n        local_max_sum = max_sub_array_sum_repeated(array, len(array), k)\n        \n        # Update the global maximum sum if the local sum is greater\n        global_max_sum = max(global_max_sum, local_max_sum)\n    \n    return global_max_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.14699105359613895,
+        "generation_seconds": 7.046759650111198
+      }
+    },
+    {
+      "code_hash": "c29adfe2d4e150bb4127c81b0a32198b068e1d2d16f901b1ea7fc6da55865b12",
+      "execution": {
+        "duration_seconds": 0.14467433281242847,
+        "passed": true,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "duration_seconds": 0.06304667145013809,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "duration_seconds": 0.08146916143596172,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import sys\n\ndef kadane(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a, n, k):\n    repeated_array = [x for _ in range(k) for x in a]\n    return kadane(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    max_sums = []\n    for array, k in zip(arrays, ks):\n        max_sums.append(max_sub_array_sum_repeated(array, len(array), k))\n    return max(max_sums)",
+        "completion_tokens": 260,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": "```python\nimport sys\n\ndef kadane(arr):\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a, n, k):\n    repeated_array = [x for _ in range(k) for x in a]\n    return kadane(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    max_sums = []\n    for array, k in zip(arrays, ks):\n        max_sums.append(max_sub_array_sum_repeated(array, len(array), k))\n    return max(max_sums)\n```\n\nThis solution includes a helper function `kadane` to implement Kadane's algorithm for finding the maximum sum of a contiguous subarray. The function `max_sub_array_sum_repeated` uses this helper function to solve the first problem by creating a repeated array and then applying Kadane's algorithm. The function `max_sub_array_sum_repeated_multiple` iterates over multiple pairs of arrays and their respective repeat counts, using the first function to compute the result for each pair and finally returns the maximum result.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.14467433281242847,
+        "generation_seconds": 7.012899866327643
+      }
+    },
+    {
+      "code_hash": "90e7059098d0cece32f17b1236364cdebdd879512718df818b1f8c28e6302ddb",
+      "execution": {
+        "duration_seconds": 0.16477216593921185,
+        "passed": true,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "duration_seconds": 0.06478472985327244,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "duration_seconds": 0.09979720041155815,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef kadane_algorithm(arr: List[int]) -> int:\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a: List[int], n: int, k: int) -> int:\n    repeated_array = a * k\n    return kadane_algorithm(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays: List[List[int]], ks: List[int]) -> int:\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n    return max(max_sums)",
+        "completion_tokens": 259,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": "```python\nfrom typing import List\n\ndef kadane_algorithm(arr: List[int]) -> int:\n    max_current = max_global = arr[0]\n    for num in arr[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a: List[int], n: int, k: int) -> int:\n    repeated_array = a * k\n    return kadane_algorithm(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays: List[List[int]], ks: List[int]) -> int:\n    max_sums = [max_sub_array_sum_repeated(array, len(array), k) for array, k in zip(arrays, ks)]\n    return max(max_sums)\n```\n\nThis solution includes the `kadane_algorithm` helper function, which implements Kadane's algorithm to find the maximum sum of a contiguous subarray. The `max_sub_array_sum_repeated` function constructs the repeated array and then uses Kadane's algorithm to find the maximum sum. The `max_sub_array_sum_repeated_multiple` function applies the first function to multiple arrays with their respective repetition counts and returns the maximum result.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.16477216593921185,
+        "generation_seconds": 6.987213591113687
+      }
+    },
+    {
+      "code_hash": "73fe9a032e63d22b2371f11f9f7336b851b566fd0f7e59f4ce54b2308663182f",
+      "execution": {
+        "duration_seconds": 0.19256582111120224,
+        "passed": true,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "duration_seconds": 0.09796142578125,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[1, 2], [3, -1]], [2, 3]) == 7",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "duration_seconds": 0.09436916373670101,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_sub_array_sum_repeated_multiple([[-1, -2], [3, 4]], [1, 2]) == 14",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 2
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def kadane_max_sum(array):\n    \"\"\"Helper function to find the maximum sum of a contiguous subarray using Kadane's algorithm.\"\"\"\n    max_current = max_global = array[0]\n    for num in array[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a, n, k):\n    \"\"\"Function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\"\"\"\n    repeated_array = a * k\n    return kadane_max_sum(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    \"\"\"Given a list of arrays, each representing a modified array formed by repeating a given array k times, \n    write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\"\"\"\n    max_sums = [max_sub_array_sum_repeated(arr, len(arr), k) for arr, k in zip(arrays, ks)]\n    return max(max_sums)",
+        "completion_tokens": 354,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 183,
+        "raw_text": "```python\ndef kadane_max_sum(array):\n    \"\"\"Helper function to find the maximum sum of a contiguous subarray using Kadane's algorithm.\"\"\"\n    max_current = max_global = array[0]\n    for num in array[1:]:\n        max_current = max(num, max_current + num)\n        if max_current > max_global:\n            max_global = max_current\n    return max_global\n\ndef max_sub_array_sum_repeated(a, n, k):\n    \"\"\"Function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\"\"\"\n    repeated_array = a * k\n    return kadane_max_sum(repeated_array)\n\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n    \"\"\"Given a list of arrays, each representing a modified array formed by repeating a given array k times, \n    write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\"\"\"\n    max_sums = [max_sub_array_sum_repeated(arr, len(arr), k) for arr, k in zip(arrays, ks)]\n    return max(max_sums)\n```\n\nThis solution includes:\n1. A helper function `kadane_max_sum` that implements Kadane's algorithm to find the maximum sum of a contiguous subarray.\n2. The main function `max_sub_array_sum_repeated` that uses the helper function to find the maximum sum of a contiguous subarray in an array that is repeated `k` times.\n3. The function `max_sub_array_sum_repeated_multiple` that applies the first function to multiple arrays, each repeated according to its corresponding `k`, and returns the maximum result among them.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the largest sum of a contiguous array in the modified array which is formed by repeating the given array k times.\ndef max_sub_array_sum_repeated(a, n, k):\n\n# Given a list of arrays, each representing a modified array formed by repeating a given array k times, write a function to find the largest sum of a contiguous subarray for each modified array and return the maximum sum among all the modified arrays.\ndef max_sub_array_sum_repeated_multiple(arrays, ks):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.19256582111120224,
+        "generation_seconds": 9.586730372160673
+      }
+    }
+  ],
+  "duration_seconds": 37.725096609443426,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/147",
+  "unique_code_count": 5
+}

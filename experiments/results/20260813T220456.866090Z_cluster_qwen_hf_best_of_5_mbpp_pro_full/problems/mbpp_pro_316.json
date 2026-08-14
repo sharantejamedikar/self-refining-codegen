@@ -1,0 +1,626 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "101024d61ddf22839fd1e2dd4067d6f52d38bf686ebf586125fddca90fdffdcc",
+      "execution": {
+        "duration_seconds": 0.3233982753008604,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "duration_seconds": 0.07851723954081535,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "duration_seconds": 0.10745585896074772,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "9",
+            "assertion_expression": "sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "duration_seconds": 0.13713498786091805,
+            "exception_message": "assertion comparison failed: actual=9; expected=11",
+            "exception_type": "AssertionError",
+            "expected_value": "11",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-roysno2m/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-roysno2m/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def toggle_middle_bits(n):\n    # Convert number to binary string and remove the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # If the length is less than 3 (i.e., it has fewer than 3 bits), return the number as is\n    if length < 3:\n        return n\n    \n    # Toggle all bits except the first and the last\n    toggled_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the toggled binary string back to an integer and return\n    return int(toggled_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Sum the toggled middle bits of each number in the list\n    total_sum = sum(toggle_middle_bits(num) for num in numbers)\n    return total_sum",
+        "completion_tokens": 284,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "raw_text": "```python\ndef toggle_middle_bits(n):\n    # Convert number to binary string and remove the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # If the length is less than 3 (i.e., it has fewer than 3 bits), return the number as is\n    if length < 3:\n        return n\n    \n    # Toggle all bits except the first and the last\n    toggled_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the toggled binary string back to an integer and return\n    return int(toggled_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Sum the toggled middle bits of each number in the list\n    total_sum = sum(toggle_middle_bits(num) for num in numbers)\n    return total_sum\n```\n\nThis solution includes two functions:\n1. `toggle_middle_bits(n)` which toggles all bits of a given number `n` except the first and the last bit.\n2. `sum_toggled_middle_bits(numbers)` which applies the `toggle_middle_bits` function to each number in a given list and returns their sum.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.3233982753008604,
+        "generation_seconds": 7.653053877875209
+      }
+    },
+    {
+      "code_hash": "c6545465e1f33328c67a4ebc36bf374e7d5ffccab97f220214d6352f46b755f4",
+      "execution": {
+        "duration_seconds": 0.3988742083311081,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "23",
+            "assertion_expression": "sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "duration_seconds": 0.1307906899601221,
+            "exception_message": "assertion comparison failed: actual=23; expected=24",
+            "exception_type": "AssertionError",
+            "expected_value": "24",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dipgsn8k/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('23', '24')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dipgsn8k/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('23', '24')\n"
+          },
+          {
+            "actual_value": "56",
+            "assertion_expression": "sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "duration_seconds": 0.14139874652028084,
+            "exception_message": "assertion comparison failed: actual=56; expected=59",
+            "exception_type": "AssertionError",
+            "expected_value": "59",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tms9w_8d/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('56', '59')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tms9w_8d/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('56', '59')\n"
+          },
+          {
+            "actual_value": "10",
+            "assertion_expression": "sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "duration_seconds": 0.12645439989864826,
+            "exception_message": "assertion comparison failed: actual=10; expected=11",
+            "exception_type": "AssertionError",
+            "expected_value": "11",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-xvl061o6/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', '11')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-xvl061o6/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('10', '11')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def toggle_middle_bits(n):\n    # Create a mask with all bits set except the first and last bit\n    num_bits = n.bit_length()\n    if num_bits <= 2:\n        return n  # No middle bits to toggle if there are less than 3 bits\n    \n    mask = (1 << (num_bits - 1)) - 1  # All bits set up to but not including the highest bit\n    mask |= 1  # Add the lowest bit back in, as it was excluded from the initial calculation\n    \n    # Toggle the middle bits by applying the XOR operation with the mask\n    return n ^ mask\n\ndef sum_toggled_middle_bits(numbers):\n    total_sum = 0\n    for number in numbers:\n        total_sum += toggle_middle_bits(number)\n    return total_sum",
+        "completion_tokens": 171,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "raw_text": "```python\ndef toggle_middle_bits(n):\n    # Create a mask with all bits set except the first and last bit\n    num_bits = n.bit_length()\n    if num_bits <= 2:\n        return n  # No middle bits to toggle if there are less than 3 bits\n    \n    mask = (1 << (num_bits - 1)) - 1  # All bits set up to but not including the highest bit\n    mask |= 1  # Add the lowest bit back in, as it was excluded from the initial calculation\n    \n    # Toggle the middle bits by applying the XOR operation with the mask\n    return n ^ mask\n\ndef sum_toggled_middle_bits(numbers):\n    total_sum = 0\n    for number in numbers:\n        total_sum += toggle_middle_bits(number)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.3988742083311081,
+        "generation_seconds": 4.605860045179725
+      }
+    },
+    {
+      "code_hash": "7e3f38a8acf5a45e1cdf17f84d1f63d3d73ff1ad038cf6055e119151bbda873e",
+      "execution": {
+        "duration_seconds": 0.3222638163715601,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "duration_seconds": 0.08108840882778168,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "duration_seconds": 0.09722423367202282,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "9",
+            "assertion_expression": "sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "duration_seconds": 0.1436723805963993,
+            "exception_message": "assertion comparison failed: actual=9; expected=11",
+            "exception_type": "AssertionError",
+            "expected_value": "11",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-c2e082w2/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-c2e082w2/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def toggle_middle_bits(n):\n    # Find the number of bits in n\n    num_bits = n.bit_length()\n    \n    # If there are less than 3 bits, no middle bits to toggle\n    if num_bits < 3:\n        return n\n    \n    # Create a mask with all bits set except the first and last\n    mask = ((1 << (num_bits - 2)) - 1) << 1\n    \n    # Toggle the bits using XOR\n    result = n ^ mask\n    \n    return result\n\ndef sum_toggled_middle_bits(numbers):\n    total_sum = 0\n    for number in numbers:\n        toggled_number = toggle_middle_bits(number)\n        total_sum += toggled_number\n    \n    return total_sum",
+        "completion_tokens": 247,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "raw_text": "```python\ndef toggle_middle_bits(n):\n    # Find the number of bits in n\n    num_bits = n.bit_length()\n    \n    # If there are less than 3 bits, no middle bits to toggle\n    if num_bits < 3:\n        return n\n    \n    # Create a mask with all bits set except the first and last\n    mask = ((1 << (num_bits - 2)) - 1) << 1\n    \n    # Toggle the bits using XOR\n    result = n ^ mask\n    \n    return result\n\ndef sum_toggled_middle_bits(numbers):\n    total_sum = 0\n    for number in numbers:\n        toggled_number = toggle_middle_bits(number)\n        total_sum += toggled_number\n    \n    return total_sum\n```\n\nThis solution includes two functions:\n1. `toggle_middle_bits(n)`: This function takes an integer `n` and toggles all bits of `n` except the first and the last bit. It returns the modified number.\n2. `sum_toggled_middle_bits(numbers)`: This function takes a list of integers, applies the `toggle_middle_bits` function to each number, sums up the results, and returns the final sum.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3222638163715601,
+        "generation_seconds": 6.656960224732757
+      }
+    },
+    {
+      "code_hash": "86d9aa487140e6def952bd81eb5a7e86be5d59f0236373fcd530334dce1fa942",
+      "execution": {
+        "duration_seconds": 0.2861666865646839,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "duration_seconds": 0.0785301961004734,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "duration_seconds": 0.08913515135645866,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "9",
+            "assertion_expression": "sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "duration_seconds": 0.1182483546435833,
+            "exception_message": "assertion comparison failed: actual=9; expected=11",
+            "exception_type": "AssertionError",
+            "expected_value": "11",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yfc6kswf/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yfc6kswf/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def toggle_middle_bits(n):\n    # Convert number to binary string, excluding the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # If the length is less than 3 (i.e., less than 4 bits in total), return the original number as no middle bits to toggle\n    if length < 3:\n        return n\n    \n    # Toggle bits from the second to the second last position\n    toggled_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the toggled binary string back to an integer and return\n    return int(toggled_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Initialize the sum to zero\n    total_sum = 0\n    \n    # Iterate over each number in the list\n    for num in numbers:\n        # Toggle the middle bits of the current number using the previous function\n        toggled_num = toggle_middle_bits(num)\n        \n        # Add the toggled number to the total sum\n        total_sum += toggled_num\n    \n    # Return the final sum\n    return total_sum",
+        "completion_tokens": 277,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "raw_text": "```python\ndef toggle_middle_bits(n):\n    # Convert number to binary string, excluding the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # If the length is less than 3 (i.e., less than 4 bits in total), return the original number as no middle bits to toggle\n    if length < 3:\n        return n\n    \n    # Toggle bits from the second to the second last position\n    toggled_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the toggled binary string back to an integer and return\n    return int(toggled_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Initialize the sum to zero\n    total_sum = 0\n    \n    # Iterate over each number in the list\n    for num in numbers:\n        # Toggle the middle bits of the current number using the previous function\n        toggled_num = toggle_middle_bits(num)\n        \n        # Add the toggled number to the total sum\n        total_sum += toggled_num\n    \n    # Return the final sum\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2861666865646839,
+        "generation_seconds": 7.485431883484125
+      }
+    },
+    {
+      "code_hash": "99a439bc8438632e79a312f51f0723c7132474ab76a56756c20dc32fd354bdf0",
+      "execution": {
+        "duration_seconds": 0.33411172218620777,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "duration_seconds": 0.07917359098792076,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([5, 7, 10]) == 24",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "duration_seconds": 0.1258817594498396,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([15, 31, 63]) == 59",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "9",
+            "assertion_expression": "sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "duration_seconds": 0.12879984639585018,
+            "exception_message": "assertion comparison failed: actual=9; expected=11",
+            "exception_type": "AssertionError",
+            "expected_value": "11",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0dheowu0/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n",
+            "stdout": "",
+            "test_case": "assert sum_toggled_middle_bits([1, 2, 4]) == 11",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0dheowu0/program.py\", line 53, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9', '11')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def toggle_middle_bits(n):\n    # Convert number to binary string, removing the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # Ensure there are at least 3 bits to toggle (excluding the first and last)\n    if length < 3:\n        return n\n    \n    # Create a new binary string with toggled middle bits\n    new_bin_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the new binary string back to an integer and return\n    return int(new_bin_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Initialize the sum variable\n    total_sum = 0\n    \n    # Iterate through each number in the list\n    for num in numbers:\n        # Toggle the middle bits of the current number\n        toggled_num = toggle_middle_bits(num)\n        \n        # Add the result to the total sum\n        total_sum += toggled_num\n    \n    # Return the final sum\n    return total_sum",
+        "completion_tokens": 255,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 170,
+        "raw_text": "```python\ndef toggle_middle_bits(n):\n    # Convert number to binary string, removing the '0b' prefix\n    bin_str = bin(n)[2:]\n    \n    # Calculate the length of the binary string\n    length = len(bin_str)\n    \n    # Ensure there are at least 3 bits to toggle (excluding the first and last)\n    if length < 3:\n        return n\n    \n    # Create a new binary string with toggled middle bits\n    new_bin_str = bin_str[0] + ''.join('1' if bit == '0' else '0' for bit in bin_str[1:-1]) + bin_str[-1]\n    \n    # Convert the new binary string back to an integer and return\n    return int(new_bin_str, 2)\n\ndef sum_toggled_middle_bits(numbers):\n    # Initialize the sum variable\n    total_sum = 0\n    \n    # Iterate through each number in the list\n    for num in numbers:\n        # Toggle the middle bits of the current number\n        toggled_num = toggle_middle_bits(num)\n        \n        # Add the result to the total sum\n        total_sum += toggled_num\n    \n    # Return the final sum\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a python function to toggle bits of the number except the first and the last bit. https://www.geeksforgeeks.org/toggle-bits-number-expect-first-last-bits/\ndef toggle_middle_bits(n):\n\n# Given a list of numbers, write a Python function to toggle the bits of each number except the first and the last bit, and then sum the results. Return the final sum.\ndef sum_toggled_middle_bits(numbers):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.33411172218620777,
+        "generation_seconds": 6.871110985055566
+      }
+    }
+  ],
+  "duration_seconds": 34.94008410722017,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/316",
+  "unique_code_count": 5
+}

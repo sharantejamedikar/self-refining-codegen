@@ -1,0 +1,701 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d8a4e6df254cd134e503a1dde69653a2e503b884a3f623d448fc25a10068c9ac",
+      "execution": {
+        "duration_seconds": 0.5462367087602615,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.14293700829148293,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-zwrb0shp/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-zwrb0shp/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.1369468718767166,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_axey98b/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_axey98b/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "duration_seconds": 0.1309354603290558,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-r5xe3njh/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-r5xe3njh/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "duration_seconds": 0.13510965183377266,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fb9nbvo4/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fb9nbvo4/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import numpy as np\n\ndef zero_count(nums):\n    total = len(nums)\n    zeros = nums.count(0)\n    non_zeros = total - zeros\n    if non_zeros == 0:\n        return float('inf')\n    return zeros / non_zeros\n\ndef average_zero_ratio(matrices):\n    total_ratio = 0\n    count = 0\n    for matrix in matrices:\n        flat_matrix = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_matrix)\n        if not np.isinf(ratio):\n            total_ratio += ratio\n            count += 1\n    if count == 0:\n        return float('inf')\n    return total_ratio / count",
+        "completion_tokens": 149,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "raw_text": "```python\nimport numpy as np\n\ndef zero_count(nums):\n    total = len(nums)\n    zeros = nums.count(0)\n    non_zeros = total - zeros\n    if non_zeros == 0:\n        return float('inf')\n    return zeros / non_zeros\n\ndef average_zero_ratio(matrices):\n    total_ratio = 0\n    count = 0\n    for matrix in matrices:\n        flat_matrix = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_matrix)\n        if not np.isinf(ratio):\n            total_ratio += ratio\n            count += 1\n    if count == 0:\n        return float('inf')\n    return total_ratio / count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.5462367087602615,
+        "generation_seconds": 4.032497346401215
+      }
+    },
+    {
+      "code_hash": "c34ec04d7ba67f2b5289d4bc0a0f9e48642c8c0398521a1f95340aa2bd54d5c5",
+      "execution": {
+        "duration_seconds": 0.49656485207378864,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "0.5833333333333334",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.14161077328026295,
+            "exception_message": "assertion comparison failed: actual=0.5833333333333334; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_nyz8759/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.5833333333333334', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_nyz8759/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.5833333333333334', '0.0')\n"
+          },
+          {
+            "actual_value": "0.25",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.13024881854653358,
+            "exception_message": "assertion comparison failed: actual=0.25; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-otur_wg1/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.25', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-otur_wg1/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.25', '0.0')\n"
+          },
+          {
+            "actual_value": "1.0",
+            "assertion_expression": "average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "duration_seconds": 0.1233144011348486,
+            "exception_message": "assertion comparison failed: actual=1.0; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ffq414wm/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1.0', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ffq414wm/program.py\", line 40, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1.0', '0.0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "duration_seconds": 0.10111531428992748,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def zero_count(nums):\n    total = len(nums)\n    zero_count = nums.count(0)\n    return zero_count / total if total > 0 else float('inf')\n\ndef average_zero_ratio(matrices):\n    total_ratios = 0\n    count_matrices = len(matrices)\n    \n    for matrix in matrices:\n        flat_list = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_list)\n        total_ratios += ratio\n    \n    if count_matrices == 0:\n        return float('inf')\n    \n    return total_ratios / count_matrices",
+        "completion_tokens": 126,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "raw_text": "```python\ndef zero_count(nums):\n    total = len(nums)\n    zero_count = nums.count(0)\n    return zero_count / total if total > 0 else float('inf')\n\ndef average_zero_ratio(matrices):\n    total_ratios = 0\n    count_matrices = len(matrices)\n    \n    for matrix in matrices:\n        flat_list = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_list)\n        total_ratios += ratio\n    \n    if count_matrices == 0:\n        return float('inf')\n    \n    return total_ratios / count_matrices\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.49656485207378864,
+        "generation_seconds": 3.391649940982461
+      }
+    },
+    {
+      "code_hash": "26bd53bb82732e093acf6bfd19a234b2dbc59faca80a3f20c07958d673fb3208",
+      "execution": {
+        "duration_seconds": 0.47556162625551224,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.07922166399657726,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pyhn_91a/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pyhn_91a/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.13392641581594944,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6g5z2nlv/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6g5z2nlv/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "duration_seconds": 0.13876045867800713,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-oa3guiy0/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-oa3guiy0/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "duration_seconds": 0.12331806682050228,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bdkc9col/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bdkc9col/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import numpy as np\n\ndef zero_count(nums):\n    total = len(nums)\n    non_zeros = sum(1 for num in nums if num != 0)\n    zero_count = total - non_zeros\n    if non_zeros == 0:\n        return float('inf')\n    return zero_count / non_zeros\n\ndef average_zero_ratio(matrices):\n    ratios = []\n    for matrix in matrices:\n        flat_matrix = matrix.flatten()\n        ratio = zero_count(flat_matrix)\n        ratios.append(ratio)\n    return sum(ratios) / len(ratios) if len(ratios) > 0 else 0",
+        "completion_tokens": 134,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "raw_text": "```python\nimport numpy as np\n\ndef zero_count(nums):\n    total = len(nums)\n    non_zeros = sum(1 for num in nums if num != 0)\n    zero_count = total - non_zeros\n    if non_zeros == 0:\n        return float('inf')\n    return zero_count / non_zeros\n\ndef average_zero_ratio(matrices):\n    ratios = []\n    for matrix in matrices:\n        flat_matrix = matrix.flatten()\n        ratio = zero_count(flat_matrix)\n        ratios.append(ratio)\n    return sum(ratios) / len(ratios) if len(ratios) > 0 else 0\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.47556162625551224,
+        "generation_seconds": 3.6045030374079943
+      }
+    },
+    {
+      "code_hash": "607c14f8f5111bd80d403e0ca78633be9c451cdaaf17ba5d2cb2163d289a0923",
+      "execution": {
+        "duration_seconds": 0.47071737609803677,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "inf",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.08667944185435772,
+            "exception_message": "assertion comparison failed: actual=inf; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-662ilgpp/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-662ilgpp/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n"
+          },
+          {
+            "actual_value": "0.4444444444444444",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.11504118889570236,
+            "exception_message": "assertion comparison failed: actual=0.4444444444444444; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n6kct9es/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.4444444444444444', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n6kct9es/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.4444444444444444', '0.0')\n"
+          },
+          {
+            "actual_value": "inf",
+            "assertion_expression": "average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "duration_seconds": 0.14872552827000618,
+            "exception_message": "assertion comparison failed: actual=inf; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-oza6qupr/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-oza6qupr/program.py\", line 43, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "duration_seconds": 0.12004649639129639,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef zero_count(nums: List[int]) -> float:\n    total = len(nums)\n    zero_count = nums.count(0)\n    non_zero_count = total - zero_count\n    if non_zero_count == 0:\n        return float('inf')\n    return zero_count / non_zero_count\n\ndef average_zero_ratio(matrices: List[List[List[int]]]) -> float:\n    total_ratios = []\n    for matrix in matrices:\n        flat_list = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_list)\n        total_ratios.append(ratio)\n    \n    if not total_ratios:\n        return 0\n    \n    return sum(total_ratios) / len(total_ratios)",
+        "completion_tokens": 156,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "raw_text": "```python\nfrom typing import List\n\ndef zero_count(nums: List[int]) -> float:\n    total = len(nums)\n    zero_count = nums.count(0)\n    non_zero_count = total - zero_count\n    if non_zero_count == 0:\n        return float('inf')\n    return zero_count / non_zero_count\n\ndef average_zero_ratio(matrices: List[List[List[int]]]) -> float:\n    total_ratios = []\n    for matrix in matrices:\n        flat_list = [item for sublist in matrix for item in sublist]\n        ratio = zero_count(flat_list)\n        total_ratios.append(ratio)\n    \n    if not total_ratios:\n        return 0\n    \n    return sum(total_ratios) / len(total_ratios)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.47071737609803677,
+        "generation_seconds": 4.264104817062616
+      }
+    },
+    {
+      "code_hash": "8c7ec989e428ca4dd7363ab7ba7646e9c1438919797a679e9e601753e9a53dbc",
+      "execution": {
+        "duration_seconds": 0.5027173310518265,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "1.4",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.11962348408997059,
+            "exception_message": "assertion comparison failed: actual=1.4; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-lhzzu5ot/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1.4', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[0, 0], [0, 0]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-lhzzu5ot/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('1.4', '0.0')\n"
+          },
+          {
+            "actual_value": "0.3333333333333333",
+            "assertion_expression": "average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "duration_seconds": 0.13266951777040958,
+            "exception_message": "assertion comparison failed: actual=0.3333333333333333; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-df63m10o/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.3333333333333333', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 1], [2, 3]], [[1, 2], [3, 4]], [[1, 0], [0, 1]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-df63m10o/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0.3333333333333333', '0.0')\n"
+          },
+          {
+            "actual_value": "inf",
+            "assertion_expression": "average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "duration_seconds": 0.14194064773619175,
+            "exception_message": "assertion comparison failed: actual=inf; expected=0.0",
+            "exception_type": "AssertionError",
+            "expected_value": "0.0",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yga1z8mm/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[0, 0], [0, 0]], [[0, 0], [0, 0]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yga1z8mm/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('inf', '0.0')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "duration_seconds": 0.10817866958677769,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert average_zero_ratio([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == 0.0",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def zero_count(nums):\n    total = len(nums)\n    zero_count = nums.count(0)\n    if total == 0:\n        return float('inf')\n    return zero_count / total\n\ndef average_zero_ratio(matrices):\n    total_zeros = 0\n    total_non_zeros = 0\n    for matrix in matrices:\n        for row in matrix:\n            row_zeros = zero_count(row)\n            if row_zeros == float('inf'):\n                total_zeros += len(matrix) * len(row)\n            else:\n                total_zeros += row_zeros * len(row)\n                total_non_zeros += (1 - row_zeros) * len(row)\n    \n    if total_non_zeros == 0:\n        return float('inf')\n    return total_zeros / total_non_zeros",
+        "completion_tokens": 160,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 165,
+        "raw_text": "```python\ndef zero_count(nums):\n    total = len(nums)\n    zero_count = nums.count(0)\n    if total == 0:\n        return float('inf')\n    return zero_count / total\n\ndef average_zero_ratio(matrices):\n    total_zeros = 0\n    total_non_zeros = 0\n    for matrix in matrices:\n        for row in matrix:\n            row_zeros = zero_count(row)\n            if row_zeros == float('inf'):\n                total_zeros += len(matrix) * len(row)\n            else:\n                total_zeros += row_zeros * len(row)\n                total_non_zeros += (1 - row_zeros) * len(row)\n    \n    if total_non_zeros == 0:\n        return float('inf')\n    return total_zeros / total_non_zeros\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the ratio of zeroes to non-zeroes in an array of integers.\ndef zero_count(nums):\n\n# Given a list of 2D matrices, write a function to find the ratio of zeroes to non-zeroes for each matrix and then return the average of these ratios across all matrices. If a matrix contains only zeroes, its ratio should be considered as infinity.\ndef average_zero_ratio(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5027173310518265,
+        "generation_seconds": 4.325020952150226
+      }
+    }
+  ],
+  "duration_seconds": 22.1129018496722,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/80",
+  "unique_code_count": 5
+}

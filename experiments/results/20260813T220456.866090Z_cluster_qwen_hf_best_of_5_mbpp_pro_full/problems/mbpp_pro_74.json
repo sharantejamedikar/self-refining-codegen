@@ -1,0 +1,631 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "8fff739703b0b751fb54d09fc163e865c0b44fc8fa29ee79016fe7ee9b5bcf88",
+      "execution": {
+        "duration_seconds": 0.2808203939348459,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "duration_seconds": 0.06548837013542652,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "duration_seconds": 0.10248152166604996,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "duration_seconds": 0.11261325515806675,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if any(len(row) != n for row in my_matrix):\n        return False\n    \n    # Calculate the sum of the first row to be used as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check the sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check the sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check the sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check the sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    return sum(1 for matrix in matrices if magic_square_test(matrix))",
+        "completion_tokens": 228,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": "```python\ndef magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if any(len(row) != n for row in my_matrix):\n        return False\n    \n    # Calculate the sum of the first row to be used as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check the sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check the sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check the sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check the sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    return sum(1 for matrix in matrices if magic_square_test(matrix))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.2808203939348459,
+        "generation_seconds": 6.125287679955363
+      }
+    },
+    {
+      "code_hash": "8b45a77e74e18ecbab85a0bdc42fc874808e07e754fef58f92dfc95237146569",
+      "execution": {
+        "duration_seconds": 0.31682052463293076,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "duration_seconds": 0.10232798755168915,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "duration_seconds": 0.10064026899635792,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "duration_seconds": 0.1132495142519474,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if n == 0:\n        return False\n\n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n\n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n\n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n\n    # Check sum of main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n\n    # Check sum of secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n\n    return True\n\n\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count",
+        "completion_tokens": 345,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": "```python\ndef magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if n == 0:\n        return False\n\n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n\n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n\n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n\n    # Check sum of main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n\n    # Check sum of secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n\n    return True\n\n\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count\n```\n\nThis solution includes two functions: `magic_square_test` to check if a single matrix is a magic square, and `count_magic_squares` to count how many matrices in a given list are magic squares. The `magic_square_test` function calculates the sum of the first row as the target sum and checks if all rows, columns, and diagonals sum up to this target value. The `count_magic_squares` function iterates through each matrix in the list, using the `magic_square_test` function to determine if it is a magic square and increments a counter accordingly.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.31682052463293076,
+        "generation_seconds": 9.304633820429444
+      }
+    },
+    {
+      "code_hash": "490d134499dfc405f8edb719c6526a22d6a4978ec2c08d6bfc96c567c3a1922a",
+      "execution": {
+        "duration_seconds": 0.3929833583533764,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "duration_seconds": 0.1381445825099945,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n6a4pwvl/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n6a4pwvl/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "duration_seconds": 0.12169845588505268,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0s4zq4xv/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0s4zq4xv/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "duration_seconds": 0.13292120397090912,
+            "exception_message": "No module named 'numpy'",
+            "exception_type": "ModuleNotFoundError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-8tlh082h/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-8tlh082h/program.py\", line 19, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import numpy as np\n\n# Function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n    # Convert input list to numpy array for easier manipulation\n    my_matrix = np.array(my_matrix)\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = np.sum(my_matrix[0])\n    \n    # Check rows and columns\n    if not all(np.sum(row) == target_sum for row in my_matrix) or \\\n       not all(np.sum(col) == target_sum for col in my_matrix.T):\n        return False\n    \n    # Check diagonals\n    if np.sum(np.diag(my_matrix)) != target_sum or \\\n       np.sum(np.diag(np.fliplr(my_matrix))) != target_sum:\n        return False\n    \n    return True\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count",
+        "completion_tokens": 227,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": "```python\nimport numpy as np\n\n# Function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n    # Convert input list to numpy array for easier manipulation\n    my_matrix = np.array(my_matrix)\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = np.sum(my_matrix[0])\n    \n    # Check rows and columns\n    if not all(np.sum(row) == target_sum for row in my_matrix) or \\\n       not all(np.sum(col) == target_sum for col in my_matrix.T):\n        return False\n    \n    # Check diagonals\n    if np.sum(np.diag(my_matrix)) != target_sum or \\\n       np.sum(np.diag(np.fliplr(my_matrix))) != target_sum:\n        return False\n    \n    return True\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.3929833583533764,
+        "generation_seconds": 6.673867067322135
+      }
+    },
+    {
+      "code_hash": "838ea275e01205965b0f788fb03f1907c1e5d2ac290166293150892e7b91e3b9",
+      "execution": {
+        "duration_seconds": 0.29040675796568394,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "duration_seconds": 0.06501634418964386,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "duration_seconds": 0.10158411227166653,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "duration_seconds": 0.12359973974525928,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def magic_square_test(my_matrix):\n    n = len(my_matrix)\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count",
+        "completion_tokens": 220,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": "```python\ndef magic_square_test(my_matrix):\n    n = len(my_matrix)\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    count = 0\n    for matrix in matrices:\n        if magic_square_test(matrix):\n            count += 1\n    return count\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.29040675796568394,
+        "generation_seconds": 6.412359345704317
+      }
+    },
+    {
+      "code_hash": "3f5a5a62b023f23a70f0ead4256e8a1e49d767ac30f4245379c59d401ce56d74",
+      "execution": {
+        "duration_seconds": 0.27386547438800335,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "duration_seconds": 0.06407376006245613,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[2, 7, 6], [9, 5, 1], [4, 3, 8]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[8, 1, 6], [3, 5, 7], [4, 9, 2]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "duration_seconds": 0.10994222946465015,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 1, 1], [1, 1, 1], [1, 1, 1]], [[2, 7, 6], [9, 5, 1], [4, 3, 8]]]) == 2",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "duration_seconds": 0.09960620477795601,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert count_magic_squares([[[1, 2], [2, 1]], [[1, 1], [1, 1]]]) == 1",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if any(len(row) != n for row in my_matrix):\n        return False\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    return sum(1 for matrix in matrices if magic_square_test(matrix))",
+        "completion_tokens": 223,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 130,
+        "raw_text": "```python\ndef magic_square_test(my_matrix):\n    n = len(my_matrix)\n    if any(len(row) != n for row in my_matrix):\n        return False\n    \n    # Calculate the sum of the first row to use as a reference\n    target_sum = sum(my_matrix[0])\n    \n    # Check sums of all rows\n    for row in my_matrix:\n        if sum(row) != target_sum:\n            return False\n    \n    # Check sums of all columns\n    for col in range(n):\n        if sum(my_matrix[row][col] for row in range(n)) != target_sum:\n            return False\n    \n    # Check sum of the main diagonal\n    if sum(my_matrix[i][i] for i in range(n)) != target_sum:\n        return False\n    \n    # Check sum of the secondary diagonal\n    if sum(my_matrix[i][n-1-i] for i in range(n)) != target_sum:\n        return False\n    \n    return True\n\ndef count_magic_squares(matrices):\n    return sum(1 for matrix in matrices if magic_square_test(matrix))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to calculate whether the matrix is a magic square.\ndef magic_square_test(my_matrix):\n\n# Given a list of matrices, write a function to determine the number of magic squares in the list.\ndef count_magic_squares(matrices):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.27386547438800335,
+        "generation_seconds": 6.030841717496514
+      }
+    }
+  ],
+  "duration_seconds": 36.10543249361217,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/74",
+  "unique_code_count": 5
+}

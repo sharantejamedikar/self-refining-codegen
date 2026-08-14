@@ -1,0 +1,631 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "53ca4ca9fe8e5417992b49b8b8780201723b716ceccaf2c1057bc7a18484e395",
+      "execution": {
+        "duration_seconds": 0.26055609807372093,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.06638097576797009,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "duration_seconds": 0.09030327573418617,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "duration_seconds": 0.10361200198531151,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\ndef comb_sort(nums: List[int]) -> List[int]:\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted:\n        gap = int(gap / shrink_factor)\n        if gap <= 1:\n            gap = 1\n            sorted = True\n        \n        i = 0\n        while i + gap < len(nums):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n            i += 1\n    \n    return nums\n\ndef sort_list_of_lists(list_of_lists: List[List[int]]) -> List[List[int]]:\n    for sublist in list_of_lists:\n        sublist = comb_sort(sublist)\n    \n    return sorted(list_of_lists, key=lambda x: sum(x))",
+        "completion_tokens": 183,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "raw_text": "```python\nfrom typing import List\n\ndef comb_sort(nums: List[int]) -> List[int]:\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted:\n        gap = int(gap / shrink_factor)\n        if gap <= 1:\n            gap = 1\n            sorted = True\n        \n        i = 0\n        while i + gap < len(nums):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n            i += 1\n    \n    return nums\n\ndef sort_list_of_lists(list_of_lists: List[List[int]]) -> List[List[int]]:\n    for sublist in list_of_lists:\n        sublist = comb_sort(sublist)\n    \n    return sorted(list_of_lists, key=lambda x: sum(x))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.26055609807372093,
+        "generation_seconds": 4.988931640982628
+      }
+    },
+    {
+      "code_hash": "bff3b342f5f5c7de2b20c03721781310bf9191c2ba110a5140c13c248af84134",
+      "execution": {
+        "duration_seconds": 0.2808965537697077,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": "[[3, 2, 1], [6, 5, 4], [9, 8, 7]]",
+            "assertion_expression": "sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.0791389886289835,
+            "exception_message": "assertion comparison failed: actual=[[3, 2, 1], [6, 5, 4], [9, 8, 7]]; expected=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yrvwmms1/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[3, 2, 1], [6, 5, 4], [9, 8, 7]]', '[[1, 2, 3], [4, 5, 6], [7, 8, 9]]')\n",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yrvwmms1/program.py\", line 44, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[3, 2, 1], [6, 5, 4], [9, 8, 7]]', '[[1, 2, 3], [4, 5, 6], [7, 8, 9]]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "duration_seconds": 0.09442775137722492,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "duration_seconds": 0.10705513507127762,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted:\n        gap = int(gap / shrink_factor)\n        if gap <= 1:\n            gap = 1\n            sorted = True\n\n        index = 0\n        while index + gap < len(nums):\n            if nums[index] > nums[index + gap]:\n                nums[index], nums[index + gap] = nums[index + gap], nums[index]\n                sorted = False\n            index += 1\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    return sorted(list_of_lists, key=lambda x: sum(x))",
+        "completion_tokens": 145,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "raw_text": "```python\ndef comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted:\n        gap = int(gap / shrink_factor)\n        if gap <= 1:\n            gap = 1\n            sorted = True\n\n        index = 0\n        while index + gap < len(nums):\n            if nums[index] > nums[index + gap]:\n                nums[index], nums[index + gap] = nums[index + gap], nums[index]\n                sorted = False\n            index += 1\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    return sorted(list_of_lists, key=lambda x: sum(x))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.2808965537697077,
+        "generation_seconds": 3.8974405974149704
+      }
+    },
+    {
+      "code_hash": "016c5d851c5fc8f0eeb7aca79dc5052a4da862c334d25ead1afe221daf7759dc",
+      "execution": {
+        "duration_seconds": 0.26384987868368626,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.0696461983025074,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "duration_seconds": 0.086296321824193,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "duration_seconds": 0.10761869885027409,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted or gap > 1:\n        if gap > 1:\n            gap = int(gap / shrink_factor)\n\n        sorted = True\n\n        for i in range(len(nums) - gap):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    # Sort each sublist using comb_sort\n    for sublist in list_of_lists:\n        comb_sort(sublist)\n\n    # Sort the main list based on the sum of elements in each sublist\n    list_of_lists.sort(key=lambda x: sum(x))\n\n    return list_of_lists",
+        "completion_tokens": 240,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "raw_text": "```python\ndef comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted or gap > 1:\n        if gap > 1:\n            gap = int(gap / shrink_factor)\n\n        sorted = True\n\n        for i in range(len(nums) - gap):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    # Sort each sublist using comb_sort\n    for sublist in list_of_lists:\n        comb_sort(sublist)\n\n    # Sort the main list based on the sum of elements in each sublist\n    list_of_lists.sort(key=lambda x: sum(x))\n\n    return list_of_lists\n```\n\nThis solution includes two functions: `comb_sort` which sorts a list of elements using the comb sort algorithm, and `sort_list_of_lists` which uses `comb_sort` to sort each sublist within a list of lists, and then sorts the main list based on the sum of the elements in each sublist.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.26384987868368626,
+        "generation_seconds": 6.477202516049147
+      }
+    },
+    {
+      "code_hash": "ee7deddd0a92d707841e22cad65149169f3610f05c6ab62f431a45011d3dc0cc",
+      "execution": {
+        "duration_seconds": 0.2498877253383398,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.06605123542249203,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "duration_seconds": 0.0856882743537426,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "duration_seconds": 0.0979145560413599,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "from typing import List\n\n# Problem 1: Sort a list of elements using Comb Sort\ndef comb_sort(nums: List[int]) -> List[int]:\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n    \n    while not sorted:\n        # Update the gap value for a next comb\n        gap = int(gap / shrink_factor)\n        \n        # If gap is less than 1, set it to 1\n        if gap <= 1:\n            gap = 1\n            sorted = True\n        \n        # A single \"comb\" over the input list\n        index = 0\n        while index + gap < len(nums):\n            if nums[index] > nums[index + gap]:\n                # Swap elements\n                nums[index], nums[index + gap] = nums[index + gap], nums[index]\n                sorted = False\n            index += 1\n    \n    return nums\n\n# Problem 2: Sort each sublist and then sort the main list based on the sum of the elements in each sublist\ndef sort_list_of_lists(list_of_lists: List[List[int]]) -> List[List[int]]:\n    # Sort each sublist using comb_sort\n    for sublist in list_of_lists:\n        comb_sort(sublist)\n    \n    # Sort the main list based on the sum of each sublist\n    list_of_lists.sort(key=lambda x: sum(x))\n    \n    return list_of_lists",
+        "completion_tokens": 293,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "raw_text": "```python\nfrom typing import List\n\n# Problem 1: Sort a list of elements using Comb Sort\ndef comb_sort(nums: List[int]) -> List[int]:\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n    \n    while not sorted:\n        # Update the gap value for a next comb\n        gap = int(gap / shrink_factor)\n        \n        # If gap is less than 1, set it to 1\n        if gap <= 1:\n            gap = 1\n            sorted = True\n        \n        # A single \"comb\" over the input list\n        index = 0\n        while index + gap < len(nums):\n            if nums[index] > nums[index + gap]:\n                # Swap elements\n                nums[index], nums[index + gap] = nums[index + gap], nums[index]\n                sorted = False\n            index += 1\n    \n    return nums\n\n# Problem 2: Sort each sublist and then sort the main list based on the sum of the elements in each sublist\ndef sort_list_of_lists(list_of_lists: List[List[int]]) -> List[List[int]]:\n    # Sort each sublist using comb_sort\n    for sublist in list_of_lists:\n        comb_sort(sublist)\n    \n    # Sort the main list based on the sum of each sublist\n    list_of_lists.sort(key=lambda x: sum(x))\n    \n    return list_of_lists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.2498877253383398,
+        "generation_seconds": 7.889710230752826
+      }
+    },
+    {
+      "code_hash": "d1c01efb91759b6165a31841fb63b4eba228a517abdc25f138e9d3c1e2e79a39",
+      "execution": {
+        "duration_seconds": 0.2308261077851057,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.0685715451836586,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[3, 2, 1], [6, 5, 4], [9, 8, 7]]) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "duration_seconds": 0.08080319873988628,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[10, 20], [1], [3, 4, 5]]) == [[1], [3, 4, 5], [10, 20]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "duration_seconds": 0.08122262731194496,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert sort_list_of_lists([[15, 15], [10, 10, 10], [5, 5, 5, 5]]) == [[5, 5, 5, 5], [15, 15], [10, 10, 10]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted or gap > 1:\n        if gap > 1:\n            gap = int(gap / shrink_factor)\n\n        sorted = True\n        for i in range(len(nums) - gap):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    for sublist in list_of_lists:\n        sublist.sort()\n    \n    return sorted(list_of_lists, key=lambda x: sum(x))",
+        "completion_tokens": 147,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 142,
+        "raw_text": "```python\ndef comb_sort(nums):\n    gap = len(nums)\n    shrink_factor = 1.3\n    sorted = False\n\n    while not sorted or gap > 1:\n        if gap > 1:\n            gap = int(gap / shrink_factor)\n\n        sorted = True\n        for i in range(len(nums) - gap):\n            if nums[i] > nums[i + gap]:\n                nums[i], nums[i + gap] = nums[i + gap], nums[i]\n                sorted = False\n\n    return nums\n\ndef sort_list_of_lists(list_of_lists):\n    for sublist in list_of_lists:\n        sublist.sort()\n    \n    return sorted(list_of_lists, key=lambda x: sum(x))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef comb_sort(nums):\n\n# Given a list of lists, where each sublist contains integers, write a function to sort each sublist and then sort the main list based on the sum of the elements in each sublist.\ndef sort_list_of_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.2308261077851057,
+        "generation_seconds": 3.987622844055295
+      }
+    }
+  ],
+  "duration_seconds": 28.53060328401625,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    2,
+    3,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/29",
+  "unique_code_count": 5
+}
