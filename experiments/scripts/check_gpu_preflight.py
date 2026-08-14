@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 
 from generation.gpu_safety import GPUPreflightRefused, check_gpu_idle
 
 
-def main() -> None:
-    """Print timestamped readings and exit successfully for either outcome."""
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    """Parse standalone GPU safety-check arguments."""
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gpu-index", type=int, default=1)
@@ -17,7 +18,13 @@ def main() -> None:
     parser.add_argument("--interval-seconds", type=float, default=3.0)
     parser.add_argument("--utilization-threshold-percent", type=float, default=25.0)
     parser.add_argument("--memory-threshold-mb", type=float, default=500.0)
-    args = parser.parse_args()
+    return parser.parse_args(argv)
+
+
+def main() -> None:
+    """Print timestamped readings and exit successfully for either outcome."""
+
+    args = parse_args()
     result = check_gpu_idle(
         args.gpu_index,
         sample_count=args.samples,
