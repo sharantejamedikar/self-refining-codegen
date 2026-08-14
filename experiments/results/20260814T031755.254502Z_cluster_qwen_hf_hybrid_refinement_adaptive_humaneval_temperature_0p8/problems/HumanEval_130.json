@@ -1,0 +1,608 @@
+{
+  "convergence_reason": "stagnation",
+  "duration_seconds": 25.833757298067212,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "runtime",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "778c365143f86efec271e245721b24b250d77833088c209b80325c7b58fb304f",
+        "error_hash": "883cc34c6c8668694d928be4ca309203e654f313d85d9a00f4850cecf5079156",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08812982402741909,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.0880535114556551,
+            "exception_message": "list index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 92, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 79, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ~~~~~~~~~^^^\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 30, in tri\n    result.append(result[i - 1] + result[i - 2] + result[i + 1])\n                                                  ~~~~~~^^^^^^^\nIndexError: list index out of range\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n\ncheck(tri)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "tri",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "tri",
+                  "line_number": 2,
+                  "source": "if n == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 4,
+                  "source": "elif n == 1:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 7,
+                  "source": "result = [1, 3, 2]"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 8,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 9,
+                  "source": "if i % 2 == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 12,
+                  "source": "result.append(result[i - 1] + result[i - 2] + result[i + 1])"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 92, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 79, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ~~~~~~~~~^^^\n  File \"/tmp/srcg-7xfno9zz/program.py\", line 30, in tri\n    result.append(result[i - 1] + result[i - 2] + result[i + 1])\n                                                  ~~~~~~^^^^^^^\nIndexError: list index out of range\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "Execution reported a runtime exception. IndexError: list index out of range",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i + 1])\n    return result",
+        "completion_tokens": 113,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 276,
+        "raw_text": "```python\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i + 1])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08812982402741909,
+        "generation_seconds": 3.1250987611711025
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "d754d61cff6a48464ca0ab9c6912738667e1df80b9f2ca84e1b8c62f9e70857c",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09084178507328033,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(3) == [1, 3, 2.0, 8.0]",
+            "duration_seconds": 0.0907747633755207,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kofyoiof/program.py\", line 92, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-kofyoiof/program.py\", line 79, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n\ncheck(tri)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "tri",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "tri",
+                  "line_number": 2,
+                  "source": "if n == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 4,
+                  "source": "elif n == 1:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 7,
+                  "source": "result = [1, 3, 2]"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 8,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 9,
+                  "source": "if i % 2 == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 12,
+                  "source": "result.append(result[i - 1] + result[i - 2] + result[i - 3])"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 8,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 13,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kofyoiof/program.py\", line 92, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-kofyoiof/program.py\", line 79, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 13 in tri: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result",
+        "completion_tokens": 113,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 410,
+        "raw_text": "```python\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i + 1])\n    return result\n\nExecution feedback:\nExecution reported a runtime exception. IndexError: list index out of range\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i + 1])\n    return result\n\nExecution feedback:\nExecution reported a runtime exception. IndexError: list index out of range\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09084178507328033,
+        "generation_seconds": 3.1567191053181887
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "cf47337c3c2b313e76660cf05e0e8aad0a2ff4e72db8e61d286939dc8c369d0a",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08956046402454376,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(3) == [1, 3, 2.0, 8.0]",
+            "duration_seconds": 0.08949066698551178,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-vebhqv6b/program.py\", line 108, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-vebhqv6b/program.py\", line 95, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n\ncheck(tri)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "tri",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "tri",
+                  "line_number": 18,
+                  "source": "if n == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 20,
+                  "source": "elif n == 1:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 23,
+                  "source": "result = [1, 3, 2]"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 24,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 25,
+                  "source": "if i % 2 == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 28,
+                  "source": "result.append(result[i - 1] + result[i - 2] + result[i - 3])"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 24,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 29,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-vebhqv6b/program.py\", line 108, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-vebhqv6b/program.py\", line 95, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 29 in tri: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result",
+        "completion_tokens": 340,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 485,
+        "raw_text": "```python\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 13 in tri: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(1 + i / 2)\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 13 in tri: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08956046402454376,
+        "generation_seconds": 9.542555373162031
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "stagnation",
+      "convergence_state": {
+        "code_hash": "cf47337c3c2b313e76660cf05e0e8aad0a2ff4e72db8e61d286939dc8c369d0a",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09530309587717056,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(3) == [1, 3, 2.0, 8.0]",
+            "duration_seconds": 0.09522725269198418,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dlj_s5yx/program.py\", line 108, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-dlj_s5yx/program.py\", line 95, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n\ncheck(tri)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "tri",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "tri",
+                  "line_number": 18,
+                  "source": "if n == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 20,
+                  "source": "elif n == 1:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 23,
+                  "source": "result = [1, 3, 2]"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 24,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 25,
+                  "source": "if i % 2 == 0:"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 28,
+                  "source": "result.append(result[i - 1] + result[i - 2] + result[i - 3])"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 24,
+                  "source": "for i in range(3, n + 1):"
+                },
+                {
+                  "function": "tri",
+                  "line_number": 29,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dlj_s5yx/program.py\", line 108, in <module>\n    check(tri)\n    ~~~~~^^^^^\n  File \"/tmp/srcg-dlj_s5yx/program.py\", line 95, in check\n    assert candidate(3) == [1, 3, 2.0, 8.0]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 29 in tri: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result",
+        "completion_tokens": 340,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 712,
+        "raw_text": "```python\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 29 in tri: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\nPrevious solution:\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2.0, 8]\n    \"\"\"\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1, 3]\n    \n    result = [1, 3, 2]\n    for i in range(3, n + 1):\n        if i % 2 == 0:\n            result.append(int(1 + i / 2))\n        else:\n            result.append(result[i - 1] + result[i - 2] + result[i - 3])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(3) == [1, 3, 2.0, 8.0]\nTrace analysis:\n1. Failed assertion: candidate(3) == [1, 3, 2.0, 8.0]\n   Last candidate operation: line 29 in tri: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09530309587717056,
+        "generation_seconds": 9.641206556931138
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/130"
+}
