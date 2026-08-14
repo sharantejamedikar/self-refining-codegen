@@ -1,0 +1,546 @@
+{
+  "convergence_reason": "oscillation",
+  "duration_seconds": 71.84535050950944,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "runtime",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "2d16e0e9ebdd1a901bf0e630be424acc4ca0734a91e492291af95252bb2dba57",
+        "error_hash": "09cc29d11ca5f5fd72a9c039f541fa9623b46c638db9eafa2005d5b8bb8d8a8a",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10320652276277542,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "duration_seconds": 0.1031201183795929,
+            "exception_message": "name 'gcd' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fqaicohy/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-fqaicohy/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-fqaicohy/program.py\", line 20, in find_solution\n    d = gcd(a, b)\n        ^^^\nNameError: name 'gcd' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "find_solution",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "find_solutions",
+                  "line_number": 8,
+                  "source": "solutions = []"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 9,
+                  "source": "for t in tuples_list:"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 10,
+                  "source": "a, b, n = t"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 11,
+                  "source": "solution = find_solution(a, b, n)"
+                },
+                {
+                  "function": "find_solution",
+                  "line_number": 2,
+                  "source": "d = gcd(a, b)"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fqaicohy/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-fqaicohy/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-fqaicohy/program.py\", line 20, in find_solution\n    d = gcd(a, b)\n        ^^^\nNameError: name 'gcd' is not defined\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "Execution reported a runtime exception. NameError: name 'gcd' is not defined",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions",
+        "completion_tokens": 138,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 245,
+        "raw_text": " ```\ndef find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10320652276277542,
+        "generation_seconds": 18.031382843852043
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "runtime",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "2d23109ab88c7ca6f92642fc1aad359ff24702ed8e5014bb3344d9b630040f79",
+        "error_hash": "7a51518166e9b63de0c6d26ae5b01d166e1ffaa2359741e7ea6b3959c6a8d38b",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10320045240223408,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "duration_seconds": 0.1031077578663826,
+            "exception_message": "name 'math' is not defined. Did you forget to import 'math'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-g1479zt_/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-g1479zt_/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-g1479zt_/program.py\", line 20, in find_solution\n    d = math.gcd(a, b)\n        ^^^^\nNameError: name 'math' is not defined. Did you forget to import 'math'?\n",
+            "stdout": "",
+            "test_case": "assert find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "find_solution",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "find_solutions",
+                  "line_number": 8,
+                  "source": "solutions = []"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 9,
+                  "source": "for t in tuples_list:"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 10,
+                  "source": "a, b, n = t"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 11,
+                  "source": "solution = find_solution(a, b, n)"
+                },
+                {
+                  "function": "find_solution",
+                  "line_number": 2,
+                  "source": "d = math.gcd(a, b)"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-g1479zt_/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-g1479zt_/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-g1479zt_/program.py\", line 20, in find_solution\n    d = math.gcd(a, b)\n        ^^^^\nNameError: name 'math' is not defined. Did you forget to import 'math'?\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "Execution reported a runtime exception. NameError: name 'math' is not defined. Did you forget to import 'math'?",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions",
+        "completion_tokens": 136,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 415,
+        "raw_text": " def find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nExecution feedback:\nExecution reported a runtime exception. NameError: name 'gcd' is not defined\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nExecution feedback:\nExecution reported a runtime exception. NameError: name 'gcd' is not defined\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10320045240223408,
+        "generation_seconds": 17.423189137130976
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "runtime",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "673c1da1ff7b11da36e38d1960c0e75c5144b8cfa52d10a00c028436aaf470a3",
+        "error_hash": "0fc9cb4bcef9a9aae73cb23302e431fc9328293c2fd78c4e0bcd46d84df7a15a",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10109610296785831,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "duration_seconds": 0.1009976714849472,
+            "exception_message": "cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)",
+            "exception_type": "ImportError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ljw9izhk/program.py\", line 37, in <module>\n    from fractions import gcd\nImportError: cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)\n",
+            "stdout": "",
+            "test_case": "assert find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ljw9izhk/program.py\", line 37, in <module>\n    from fractions import gcd\nImportError: cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "Execution reported a runtime exception. ImportError: cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nimport math\nfrom fractions import gcd",
+        "completion_tokens": 145,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 426,
+        "raw_text": " def find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nimport math\nfrom fractions import gcd",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nExecution feedback:\nExecution reported a runtime exception. NameError: name 'math' is not defined. Did you forget to import 'math'?\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nExecution feedback:\nExecution reported a runtime exception. NameError: name 'math' is not defined. Did you forget to import 'math'?\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10109610296785831,
+        "generation_seconds": 18.508066710084677
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "runtime",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "oscillation",
+      "convergence_state": {
+        "code_hash": "2d23109ab88c7ca6f92642fc1aad359ff24702ed8e5014bb3344d9b630040f79",
+        "error_hash": "7a51518166e9b63de0c6d26ae5b01d166e1ffaa2359741e7ea6b3959c6a8d38b",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10164184682071209,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "duration_seconds": 0.10155045799911022,
+            "exception_message": "name 'math' is not defined. Did you forget to import 'math'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 20, in find_solution\n    d = math.gcd(a, b)\n        ^^^^\nNameError: name 'math' is not defined. Did you forget to import 'math'?\n",
+            "stdout": "",
+            "test_case": "assert find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)]) == [(2, 2), (0, 2), (1, 2)]",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "find_solution",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "find_solutions",
+                  "line_number": 8,
+                  "source": "solutions = []"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 9,
+                  "source": "for t in tuples_list:"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 10,
+                  "source": "a, b, n = t"
+                },
+                {
+                  "function": "find_solutions",
+                  "line_number": 11,
+                  "source": "solution = find_solution(a, b, n)"
+                },
+                {
+                  "function": "find_solution",
+                  "line_number": 2,
+                  "source": "d = math.gcd(a, b)"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 78, in <module>\n    __srcg_assertion_actual_7f31 = find_solutions([(2, 3, 10), (1, 5, 10), (3, 4, 11)])\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 29, in find_solutions\n    solution = find_solution(a, b, n)\n  File \"/tmp/srcg-74w4gu5l/program.py\", line 20, in find_solution\n    d = math.gcd(a, b)\n        ^^^^\nNameError: name 'math' is not defined. Did you forget to import 'math'?\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "Execution reported a runtime exception. NameError: name 'math' is not defined. Did you forget to import 'math'?",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions",
+        "completion_tokens": 136,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 455,
+        "raw_text": " def find_solution(a, b, n):\n    d = math.gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nimport math\nfrom fractions import gcd\n\nExecution feedback:\nExecution reported a runtime exception. ImportError: cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that returns integers x and y that satisfy ax + by = n as a tuple, or return None if no solution exists.\ndef find_solution(a, b, n):\n\n# Given a list of tuples, where each tuple contains three integers (a, b, n), write a function that returns a list of tuples. Each tuple in the returned list should contain the integers x and y that satisfy the equation ax + by = n for the corresponding tuple (a, b, n) from the input list. If no solution exists for a particular tuple, the corresponding tuple in the returned list should be None.\ndef find_solutions(tuples_list):\n\nPrevious solution:\ndef find_solution(a, b, n):\n    d = gcd(a, b)\n    x = n * d // a\n    y = n * d // b\n    return x, y\n\ndef find_solutions(tuples_list):\n    solutions = []\n    for t in tuples_list:\n        a, b, n = t\n        solution = find_solution(a, b, n)\n        if solution is not None:\n            solutions.append(solution)\n        else:\n            solutions.append(None)\n    return solutions\n\nimport math\nfrom fractions import gcd\n\nExecution feedback:\nExecution reported a runtime exception. ImportError: cannot import name 'gcd' from 'fractions' (/home/sharant/miniconda3/lib/python3.14/fractions.py)\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10164184682071209,
+        "generation_seconds": 17.469430780038238
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "mbpp_pro/87"
+}
