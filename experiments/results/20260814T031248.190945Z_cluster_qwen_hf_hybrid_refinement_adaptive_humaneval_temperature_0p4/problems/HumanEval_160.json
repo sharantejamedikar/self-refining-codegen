@@ -1,0 +1,530 @@
+{
+  "convergence_reason": "stagnation",
+  "duration_seconds": 8.544275399297476,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "a559662c755ffe13e99d3b1910888e4796725f4bea52eae49aef0aa4b5b4ea6f",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.15039006806910038,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9",
+            "duration_seconds": 0.15032311901450157,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-d87u27z4/program.py\", line 87, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-d87u27z4/program.py\", line 80, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['**', '*', '+'], [2, 3, 4, 5]) == 37\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n    assert candidate(['//', '*'], [7, 3, 4]) == 8, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(do_algebra)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "do_algebra",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "do_algebra",
+                  "line_number": 5,
+                  "source": "result += operand[i + 1]"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 3,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 4,
+                  "source": "if operator[i] == '+':"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "elif operator[i] == '-':"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 8,
+                  "source": "elif operator[i] == '*':"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 9,
+                  "source": "result *= operand[i + 1]"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 3,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 4,
+                  "source": "if operator[i] == '+':"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "elif operator[i] == '-':"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result -= operand[i + 1]"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 3,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 14,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-d87u27z4/program.py\", line 87, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-d87u27z4/program.py\", line 80, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 14 in do_algebra: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "def do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        if operator[i] == '+':\n            result += operand[i + 1]\n        elif operator[i] == '-':\n            result -= operand[i + 1]\n        elif operator[i] == '*':\n            result *= operand[i + 1]\n        elif operator[i] == '//':\n            result //= operand[i + 1]\n        elif operator[i] == '**':\n            result **= operand[i + 1]\n    return result",
+        "completion_tokens": 118,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 248,
+        "raw_text": "```python\ndef do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        if operator[i] == '+':\n            result += operand[i + 1]\n        elif operator[i] == '-':\n            result -= operand[i + 1]\n        elif operator[i] == '*':\n            result *= operand[i + 1]\n        elif operator[i] == '//':\n            result //= operand[i + 1]\n        elif operator[i] == '**':\n            result **= operand[i + 1]\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.15039006806910038,
+        "generation_seconds": 3.3064891155809164
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "428d317a57b5b48dee526476f7d17b3e80ce3c8576719e5f3373a9576dc46852",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.12975980713963509,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9",
+            "duration_seconds": 0.12968937307596207,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ojdpyhxu/program.py\", line 81, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-ojdpyhxu/program.py\", line 74, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['**', '*', '+'], [2, 3, 4, 5]) == 37\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n    assert candidate(['//', '*'], [7, 3, 4]) == 8, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(do_algebra)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "do_algebra",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 8,
+                  "source": "return result"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 4,
+                  "source": "ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 5,
+                  "source": "result = operand[0]"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 8,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ojdpyhxu/program.py\", line 81, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-ojdpyhxu/program.py\", line 74, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 8 in do_algebra: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result",
+        "completion_tokens": 86,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 466,
+        "raw_text": "```python\nimport operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nPrevious solution:\ndef do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        if operator[i] == '+':\n            result += operand[i + 1]\n        elif operator[i] == '-':\n            result -= operand[i + 1]\n        elif operator[i] == '*':\n            result *= operand[i + 1]\n        elif operator[i] == '//':\n            result //= operand[i + 1]\n        elif operator[i] == '**':\n            result **= operand[i + 1]\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 14 in do_algebra: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nPrevious solution:\ndef do_algebra(operator, operand):\n    result = operand[0]\n    for i in range(len(operator)):\n        if operator[i] == '+':\n            result += operand[i + 1]\n        elif operator[i] == '-':\n            result -= operand[i + 1]\n        elif operator[i] == '*':\n            result *= operand[i + 1]\n        elif operator[i] == '//':\n            result //= operand[i + 1]\n        elif operator[i] == '**':\n            result **= operand[i + 1]\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 14 in do_algebra: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.12975980713963509,
+        "generation_seconds": 2.442541617900133
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "stagnation",
+      "convergence_state": {
+        "code_hash": "428d317a57b5b48dee526476f7d17b3e80ce3c8576719e5f3373a9576dc46852",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08538535982370377,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9",
+            "duration_seconds": 0.08534924127161503,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-xw_cow2j/program.py\", line 81, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-xw_cow2j/program.py\", line 74, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['**', '*', '+'], [2, 3, 4, 5]) == 37\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n    assert candidate(['//', '*'], [7, 3, 4]) == 8, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n\ncheck(do_algebra)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "do_algebra",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 8,
+                  "source": "return result"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 4,
+                  "source": "ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 5,
+                  "source": "result = operand[0]"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 7,
+                  "source": "result = ops[operator[i]](result, operand[i + 1])"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 6,
+                  "source": "for i in range(len(operator)):"
+                },
+                {
+                  "function": "do_algebra",
+                  "line_number": 8,
+                  "source": "return result"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-xw_cow2j/program.py\", line 81, in <module>\n    check(do_algebra)\n    ~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-xw_cow2j/program.py\", line 74, in check\n    assert candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 8 in do_algebra: return result",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "model_memory_footprint_bytes": 15231233280,
+          "prompt_strategy": "zero_shot",
+          "quantization": null,
+          "quantization_config": null,
+          "quantization_method": null,
+          "result_precision": "FULL_PRECISION",
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+        },
+        "code": "import operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result",
+        "completion_tokens": 86,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 433,
+        "raw_text": "```python\nimport operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nPrevious solution:\nimport operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 8 in do_algebra: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 151643,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef do_algebra(operator, operand):\n    \"\"\"\n    Given two lists operator, and operand. The first list has basic algebra operations, and \n    the second list is a list of integers. Use the two given lists to build the algebric \n    expression and return the evaluation of this expression.\n\n    The basic algebra operations:\n    Addition ( + ) \n    Subtraction ( - ) \n    Multiplication ( * ) \n    Floor division ( // ) \n    Exponentiation ( ** ) \n\n    Example:\n    operator['+', '*', '-']\n    array = [2, 3, 4, 5]\n    result = 2 + 3 * 4 - 5\n    => result = 9\n\n    Note:\n        The length of operator list is equal to the length of operand list minus one.\n        Operand is a list of of non-negative integers.\n        Operator list has at least one operator, and operand list has at least two operands.\n\n    \"\"\"\n\nPrevious solution:\nimport operator as op\n\ndef do_algebra(operator, operand):\n    ops = {'+': op.add, '-': op.sub, '*': op.mul, '//': op.floordiv, '**': op.pow}\n    result = operand[0]\n    for i in range(len(operator)):\n        result = ops[operator[i]](result, operand[i + 1])\n    return result\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\nTrace analysis:\n1. Failed assertion: candidate(['+', '*', '-'], [2, 3, 4, 5]) == 9\n   Last candidate operation: line 8 in do_algebra: return result\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+          "quantization": {
+            "quantization_config": null,
+            "quantization_method": null,
+            "result_precision": "FULL_PRECISION"
+          },
+          "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08538535982370377,
+        "generation_seconds": 2.427044667303562
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "model_memory_footprint_bytes": 15231233280,
+    "prompt_strategy": "zero_shot",
+    "quantization": null,
+    "quantization_config": null,
+    "quantization_method": null,
+    "result_precision": "FULL_PRECISION",
+    "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/160"
+}
