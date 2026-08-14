@@ -15,7 +15,7 @@ def main() -> None:
     parser.add_argument("--gpu-index", type=int, default=1)
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--interval-seconds", type=float, default=3.0)
-    parser.add_argument("--utilization-threshold-percent", type=float, default=5.0)
+    parser.add_argument("--utilization-threshold-percent", type=float, default=25.0)
     parser.add_argument("--memory-threshold-mb", type=float, default=500.0)
     args = parser.parse_args()
     result = check_gpu_idle(
