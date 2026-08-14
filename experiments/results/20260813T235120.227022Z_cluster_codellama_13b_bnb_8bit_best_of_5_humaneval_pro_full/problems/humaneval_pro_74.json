@@ -1,0 +1,802 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "160b06498b11b49fef1ae8a1a75a12120b32bb8028743d59d0ead878a1491123",
+      "execution": {
+        "duration_seconds": 0.4726240672171116,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([[], []]) == []",
+            "duration_seconds": 0.07718882523477077,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([[], []]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "duration_seconds": 0.09777921065688133,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "duration_seconds": 0.10057077929377556,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "duration_seconds": 0.0936671644449234,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "duration_seconds": 0.10301986336708069,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def total_match(lst1, lst2):\n    return lst1 if sum(len(s) for s in lst1) < sum(len(s) for s in lst2) else lst2\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=lambda x: sum(len(s) for s in x))",
+        "completion_tokens": 93,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 382,
+        "raw_text": " ```\ndef total_match(lst1, lst2):\n    return lst1 if sum(len(s) for s in lst1) < sum(len(s) for s in lst2) else lst2\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=lambda x: sum(len(s) for s in x))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.4726240672171116,
+        "generation_seconds": 11.733418736606836
+      }
+    },
+    {
+      "code_hash": "ca71fa50d903b300ac431be6ba8fa74052fb45c8f972ddfa17731451b374381e",
+      "execution": {
+        "duration_seconds": 0.602163415402174,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([[], []]) == []",
+            "duration_seconds": 0.08032703958451748,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([[], []]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "duration_seconds": 0.1353740356862545,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "duration_seconds": 0.1342142689973116,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "duration_seconds": 0.11982105113565922,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "duration_seconds": 0.1319627035409212,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def smallest_total_match(list_of_lists):\n    min_total = float('inf')\n    result = None\n    for lst in list_of_lists:\n        total = sum(len(s) for s in lst)\n        if total < min_total:\n            min_total = total\n            result = lst\n    return result",
+        "completion_tokens": 86,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 382,
+        "raw_text": " ```python\ndef smallest_total_match(list_of_lists):\n    min_total = float('inf')\n    result = None\n    for lst in list_of_lists:\n        total = sum(len(s) for s in lst)\n        if total < min_total:\n            min_total = total\n            result = lst\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.602163415402174,
+        "generation_seconds": 10.975357679650187
+      }
+    },
+    {
+      "code_hash": "4b3b74bbcbbda47d94c598c6b1cef403f6be679cff92cfb496709e415768e2bf",
+      "execution": {
+        "duration_seconds": 0.6351106073707342,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([[], []]) == []",
+            "duration_seconds": 0.0779604259878397,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([[], []]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "duration_seconds": 0.11565208062529564,
+            "exception_message": "unsupported operand type(s) for +: 'int' and 'str'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-94lyy6tl/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'Hi']])\n  File \"/tmp/srcg-94lyy6tl/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-94lyy6tl/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'Hi']])\n  File \"/tmp/srcg-94lyy6tl/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "duration_seconds": 0.1583153773099184,
+            "exception_message": "unsupported operand type(s) for +: 'int' and 'str'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0j39l7h7/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']])\n  File \"/tmp/srcg-0j39l7h7/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0j39l7h7/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']])\n  File \"/tmp/srcg-0j39l7h7/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "duration_seconds": 0.1630085576325655,
+            "exception_message": "unsupported operand type(s) for +: 'int' and 'str'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-n4dzdqyt/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']])\n  File \"/tmp/srcg-n4dzdqyt/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-n4dzdqyt/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']])\n  File \"/tmp/srcg-n4dzdqyt/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "duration_seconds": 0.11971283704042435,
+            "exception_message": "unsupported operand type(s) for +: 'int' and 'str'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fmwmwemz/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['4'], ['1', '2', '3', '4', '5']])\n  File \"/tmp/srcg-fmwmwemz/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fmwmwemz/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['4'], ['1', '2', '3', '4', '5']])\n  File \"/tmp/srcg-fmwmwemz/program.py\", line 23, in smallest_total_match\n    return min(list_of_lists, key=sum)\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def total_match(lst1, lst2):\n    return lst1 if sum(len(s) for s in lst1) < sum(len(s) for s in lst2) else lst2\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=sum)",
+        "completion_tokens": 81,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 382,
+        "raw_text": " ```\ndef total_match(lst1, lst2):\n    return lst1 if sum(len(s) for s in lst1) < sum(len(s) for s in lst2) else lst2\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=sum)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.6351106073707342,
+        "generation_seconds": 10.255918018519878
+      }
+    },
+    {
+      "code_hash": "24df18f435033b3d8440a2b1b7a4a3aeb7d6bf63e31901c5a343f85ef040196e",
+      "execution": {
+        "duration_seconds": 0.5857156440615654,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([[], []]) == []",
+            "duration_seconds": 0.09333982691168785,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-io_xlb_m/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([[], []])\n  File \"/tmp/srcg-io_xlb_m/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([[], []]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-io_xlb_m/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([[], []])\n  File \"/tmp/srcg-io_xlb_m/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "duration_seconds": 0.10815007239580154,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bzgtawck/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'Hi']])\n  File \"/tmp/srcg-bzgtawck/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bzgtawck/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'Hi']])\n  File \"/tmp/srcg-bzgtawck/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "duration_seconds": 0.1337320115417242,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i55nq721/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']])\n  File \"/tmp/srcg-i55nq721/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i55nq721/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']])\n  File \"/tmp/srcg-i55nq721/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "duration_seconds": 0.132664630189538,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-17jea3q1/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']])\n  File \"/tmp/srcg-17jea3q1/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-17jea3q1/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']])\n  File \"/tmp/srcg-17jea3q1/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "duration_seconds": 0.11749083548784256,
+            "exception_message": "'int' object is not iterable",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mhj05skg/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['4'], ['1', '2', '3', '4', '5']])\n  File \"/tmp/srcg-mhj05skg/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mhj05skg/program.py\", line 25, in <module>\n    __srcg_assertion_actual_7f31 = smallest_total_match([['4'], ['1', '2', '3', '4', '5']])\n  File \"/tmp/srcg-mhj05skg/program.py\", line 23, in smallest_total_match\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\nTypeError: 'int' object is not iterable\n"
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def total_match(lst1, lst2):\n    return sorted(lst1 + lst2, key=lambda x: len(x))[:len(lst1)]\n\ndef smallest_total_match(list_of_lists):\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))",
+        "completion_tokens": 95,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 382,
+        "raw_text": " ```\ndef total_match(lst1, lst2):\n    return sorted(lst1 + lst2, key=lambda x: len(x))[:len(lst1)]\n\ndef smallest_total_match(list_of_lists):\n    return min(map(sum, map(len, list_of_lists)), key=lambda x: (x, list_of_lists.index(x)))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.5857156440615654,
+        "generation_seconds": 11.971339037641883
+      }
+    },
+    {
+      "code_hash": "82e7925d4ab2c7bc2625f7d957eea48af9a09fec11995412878f90cdda3b9c8e",
+      "execution": {
+        "duration_seconds": 0.6426844149827957,
+        "passed": true,
+        "passed_tests": 5,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([[], []]) == []",
+            "duration_seconds": 0.1102315504103899,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([[], []]) == []",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "duration_seconds": 0.1366116665303707,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'Hi']]) == ['hI', 'Hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "duration_seconds": 0.1330505833029747,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hi', 'hi', 'admin', 'project']]) == ['hi', 'admin']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "duration_seconds": 0.13749235682189465,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['hi', 'admin'], ['hI', 'hi', 'hi']]) == ['hI', 'hi', 'hi']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "duration_seconds": 0.12483175657689571,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert smallest_total_match([['4'], ['1', '2', '3', '4', '5']]) == ['4']",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 5
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def total_match(lst1, lst2):\n    return min(lst1, lst2, key=lambda x: sum(len(s) for s in x))\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=lambda x: sum(len(s) for s in x))",
+        "completion_tokens": 87,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 382,
+        "raw_text": " ```python\ndef total_match(lst1, lst2):\n    return min(lst1, lst2, key=lambda x: sum(len(s) for s in x))\n\ndef smallest_total_match(list_of_lists):\n    return min(list_of_lists, key=lambda x: sum(len(s) for s in x))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) \u279e []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) \u279e ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) \u279e ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) \u279e ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) \u279e ['4']\n    '''\n\n# Given a list of lists of strings, return the list of strings that has the smallest total number of characters across all its sublists. If there are multiple lists with the same smallest total number of characters, return the first one encountered.\ndef smallest_total_match(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.6426844149827957,
+        "generation_seconds": 11.171371713280678
+      }
+    }
+  ],
+  "duration_seconds": 59.04914331994951,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1,
+    4
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/74",
+  "unique_code_count": 5
+}

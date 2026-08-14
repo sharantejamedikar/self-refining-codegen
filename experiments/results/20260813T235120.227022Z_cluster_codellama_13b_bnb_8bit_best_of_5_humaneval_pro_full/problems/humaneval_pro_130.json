@@ -1,0 +1,648 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "1a0929f3a9a9b68b300e1ac35a5d8cd9d93ff4b2b82e1b0d3d8da0d36fc8a736",
+      "execution": {
+        "duration_seconds": 0.47514770179986954,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "duration_seconds": 0.15121819265186787,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-nd32dg4_/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-nd32dg4_/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(0) == [[1]]",
+            "duration_seconds": 0.1629653386771679,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-daaq66st/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(0) == [[1]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-daaq66st/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(1) == [[1], [1, 3]]",
+            "duration_seconds": 0.16071100533008575,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-raky6vs_/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(1) == [[1], [1, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-raky6vs_/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tribonacci(n):\n    if n <= 0:\n        return []\n    elif n == 1:\n        return [1]\n    else:\n        seq = [1, 3, 2, 8]\n        for i in range(n - len(seq)):\n            next_term = seq[-1] + seq[-2] + seq[-3]\n            seq.append(next_term)\n        return seq[:n+1]",
+        "completion_tokens": 159,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 445,
+        "raw_text": " ```\ndef tribonacci(n):\n    if n <= 0:\n        return []\n    elif n == 1:\n        return [1]\n    else:\n        seq = [1, 3, 2, 8]\n        for i in range(n - len(seq)):\n            next_term = seq[-1] + seq[-2] + seq[-3]\n            seq.append(next_term)\n        return seq[:n+1]\n```\n```\ndef multi_tribonacci(n):\n    result = []\n    for i in range(n+1):\n        result.append(tribonacci(i))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.47514770179986954,
+        "generation_seconds": 20.31780601479113
+      }
+    },
+    {
+      "code_hash": "aa45c9b04cb755b59988806f8b274ef088b042608713776864d29c820575988b",
+      "execution": {
+        "duration_seconds": 0.37628819048404694,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "duration_seconds": 0.09850684180855751,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b90qwq89/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b90qwq89/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(0) == [[1]]",
+            "duration_seconds": 0.15588743798434734,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-gmsnogyh/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(0) == [[1]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-gmsnogyh/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(1) == [[1], [1, 3]]",
+            "duration_seconds": 0.12170185521245003,
+            "exception_message": "name 'multi_tri' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pdlvmdmq/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(1) == [[1], [1, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pdlvmdmq/program.py\", line 31, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n                                   ^^^^^^^^^\nNameError: name 'multi_tri' is not defined\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tri(n):\n    tribonacci = []\n    if n == 0:\n        tribonacci.append(1)\n    elif n == 1:\n        tribonacci.extend([1, 3])\n    else:\n        tribonacci.extend([1, 3])\n        for i in range(2, n):\n            tribonacci.append(tribonacci[i - 1] + tribonacci[i - 2] + tribonacci[i - 3])\n    return tribonacci",
+        "completion_tokens": 461,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 445,
+        "raw_text": " ```python\ndef tri(n):\n    tribonacci = []\n    if n == 0:\n        tribonacci.append(1)\n    elif n == 1:\n        tribonacci.extend([1, 3])\n    else:\n        tribonacci.extend([1, 3])\n        for i in range(2, n):\n            tribonacci.append(tribonacci[i - 1] + tribonacci[i - 2] + tribonacci[i - 3])\n    return tribonacci\n```\n\nThe `tri` function takes a single integer argument `n`, which represents the number of terms in the Tribonacci sequence that we want to compute. We initialize an empty list called `tribonacci` and check if `n` is equal to 0, 1, or greater than 1. If `n` is 0, we append the value 1 to the list. If `n` is 1, we extend the list with the values 1 and 3. Otherwise, we start with the values 1 and 3 and iterate through the remaining terms of the sequence using the recurrence relation provided in the problem statement. We then return the final list of Tribonacci numbers.\n\nFor the second problem, we can simply call the `tri` function multiple times to generate the Tribonacci sequences for different values of `n`. Here's one way to do this:\n```python\ndef multi_tri(n):\n    results = []\n    for i in range(n+1):\n        results.append(tri(i))\n    return results\n```\nThis function takes a single integer argument `n`, which represents the maximum value of `n` for which we want to compute the Tribonacci sequence. We initialize an empty list called `results` and loop over the range of integers from 0 to `n+1`, calling the `tri` function once for each integer `i` and appending the resulting list of Tribonacci numbers to `results`. Finally, we return the entire list of Tribonacci sequences.",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.37628819048404694,
+        "generation_seconds": 58.40655284561217
+      }
+    },
+    {
+      "code_hash": "f1392bf33d3fa6b7da0b9708ee4b8f26e3d890c17034e74929eb27738a53d30c",
+      "execution": {
+        "duration_seconds": 0.4268738850951195,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "duration_seconds": 0.14940552972257137,
+            "exception_message": "list assignment index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-wana9acr/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n  File \"/tmp/srcg-wana9acr/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-wana9acr/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-wana9acr/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(3)\n  File \"/tmp/srcg-wana9acr/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-wana9acr/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(0) == [[1]]",
+            "duration_seconds": 0.11701083369553089,
+            "exception_message": "list assignment index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(0) == [[1]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(0)\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-eh88l_jn/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(1) == [[1], [1, 3]]",
+            "duration_seconds": 0.1601989734917879,
+            "exception_message": "list assignment index out of range",
+            "exception_type": "IndexError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(1) == [[1], [1, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 32, in <module>\n    __srcg_assertion_actual_7f31 = multi_tri(1)\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 30, in multi_tri\n    return [tri(i) for i in range(n+1)]\n            ~~~^^^\n  File \"/tmp/srcg-s98i9n5c/program.py\", line 21, in tri\n    trib[1] = 3\n    ~~~~^^^\nIndexError: list assignment index out of range\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tri(n):\n    trib = [None] * (n+1)\n    trib[1] = 3\n    for i in range(2, n+1):\n        if i % 2 == 0:\n            trib[i] = trib[i//2]\n        else:\n            trib[i] = trib[i-1] + trib[i-2] + trib[i+1]\n    return trib\n\ndef multi_tri(n):\n    return [tri(i) for i in range(n+1)]",
+        "completion_tokens": 131,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 445,
+        "raw_text": " ```\ndef tri(n):\n    trib = [None] * (n+1)\n    trib[1] = 3\n    for i in range(2, n+1):\n        if i % 2 == 0:\n            trib[i] = trib[i//2]\n        else:\n            trib[i] = trib[i-1] + trib[i-2] + trib[i+1]\n    return trib\n\ndef multi_tri(n):\n    return [tri(i) for i in range(n+1)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.4268738850951195,
+        "generation_seconds": 16.50758584961295
+      }
+    },
+    {
+      "code_hash": "b678848d8b492a5a41d06dbf2806929a5797ec7ca19e5ea74544055f4708ef16",
+      "execution": {
+        "duration_seconds": 0.40697423927485943,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[[1], [1, 0], [1, 0, 1], [1, 0, 1, 3]]",
+            "assertion_expression": "multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "duration_seconds": 0.10235273279249668,
+            "exception_message": "assertion comparison failed: actual=[[1], [1, 0], [1, 0, 1], [1, 0, 1, 3]]; expected=[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-3lbz4v8d/program.py\", line 42, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1], [1, 0], [1, 0, 1], [1, 0, 1, 3]]', '[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]')\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-3lbz4v8d/program.py\", line 42, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1], [1, 0], [1, 0, 1], [1, 0, 1, 3]]', '[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "multi_tri(0) == [[1]]",
+            "duration_seconds": 0.14897936582565308,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert multi_tri(0) == [[1]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "[[1], [1, 0]]",
+            "assertion_expression": "multi_tri(1) == [[1], [1, 3]]",
+            "duration_seconds": 0.15536959655582905,
+            "exception_message": "assertion comparison failed: actual=[[1], [1, 0]]; expected=[[1], [1, 3]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1], [1, 3]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-gp_14cjq/program.py\", line 42, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1], [1, 0]]', '[[1], [1, 3]]')\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(1) == [[1], [1, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-gp_14cjq/program.py\", line 42, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1], [1, 0]]', '[[1], [1, 3]]')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tri(n):\n    \"\"\"Returns a list of the first n+1 numbers of the Tribonacci sequence.\"\"\"\n    tribonacci = []\n    if n == 0:\n        return [1]\n    else:\n        tribonacci.append(1)\n        for i in range(n):\n            if i % 2 == 0:\n                tribonacci.append((i // 2) * 3)\n            else:\n                tribonacci.append(sum(tribonacci[-3:]))\n        return tribonacci\n\ndef multi_tri(n):\n    \"\"\"Returns a list of lists of the first n+1 numbers of the Tribonacci sequence for each of the first n+1 natural numbers.\"\"\"\n    tribonacci_seq = []\n    for i in range(n+1):\n        tribonacci_seq.append(tri(i))\n    return tribonacci_seq",
+        "completion_tokens": 218,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 445,
+        "raw_text": " ```\ndef tri(n):\n    \"\"\"Returns a list of the first n+1 numbers of the Tribonacci sequence.\"\"\"\n    tribonacci = []\n    if n == 0:\n        return [1]\n    else:\n        tribonacci.append(1)\n        for i in range(n):\n            if i % 2 == 0:\n                tribonacci.append((i // 2) * 3)\n            else:\n                tribonacci.append(sum(tribonacci[-3:]))\n        return tribonacci\n\ndef multi_tri(n):\n    \"\"\"Returns a list of lists of the first n+1 numbers of the Tribonacci sequence for each of the first n+1 natural numbers.\"\"\"\n    tribonacci_seq = []\n    for i in range(n+1):\n        tribonacci_seq.append(tri(i))\n    return tribonacci_seq\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.40697423927485943,
+        "generation_seconds": 27.36875542253256
+      }
+    },
+    {
+      "code_hash": "0c2a9e3c52e7644e51634b0d4d3f22f5ac7319c1c2bfacd021e69164feb94a3c",
+      "execution": {
+        "duration_seconds": 0.3746701180934906,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[[1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8]]",
+            "assertion_expression": "multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "duration_seconds": 0.0998196005821228,
+            "exception_message": "assertion comparison failed: actual=[[1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8]]; expected=[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-s23xo3im/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8]]', '[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]')\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(3) == [[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-s23xo3im/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8], [1, 3, 2, 8]]', '[[1], [1, 3], [1, 3, 2], [1, 3, 2, 8]]')\n"
+          },
+          {
+            "actual_value": "[[1, 3, 2, 8]]",
+            "assertion_expression": "multi_tri(0) == [[1]]",
+            "duration_seconds": 0.11191191524267197,
+            "exception_message": "assertion comparison failed: actual=[[1, 3, 2, 8]]; expected=[[1]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6xp3ncc8/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8]]', '[[1]]')\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(0) == [[1]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6xp3ncc8/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8]]', '[[1]]')\n"
+          },
+          {
+            "actual_value": "[[1, 3, 2, 8], [1, 3, 2, 8]]",
+            "assertion_expression": "multi_tri(1) == [[1], [1, 3]]",
+            "duration_seconds": 0.16271141357719898,
+            "exception_message": "assertion comparison failed: actual=[[1, 3, 2, 8], [1, 3, 2, 8]]; expected=[[1], [1, 3]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1], [1, 3]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kumx9sw0/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8], [1, 3, 2, 8]]', '[[1], [1, 3]]')\n",
+            "stdout": "",
+            "test_case": "assert multi_tri(1) == [[1], [1, 3]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kumx9sw0/program.py\", line 36, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 3, 2, 8], [1, 3, 2, 8]]', '[[1], [1, 3]]')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tri(n):\n    tribonacci_sequence = [1, 3, 2, 8]\n    for i in range(4, n+1):\n        if i % 2 == 0:\n            tribonacci_sequence.append((i // 2) * (tribonacci_sequence[i-1] + tribonacci_sequence[i-2]))\n        else:\n            tribonacci_sequence.append(tribonacci_sequence[i-1] + tribonacci_sequence[i-2] + tribonacci_sequence[i+1])\n    return tribonacci_sequence\n\ndef multi_tri(n):\n    tribonacci_sequences = []\n    for i in range(n+1):\n        tribonacci_sequences.append(tri(i))\n    return tribonacci_sequences",
+        "completion_tokens": 204,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 445,
+        "raw_text": " ```python\ndef tri(n):\n    tribonacci_sequence = [1, 3, 2, 8]\n    for i in range(4, n+1):\n        if i % 2 == 0:\n            tribonacci_sequence.append((i // 2) * (tribonacci_sequence[i-1] + tribonacci_sequence[i-2]))\n        else:\n            tribonacci_sequence.append(tribonacci_sequence[i-1] + tribonacci_sequence[i-2] + tribonacci_sequence[i+1])\n    return tribonacci_sequence\n\ndef multi_tri(n):\n    tribonacci_sequences = []\n    for i in range(n+1):\n        tribonacci_sequences.append(tri(i))\n    return tribonacci_sequences\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\n# Given a non-negative integer number n, you have to return a list of the first n + 1 numbers of the Tribonacci sequence for each of the first n + 1 natural numbers. For example, if n is 3, you should return a list of lists where each sublist is the Tribonacci sequence for the numbers 0 through 3.\ndef multi_tri(n):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.3746701180934906,
+        "generation_seconds": 26.105988984927535
+      }
+    }
+  ],
+  "duration_seconds": 150.77046760730445,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/130",
+  "unique_code_count": 5
+}

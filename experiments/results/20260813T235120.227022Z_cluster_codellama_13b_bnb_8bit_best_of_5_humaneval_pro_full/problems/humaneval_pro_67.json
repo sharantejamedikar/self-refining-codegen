@@ -1,0 +1,498 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "bd71daf032614aaa35232e4769fd0dd1ead803e5b71ed0921e3609ce9e2005b5",
+      "execution": {
+        "duration_seconds": 0.09447389654815197,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "duration_seconds": 0.09434146620333195,
+            "exception_message": "name 'total_mangoes' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6vnqxg2h/program.py\", line 37, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n                                   ^^^^^^^^^^^^^\nNameError: name 'total_mangoes' is not defined\n",
+            "stdout": "",
+            "test_case": "assert total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6vnqxg2h/program.py\", line 37, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n                                   ^^^^^^^^^^^^^\nNameError: name 'total_mangoes' is not defined\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def fruit_distribution(s, n):\n    # split the string into a list of words\n    words = s.split()\n    # initialize the count of apples and oranges to zero\n    apples, oranges = 0, 0\n    # loop through the list of words and extract the numbers\n    for word in words:\n        try:\n            num = int(word)\n            if \"apple\" in word:\n                apples += num\n            elif \"orange\" in word:\n                oranges += num\n        except ValueError:\n            pass\n    # return the difference between the total number of fruits and the sum of apples and oranges\n    return n - (apples + oranges)",
+        "completion_tokens": 273,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 451,
+        "raw_text": " ```\ndef fruit_distribution(s, n):\n    # split the string into a list of words\n    words = s.split()\n    # initialize the count of apples and oranges to zero\n    apples, oranges = 0, 0\n    # loop through the list of words and extract the numbers\n    for word in words:\n        try:\n            num = int(word)\n            if \"apple\" in word:\n                apples += num\n            elif \"orange\" in word:\n                oranges += num\n        except ValueError:\n            pass\n    # return the difference between the total number of fruits and the sum of apples and oranges\n    return n - (apples + oranges)\n```\n\nAnd here is the solution for the second problem:\n```\ndef total_mangoes(distributions, totals):\n    # loop through the list of distributions and call the fruit_distribution function on each element\n    mangoes = 0\n    for i in range(len(distributions)):\n        mangoes += fruit_distribution(distributions[i], totals[i])\n    # return the total number of mangoes\n    return mangoes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09447389654815197,
+        "generation_seconds": 35.25505267828703
+      }
+    },
+    {
+      "code_hash": "53f05f323a92311409b01007d3fbf9508ec0b637ae899202b5365dc2fe168d46",
+      "execution": {
+        "duration_seconds": 0.09598904848098755,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "duration_seconds": 0.09589254483580589,
+            "exception_message": "fruit_distribution() takes 2 positional arguments but 6 were given",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 26, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 24, in total_mangoes\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 24, in <genexpr>\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))\n               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nTypeError: fruit_distribution() takes 2 positional arguments but 6 were given\n",
+            "stdout": "",
+            "test_case": "assert total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 26, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 24, in total_mangoes\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))\n  File \"/tmp/srcg-ngc1mw3r/program.py\", line 24, in <genexpr>\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))\n               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\nTypeError: fruit_distribution() takes 2 positional arguments but 6 were given\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def fruit_distribution(s, n):\n    apples, oranges = map(int, s.split())\n    return n - (apples + oranges)\n\ndef total_mangoes(distributions, totals):\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))",
+        "completion_tokens": 88,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 451,
+        "raw_text": " ```python\ndef fruit_distribution(s, n):\n    apples, oranges = map(int, s.split())\n    return n - (apples + oranges)\n\ndef total_mangoes(distributions, totals):\n    return sum(fruit_distribution(*d.split(), t) for d, t in zip(distributions, totals))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.09598904848098755,
+        "generation_seconds": 11.320579594001174
+      }
+    },
+    {
+      "code_hash": "99cad09039b0a70aca7451d2e717d4c48490d3979583bdf8aa28ba2996155fb0",
+      "execution": {
+        "duration_seconds": 0.09506569616496563,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "duration_seconds": 0.0950150266289711,
+            "exception_message": "not enough values to unpack (expected 2, got 1)",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 25, in total_mangoes\n    return sum([fruit_distribution(*d) for d in zip(distributions, totals)])\n                ~~~~~~~~~~~~~~~~~~^^^^\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 20, in fruit_distribution\n    apples, oranges = map(int, s.split()[0].split('and'))\n    ^^^^^^^^^^^^^^^\nValueError: not enough values to unpack (expected 2, got 1)\n",
+            "stdout": "",
+            "test_case": "assert total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 27, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 25, in total_mangoes\n    return sum([fruit_distribution(*d) for d in zip(distributions, totals)])\n                ~~~~~~~~~~~~~~~~~~^^^^\n  File \"/tmp/srcg-m1iipcz_/program.py\", line 20, in fruit_distribution\n    apples, oranges = map(int, s.split()[0].split('and'))\n    ^^^^^^^^^^^^^^^\nValueError: not enough values to unpack (expected 2, got 1)\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def fruit_distribution(s, n):\n    apples, oranges = map(int, s.split()[0].split('and'))\n    mangoes = n - apples - oranges\n    return mangoes\n\ndef total_mangoes(distributions, totals):\n    return sum([fruit_distribution(*d) for d in zip(distributions, totals)])",
+        "completion_tokens": 96,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 451,
+        "raw_text": " ```\ndef fruit_distribution(s, n):\n    apples, oranges = map(int, s.split()[0].split('and'))\n    mangoes = n - apples - oranges\n    return mangoes\n\ndef total_mangoes(distributions, totals):\n    return sum([fruit_distribution(*d) for d in zip(distributions, totals)])\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.09506569616496563,
+        "generation_seconds": 12.343686440959573
+      }
+    },
+    {
+      "code_hash": "e77d166b956e30a5ebc47522da9e2bdb74955031d8490ceb37eec8e0fa528e6e",
+      "execution": {
+        "duration_seconds": 0.09447144716978073,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "duration_seconds": 0.09436400048434734,
+            "exception_message": "invalid literal for int() with base 10: 'oranges'",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 37, in total_mangoes\n    num_mangoes = fruit_distribution(distribution, total)\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 24, in fruit_distribution\n    num_oranges = int(words[4])\nValueError: invalid literal for int() with base 10: 'oranges'\n",
+            "stdout": "",
+            "test_case": "assert total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 42, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 37, in total_mangoes\n    num_mangoes = fruit_distribution(distribution, total)\n  File \"/tmp/srcg-bwzvrz_z/program.py\", line 24, in fruit_distribution\n    num_oranges = int(words[4])\nValueError: invalid literal for int() with base 10: 'oranges'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def fruit_distribution(s, n):\n    # Split the input string into a list of words\n    words = s.split()\n    # Get the number of apples and oranges from the input string\n    num_apples = int(words[0])\n    num_oranges = int(words[4])\n    # Calculate the total number of fruits in the basket\n    total_fruits = num_apples + num_oranges\n    # Subtract the number of fruits in the basket from the total number of fruits to get the number of mangoes\n    num_mangoes = n - total_fruits\n    return num_mangoes\n\ndef total_mangoes(distributions, totals):\n    # Initialize a variable to store the total number of mangoes\n    total_mangoes = 0\n    # Loop through the distributions and totals lists simultaneously\n    for distribution, total in zip(distributions, totals):\n        # Call the fruit_distribution function to get the number of mangoes in the current basket\n        num_mangoes = fruit_distribution(distribution, total)\n        # Add the number of mangoes in the current basket to the total number of mangoes\n        total_mangoes += num_mangoes\n    return total_mangoes",
+        "completion_tokens": 305,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 451,
+        "raw_text": " ```\ndef fruit_distribution(s, n):\n    # Split the input string into a list of words\n    words = s.split()\n    # Get the number of apples and oranges from the input string\n    num_apples = int(words[0])\n    num_oranges = int(words[4])\n    # Calculate the total number of fruits in the basket\n    total_fruits = num_apples + num_oranges\n    # Subtract the number of fruits in the basket from the total number of fruits to get the number of mangoes\n    num_mangoes = n - total_fruits\n    return num_mangoes\n\ndef total_mangoes(distributions, totals):\n    # Initialize a variable to store the total number of mangoes\n    total_mangoes = 0\n    # Loop through the distributions and totals lists simultaneously\n    for distribution, total in zip(distributions, totals):\n        # Call the fruit_distribution function to get the number of mangoes in the current basket\n        num_mangoes = fruit_distribution(distribution, total)\n        # Add the number of mangoes in the current basket to the total number of mangoes\n        total_mangoes += num_mangoes\n    return total_mangoes\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.09447144716978073,
+        "generation_seconds": 39.285155456513166
+      }
+    },
+    {
+      "code_hash": "5f4f84cb569f3d2588df54adcf6bd9b42ed878dd9efb1da966cb16e96c21e964",
+      "execution": {
+        "duration_seconds": 0.16543838754296303,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "duration_seconds": 0.16533727757632732,
+            "exception_message": "invalid literal for int() with base 10: '6 oranges'",
+            "exception_type": "ValueError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 28, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 26, in total_mangoes\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 26, in <genexpr>\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))\n               ~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 21, in fruit_distribution\n    oranges = int(s[s.index('and') + 4:].strip())\nValueError: invalid literal for int() with base 10: '6 oranges'\n",
+            "stdout": "",
+            "test_case": "assert total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120]) == 124",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 28, in <module>\n    __srcg_assertion_actual_7f31 = total_mangoes(['5 apples and 6 oranges', '0 apples and 1 oranges', '2 apples and 3 oranges', '100 apples and 1 oranges'], [19, 3, 100, 120])\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 26, in total_mangoes\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 26, in <genexpr>\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))\n               ~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"/tmp/srcg-6c2qo15g/program.py\", line 21, in fruit_distribution\n    oranges = int(s[s.index('and') + 4:].strip())\nValueError: invalid literal for int() with base 10: '6 oranges'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def fruit_distribution(s, n):\n    apples = int(s[:s.index(' apples')].strip())\n    oranges = int(s[s.index('and') + 4:].strip())\n    mangoes = n - apples - oranges\n    return mangoes\n\ndef total_mangoes(distributions, totals):\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))",
+        "completion_tokens": 118,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 451,
+        "raw_text": " ```python\ndef fruit_distribution(s, n):\n    apples = int(s[:s.index(' apples')].strip())\n    oranges = int(s[s.index('and') + 4:].strip())\n    mangoes = n - apples - oranges\n    return mangoes\n\ndef total_mangoes(distributions, totals):\n    return sum(fruit_distribution(d, t) for d, t in zip(distributions, totals))\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\n# Given a list of strings, each representing the distribution of apples and oranges in multiple baskets, and a list of integers, each representing the total number of fruits in the corresponding basket, write a function to calculate the total number of mango fruits across all baskets. Each string follows the format 'X apples and Y oranges' where X and Y are integers.\ndef total_mangoes(distributions, totals):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.16543838754296303,
+        "generation_seconds": 15.093112217262387
+      }
+    }
+  ],
+  "duration_seconds": 113.8450815975666,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/67",
+  "unique_code_count": 5
+}

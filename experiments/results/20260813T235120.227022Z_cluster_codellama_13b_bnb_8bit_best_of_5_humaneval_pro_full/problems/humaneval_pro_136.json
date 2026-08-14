@@ -1,0 +1,725 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "6c56e7dd4df5db6b30b07eddf04922c92a66589b12b0f585e05f5c953c245223",
+      "execution": {
+        "duration_seconds": 0.5016387794166803,
+        "passed": true,
+        "passed_tests": 4,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "duration_seconds": 0.08717530034482479,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "duration_seconds": 0.1284635290503502,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "duration_seconds": 0.13876647874712944,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "duration_seconds": 0.14685182832181454,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n\n    for num in lst:\n        if num < 0 and (largest_negative is None or num > largest_negative):\n            largest_negative = num\n        elif num > 0 and (smallest_positive is None or num < smallest_positive):\n            smallest_positive = num\n\n    return (largest_negative, smallest_positive)\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n\n    for lst in list_of_lists:\n        a, b = largest_smallest_integers(lst)\n        if a is not None and (largest_negative is None or a > largest_negative):\n            largest_negative = a\n        if b is not None and (smallest_positive is None or b < smallest_positive):\n            smallest_positive = b\n\n    return (largest_negative, smallest_positive)",
+        "completion_tokens": 257,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 336,
+        "raw_text": " ```\ndef largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n\n    for num in lst:\n        if num < 0 and (largest_negative is None or num > largest_negative):\n            largest_negative = num\n        elif num > 0 and (smallest_positive is None or num < smallest_positive):\n            smallest_positive = num\n\n    return (largest_negative, smallest_positive)\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n\n    for lst in list_of_lists:\n        a, b = largest_smallest_integers(lst)\n        if a is not None and (largest_negative is None or a > largest_negative):\n            largest_negative = a\n        if b is not None and (smallest_positive is None or b < smallest_positive):\n            smallest_positive = b\n\n    return (largest_negative, smallest_positive)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.5016387794166803,
+        "generation_seconds": 34.51326281018555
+      }
+    },
+    {
+      "code_hash": "c850337a3be909c0ce62bda41f572c819d06b0bd910fe04d880d580ccaa2440b",
+      "execution": {
+        "duration_seconds": 0.6209429800510406,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "duration_seconds": 0.1754066925495863,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-yw8m_hfs/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-yw8m_hfs/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-yw8m_hfs/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-yw8m_hfs/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "duration_seconds": 0.16657222621142864,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-lieh_w1t/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-lieh_w1t/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-lieh_w1t/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-lieh_w1t/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "duration_seconds": 0.12986612878739834,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-7d44lrgx/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-7d44lrgx/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-7d44lrgx/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-7d44lrgx/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "duration_seconds": 0.1487356312572956,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4o77zezr/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[0], [0], [0]])\n  File \"/tmp/srcg-4o77zezr/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4o77zezr/program.py\", line 30, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[0], [0], [0]])\n  File \"/tmp/srcg-4o77zezr/program.py\", line 23, in find_largest_smallest_across_lists\n    largest, smallest = largest_smallest_integers(lst)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        if largest is not None and (largest_negative is None or largest < largest_negative):\n            largest_negative = largest\n        if smallest is not None and (smallest_positive is None or smallest > smallest_positive):\n            smallest_positive = smallest\n    return largest_negative, smallest_positive",
+        "completion_tokens": 141,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 336,
+        "raw_text": " ```python\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        if largest is not None and (largest_negative is None or largest < largest_negative):\n            largest_negative = largest\n        if smallest is not None and (smallest_positive is None or smallest > smallest_positive):\n            smallest_positive = smallest\n    return largest_negative, smallest_positive\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.6209429800510406,
+        "generation_seconds": 17.440827598795295
+      }
+    },
+    {
+      "code_hash": "814e170906f2e043d50932349361c439cefbdeb6d5dfd05de3826db64bae5491",
+      "execution": {
+        "duration_seconds": 0.621253339573741,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "duration_seconds": 0.16390368342399597,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mhv_9d7g/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-mhv_9d7g/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mhv_9d7g/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-mhv_9d7g/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "duration_seconds": 0.13141919299960136,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-5apr1xid/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-5apr1xid/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-5apr1xid/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-5apr1xid/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "duration_seconds": 0.1769108735024929,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m5geyld0/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-m5geyld0/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m5geyld0/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-m5geyld0/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "duration_seconds": 0.14862525276839733,
+            "exception_message": "name 'largest_smallest_integers' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-u0bhdyhl/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[0], [0], [0]])\n  File \"/tmp/srcg-u0bhdyhl/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-u0bhdyhl/program.py\", line 34, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[0], [0], [0]])\n  File \"/tmp/srcg-u0bhdyhl/program.py\", line 24, in find_largest_smallest_across_lists\n    a, b = largest_smallest_integers(lst)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nNameError: name 'largest_smallest_integers' is not defined\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    \n    for lst in list_of_lists:\n        a, b = largest_smallest_integers(lst)\n        \n        if a is not None and (largest_negative is None or a > largest_negative):\n            largest_negative = a\n            \n        if b is not None and (smallest_positive is None or b < smallest_positive):\n            smallest_positive = b\n            \n    return largest_negative, smallest_positive",
+        "completion_tokens": 148,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 336,
+        "raw_text": " ```\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    \n    for lst in list_of_lists:\n        a, b = largest_smallest_integers(lst)\n        \n        if a is not None and (largest_negative is None or a > largest_negative):\n            largest_negative = a\n            \n        if b is not None and (smallest_positive is None or b < smallest_positive):\n            smallest_positive = b\n            \n    return largest_negative, smallest_positive\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.621253339573741,
+        "generation_seconds": 19.9675928093493
+      }
+    },
+    {
+      "code_hash": "78c760172c276da98fc5913fc12b6a4e188f1f63cc9b051aff14d95b97d4a33c",
+      "execution": {
+        "duration_seconds": 0.5269735585898161,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "duration_seconds": 0.10240848734974861,
+            "exception_message": "'>' not supported between instances of 'NoneType' and 'int'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-aa4v3ymk/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-aa4v3ymk/program.py\", line 40, in find_largest_smallest_across_lists\n    if smallest_positive is None or smallest > smallest_positive:\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-aa4v3ymk/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-aa4v3ymk/program.py\", line 40, in find_largest_smallest_across_lists\n    if smallest_positive is None or smallest > smallest_positive:\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "duration_seconds": 0.1578549575060606,
+            "exception_message": "'<' not supported between instances of 'NoneType' and 'int'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6daufrse/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-6daufrse/program.py\", line 38, in find_largest_smallest_across_lists\n    if largest_negative is None or largest < largest_negative:\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'NoneType' and 'int'\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6daufrse/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]])\n  File \"/tmp/srcg-6daufrse/program.py\", line 38, in find_largest_smallest_across_lists\n    if largest_negative is None or largest < largest_negative:\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'NoneType' and 'int'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "duration_seconds": 0.1306875217705965,
+            "exception_message": "'>' not supported between instances of 'NoneType' and 'int'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-qed3sn8y/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-qed3sn8y/program.py\", line 40, in find_largest_smallest_across_lists\n    if smallest_positive is None or smallest > smallest_positive:\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-qed3sn8y/program.py\", line 45, in <module>\n    __srcg_assertion_actual_7f31 = find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]])\n  File \"/tmp/srcg-qed3sn8y/program.py\", line 40, in find_largest_smallest_across_lists\n    if smallest_positive is None or smallest > smallest_positive:\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '>' not supported between instances of 'NoneType' and 'int'\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "duration_seconds": 0.1356747467070818,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n\n    for num in lst:\n        if num < 0 and (largest_negative is None or num > largest_negative):\n            largest_negative = num\n        elif num > 0 and (smallest_positive is None or num < smallest_positive):\n            smallest_positive = num\n\n    return largest_negative, smallest_positive\n\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n\n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        if largest_negative is None or largest < largest_negative:\n            largest_negative = largest\n        if smallest_positive is None or smallest > smallest_positive:\n            smallest_positive = smallest\n\n    return largest_negative, smallest_positive",
+        "completion_tokens": 238,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 336,
+        "raw_text": " ```\ndef largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n\n    for num in lst:\n        if num < 0 and (largest_negative is None or num > largest_negative):\n            largest_negative = num\n        elif num > 0 and (smallest_positive is None or num < smallest_positive):\n            smallest_positive = num\n\n    return largest_negative, smallest_positive\n\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n\n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        if largest_negative is None or largest < largest_negative:\n            largest_negative = largest\n        if smallest_positive is None or smallest > smallest_positive:\n            smallest_positive = smallest\n\n    return largest_negative, smallest_positive\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.5269735585898161,
+        "generation_seconds": 30.408553894609213
+      }
+    },
+    {
+      "code_hash": "37cb9bfb1f3c8967e89033799b5a514be69f62f85247c18cfee6ed83b4bdc7e9",
+      "execution": {
+        "duration_seconds": 0.5183779932558537,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "duration_seconds": 0.088200269266963,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [-1, -3, -5, -7], [0]]) == (-1, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "(-1, 0)",
+            "assertion_expression": "find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "duration_seconds": 0.14542189612984657,
+            "exception_message": "assertion comparison failed: actual=(-1, 0); expected=(-1, None)",
+            "exception_type": "AssertionError",
+            "expected_value": "(-1, None)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-823s8zfm/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(-1, 0)', '(-1, None)')\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[], [-1, -3, -5, -7], [0]]) == (-1, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-823s8zfm/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(-1, 0)', '(-1, None)')\n"
+          },
+          {
+            "actual_value": "(0, 1)",
+            "assertion_expression": "find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "duration_seconds": 0.1311892606317997,
+            "exception_message": "assertion comparison failed: actual=(0, 1); expected=(None, 1)",
+            "exception_type": "AssertionError",
+            "expected_value": "(None, 1)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ce45nav3/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 1)', '(None, 1)')\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[2, 4, 1, 3, 5, 7], [], [0]]) == (None, 1)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ce45nav3/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 1)', '(None, 1)')\n"
+          },
+          {
+            "actual_value": "(0, 0)",
+            "assertion_expression": "find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "duration_seconds": 0.15322201140224934,
+            "exception_message": "assertion comparison failed: actual=(0, 0); expected=(None, None)",
+            "exception_type": "AssertionError",
+            "expected_value": "(None, None)",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-rsfvjpkz/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 0)', '(None, None)')\n",
+            "stdout": "",
+            "test_case": "assert find_largest_smallest_across_lists([[0], [0], [0]]) == (None, None)",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-rsfvjpkz/program.py\", line 51, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(0, 0)', '(None, None)')\n"
+          }
+        ],
+        "total_tests": 4
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def largest_smallest_integers(lst):\n    largest = None\n    smallest = None\n    \n    for num in lst:\n        if isinstance(num, int):\n            if largest is None or num > largest:\n                largest = num\n            \n            if smallest is None or num < smallest:\n                smallest = num\n    \n    return (largest, smallest)\n\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    \n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        \n        if largest_negative is None or (largest is not None and largest < largest_negative):\n            largest_negative = largest\n        \n        if smallest_positive is None or (smallest is not None and smallest > smallest_positive):\n            smallest_positive = smallest\n    \n    return (largest_negative, smallest_positive)",
+        "completion_tokens": 239,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 336,
+        "raw_text": " ```\ndef largest_smallest_integers(lst):\n    largest = None\n    smallest = None\n    \n    for num in lst:\n        if isinstance(num, int):\n            if largest is None or num > largest:\n                largest = num\n            \n            if smallest is None or num < smallest:\n                smallest = num\n    \n    return (largest, smallest)\n\n\ndef find_largest_smallest_across_lists(list_of_lists):\n    largest_negative = None\n    smallest_positive = None\n    \n    for lst in list_of_lists:\n        largest, smallest = largest_smallest_integers(lst)\n        \n        if largest_negative is None or (largest is not None and largest < largest_negative):\n            largest_negative = largest\n        \n        if smallest_positive is None or (smallest is not None and smallest > smallest_positive):\n            smallest_positive = smallest\n    \n    return (largest_negative, smallest_positive)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\n# Given a list of lists, find the largest negative integer and the smallest positive integer across all sublists. Return a tuple (a, b), where 'a' is the largest negative integer and 'b' is the smallest positive integer. If there are no negative or positive integers, return them as None.\ndef find_largest_smallest_across_lists(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.5183779932558537,
+        "generation_seconds": 30.008102256804705
+      }
+    }
+  ],
+  "duration_seconds": 135.13169575482607,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "humaneval_pro/136",
+  "unique_code_count": 5
+}
