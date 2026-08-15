@@ -1,0 +1,888 @@
+{
+  "convergence_reason": "fixed_iterations_complete",
+  "duration_seconds": 73.02776665054262,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "722be378d89d4f0993a3758a535634c9f82c1fe138e6575b7dbe86bad061947a",
+        "error_hash": "bede84130192c3e04001761014402c3b527a1e57d264c0c14b6516c0b1c9bfe6",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.1309701520949602,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "273",
+            "assertion_expression": "total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "duration_seconds": 0.1309239473193884,
+            "exception_message": "assertion comparison failed: actual=273; expected=30",
+            "exception_type": "AssertionError",
+            "expected_value": "30",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-m79guczp/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n",
+            "stdout": "",
+            "test_case": "assert total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "power_base_sum",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 11,
+                  "source": "total_sum += power_base_sum(base, power)"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 2,
+                  "source": "result = 0"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 4,
+                  "source": "result += base % 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 5,
+                  "source": "base //= 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 12,
+                  "source": "return total_sum"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-m79guczp/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 210,
+        "raw_text": " ```\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.1309701520949602,
+        "generation_seconds": 14.361915748566389
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "722be378d89d4f0993a3758a535634c9f82c1fe138e6575b7dbe86bad061947a",
+        "error_hash": "bede84130192c3e04001761014402c3b527a1e57d264c0c14b6516c0b1c9bfe6",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.12648385390639305,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "273",
+            "assertion_expression": "total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "duration_seconds": 0.1263914816081524,
+            "exception_message": "assertion comparison failed: actual=273; expected=30",
+            "exception_type": "AssertionError",
+            "expected_value": "30",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-pry6gvow/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n",
+            "stdout": "",
+            "test_case": "assert total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "power_base_sum",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 11,
+                  "source": "total_sum += power_base_sum(base, power)"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 2,
+                  "source": "result = 0"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 4,
+                  "source": "result += base % 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 5,
+                  "source": "base //= 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 12,
+                  "source": "return total_sum"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-pry6gvow/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 499,
+        "raw_text": " ```\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.12648385390639305,
+        "generation_seconds": 14.65290410630405
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "722be378d89d4f0993a3758a535634c9f82c1fe138e6575b7dbe86bad061947a",
+        "error_hash": "bede84130192c3e04001761014402c3b527a1e57d264c0c14b6516c0b1c9bfe6",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.15637537091970444,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "273",
+            "assertion_expression": "total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "duration_seconds": 0.1562847625464201,
+            "exception_message": "assertion comparison failed: actual=273; expected=30",
+            "exception_type": "AssertionError",
+            "expected_value": "30",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-npukhwaz/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n",
+            "stdout": "",
+            "test_case": "assert total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "power_base_sum",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 11,
+                  "source": "total_sum += power_base_sum(base, power)"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 2,
+                  "source": "result = 0"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 4,
+                  "source": "result += base % 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 5,
+                  "source": "base //= 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 12,
+                  "source": "return total_sum"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-npukhwaz/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 499,
+        "raw_text": " ```\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.15637537091970444,
+        "generation_seconds": 14.541448209434748
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "722be378d89d4f0993a3758a535634c9f82c1fe138e6575b7dbe86bad061947a",
+        "error_hash": "bede84130192c3e04001761014402c3b527a1e57d264c0c14b6516c0b1c9bfe6",
+        "iteration": 4,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.15899395756423473,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "273",
+            "assertion_expression": "total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "duration_seconds": 0.1589053049683571,
+            "exception_message": "assertion comparison failed: actual=273; expected=30",
+            "exception_type": "AssertionError",
+            "expected_value": "30",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tcg7qz_5/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n",
+            "stdout": "",
+            "test_case": "assert total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "power_base_sum",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 11,
+                  "source": "total_sum += power_base_sum(base, power)"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 2,
+                  "source": "result = 0"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 4,
+                  "source": "result += base % 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 5,
+                  "source": "base //= 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 12,
+                  "source": "return total_sum"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tcg7qz_5/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 499,
+        "raw_text": " ```\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 4,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.15899395756423473,
+        "generation_seconds": 14.412910036742687
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "fixed_iterations_complete",
+      "convergence_state": {
+        "code_hash": "722be378d89d4f0993a3758a535634c9f82c1fe138e6575b7dbe86bad061947a",
+        "error_hash": "bede84130192c3e04001761014402c3b527a1e57d264c0c14b6516c0b1c9bfe6",
+        "iteration": 5,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09521077387034893,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "273",
+            "assertion_expression": "total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "duration_seconds": 0.09511256776750088,
+            "exception_message": "assertion comparison failed: actual=273; expected=30",
+            "exception_type": "AssertionError",
+            "expected_value": "30",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-phd53p62/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n",
+            "stdout": "",
+            "test_case": "assert total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "power_base_sum",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 11,
+                  "source": "total_sum += power_base_sum(base, power)"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 2,
+                  "source": "result = 0"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 4,
+                  "source": "result += base % 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 5,
+                  "source": "base //= 10"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 3,
+                  "source": "while base > 0:"
+                },
+                {
+                  "function": "power_base_sum",
+                  "line_number": 6,
+                  "source": "return result ** power"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 10,
+                  "source": "for base, power in tuples_list:"
+                },
+                {
+                  "function": "total_power_base_sum",
+                  "line_number": 12,
+                  "source": "return total_sum"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-phd53p62/program.py\", line 76, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('273', '30')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum",
+        "completion_tokens": 112,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 499,
+        "raw_text": " ```\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function that takes base and power as arguments and calculate the sum of all digits of the base to the specified power.\ndef power_base_sum(base, power):\n\n# Write a function that takes a list of tuples, where each tuple contains a base and a power, and calculates the sum of all digits of the base raised to the specified power for each tuple in the list. Finally, return the total sum of all these sums.\ndef total_power_base_sum(tuples_list):\n\nPrevious solution:\ndef power_base_sum(base, power):\n    result = 0\n    while base > 0:\n        result += base % 10\n        base //= 10\n    return result ** power\n\ndef total_power_base_sum(tuples_list):\n    total_sum = 0\n    for base, power in tuples_list:\n        total_sum += power_base_sum(base, power)\n    return total_sum\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   actual: 273\n   expected: 30\nTrace analysis:\n1. Failed assertion: total_power_base_sum([(2, 3), (3, 2), (4, 4)]) == 30\n   Observed divergence: actual: 273; expected: 30.\n   Last candidate operation: line 12 in total_power_base_sum: return total_sum\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 5,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09521077387034893,
+        "generation_seconds": 14.384805431589484
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "mbpp_pro/307"
+}

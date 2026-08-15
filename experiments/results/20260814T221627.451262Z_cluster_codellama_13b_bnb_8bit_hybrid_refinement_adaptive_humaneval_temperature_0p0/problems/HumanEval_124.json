@@ -1,0 +1,200 @@
+{
+  "convergence_reason": "success",
+  "duration_seconds": 27.222395159304142,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 1.0,
+        "category": "success",
+        "passed_assertions": 1,
+        "total_assertions": 1
+      },
+      "convergence_decision": "success",
+      "convergence_state": {
+        "code_hash": "d431f0732d47640f5a7cb0554e2a8e2689af48afa37a6b8900f88f5dcee99821",
+        "error_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "iteration": 1,
+        "passed_assertions": 1,
+        "success": true,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08964353986084461,
+        "passed": true,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": null,
+            "duration_seconds": 0.08956308662891388,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('03-11-2000') == True\n\n    assert candidate('15-01-2012') == False\n\n    assert candidate('04-0-2040') == False\n\n    assert candidate('06-04-2020') == True\n\n    assert candidate('01-01-2007') == True\n\n    assert candidate('03-32-2011') == False\n\n    assert candidate('') == False\n\n    assert candidate('04-31-3000') == False\n\n    assert candidate('06-06-2005') == True\n\n    assert candidate('21-31-2000') == False\n\n    assert candidate('04-12-2003') == True\n\n    assert candidate('04122003') == False\n\n    assert candidate('20030412') == False\n\n    assert candidate('2003-04') == False\n\n    assert candidate('2003-04-12') == False\n\n    assert candidate('04-2003') == False\n\ncheck(valid_date)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "valid_date",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "valid_date",
+                  "line_number": 4,
+                  "source": "pattern = r\"^(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<year>\\d{4})$\""
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 5,
+                  "source": "match = re.match(pattern, date)"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 6,
+                  "source": "if not match:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 7,
+                  "source": "return False"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 4,
+                  "source": "pattern = r\"^(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<year>\\d{4})$\""
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 5,
+                  "source": "match = re.match(pattern, date)"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 6,
+                  "source": "if not match:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 7,
+                  "source": "return False"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 4,
+                  "source": "pattern = r\"^(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<year>\\d{4})$\""
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 5,
+                  "source": "match = re.match(pattern, date)"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 6,
+                  "source": "if not match:"
+                },
+                {
+                  "function": "valid_date",
+                  "line_number": 7,
+                  "source": "return False"
+                }
+              ]
+            },
+            "traceback": null
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "All assertions passed.",
+      "feedback_strategy": "template",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "import re\n\ndef valid_date(date):\n    pattern = r\"^(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<year>\\d{4})$\"\n    match = re.match(pattern, date)\n    if not match:\n        return False\n    month, day, year = match.groups()\n    if int(month) < 1 or int(month) > 12:\n        return False\n    if int(day) < 1 or (int(month) in [1, 3, 5, 7, 8, 10, 12] and int(day) > 31) or (int(month) in [4, 6, 9, 11] and int(day) > 30) or (int(month) == 2 and int(day) > 29):\n        return False\n    return True",
+        "completion_tokens": 219,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 366,
+        "raw_text": " ```\nimport re\n\ndef valid_date(date):\n    pattern = r\"^(?P<month>\\d{2})-(?P<day>\\d{2})-(?P<year>\\d{4})$\"\n    match = re.match(pattern, date)\n    if not match:\n        return False\n    month, day, year = match.groups()\n    if int(month) < 1 or int(month) > 12:\n        return False\n    if int(day) < 1 or (int(month) in [1, 3, 5, 7, 8, 10, 12] and int(day) > 31) or (int(month) in [4, 6, 9, 11] and int(day) > 30) or (int(month) == 2 and int(day) > 29):\n        return False\n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef valid_date(date):\n    \"\"\"You have to write a function which validates a given date string and\n    returns True if the date is valid otherwise False.\n    The date is valid if all of the following rules are satisfied:\n    1. The date string is not empty.\n    2. The number of days is not less than 1 or higher than 31 days for months 1,3,5,7,8,10,12. And the number of days is not less than 1 or higher than 30 days for months 4,6,9,11. And, the number of days is not less than 1 or higher than 29 for the month 2.\n    3. The months should not be less than 1 or higher than 12.\n    4. The date should be in the format: mm-dd-yyyy\n\n    for example: \n    valid_date('03-11-2000') => True\n\n    valid_date('15-01-2012') => False\n\n    valid_date('04-0-2040') => False\n\n    valid_date('06-04-2020') => True\n\n    valid_date('06/04/2020') => False\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": false,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.0,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef valid_date(date):\n    \"\"\"You have to write a function which validates a given date string and\n    returns True if the date is valid otherwise False.\n    The date is valid if all of the following rules are satisfied:\n    1. The date string is not empty.\n    2. The number of days is not less than 1 or higher than 31 days for months 1,3,5,7,8,10,12. And the number of days is not less than 1 or higher than 30 days for months 4,6,9,11. And, the number of days is not less than 1 or higher than 29 for the month 2.\n    3. The months should not be less than 1 or higher than 12.\n    4. The date should be in the format: mm-dd-yyyy\n\n    for example: \n    valid_date('03-11-2000') => True\n\n    valid_date('15-01-2012') => False\n\n    valid_date('04-0-2040') => False\n\n    valid_date('06-04-2020') => True\n\n    valid_date('06/04/2020') => False\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08964353986084461,
+        "generation_seconds": 27.131626971065998
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": true,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/124"
+}

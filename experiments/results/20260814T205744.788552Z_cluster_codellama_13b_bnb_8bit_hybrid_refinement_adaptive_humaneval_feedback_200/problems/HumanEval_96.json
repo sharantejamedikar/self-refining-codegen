@@ -1,0 +1,544 @@
+{
+  "convergence_reason": "stagnation",
+  "duration_seconds": 44.593440890312195,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "d65a10eac55f166d06fee51e42adddcc30aa53bb71ea49b89a0bba54ecb5a4b2",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.17267821542918682,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(5) == [2, 3]",
+            "duration_seconds": 0.17260066606104374,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-bog9eqv2/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-bog9eqv2/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == [2,3]\n    assert candidate(6) == [2,3,5]\n    assert candidate(7) == [2,3,5]\n    assert candidate(10) == [2,3,5,7]\n    assert candidate(0) == []\n    assert candidate(22) == [2,3,5,7,11,13,17,19]\n    assert candidate(1) == []\n    assert candidate(18) == [2,3,5,7,11,13,17]\n    assert candidate(47) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]\n    assert candidate(101) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]\n\n\ncheck(count_up_to)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 13,
+                  "source": "return False"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 4,
+                  "source": "if is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 9,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 14,
+                  "source": "return True"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 5,
+                  "source": "primes.append(i)"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 6,
+                  "source": "return primes"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-bog9eqv2/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-bog9eqv2/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 115,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 240,
+        "raw_text": " ```\ndef count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.17267821542918682,
+        "generation_seconds": 14.719755982980132
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "613b3cd63790ef70e5afc21067c0157a619ae9c24edd367c9c32cf7abc4d5f54",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.1607397347688675,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(5) == [2, 3]",
+            "duration_seconds": 0.16068984754383564,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-fj8ueslw/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-fj8ueslw/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == [2,3]\n    assert candidate(6) == [2,3,5]\n    assert candidate(7) == [2,3,5]\n    assert candidate(10) == [2,3,5,7]\n    assert candidate(0) == []\n    assert candidate(22) == [2,3,5,7,11,13,17,19]\n    assert candidate(1) == []\n    assert candidate(18) == [2,3,5,7,11,13,17]\n    assert candidate(47) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]\n    assert candidate(101) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]\n\n\ncheck(count_up_to)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 13,
+                  "source": "return False"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 4,
+                  "source": "if is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 9,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 14,
+                  "source": "return True"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 5,
+                  "source": "primes.append(i)"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 6,
+                  "source": "return primes[:n]"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-fj8ueslw/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-fj8ueslw/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes[:n]",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 114,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 447,
+        "raw_text": " def count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nPrevious solution:\ndef count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nPrevious solution:\ndef count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.1607397347688675,
+        "generation_seconds": 14.688769530504942
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "stagnation",
+      "convergence_state": {
+        "code_hash": "613b3cd63790ef70e5afc21067c0157a619ae9c24edd367c9c32cf7abc4d5f54",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.10441670566797256,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate(5) == [2, 3]",
+            "duration_seconds": 0.10434310510754585,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i73m4fb5/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-i73m4fb5/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "def check(candidate):\n\n    assert candidate(5) == [2,3]\n    assert candidate(6) == [2,3,5]\n    assert candidate(7) == [2,3,5]\n    assert candidate(10) == [2,3,5,7]\n    assert candidate(0) == []\n    assert candidate(22) == [2,3,5,7,11,13,17,19]\n    assert candidate(1) == []\n    assert candidate(18) == [2,3,5,7,11,13,17]\n    assert candidate(47) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43]\n    assert candidate(101) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]\n\n\ncheck(count_up_to)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "is_prime",
+              "max_call_depth": 2,
+              "recent_events": [
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 13,
+                  "source": "return False"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 4,
+                  "source": "if is_prime(i):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 9,
+                  "source": "if n <= 1:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 12,
+                  "source": "if n % i == 0:"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 11,
+                  "source": "for i in range(2, int(n**0.5)+1):"
+                },
+                {
+                  "function": "is_prime",
+                  "line_number": 14,
+                  "source": "return True"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 5,
+                  "source": "primes.append(i)"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 3,
+                  "source": "for i in range(2, n+1):"
+                },
+                {
+                  "function": "count_up_to",
+                  "line_number": 6,
+                  "source": "return primes[:n]"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i73m4fb5/program.py\", line 90, in <module>\n    check(count_up_to)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-i73m4fb5/program.py\", line 78, in check\n    assert candidate(5) == [2,3]\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes[:n]",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True",
+        "completion_tokens": 114,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 453,
+        "raw_text": " def count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nPrevious solution:\ndef count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes[:n]\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.2,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\n\ndef count_up_to(n):\n    \"\"\"Implement a function that takes an non-negative integer and returns an array of the first n\n    integers that are prime numbers and less than n.\n    for example:\n    count_up_to(5) => [2,3]\n    count_up_to(11) => [2,3,5,7]\n    count_up_to(0) => []\n    count_up_to(20) => [2,3,5,7,11,13,17,19]\n    count_up_to(1) => []\n    count_up_to(18) => [2,3,5,7,11,13,17]\n    \"\"\"\n\nPrevious solution:\ndef count_up_to(n):\n    primes = []\n    for i in range(2, n+1):\n        if is_prime(i):\n            primes.append(i)\n    return primes[:n]\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            return False\n    return True\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm. Passed 0/1 assertions. Failed assertions: 1. candidate(5) == [2, 3] Trace analysis: 1. Failed assertion: candidate(5) == [2, 3] Last candidate operation: line 6 in count_up_to: return primes[:n]\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10441670566797256,
+        "generation_seconds": 14.743854938074946
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/96"
+}

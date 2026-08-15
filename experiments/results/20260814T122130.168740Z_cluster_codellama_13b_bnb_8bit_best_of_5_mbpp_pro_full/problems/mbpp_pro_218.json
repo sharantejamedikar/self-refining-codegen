@@ -1,0 +1,648 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "87afe2c2ff01df2a30e696b451306ab19cf5b64bee922a2f3388347c69013b39",
+      "execution": {
+        "duration_seconds": 0.385167071595788,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "42",
+            "assertion_expression": "max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "duration_seconds": 0.10875707305967808,
+            "exception_message": "assertion comparison failed: actual=42; expected=54",
+            "exception_type": "AssertionError",
+            "expected_value": "54",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ul54789l/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '54')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ul54789l/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '54')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "duration_seconds": 0.12489546090364456,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "7",
+            "assertion_expression": "max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "duration_seconds": 0.15122165344655514,
+            "exception_message": "assertion comparison failed: actual=7; expected=19",
+            "exception_type": "AssertionError",
+            "expected_value": "19",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-31znt3co/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('7', '19')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-31znt3co/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('7', '19')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    max_so_far = arr[0]\n    min_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        max_product = max(arr[i], max_product * arr[i])\n        min_product = min(arr[i], min_product * arr[i])\n        max_so_far = max(max_so_far, max_product)\n        min_so_far = min(min_so_far, min_product)\n    \n    return max_so_far\n\ndef max_subarray_product_sum(arr):\n    if len(arr) == 0 or len(arr[0]) == 0:\n        return 0\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)",
+        "completion_tokens": 267,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    max_so_far = arr[0]\n    min_so_far = arr[0]\n    \n    for i in range(1, len(arr)):\n        max_product = max(arr[i], max_product * arr[i])\n        min_product = min(arr[i], min_product * arr[i])\n        max_so_far = max(max_so_far, max_product)\n        min_so_far = min(min_so_far, min_product)\n    \n    return max_so_far\n\ndef max_subarray_product_sum(arr):\n    if len(arr) == 0 or len(arr[0]) == 0:\n        return 0\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.385167071595788,
+        "generation_seconds": 34.154374999925494
+      }
+    },
+    {
+      "code_hash": "2dc20e342d6e92cffe262337d6c82f95f78f127c524f6979a44dd78bee001567",
+      "execution": {
+        "duration_seconds": 0.34060863219201565,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "duration_seconds": 0.1071588583290577,
+            "exception_message": "assertion comparison failed: actual=0; expected=54",
+            "exception_type": "AssertionError",
+            "expected_value": "54",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-7kf0ncmz/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '54')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-7kf0ncmz/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '54')\n"
+          },
+          {
+            "actual_value": "42",
+            "assertion_expression": "max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "duration_seconds": 0.1188609879463911,
+            "exception_message": "assertion comparison failed: actual=42; expected=44",
+            "exception_type": "AssertionError",
+            "expected_value": "44",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-p9h66k3o/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-p9h66k3o/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n"
+          },
+          {
+            "actual_value": "16",
+            "assertion_expression": "max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "duration_seconds": 0.11436781845986843,
+            "exception_message": "assertion comparison failed: actual=16; expected=19",
+            "exception_type": "AssertionError",
+            "expected_value": "19",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-595w8zrv/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('16', '19')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-595w8zrv/program.py\", line 30, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('16', '19')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_subarray_product(arr):\n    max_product = 1\n    for i in range(len(arr)):\n        max_product *= arr[i]\n    return max_product\n\ndef max_subarray_product_sum(arr):\n    return sum([max_subarray_product(row) for row in arr])",
+        "completion_tokens": 85,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef max_subarray_product(arr):\n    max_product = 1\n    for i in range(len(arr)):\n        max_product *= arr[i]\n    return max_product\n\ndef max_subarray_product_sum(arr):\n    return sum([max_subarray_product(row) for row in arr])\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.34060863219201565,
+        "generation_seconds": 11.487487131729722
+      }
+    },
+    {
+      "code_hash": "b06f91ce58bbcec06c7a47d6b53ee719c67659194a415e51db9e75e3e10cedcb",
+      "execution": {
+        "duration_seconds": 0.38607021048665047,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "0",
+            "assertion_expression": "max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "duration_seconds": 0.10557485930621624,
+            "exception_message": "assertion comparison failed: actual=0; expected=54",
+            "exception_type": "AssertionError",
+            "expected_value": "54",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-odagaw1k/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '54')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-odagaw1k/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('0', '54')\n"
+          },
+          {
+            "actual_value": "42",
+            "assertion_expression": "max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "duration_seconds": 0.11068153008818626,
+            "exception_message": "assertion comparison failed: actual=42; expected=44",
+            "exception_type": "AssertionError",
+            "expected_value": "44",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ccy2s2lh/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ccy2s2lh/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n"
+          },
+          {
+            "actual_value": "16",
+            "assertion_expression": "max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "duration_seconds": 0.16961413621902466,
+            "exception_message": "assertion comparison failed: actual=16; expected=19",
+            "exception_type": "AssertionError",
+            "expected_value": "19",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ii35_9xi/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('16', '19')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ii35_9xi/program.py\", line 41, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('16', '19')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] < 0:\n            temp = max_product\n            max_product = min_product\n            min_product = temp\n        \n        max_product *= arr[i]\n        min_product *= arr[i]\n    \n    return max(max_product, min_product)\n\ndef max_subarray_product_sum(arr):\n    return sum([max_subarray_product(row) for row in arr])",
+        "completion_tokens": 173,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] < 0:\n            temp = max_product\n            max_product = min_product\n            min_product = temp\n        \n        max_product *= arr[i]\n        min_product *= arr[i]\n    \n    return max(max_product, min_product)\n\ndef max_subarray_product_sum(arr):\n    return sum([max_subarray_product(row) for row in arr])\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.38607021048665047,
+        "generation_seconds": 22.59900795854628
+      }
+    },
+    {
+      "code_hash": "178a81acbe660e7b20024079c4148f977b6e0e973ccbd3f1a46dc517cbbad327",
+      "execution": {
+        "duration_seconds": 0.3905696999281645,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "78",
+            "assertion_expression": "max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "duration_seconds": 0.10665979981422424,
+            "exception_message": "assertion comparison failed: actual=78; expected=54",
+            "exception_type": "AssertionError",
+            "expected_value": "54",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-tvyc6gjp/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('78', '54')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-tvyc6gjp/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('78', '54')\n"
+          },
+          {
+            "actual_value": "42",
+            "assertion_expression": "max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "duration_seconds": 0.1170253548771143,
+            "exception_message": "assertion comparison failed: actual=42; expected=44",
+            "exception_type": "AssertionError",
+            "expected_value": "44",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-z6habc6q/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-z6habc6q/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('42', '44')\n"
+          },
+          {
+            "actual_value": "73",
+            "assertion_expression": "max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "duration_seconds": 0.16663680039346218,
+            "exception_message": "assertion comparison failed: actual=73; expected=19",
+            "exception_type": "AssertionError",
+            "expected_value": "19",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-qkcakvq3/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('73', '19')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-qkcakvq3/program.py\", line 47, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('73', '19')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    for i in range(1, len(arr)):\n        temp = arr[i]\n        if temp < 0:\n            temp, min_product = min_product, temp\n        max_product *= temp\n        if max_product < min_product:\n            max_product, min_product = min_product, max_product\n    \n    return max_product\n\ndef max_subarray_product_sum(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)",
+        "completion_tokens": 214,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef max_subarray_product(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_product = arr[0]\n    min_product = arr[0]\n    for i in range(1, len(arr)):\n        temp = arr[i]\n        if temp < 0:\n            temp, min_product = min_product, temp\n        max_product *= temp\n        if max_product < min_product:\n            max_product, min_product = min_product, max_product\n    \n    return max_product\n\ndef max_subarray_product_sum(arr):\n    if len(arr) == 0:\n        return 0\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.3905696999281645,
+        "generation_seconds": 27.312134498730302
+      }
+    },
+    {
+      "code_hash": "b51692a538b360eeeec6fe9664e3c25a30ef4850c0819dbce669396d90d5a068",
+      "execution": {
+        "duration_seconds": 0.4626427534967661,
+        "passed": false,
+        "passed_tests": 2,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "duration_seconds": 0.1384741235524416,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[2, 3, -2, 4], [1, 2, 3, 4], [-1, -2, -3, -4]]) == 54",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "duration_seconds": 0.15106956101953983,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[0, 2], [3, 4], [5, 6]]) == 44",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": "20",
+            "assertion_expression": "max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "duration_seconds": 0.17284307442605495,
+            "exception_message": "assertion comparison failed: actual=20; expected=19",
+            "exception_type": "AssertionError",
+            "expected_value": "19",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4j5lzn5w/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('20', '19')\n",
+            "stdout": "",
+            "test_case": "assert max_subarray_product_sum([[-2, 0, -1], [3, 0, 3], [-4, 4, -1]]) == 19",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4j5lzn5w/program.py\", line 45, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('20', '19')\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_subarray_product(arr):\n    if not arr:\n        return None\n    \n    max_product = 1\n    current_product = 1\n    for i in range(len(arr)):\n        current_product *= arr[i]\n        max_product = max(max_product, current_product)\n        if arr[i] == 0:\n            current_product = 1\n    \n    return max_product\n\ndef max_subarray_product_sum(arr):\n    if not arr or not arr[0]:\n        return None\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)",
+        "completion_tokens": 182,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef max_subarray_product(arr):\n    if not arr:\n        return None\n    \n    max_product = 1\n    current_product = 1\n    for i in range(len(arr)):\n        current_product *= arr[i]\n        max_product = max(max_product, current_product)\n        if arr[i] == 0:\n            current_product = 1\n    \n    return max_product\n\ndef max_subarray_product_sum(arr):\n    if not arr or not arr[0]:\n        return None\n    \n    max_products = []\n    for row in arr:\n        max_products.append(max_subarray_product(row))\n    \n    return sum(max_products)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to find the maximum product subarray of the given array.\ndef max_subarray_product(arr):\n\n# Given a 2D array where each element is an array of integers, find the maximum product subarray for each row and then return the sum of these maximum products.\ndef max_subarray_product_sum(arr):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4626427534967661,
+        "generation_seconds": 23.641604028642178
+      }
+    }
+  ],
+  "duration_seconds": 121.1625857707113,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/218",
+  "unique_code_count": 5
+}

@@ -1,0 +1,876 @@
+{
+  "all_candidates_unique": false,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "2a6b5b1ca08939f81b95fc03418cc365055c786760277c81f4fdd9be07b81e1b",
+      "execution": {
+        "duration_seconds": 0.6755062770098448,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.09221808612346649,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.09763721935451031,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.10053114593029022,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.14428608864545822,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.11902493052184582,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.12131521478295326,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def extract_singly(test_list):\n    return set(sum(test_list, []))\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return set(flat_list)",
+        "completion_tokens": 113,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef extract_singly(test_list):\n    return set(sum(test_list, []))\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return set(flat_list)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.6755062770098448,
+        "generation_seconds": 14.17856915667653
+      }
+    },
+    {
+      "code_hash": "2a6b5b1ca08939f81b95fc03418cc365055c786760277c81f4fdd9be07b81e1b",
+      "execution": {
+        "duration_seconds": 0.7300842050462961,
+        "passed": true,
+        "passed_tests": 6,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.09023904800415039,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.10029787942767143,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.1424764022231102,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.1238416749984026,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.1285654604434967,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.14408836886286736,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def extract_singly(test_list):\n    return set(sum(test_list, []))\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return set(flat_list)",
+        "completion_tokens": 114,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```python\ndef extract_singly(test_list):\n    return set(sum(test_list, []))\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return set(flat_list)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.7300842050462961,
+        "generation_seconds": 14.242764219641685
+      }
+    },
+    {
+      "code_hash": "a46198df2069c37c3f3577fdd46372c291f5189f820d369a7686e3baefdb4b50",
+      "execution": {
+        "duration_seconds": 1.0205819681286812,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.1590546164661646,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-it1jf5hv/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-it1jf5hv/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.19977619871497154,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-k8us6cf4/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-k8us6cf4/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3]",
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.16679635271430016,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3]; expected={1, 2, 3}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-0euph7tm/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-0euph7tm/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n"
+          },
+          {
+            "actual_value": "[10, 20, 30, 40, 50]",
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.12764691933989525,
+            "exception_message": "assertion comparison failed: actual=[10, 20, 30, 40, 50]; expected={50, 20, 40, 10, 30}",
+            "exception_type": "AssertionError",
+            "expected_value": "{50, 20, 40, 10, 30}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-5d6hxdn5/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-5d6hxdn5/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n"
+          },
+          {
+            "actual_value": "[]",
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.1734117902815342,
+            "exception_message": "assertion comparison failed: actual=[]; expected=set()",
+            "exception_type": "AssertionError",
+            "expected_value": "set()",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-mh3w7sks/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-mh3w7sks/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n"
+          },
+          {
+            "actual_value": "[1, 2, 2, 3, 3, 4, 4, 5]",
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.19345649145543575,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 2, 3, 3, 4, 4, 5]; expected={1, 2, 3, 4, 5}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-5ubrwxus/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-5ubrwxus/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n"
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def extract_singly(test_list):\n    result = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            result.extend(extract_singly(sublist))\n        else:\n            result.append(sublist)\n    return result\n\ndef deep_extract_singly(test_list):\n    result = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            result.extend(deep_extract_singly(sublist))\n        else:\n            result.append(sublist)\n    return result",
+        "completion_tokens": 146,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef extract_singly(test_list):\n    result = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            result.extend(extract_singly(sublist))\n        else:\n            result.append(sublist)\n    return result\n\ndef deep_extract_singly(test_list):\n    result = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            result.extend(deep_extract_singly(sublist))\n        else:\n            result.append(sublist)\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 1.0205819681286812,
+        "generation_seconds": 19.572142589837313
+      }
+    },
+    {
+      "code_hash": "82c9d6411d6d2ed6cc71e2a46643462d6d899c2484327b0c83736b70e2fa37cb",
+      "execution": {
+        "duration_seconds": 0.9360802993178368,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.15078051760792732,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b73mq298/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b73mq298/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.16352572664618492,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-kyulf73j/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-kyulf73j/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3]",
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.15947501547634602,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3]; expected={1, 2, 3}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-efmbvo_c/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-efmbvo_c/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n"
+          },
+          {
+            "actual_value": "[10, 20, 30, 40, 50]",
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.13812636956572533,
+            "exception_message": "assertion comparison failed: actual=[10, 20, 30, 40, 50]; expected={50, 20, 40, 10, 30}",
+            "exception_type": "AssertionError",
+            "expected_value": "{50, 20, 40, 10, 30}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ywwr284z/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ywwr284z/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n"
+          },
+          {
+            "actual_value": "[]",
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.15950110368430614,
+            "exception_message": "assertion comparison failed: actual=[]; expected=set()",
+            "exception_type": "AssertionError",
+            "expected_value": "set()",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ashgs28v/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ashgs28v/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n"
+          },
+          {
+            "actual_value": "[1, 2, 2, 3, 3, 4, 4, 5]",
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.16426922380924225,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 2, 3, 3, 4, 4, 5]; expected={1, 2, 3, 4, 5}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6vxi5sjk/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6vxi5sjk/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n"
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list",
+        "completion_tokens": 162,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.9360802993178368,
+        "generation_seconds": 22.292625978589058
+      }
+    },
+    {
+      "code_hash": "82c9d6411d6d2ed6cc71e2a46643462d6d899c2484327b0c83736b70e2fa37cb",
+      "execution": {
+        "duration_seconds": 0.8044014349579811,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.10547684133052826,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-srf6q9ou/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([1, 2, [3, 4], [[5], [6, 7]], [[[8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-srf6q9ou/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3, 4, 5, 6, 7, 8, 9]",
+            "assertion_expression": "deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "duration_seconds": 0.11587908677756786,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3, 4, 5, 6, 7, 8, 9]; expected={1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-f0sa0nx0/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2, [3]], [4, [5, 6]], [[7, [8]], 9]]) == {1, 2, 3, 4, 5, 6, 7, 8, 9}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-f0sa0nx0/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3, 4, 5, 6, 7, 8, 9]', '{1, 2, 3, 4, 5, 6, 7, 8, 9}')\n"
+          },
+          {
+            "actual_value": "[1, 2, 3]",
+            "assertion_expression": "deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "duration_seconds": 0.1715422123670578,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 3]; expected={1, 2, 3}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-whosl0_v/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[[[1]]], [[[[2]]]], [[[[[3]]]]]]) == {1, 2, 3}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-whosl0_v/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 3]', '{1, 2, 3}')\n"
+          },
+          {
+            "actual_value": "[10, 20, 30, 40, 50]",
+            "assertion_expression": "deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "duration_seconds": 0.11546102724969387,
+            "exception_message": "assertion comparison failed: actual=[10, 20, 30, 40, 50]; expected={50, 20, 40, 10, 30}",
+            "exception_type": "AssertionError",
+            "expected_value": "{50, 20, 40, 10, 30}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b92mcite/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([10, [20, [30, [40, [50]]]]]) == {10, 20, 30, 40, 50}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b92mcite/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[10, 20, 30, 40, 50]', '{50, 20, 40, 10, 30}')\n"
+          },
+          {
+            "actual_value": "[]",
+            "assertion_expression": "deep_extract_singly([]) == set()",
+            "duration_seconds": 0.176840677857399,
+            "exception_message": "assertion comparison failed: actual=[]; expected=set()",
+            "exception_type": "AssertionError",
+            "expected_value": "set()",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-jvlv8jpm/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([]) == set()",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-jvlv8jpm/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[]', 'set()')\n"
+          },
+          {
+            "actual_value": "[1, 2, 2, 3, 3, 4, 4, 5]",
+            "assertion_expression": "deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "duration_seconds": 0.11878542602062225,
+            "exception_message": "assertion comparison failed: actual=[1, 2, 2, 3, 3, 4, 4, 5]; expected={1, 2, 3, 4, 5}",
+            "exception_type": "AssertionError",
+            "expected_value": "{1, 2, 3, 4, 5}",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-475w_43f/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n",
+            "stdout": "",
+            "test_case": "assert deep_extract_singly([[1, 2], [2, 3], [3, 4, [4, 5]]]) == {1, 2, 3, 4, 5}",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-475w_43f/program.py\", line 39, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[1, 2, 2, 3, 3, 4, 4, 5]', '{1, 2, 3, 4, 5}')\n"
+          }
+        ],
+        "total_tests": 6
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list",
+        "completion_tokens": 163,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```python\ndef extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n\ndef deep_extract_singly(test_list):\n    flat_list = []\n    for sublist in test_list:\n        if isinstance(sublist, list):\n            flat_list.extend(deep_extract_singly(sublist))\n        else:\n            flat_list.append(sublist)\n    return flat_list\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to flatten the list of lists into a single set of numbers.\ndef extract_singly(test_list):\n\n# Given a list of lists of lists, write a function to flatten it into a single set of numbers. The function should handle any level of nested lists.\ndef deep_extract_singly(test_list):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.8044014349579811,
+        "generation_seconds": 20.87801806256175
+      }
+    }
+  ],
+  "duration_seconds": 95.334887098521,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0,
+    1
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/83",
+  "unique_code_count": 3
+}

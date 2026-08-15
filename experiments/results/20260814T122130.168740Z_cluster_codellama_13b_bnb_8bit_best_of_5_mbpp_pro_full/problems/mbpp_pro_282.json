@@ -1,0 +1,498 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "81fc5e40ed850b68fc07e04cef565bcbeee2870dc82d48ba25af59b87f516f11",
+      "execution": {
+        "duration_seconds": 0.10878681018948555,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "duration_seconds": 0.10867198184132576,
+            "exception_message": "unsupported operand type(s) for %: 'tuple' and 'tuple'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 32, in list_of_tuples_modulo\n    result.append(tuple_modulo(tup1, tup2))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 24, in tuple_modulo\n    result.append((test_tup1[i] % test_tup2[i]))\n                   ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n",
+            "stdout": "",
+            "test_case": "assert list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 32, in list_of_tuples_modulo\n    result.append(tuple_modulo(tup1, tup2))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-hdc59rzf/program.py\", line 24, in tuple_modulo\n    result.append((test_tup1[i] % test_tup2[i]))\n                   ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append((test_tup1[i] % test_tup2[i]))\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(tup) == len(list_of_tuples[0]) for tup in list_of_tuples):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for tup1, tup2 in zip(list_of_tuples[:-1], list_of_tuples[1:]):\n        result.append(tuple_modulo(tup1, tup2))\n    return result",
+        "completion_tokens": 239,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 222,
+        "raw_text": " ```\ndef tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append((test_tup1[i] % test_tup2[i]))\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(tup) == len(list_of_tuples[0]) for tup in list_of_tuples):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for tup1, tup2 in zip(list_of_tuples[:-1], list_of_tuples[1:]):\n        result.append(tuple_modulo(tup1, tup2))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10878681018948555,
+        "generation_seconds": 30.227617548778653
+      }
+    },
+    {
+      "code_hash": "d2a517163ef341830a766e5faeb2c0957adb3ae773b1b3fda885f545cfa231e3",
+      "execution": {
+        "duration_seconds": 0.16445642337203026,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "duration_seconds": 0.1643385235220194,
+            "exception_message": "unsupported operand type(s) for %: 'tuple' and 'tuple'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-2n0k8ehw/program.py\", line 40, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-2n0k8ehw/program.py\", line 37, in list_of_tuples_modulo\n    result.append(tuple([a % b for a, b in zip(col[0::2], col[1::2])]))\n                         ~~^~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n",
+            "stdout": "",
+            "test_case": "assert list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-2n0k8ehw/program.py\", line 40, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-2n0k8ehw/program.py\", line 37, in list_of_tuples_modulo\n    result.append(tuple([a % b for a, b in zip(col[0::2], col[1::2])]))\n                         ~~^~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append(test_tup1[i] % test_tup2[i])\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not list_of_tuples:\n        return []\n    num_elements = len(list_of_tuples[0])\n    for tup in list_of_tuples:\n        if len(tup) != num_elements:\n            raise ValueError(\"All tuples must be of the same length\")\n    result = []\n    for i in range(num_elements):\n        col = [tup[i] for tup in list_of_tuples]\n        result.append(tuple([a % b for a, b in zip(col[0::2], col[1::2])]))\n    return result",
+        "completion_tokens": 276,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 222,
+        "raw_text": " ```python\ndef tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append(test_tup1[i] % test_tup2[i])\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not list_of_tuples:\n        return []\n    num_elements = len(list_of_tuples[0])\n    for tup in list_of_tuples:\n        if len(tup) != num_elements:\n            raise ValueError(\"All tuples must be of the same length\")\n    result = []\n    for i in range(num_elements):\n        col = [tup[i] for tup in list_of_tuples]\n        result.append(tuple([a % b for a, b in zip(col[0::2], col[1::2])]))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.16445642337203026,
+        "generation_seconds": 35.252624809741974
+      }
+    },
+    {
+      "code_hash": "d42d0b812f062abf2f32e9c2c0701cb76c3be57ae553ae3810809a6bc9ff599a",
+      "execution": {
+        "duration_seconds": 0.10946286655962467,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "duration_seconds": 0.10935060307383537,
+            "exception_message": "unsupported operand type(s) for %: 'tuple' and 'tuple'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-747r698g/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-747r698g/program.py\", line 30, in list_of_tuples_modulo\n    result.append(tuple_modulo(tup1, tup2))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-747r698g/program.py\", line 24, in tuple_modulo\n    result.append(test_tup1[i] % test_tup2[i])\n                  ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n",
+            "stdout": "",
+            "test_case": "assert list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-747r698g/program.py\", line 33, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-747r698g/program.py\", line 30, in list_of_tuples_modulo\n    result.append(tuple_modulo(tup1, tup2))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/tmp/srcg-747r698g/program.py\", line 24, in tuple_modulo\n    result.append(test_tup1[i] % test_tup2[i])\n                  ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuple lengths do not match\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append(test_tup1[i] % test_tup2[i])\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    result = []\n    for tup1, tup2 in zip(list_of_tuples[:-1], list_of_tuples[1:]):\n        result.append(tuple_modulo(tup1, tup2))\n    return result",
+        "completion_tokens": 188,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 222,
+        "raw_text": " ```\ndef tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuple lengths do not match\")\n    result = []\n    for i in range(len(test_tup1)):\n        result.append(test_tup1[i] % test_tup2[i])\n    return tuple(result)\n\ndef list_of_tuples_modulo(list_of_tuples):\n    result = []\n    for tup1, tup2 in zip(list_of_tuples[:-1], list_of_tuples[1:]):\n        result.append(tuple_modulo(tup1, tup2))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.10946286655962467,
+        "generation_seconds": 23.931849159300327
+      }
+    },
+    {
+      "code_hash": "58f5ea9c47b7b025035662242c06e4f47bc1af4847455f3ce415911e8bac1075",
+      "execution": {
+        "duration_seconds": 0.17153014428913593,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "duration_seconds": 0.17141254618763924,
+            "exception_message": "unsupported operand type(s) for %: 'tuple' and 'tuple'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 32, in list_of_tuples_modulo\n    result.append(tuple_modulo(list_of_tuples[i], list_of_tuples[0]))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 24, in tuple_modulo\n    result += (test_tup1[i] % test_tup2[i],)\n               ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n",
+            "stdout": "",
+            "test_case": "assert list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 35, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 32, in list_of_tuples_modulo\n    result.append(tuple_modulo(list_of_tuples[i], list_of_tuples[0]))\n                  ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/srcg-ewae1rxa/program.py\", line 24, in tuple_modulo\n    result += (test_tup1[i] % test_tup2[i],)\n               ~~~~~~~~~~~~~^~~~~~~~~~~~~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = ()\n    for i in range(len(test_tup1)):\n        result += (test_tup1[i] % test_tup2[i],)\n    return result\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(x) == len(list_of_tuples[0]) for x in list_of_tuples):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(list_of_tuples)):\n        result.append(tuple_modulo(list_of_tuples[i], list_of_tuples[0]))\n    return result",
+        "completion_tokens": 227,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 222,
+        "raw_text": " ```\ndef tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = ()\n    for i in range(len(test_tup1)):\n        result += (test_tup1[i] % test_tup2[i],)\n    return result\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(x) == len(list_of_tuples[0]) for x in list_of_tuples):\n        raise ValueError(\"Tuples must be of the same length\")\n    result = []\n    for i in range(len(list_of_tuples)):\n        result.append(tuple_modulo(list_of_tuples[i], list_of_tuples[0]))\n    return result\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.17153014428913593,
+        "generation_seconds": 28.57570909895003
+      }
+    },
+    {
+      "code_hash": "09e60937bd0515bcbfca8bdaec4c93df2e001fc53b0348fe970c538b497c0a39",
+      "execution": {
+        "duration_seconds": 0.10855799354612827,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "duration_seconds": 0.1084496695548296,
+            "exception_message": "unsupported operand type(s) for %: 'tuple' and 'tuple'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 27, in list_of_tuples_modulo\n    return [tuple_modulo(t1, t2) for t1, t2 in zip(list_of_tuples[:-1], list_of_tuples[1:])]\n            ~~~~~~~~~~~~^^^^^^^^\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 22, in tuple_modulo\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n           ^^^^^\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 22, in <genexpr>\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n                 ~~^~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n",
+            "stdout": "",
+            "test_case": "assert list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))]) == [(0, 0, 0), (3, 1, 1)]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = list_of_tuples_modulo([((10, 4, 6), (5, 2, 3)), ((15, 7, 9), (6, 3, 4))])\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 27, in list_of_tuples_modulo\n    return [tuple_modulo(t1, t2) for t1, t2 in zip(list_of_tuples[:-1], list_of_tuples[1:])]\n            ~~~~~~~~~~~~^^^^^^^^\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 22, in tuple_modulo\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n           ^^^^^\n  File \"/tmp/srcg-dw2ol7j_/program.py\", line 22, in <genexpr>\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n                 ~~^~~\nTypeError: unsupported operand type(s) for %: 'tuple' and 'tuple'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(t) == len(list_of_tuples[0]) for t in list_of_tuples):\n        raise ValueError(\"All tuples must be of the same length\")\n    return [tuple_modulo(t1, t2) for t1, t2 in zip(list_of_tuples[:-1], list_of_tuples[1:])]",
+        "completion_tokens": 200,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 222,
+        "raw_text": " ```python\ndef tuple_modulo(test_tup1, test_tup2):\n    if len(test_tup1) != len(test_tup2):\n        raise ValueError(\"Tuples must be of the same length\")\n    return tuple(x % y for x, y in zip(test_tup1, test_tup2))\n\ndef list_of_tuples_modulo(list_of_tuples):\n    if not all(len(t) == len(list_of_tuples[0]) for t in list_of_tuples):\n        raise ValueError(\"All tuples must be of the same length\")\n    return [tuple_modulo(t1, t2) for t1, t2 in zip(list_of_tuples[:-1], list_of_tuples[1:])]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function which takes two tuples of the same length and performs the element wise modulo.\ndef tuple_modulo(test_tup1, test_tup2):\n\n# Write a function which takes a list of tuples of the same length and performs the element wise modulo for each tuple pair in the list. The function should return a list of tuples where each tuple contains the results of the element wise modulo operation for the corresponding tuple pair in the input list.\ndef list_of_tuples_modulo(list_of_tuples):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.10855799354612827,
+        "generation_seconds": 25.49011265859008
+      }
+    }
+  ],
+  "duration_seconds": 144.14403511956334,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/282",
+  "unique_code_count": 5
+}
