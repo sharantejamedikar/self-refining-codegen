@@ -1,0 +1,650 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "0755340c4cc6a465acdc4c0defc9c612ddfd64a12558a1c7bd9ff343ad9d46f5",
+      "execution": {
+        "duration_seconds": 0.35940766893327236,
+        "passed": true,
+        "passed_tests": 3,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "duration_seconds": 0.09154253266751766,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.13443192094564438,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "duration_seconds": 0.1331342589110136,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def pancake_sort(nums):\n    def _pancake_sort(arr, k):\n        if k == 0:\n            return arr\n        i = k - 1\n        while i >= 0 and arr[i] > arr[k]:\n            i -= 1\n        if i != k - 1:\n            arr[k], arr[i] = arr[i], arr[k]\n            arr[:k+1] = reversed(arr[:k+1])\n        return arr\n    \n    def _reverse(arr, start, end):\n        while start < end:\n            arr[start], arr[end] = arr[end], arr[start]\n            start += 1\n            end -= 1\n        \n    n = len(nums)\n    for k in range(n-1, -1, -1):\n        nums = _pancake_sort(nums, k)\n        _reverse(nums, 0, k)\n    return nums\n\ndef complex_sort(list_of_lists):\n    def _sum_sublist(sublist):\n        return sum(sublist)\n    \n    def _sort_sublist(sublist):\n        return sorted(sublist)\n    \n    def _sort_list_of_lists(list_of_lists):\n        return sorted(list_of_lists, key=_sum_sublist)\n    \n    return [_sort_sublist(sublist) for sublist in _sort_list_of_lists(list_of_lists)]",
+        "completion_tokens": 366,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef pancake_sort(nums):\n    def _pancake_sort(arr, k):\n        if k == 0:\n            return arr\n        i = k - 1\n        while i >= 0 and arr[i] > arr[k]:\n            i -= 1\n        if i != k - 1:\n            arr[k], arr[i] = arr[i], arr[k]\n            arr[:k+1] = reversed(arr[:k+1])\n        return arr\n    \n    def _reverse(arr, start, end):\n        while start < end:\n            arr[start], arr[end] = arr[end], arr[start]\n            start += 1\n            end -= 1\n        \n    n = len(nums)\n    for k in range(n-1, -1, -1):\n        nums = _pancake_sort(nums, k)\n        _reverse(nums, 0, k)\n    return nums\n\ndef complex_sort(list_of_lists):\n    def _sum_sublist(sublist):\n        return sum(sublist)\n    \n    def _sort_sublist(sublist):\n        return sorted(sublist)\n    \n    def _sort_list_of_lists(list_of_lists):\n        return sorted(list_of_lists, key=_sum_sublist)\n    \n    return [_sort_sublist(sublist) for sublist in _sort_list_of_lists(list_of_lists)]\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": true,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.35940766893327236,
+        "generation_seconds": 47.055971970781684
+      }
+    },
+    {
+      "code_hash": "f27172949f20eef7e593d3f6ebddda4370a71cacbd5b20307e1ee10173b4a824",
+      "execution": {
+        "duration_seconds": 0.46704864874482155,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "duration_seconds": 0.16336053237318993,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ct99oa3r/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[3, 1, 2], [5, 4], [6]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ct99oa3r/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[3, 1, 2], [5, 4], [6]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.16087125055491924,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-73w0e_1j/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-73w0e_1j/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "duration_seconds": 0.1425425410270691,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ri3v56u3/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[10], [20, 30], [40, 50, 60]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ri3v56u3/program.py\", line 29, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[10], [20, 30], [40, 50, 60]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def pancake_sort(nums):\n    n = len(nums)\n    while n > 1:\n        largest = max(range(n), key=nums.__getitem__)\n        if largest != n - 1:\n            nums[largest], nums[n - 1] = nums[n - 1], nums[largest]\n            nums[0:n - largest - 1].reverse()\n        n -= 1\n    return nums",
+        "completion_tokens": 208,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```python\ndef pancake_sort(nums):\n    n = len(nums)\n    while n > 1:\n        largest = max(range(n), key=nums.__getitem__)\n        if largest != n - 1:\n            nums[largest], nums[n - 1] = nums[n - 1], nums[largest]\n            nums[0:n - largest - 1].reverse()\n        n -= 1\n    return nums\n```\n```python\ndef complex_sort(list_of_lists):\n    sorted_lists = []\n    for sublist in list_of_lists:\n        sorted_sublist = pancake_sort(sublist)\n        sorted_lists.append(sorted_sublist)\n    sorted_lists = sorted(sorted_lists, key=sum)\n    return sorted_lists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.46704864874482155,
+        "generation_seconds": 26.344740219414234
+      }
+    },
+    {
+      "code_hash": "dcfc238f42ea183aacca8d0d0c44fbaad02ac7f67e81365d8a9660f8780d88c6",
+      "execution": {
+        "duration_seconds": 0.422260532155633,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[[1, 2, 3], [4, 5], [6]]",
+            "assertion_expression": "complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "duration_seconds": 0.16700323298573494,
+            "exception_message": "assertion comparison failed: actual=[[1, 2, 3], [4, 5], [6]]; expected=[[1, 2, 3], [6], [4, 5]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1, 2, 3], [6], [4, 5]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-b_uackt1/program.py\", line 31, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 2, 3], [4, 5], [6]]', '[[1, 2, 3], [6], [4, 5]]')\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-b_uackt1/program.py\", line 31, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[1, 2, 3], [4, 5], [6]]', '[[1, 2, 3], [6], [4, 5]]')\n"
+          },
+          {
+            "actual_value": "[[7, 8, 9], [5, 6], [1, 2, 3, 4]]",
+            "assertion_expression": "complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.12334093078970909,
+            "exception_message": "assertion comparison failed: actual=[[7, 8, 9], [5, 6], [1, 2, 3, 4]]; expected=[[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-aji5ft5a/program.py\", line 31, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[7, 8, 9], [5, 6], [1, 2, 3, 4]]', '[[1, 2, 3, 4], [5, 6], [7, 8, 9]]')\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-aji5ft5a/program.py\", line 31, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[7, 8, 9], [5, 6], [1, 2, 3, 4]]', '[[1, 2, 3, 4], [5, 6], [7, 8, 9]]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "duration_seconds": 0.1317345704883337,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def pancake_sort(nums):\n    nums.sort()\n    return nums\n\ndef complex_sort(list_of_lists):\n    sorted_sublists = []\n    for sublist in list_of_lists:\n        sorted_sublists.append(pancake_sort(sublist))\n    return sorted_sublists",
+        "completion_tokens": 86,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef pancake_sort(nums):\n    nums.sort()\n    return nums\n\ndef complex_sort(list_of_lists):\n    sorted_sublists = []\n    for sublist in list_of_lists:\n        sorted_sublists.append(pancake_sort(sublist))\n    return sorted_sublists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.422260532155633,
+        "generation_seconds": 11.267382360994816
+      }
+    },
+    {
+      "code_hash": "600fde8ca560d9b124f49a55dd37563e8f7dbd09800524dfbe202961d1494969",
+      "execution": {
+        "duration_seconds": 0.45677895843982697,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "duration_seconds": 0.11074383929371834,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4anbpj4o/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[3, 1, 2], [5, 4], [6]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4anbpj4o/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[3, 1, 2], [5, 4], [6]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.16479215398430824,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-cpa8hnif/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-cpa8hnif/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "duration_seconds": 0.18102159164845943,
+            "exception_message": "name 'complex_sort' is not defined",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-1qb2z9y1/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[10], [20, 30], [40, 50, 60]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-1qb2z9y1/program.py\", line 49, in <module>\n    __srcg_assertion_actual_7f31 = complex_sort([[10], [20, 30], [40, 50, 60]])\n                                   ^^^^^^^^^^^^\nNameError: name 'complex_sort' is not defined\n"
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def pancake_sort(nums):\n    def swap(i, j):\n        nums[i], nums[j] = nums[j], nums[i]\n\n    def sink(k):\n        while k * 2 + 1 < len(nums):\n            child = k * 2 + 1\n            if child + 1 < len(nums) and nums[child] < nums[child + 1]:\n                child += 1\n            if nums[k] < nums[child]:\n                swap(k, child)\n                k = child\n            else:\n                break\n\n    def flip(k):\n        while k > 0:\n            parent = (k - 1) // 2\n            if nums[parent] < nums[k]:\n                swap(parent, k)\n                k = parent\n            else:\n                break\n\n    n = len(nums)\n    for i in range(n-1, -1, -1):\n        sink(i)\n    for i in range(n):\n        flip(i)",
+        "completion_tokens": 512,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "length",
+        "prompt_tokens": 176,
+        "raw_text": " ```\ndef pancake_sort(nums):\n    def swap(i, j):\n        nums[i], nums[j] = nums[j], nums[i]\n\n    def sink(k):\n        while k * 2 + 1 < len(nums):\n            child = k * 2 + 1\n            if child + 1 < len(nums) and nums[child] < nums[child + 1]:\n                child += 1\n            if nums[k] < nums[child]:\n                swap(k, child)\n                k = child\n            else:\n                break\n\n    def flip(k):\n        while k > 0:\n            parent = (k - 1) // 2\n            if nums[parent] < nums[k]:\n                swap(parent, k)\n                k = parent\n            else:\n                break\n\n    n = len(nums)\n    for i in range(n-1, -1, -1):\n        sink(i)\n    for i in range(n):\n        flip(i)\n```\n```\ndef complex_sort(list_of_lists):\n    def swap(i, j):\n        list_of_lists[i], list_of_lists[j] = list_of_lists[j], list_of_lists[i]\n\n    def sink(k):\n        while k * 2 + 1 < len(list_of_lists):\n            child = k * 2 + 1\n            if child + 1 < len(list_of_lists) and list_of_lists[child][0] < list_of_lists[child + 1][0]:\n                child += 1\n            if list_of_lists[k][0] < list_of_lists[child][0]:\n                swap(k, child)\n                k = child\n            else:\n                break\n\n    def flip(k):\n        while k > 0:\n            parent = (k - 1) // 2\n            if list_of_lists[parent][0] < list_of_lists[k][0]:\n                swap(parent, k)",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.45677895843982697,
+        "generation_seconds": 65.46469972468913
+      }
+    },
+    {
+      "code_hash": "d984784cd42a6f78cbcee323d81a8217eda9949f0c63cff5cec5cd68b98ddceb",
+      "execution": {
+        "duration_seconds": 0.4183360878378153,
+        "passed": false,
+        "passed_tests": 1,
+        "tests": [
+          {
+            "actual_value": "[[3, 1, 2], [6], [5, 4]]",
+            "assertion_expression": "complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "duration_seconds": 0.1483066901564598,
+            "exception_message": "assertion comparison failed: actual=[[3, 1, 2], [6], [5, 4]]; expected=[[1, 2, 3], [6], [4, 5]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1, 2, 3], [6], [4, 5]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-nl71rn6e/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[3, 1, 2], [6], [5, 4]]', '[[1, 2, 3], [6], [4, 5]]')\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[3, 1, 2], [5, 4], [6]]) == [[1, 2, 3], [6], [4, 5]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-nl71rn6e/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[3, 1, 2], [6], [5, 4]]', '[[1, 2, 3], [6], [4, 5]]')\n"
+          },
+          {
+            "actual_value": "[[4, 3, 2, 1], [6, 5], [9, 8, 7]]",
+            "assertion_expression": "complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "duration_seconds": 0.1292716320604086,
+            "exception_message": "assertion comparison failed: actual=[[4, 3, 2, 1], [6, 5], [9, 8, 7]]; expected=[[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "exception_type": "AssertionError",
+            "expected_value": "[[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-nl15bzl9/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[4, 3, 2, 1], [6, 5], [9, 8, 7]]', '[[1, 2, 3, 4], [5, 6], [7, 8, 9]]')\n",
+            "stdout": "",
+            "test_case": "assert complex_sort([[9, 8, 7], [6, 5], [4, 3, 2, 1]]) == [[1, 2, 3, 4], [5, 6], [7, 8, 9]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-nl15bzl9/program.py\", line 48, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('[[4, 3, 2, 1], [6, 5], [9, 8, 7]]', '[[1, 2, 3, 4], [5, 6], [7, 8, 9]]')\n"
+          },
+          {
+            "actual_value": null,
+            "assertion_expression": "complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "duration_seconds": 0.14052044413983822,
+            "exception_message": null,
+            "exception_type": null,
+            "expected_value": null,
+            "passed": true,
+            "stderr": "",
+            "stdout": "",
+            "test_case": "assert complex_sort([[10], [20, 30], [40, 50, 60]]) == [[10], [20, 30], [40, 50, 60]]",
+            "timed_out": false,
+            "trace": null,
+            "traceback": null
+          }
+        ],
+        "total_tests": 3
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def pancake_sort(nums):\n    def flip(i):\n        if i > 0:\n            nums[:i+1] = reversed(nums[:i+1])\n    \n    def max_index(arr):\n        return arr.index(max(arr))\n    \n    size = len(nums)\n    while size > 0:\n        mi = max_index(nums)\n        if mi != size - 1:\n            flip(mi)\n            flip(size - 1)\n        size -= 1\n\ndef complex_sort(list_of_lists):\n    def sort_sublist(sublist):\n        sublist.sort()\n        return sublist\n    \n    def sum_elements(sublist):\n        return sum(sublist)\n    \n    list_of_lists.sort(key=sum_elements)\n    return list_of_lists",
+        "completion_tokens": 220,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 176,
+        "raw_text": " ```python\ndef pancake_sort(nums):\n    def flip(i):\n        if i > 0:\n            nums[:i+1] = reversed(nums[:i+1])\n    \n    def max_index(arr):\n        return arr.index(max(arr))\n    \n    size = len(nums)\n    while size > 0:\n        mi = max_index(nums)\n        if mi != size - 1:\n            flip(mi)\n            flip(size - 1)\n        size -= 1\n\ndef complex_sort(list_of_lists):\n    def sort_sublist(sublist):\n        sublist.sort()\n        return sublist\n    \n    def sum_elements(sublist):\n        return sum(sublist)\n    \n    list_of_lists.sort(key=sum_elements)\n    return list_of_lists\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Write a function to sort a list of elements.\ndef pancake_sort(nums):\n\n# Given a list of lists, where each sublist contains unsorted elements, write a function to sort each sublist and then sort the main list based on the sum of elements in each sublist.\ndef complex_sort(list_of_lists):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.4183360878378153,
+        "generation_seconds": 28.213040351867676
+      }
+    }
+  ],
+  "duration_seconds": 180.47331165149808,
+  "metric": "pass@1_bo5",
+  "passed": true,
+  "passing_sample_indices": [
+    0
+  ],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/84",
+  "unique_code_count": 5
+}

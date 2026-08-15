@@ -1,0 +1,544 @@
+{
+  "convergence_reason": "stagnation",
+  "duration_seconds": 49.62387380935252,
+  "iterations": [
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "439dd2dbe3c815cbb087f79234d1d89488adf2151d26c4d6db08e2964291cefc",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 1,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.09347029589116573,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('.| .| .| .|') == [1, 1, 1, 1]",
+            "duration_seconds": 0.09339321218430996,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-6ianw5j9/program.py\", line 95, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-6ianw5j9/program.py\", line 91, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n\ncheck(parse_music)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_music",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "parse_music",
+                  "line_number": 11,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 14,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 11,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 14,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 11,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 14,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 18,
+                  "source": "return parsed_music"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-6ianw5j9/program.py\", line 95, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-6ianw5j9/program.py\", line 91, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 18 in parse_music: return parsed_music",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def parse_music(music_string):\n    # Initialize an empty list to store the parsed music\n    parsed_music = []\n    \n    # Iterate through the input string\n    for char in music_string:\n        # If the current character is a 'o', add 4 to the parsed music list\n        if char == 'o':\n            parsed_music.append(4)\n        # If the current character is a 'o|', add 2 to the parsed music list\n        elif char == 'o|':\n            parsed_music.append(2)\n        # If the current character is a '.|', add 1 to the parsed music list\n        elif char == '.|':\n            parsed_music.append(1)\n    \n    # Return the parsed music list\n    return parsed_music",
+        "completion_tokens": 186,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 250,
+        "raw_text": " ```\ndef parse_music(music_string):\n    # Initialize an empty list to store the parsed music\n    parsed_music = []\n    \n    # Iterate through the input string\n    for char in music_string:\n        # If the current character is a 'o', add 4 to the parsed music list\n        if char == 'o':\n            parsed_music.append(4)\n        # If the current character is a 'o|', add 2 to the parsed music list\n        elif char == 'o|':\n            parsed_music.append(2)\n        # If the current character is a '.|', add 1 to the parsed music list\n        elif char == '.|':\n            parsed_music.append(1)\n    \n    # Return the parsed music list\n    return parsed_music\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 1,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.09347029589116573,
+        "generation_seconds": 23.65444776788354
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "continue",
+      "convergence_state": {
+        "code_hash": "a56d22158efa1757a3f6f893b40f5d2a74fd7a23a491d3cd0c600fe3108bff16",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 2,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08988449349999428,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('.| .| .| .|') == [1, 1, 1, 1]",
+            "duration_seconds": 0.08981103263795376,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-i3ilvwww/program.py\", line 87, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-i3ilvwww/program.py\", line 83, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n\ncheck(parse_music)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_music",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 4,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 4,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 10,
+                  "source": "return parsed_music"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-i3ilvwww/program.py\", line 87, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-i3ilvwww/program.py\", line 83, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 10 in parse_music: return parsed_music",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music",
+        "completion_tokens": 95,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 557,
+        "raw_text": " def parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nPrevious solution:\ndef parse_music(music_string):\n    # Initialize an empty list to store the parsed music\n    parsed_music = []\n    \n    # Iterate through the input string\n    for char in music_string:\n        # If the current character is a 'o', add 4 to the parsed music list\n        if char == 'o':\n            parsed_music.append(4)\n        # If the current character is a 'o|', add 2 to the parsed music list\n        elif char == 'o|':\n            parsed_music.append(2)\n        # If the current character is a '.|', add 1 to the parsed music list\n        elif char == '.|':\n            parsed_music.append(1)\n    \n    # Return the parsed music list\n    return parsed_music\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 18 in parse_music: return parsed_music\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nPrevious solution:\ndef parse_music(music_string):\n    # Initialize an empty list to store the parsed music\n    parsed_music = []\n    \n    # Iterate through the input string\n    for char in music_string:\n        # If the current character is a 'o', add 4 to the parsed music list\n        if char == 'o':\n            parsed_music.append(4)\n        # If the current character is a 'o|', add 2 to the parsed music list\n        elif char == 'o|':\n            parsed_music.append(2)\n        # If the current character is a '.|', add 1 to the parsed music list\n        elif char == '.|':\n            parsed_music.append(1)\n    \n    # Return the parsed music list\n    return parsed_music\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 18 in parse_music: return parsed_music\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 2,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08988449349999428,
+        "generation_seconds": 12.663566211238503
+      }
+    },
+    {
+      "classification": {
+        "assertion_pass_rate_diagnostic": 0.0,
+        "category": "logic",
+        "passed_assertions": 0,
+        "total_assertions": 1
+      },
+      "convergence_decision": "stagnation",
+      "convergence_state": {
+        "code_hash": "a56d22158efa1757a3f6f893b40f5d2a74fd7a23a491d3cd0c600fe3108bff16",
+        "error_hash": "f2f154e0c4ffcb5e19b33d6a126231d6a78e8b28054e8792d06bbeaaf58d82f2",
+        "iteration": 3,
+        "passed_assertions": 0,
+        "success": false,
+        "total_assertions": 1
+      },
+      "execution": {
+        "duration_seconds": 0.08902374282479286,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "candidate('.| .| .| .|') == [1, 1, 1, 1]",
+            "duration_seconds": 0.08896226063370705,
+            "exception_message": "",
+            "exception_type": "AssertionError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-t6g1y46r/program.py\", line 87, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-t6g1y46r/program.py\", line 83, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+            "stdout": "",
+            "test_case": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n\ncheck(parse_music)",
+            "timed_out": false,
+            "trace": {
+              "deepest_function": "parse_music",
+              "max_call_depth": 1,
+              "recent_events": [
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 4,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 4,
+                  "source": "if char == 'o':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 6,
+                  "source": "elif char == 'o|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 8,
+                  "source": "elif char == '.|':"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 3,
+                  "source": "for char in music_string:"
+                },
+                {
+                  "function": "parse_music",
+                  "line_number": 10,
+                  "source": "return parsed_music"
+                }
+              ]
+            },
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-t6g1y46r/program.py\", line 87, in <module>\n    check(parse_music)\n    ~~~~~^^^^^^^^^^^^^\n  File \"/tmp/srcg-t6g1y46r/program.py\", line 83, in check\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "feedback": "The solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 10 in parse_music: return parsed_music",
+      "feedback_strategy": "trace",
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music",
+        "completion_tokens": 95,
+        "extraction_method": "raw",
+        "finish_reason": "stop",
+        "prompt_tokens": 470,
+        "raw_text": " def parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nPrevious solution:\ndef parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 10 in parse_music: return parsed_music\n\nReturn a corrected complete solution.\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.4,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\nPrevious solution:\ndef parse_music(music_string: str) -> List[int]:\n    parsed_music = []\n    for char in music_string:\n        if char == 'o':\n            parsed_music.append(4)\n        elif char == 'o|':\n            parsed_music.append(2)\n        elif char == '.|':\n            parsed_music.append(1)\n    return parsed_music\n\nExecution feedback:\nThe solution failed every assertion. Reconsider the core algorithm.\nPassed 0/1 assertions.\nFailed assertions:\n1. candidate('.| .| .| .|') == [1, 1, 1, 1]\nTrace analysis:\n1. Failed assertion: candidate('.| .| .| .|') == [1, 1, 1, 1]\n   Last candidate operation: line 10 in parse_music: return parsed_music\n\nReturn a corrected complete solution.\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "iteration": 3,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.08902374282479286,
+        "generation_seconds": 13.02999803237617
+      }
+    }
+  ],
+  "metric": "pass@1_refined",
+  "passed": false,
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "seed": 42,
+  "task_id": "HumanEval/17"
+}

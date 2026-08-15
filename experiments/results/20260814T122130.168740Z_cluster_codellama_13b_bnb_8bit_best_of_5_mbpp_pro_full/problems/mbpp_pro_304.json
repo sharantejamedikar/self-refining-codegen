@@ -1,0 +1,498 @@
+{
+  "all_candidates_unique": true,
+  "base_seed": 42,
+  "candidate_count": 5,
+  "candidates": [
+    {
+      "code_hash": "d0523d5327b9626147bffd038f82eec9397c0eb40ace482760d0844af663cdfd",
+      "execution": {
+        "duration_seconds": 0.10813016630709171,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "9.0",
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.1080224085599184,
+            "exception_message": "assertion comparison failed: actual=9.0; expected=6.279999999999999",
+            "exception_type": "AssertionError",
+            "expected_value": "6.279999999999999",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-ceds350c/program.py\", line 64, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9.0', '6.279999999999999')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-ceds350c/program.py\", line 64, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('9.0', '6.279999999999999')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[0] * n for _ in range(n)]\n    for i in range(n):\n        dp[i][i] = cost[i][i]\n    \n    # Fill in the table\n    for i in range(1, n):\n        for j in range(n - i):\n            dp[j][j + i] = max(dp[j][j + i - 1], dp[j + 1][j + i]) + cost[j][j + i]\n    \n    # Find the maximum average\n    max_average = 0\n    for i in range(n):\n        for j in range(i, n):\n            max_average = max(max_average, (dp[i][j] / (j - i + 1)))\n    \n    return max_average\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[[0] * n for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            dp[i][j][i] = cost[i][j][i]\n    \n    # Fill in the table\n    for k in range(1, n):\n        for i in range(n - k):\n            for j in range(n - k):\n                dp[i][j][k] = max(dp[i][j][k - 1], dp[i + 1][j][k], dp[i][j + 1][k]) + cost[i][j][k]\n    \n    # Find the maximum average\n    max_average = 0\n    for i in range(n):\n        for j in range(i, n):\n            for k in range(i, n):\n                max_average = max(max_average, (dp[i][j][k] / (k - i + 1)))\n    \n    return max_average",
+        "completion_tokens": 505,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 301,
+        "raw_text": " ```\ndef maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[0] * n for _ in range(n)]\n    for i in range(n):\n        dp[i][i] = cost[i][i]\n    \n    # Fill in the table\n    for i in range(1, n):\n        for j in range(n - i):\n            dp[j][j + i] = max(dp[j][j + i - 1], dp[j + 1][j + i]) + cost[j][j + i]\n    \n    # Find the maximum average\n    max_average = 0\n    for i in range(n):\n        for j in range(i, n):\n            max_average = max(max_average, (dp[i][j] / (j - i + 1)))\n    \n    return max_average\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[[0] * n for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            dp[i][j][i] = cost[i][j][i]\n    \n    # Fill in the table\n    for k in range(1, n):\n        for i in range(n - k):\n            for j in range(n - k):\n                dp[i][j][k] = max(dp[i][j][k - 1], dp[i + 1][j][k], dp[i][j + 1][k]) + cost[i][j][k]\n    \n    # Find the maximum average\n    max_average = 0\n    for i in range(n):\n        for j in range(i, n):\n            for k in range(i, n):\n                max_average = max(max_average, (dp[i][j][k] / (k - i + 1)))\n    \n    return max_average\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 42
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 0,
+      "seed": 42,
+      "timing": {
+        "execution_seconds": 0.10813016630709171,
+        "generation_seconds": 64.16778100654483
+      }
+    },
+    {
+      "code_hash": "3105a4999c7558da5064024143f16653acfab274fd9524e1c2951acbf441484a",
+      "execution": {
+        "duration_seconds": 0.10754072666168213,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.10749203152954578,
+            "exception_message": "unsupported operand type(s) for /: 'list' and 'int'",
+            "exception_type": "TypeError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-znzlfu57/program.py\", line 50, in <module>\n    __srcg_assertion_actual_7f31 = maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]])\n  File \"/tmp/srcg-znzlfu57/program.py\", line 48, in maxAverageOf3DPath\n    return max(max(row) for row in dp) / (n ** 3)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~\nTypeError: unsupported operand type(s) for /: 'list' and 'int'\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-znzlfu57/program.py\", line 50, in <module>\n    __srcg_assertion_actual_7f31 = maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]])\n  File \"/tmp/srcg-znzlfu57/program.py\", line 48, in maxAverageOf3DPath\n    return max(max(row) for row in dp) / (n ** 3)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~\nTypeError: unsupported operand type(s) for /: 'list' and 'int'\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[0] * n for _ in range(n)]\n    for i in range(n):\n        dp[i][i] = cost[i][i]\n    \n    # Compute maximum average cost for each cell\n    for i in range(1, n):\n        for j in range(n - i):\n            dp[j][j + i] = max(dp[j][j + i - 1], dp[j + 1][j + i]) + cost[j][j + i]\n    \n    # Find maximum average cost for the entire path\n    return max(max(row) for row in dp) / (n ** 2)\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[[0] * n for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        dp[i][i][i] = cost[i][i][i]\n    \n    # Compute maximum average cost for each cell\n    for k in range(1, n):\n        for i in range(n - k):\n            for j in range(n - k):\n                dp[k][i][j] = max(dp[k - 1][i][j], dp[k - 1][i + 1][j], dp[k - 1][i][j + 1]) + cost[k][i][j]\n                \n    # Find maximum average cost for the entire path\n    return max(max(row) for row in dp) / (n ** 3)",
+        "completion_tokens": 412,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 301,
+        "raw_text": " ```python\ndef maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[0] * n for _ in range(n)]\n    for i in range(n):\n        dp[i][i] = cost[i][i]\n    \n    # Compute maximum average cost for each cell\n    for i in range(1, n):\n        for j in range(n - i):\n            dp[j][j + i] = max(dp[j][j + i - 1], dp[j + 1][j + i]) + cost[j][j + i]\n    \n    # Find maximum average cost for the entire path\n    return max(max(row) for row in dp) / (n ** 2)\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    dp = [[[0] * n for _ in range(n)] for _ in range(n)]\n    for i in range(n):\n        dp[i][i][i] = cost[i][i][i]\n    \n    # Compute maximum average cost for each cell\n    for k in range(1, n):\n        for i in range(n - k):\n            for j in range(n - k):\n                dp[k][i][j] = max(dp[k - 1][i][j], dp[k - 1][i + 1][j], dp[k - 1][i][j + 1]) + cost[k][i][j]\n                \n    # Find maximum average cost for the entire path\n    return max(max(row) for row in dp) / (n ** 3)\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 43
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 1,
+      "seed": 43,
+      "timing": {
+        "execution_seconds": 0.10754072666168213,
+        "generation_seconds": 51.734715884551406
+      }
+    },
+    {
+      "code_hash": "18454545eb8b8e24705c4217b3c01ce23a401884dc0858972d23bfb2e87b0baf",
+      "execution": {
+        "duration_seconds": 0.10828558914363384,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "None",
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.10817237012088299,
+            "exception_message": "assertion comparison failed: actual=None; expected=6.279999999999999",
+            "exception_type": "AssertionError",
+            "expected_value": "6.279999999999999",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-4ajuknfi/program.py\", line 71, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('None', '6.279999999999999')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-4ajuknfi/program.py\", line 71, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('None', '6.279999999999999')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def maxAverageOfPath(cost):\n    # Initialize variables\n    m = len(cost)\n    n = len(cost[0])\n    total_cost = 0\n    num_cells = 0\n    max_average = 0\n    \n    # Iterate through each cell in the matrix\n    for i in range(m):\n        for j in range(n):\n            # If we are not at the last row or column, add the current cell's cost to the total cost\n            if i != m - 1 and j != n - 1:\n                total_cost += cost[i][j]\n                num_cells += 1\n            \n            # If we are at the last row or column, calculate the average cost for the current path and compare it to the previous maximum average\n            else:\n                average = total_cost / num_cells\n                if average > max_average:\n                    max_average = average\n                total_cost = 0\n                num_cells = 0\n    \n    return max_average\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    m = len(cost)\n    n = len(cost[0])\n    p = len(cost[0][0])\n    total_cost = 0\n    num_cells = 0\n    max_average = 0\n    \n    # Iterate through each cell in the 3D matrix\n    for i in range(m):\n        for j in range(n):\n            for k in range(p):\n                # If we are not at the last row, column, or depth layer, add the current cell's cost to the total cost\n                if i != m - 1 and j != n - 1 and k != p - 1:\n                    total_cost += cost[i][j][k]\n                    num_cells += 1\n                \n                # If we are at the last row, column, or depth layer, calculate the average cost for the current path and compare it to the previous maximum average\n                else:\n                    average = total_cost / num_cells\n                    if average > max_average:\n                        max_average",
+        "completion_tokens": 512,
+        "extraction_method": "unclosed_markdown_fence",
+        "finish_reason": "length",
+        "prompt_tokens": 301,
+        "raw_text": " ```\ndef maxAverageOfPath(cost):\n    # Initialize variables\n    m = len(cost)\n    n = len(cost[0])\n    total_cost = 0\n    num_cells = 0\n    max_average = 0\n    \n    # Iterate through each cell in the matrix\n    for i in range(m):\n        for j in range(n):\n            # If we are not at the last row or column, add the current cell's cost to the total cost\n            if i != m - 1 and j != n - 1:\n                total_cost += cost[i][j]\n                num_cells += 1\n            \n            # If we are at the last row or column, calculate the average cost for the current path and compare it to the previous maximum average\n            else:\n                average = total_cost / num_cells\n                if average > max_average:\n                    max_average = average\n                total_cost = 0\n                num_cells = 0\n    \n    return max_average\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    m = len(cost)\n    n = len(cost[0])\n    p = len(cost[0][0])\n    total_cost = 0\n    num_cells = 0\n    max_average = 0\n    \n    # Iterate through each cell in the 3D matrix\n    for i in range(m):\n        for j in range(n):\n            for k in range(p):\n                # If we are not at the last row, column, or depth layer, add the current cell's cost to the total cost\n                if i != m - 1 and j != n - 1 and k != p - 1:\n                    total_cost += cost[i][j][k]\n                    num_cells += 1\n                \n                # If we are at the last row, column, or depth layer, calculate the average cost for the current path and compare it to the previous maximum average\n                else:\n                    average = total_cost / num_cells\n                    if average > max_average:\n                        max_average",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 44
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 2,
+      "seed": 44,
+      "timing": {
+        "execution_seconds": 0.10828558914363384,
+        "generation_seconds": 64.99336628615856
+      }
+    },
+    {
+      "code_hash": "6fd78218656942193aec28b7f88aba2f0649f7046fc8aa007ade3ccbc91b0d60",
+      "execution": {
+        "duration_seconds": 0.11302423477172852,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": null,
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.11290568858385086,
+            "exception_message": "name 'maxAverageOf3DPath' is not defined. Did you mean: 'max_average_of_path'?",
+            "exception_type": "NameError",
+            "expected_value": null,
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-_vobcm9t/program.py\", line 65, in <module>\n    __srcg_assertion_actual_7f31 = maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]])\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'maxAverageOf3DPath' is not defined. Did you mean: 'max_average_of_path'?\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-_vobcm9t/program.py\", line 65, in <module>\n    __srcg_assertion_actual_7f31 = maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]])\n                                   ^^^^^^^^^^^^^^^^^^\nNameError: name 'maxAverageOf3DPath' is not defined. Did you mean: 'max_average_of_path'?\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def max_average_of_path(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    max_avg = -float('inf')\n    path = []\n\n    # Loop through each cell in the matrix\n    for i in range(n):\n        for j in range(m):\n            # If the current cell is not part of an existing path, add it to the path\n            if (i, j) not in path:\n                path.append((i, j))\n                # Calculate the average cost of the current path\n                avg = sum(cost[i][j] for i, j in path) / len(path)\n                # If the average cost is greater than the maximum average cost seen so far, update the maximum average cost and the corresponding path\n                if avg > max_avg:\n                    max_avg = avg\n                    best_path = path[:]\n                # Remove the last cell from the path and continue to the next cell\n                else:\n                    path.pop()\n    \n    return best_path\n\ndef max_average_of_3d_path(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    p = len(cost[0][0])\n    max_avg = -float('inf')\n    path = []\n\n    # Loop through each cell in the matrix\n    for i in range(n):\n        for j in range(m):\n            for k in range(p):\n                # If the current cell is not part of an existing path, add it to the path\n                if (i, j, k) not in path:\n                    path.append((i, j, k))\n                    # Calculate the average cost of the current path\n                    avg = sum(cost[i][j][k] for i, j, k in path) / len(path)\n                    # If the average cost is greater than the maximum average cost seen so far, update the maximum average cost and the corresponding path\n                    if avg > max_avg:\n                        max_avg = avg",
+        "completion_tokens": 512,
+        "extraction_method": "prose_wrapped",
+        "finish_reason": "length",
+        "prompt_tokens": 301,
+        "raw_text": " ```\ndef max_average_of_path(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    max_avg = -float('inf')\n    path = []\n\n    # Loop through each cell in the matrix\n    for i in range(n):\n        for j in range(m):\n            # If the current cell is not part of an existing path, add it to the path\n            if (i, j) not in path:\n                path.append((i, j))\n                # Calculate the average cost of the current path\n                avg = sum(cost[i][j] for i, j in path) / len(path)\n                # If the average cost is greater than the maximum average cost seen so far, update the maximum average cost and the corresponding path\n                if avg > max_avg:\n                    max_avg = avg\n                    best_path = path[:]\n                # Remove the last cell from the path and continue to the next cell\n                else:\n                    path.pop()\n    \n    return best_path\n\ndef max_average_of_3d_path(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    p = len(cost[0][0])\n    max_avg = -float('inf')\n    path = []\n\n    # Loop through each cell in the matrix\n    for i in range(n):\n        for j in range(m):\n            for k in range(p):\n                # If the current cell is not part of an existing path, add it to the path\n                if (i, j, k) not in path:\n                    path.append((i, j, k))\n                    # Calculate the average cost of the current path\n                    avg = sum(cost[i][j][k] for i, j, k in path) / len(path)\n                    # If the average cost is greater than the maximum average cost seen so far, update the maximum average cost and the corresponding path\n                    if avg > max_avg:\n                        max_avg = avg\n                        best_path = path[:",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 45
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 3,
+      "seed": 45,
+      "timing": {
+        "execution_seconds": 0.11302423477172852,
+        "generation_seconds": 65.50153673253953
+      }
+    },
+    {
+      "code_hash": "87457fc3d8a42e008b5b270451a81528a5020e987ff856fa1d94444a599c697e",
+      "execution": {
+        "duration_seconds": 0.10568659380078316,
+        "passed": false,
+        "passed_tests": 0,
+        "tests": [
+          {
+            "actual_value": "(5.333333333333333, [(2, 2, 2)])",
+            "assertion_expression": "maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "duration_seconds": 0.1056411936879158,
+            "exception_message": "assertion comparison failed: actual=(5.333333333333333, [(2, 2, 2)]); expected=6.279999999999999",
+            "exception_type": "AssertionError",
+            "expected_value": "6.279999999999999",
+            "passed": false,
+            "stderr": "Traceback (most recent call last):\n  File \"/tmp/srcg-k1zbyixm/program.py\", line 79, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(5.333333333333333, [(2, 2, 2)])', '6.279999999999999')\n",
+            "stdout": "",
+            "test_case": "assert maxAverageOf3DPath([[[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[9, 8, 7], [6, 5, 4], [3, 2, 1]], [[1, 2, 3], [4, 5, 6], [7, 8, 9]]]) == 6.279999999999999",
+            "timed_out": false,
+            "trace": null,
+            "traceback": "Traceback (most recent call last):\n  File \"/tmp/srcg-k1zbyixm/program.py\", line 79, in <module>\n    assert __srcg_assertion_actual_7f31 == __srcg_assertion_expected_7f31, '__SRCG_ASSERTION_VALUES__' + repr((repr(__srcg_assertion_actual_7f31), repr(__srcg_assertion_expected_7f31)))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: __SRCG_ASSERTION_VALUES__('(5.333333333333333, [(2, 2, 2)])', '6.279999999999999')\n"
+          }
+        ],
+        "total_tests": 1
+      },
+      "generation": {
+        "backend_metadata": {
+          "accelerator": "cuda",
+          "backend": "huggingface",
+          "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+          "device_map": "cuda",
+          "dtype": "torch.bfloat16",
+          "gpu_preflight": null,
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "model_memory_footprint_bytes": 13344286976,
+          "prompt_strategy": "zero_shot",
+          "quantization": "bitsandbytes_8bit",
+          "quantization_config": {
+            "load_in_8bit": true
+          },
+          "quantization_method": "bitsandbytes",
+          "result_precision": "QUANTIZED",
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+        },
+        "code": "def maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    max_average = 0\n    path = []\n\n    # Iterate over rows\n    for i in range(n):\n        # Iterate over columns\n        for j in range(m):\n            # Check if current cell is part of an existing path\n            if (i, j) in path:\n                continue\n\n            # Compute average cost of current path\n            total_cost = 0\n            num_cells = 0\n            for k in range(i, min(i + m - 1, n - 1)):\n                total_cost += cost[k][j]\n                num_cells += 1\n\n            average_cost = total_cost / num_cells\n\n            # Update maximum average if necessary\n            if average_cost > max_average:\n                max_average = average_cost\n                path = [(i, j)]\n\n    return max_average, path\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    l = len(cost[0][0])\n    max_average = 0\n    path = []\n\n    # Iterate over layers\n    for k in range(l):\n        # Compute average cost of current layer\n        total_cost = 0\n        num_cells = 0\n        for i in range(n):\n            for j in range(m):\n                total_cost += cost[i][j][k]\n                num_cells += 1\n\n        average_cost = total_cost / num_cells\n\n        # Update maximum average if necessary\n        if average_cost > max_average:\n            max_average = average_cost\n            path = [(k, i, j)]\n\n    return max_average, path",
+        "completion_tokens": 464,
+        "extraction_method": "markdown_fence",
+        "finish_reason": "stop",
+        "prompt_tokens": 301,
+        "raw_text": " ```python\ndef maxAverageOfPath(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    max_average = 0\n    path = []\n\n    # Iterate over rows\n    for i in range(n):\n        # Iterate over columns\n        for j in range(m):\n            # Check if current cell is part of an existing path\n            if (i, j) in path:\n                continue\n\n            # Compute average cost of current path\n            total_cost = 0\n            num_cells = 0\n            for k in range(i, min(i + m - 1, n - 1)):\n                total_cost += cost[k][j]\n                num_cells += 1\n\n            average_cost = total_cost / num_cells\n\n            # Update maximum average if necessary\n            if average_cost > max_average:\n                max_average = average_cost\n                path = [(i, j)]\n\n    return max_average, path\n\ndef maxAverageOf3DPath(cost):\n    # Initialize variables\n    n = len(cost)\n    m = len(cost[0])\n    l = len(cost[0][0])\n    max_average = 0\n    path = []\n\n    # Iterate over layers\n    for k in range(l):\n        # Compute average cost of current layer\n        total_cost = 0\n        num_cells = 0\n        for i in range(n):\n            for j in range(m):\n                total_cost += cost[i][j][k]\n                num_cells += 1\n\n        average_cost = total_cost / num_cells\n\n        # Update maximum average if necessary\n        if average_cost > max_average:\n            max_average = average_cost\n            path = [(k, i, j)]\n\n    return max_average, path\n```",
+        "rendered_system_prompt": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+        "rendered_user_prompt": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+        "request_payload": {
+          "generation_options": {
+            "do_sample": true,
+            "max_new_tokens": 512,
+            "pad_token_id": 2,
+            "repetition_penalty": 1.1,
+            "temperature": 0.8,
+            "top_p": 0.95
+          },
+          "messages": [
+            {
+              "content": "You are a Python code generation system. Return only the complete Python solution, without Markdown fences or explanatory prose. Preserve the requested function name and signature.",
+              "role": "system"
+            },
+            {
+              "content": "Problem:\nWrite a solution Python file for the following two problems. The solution to the second problem must use one or more calls to the first solution. Return both complete implementations.\n\n# Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.\ndef maxAverageOfPath(cost):\n\n# Given a 3D matrix of size N*N*N where each cell is associated with a specific cost, find the path with the maximum average cost from the top-left cell of the front face to the bottom-right cell of the back face. A path can move right, down, or into the next depth layer. The average cost is computed as the total cost divided by the number of cells visited in the path.\ndef maxAverageOf3DPath(cost):\n\nSolution:",
+              "role": "user"
+            }
+          ],
+          "model": "codellama/CodeLlama-13b-Instruct-hf",
+          "quantization": {
+            "quantization_config": {
+              "load_in_8bit": true
+            },
+            "quantization_method": "bitsandbytes",
+            "result_precision": "QUANTIZED"
+          },
+          "revision": "745795438019e47e4dad1347a0093e11deee4c68",
+          "seed": 46
+        },
+        "syntax_valid": true
+      },
+      "passed": false,
+      "sample_index": 4,
+      "seed": 46,
+      "timing": {
+        "execution_seconds": 0.10568659380078316,
+        "generation_seconds": 59.46444698981941
+      }
+    }
+  ],
+  "duration_seconds": 306.40695883892477,
+  "metric": "pass@1_bo5",
+  "passed": false,
+  "passing_sample_indices": [],
+  "provenance": {
+    "accelerator": "cuda",
+    "backend": "huggingface",
+    "canonical_model": "codellama/CodeLlama-13b-Instruct-hf",
+    "device_map": "cuda",
+    "dtype": "torch.bfloat16",
+    "gpu_preflight": null,
+    "model": "codellama/CodeLlama-13b-Instruct-hf",
+    "model_memory_footprint_bytes": 13344286976,
+    "prompt_strategy": "zero_shot",
+    "quantization": "bitsandbytes_8bit",
+    "quantization_config": {
+      "load_in_8bit": true
+    },
+    "quantization_method": "bitsandbytes",
+    "result_precision": "QUANTIZED",
+    "revision": "745795438019e47e4dad1347a0093e11deee4c68"
+  },
+  "sample_seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "task_id": "mbpp_pro/304",
+  "unique_code_count": 5
+}
