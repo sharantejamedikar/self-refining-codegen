@@ -187,7 +187,23 @@ The requested Qwen headline results are *p*=0.00258 on HumanEval Pro and
 10,000-resample problem-level bootstrap confidence intervals and paired effect
 sizes for all 16 configurations.[^pro-stats]
 
-## Table 10. Tier 3 CodeLlama HumanEval-100 ablations
+## Table 10. Tier 3 Qwen HumanEval-100 ablations
+
+| Ablation axis | Setting | pass@1_refined | Model calls | Prompt tokens | Completion tokens | Wall-clock (s) | Convergence: success/oscillation/stagnation/max | Source |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Feedback-length cap | 100 words | 0.9300 (93/100) | 116 | 25,150 | 8,586 | 261.58 | 93/4/3/0 | Q-F100[^q-f100] |
+| Feedback-length cap | 200 words | 0.9300 (93/100) | 116 | 25,150 | 8,586 | 259.34 | 93/4/3/0 | Q-F200[^q-f200] |
+| Feedback-length cap | 300 words | 0.9300 (93/100) | 116 | 25,150 | 8,586 | 256.69 | 93/4/3/0 | Q-F300[^q-f300] |
+| Refinement temperature | 0.0 | 0.9200 (92/100) | 122 | 27,966 | 9,261 | 274.14 | 92/5/3/0 | Q-T0[^q-t0] |
+| Refinement temperature | 0.4 | 0.9100 (91/100) | 122 | 28,099 | 10,081 | 298.07 | 91/5/4/0 | Q-T04[^q-t04] |
+| Refinement temperature | 0.8 | 0.9100 (91/100) | 122 | 28,700 | 11,028 | 325.14 | 91/3/6/0 | Q-T08[^q-t08] |
+
+**Table note.** All six configurations use `humaneval_ablation_100`, a fixed,
+stratified 100-task HumanEval subset, with seed 42 and adaptive hybrid
+refinement. The Qwen feedback-length 100/200/300 configurations have identical
+per-task pass/fail vectors.
+
+## Table 11. Tier 3 CodeLlama HumanEval-100 ablations
 
 | Ablation axis | Setting | pass@1_refined | Model calls | Prompt tokens | Completion tokens | Source |
 |---|---:|---:|---:|---:|---:|---:|
@@ -198,13 +214,18 @@ sizes for all 16 configurations.[^pro-stats]
 | Refinement temperature | 0.4 | **0.5200 (52/100)** | 190 | 59,251 | 15,733 | C-T04[^c-t04] |
 | Refinement temperature | 0.8 | 0.5000 (50/100) | 198 | 62,076 | 15,542 | C-T08[^c-t08] |
 
-**Table note.** All six ablations use the same fixed, stratified 100-problem
-HumanEval subset and adaptive hybrid refinement. The three feedback caps
-produced identical task outcomes and token counts because observed feedback
+**Table note.** All six configurations use `humaneval_ablation_100`, the same
+fixed, stratified 100-task HumanEval subset, with seed 42 and adaptive hybrid
+refinement. The CodeLlama feedback-length 100/200/300 configurations have
+identical per-task pass/fail vectors and token counts because observed feedback
 did not reach the active cap. Temperature 0.4 matched the 0.2 reference
 configuration at 52/100; temperatures 0.0 and 0.8 each solved 50/100. With one
 fixed-seed run per cell, these results describe sensitivity within this
 protocol rather than run-to-run variability.
+
+The authoritative reporting total is **44 configurations**: 16 Tier 1/2 core
+configurations, 16 Tier 3 Pro configurations, and 12 sensitivity
+configurations. Development and validation runs are not part of these 44.
 
 ## Artifact and commit references
 
@@ -234,6 +255,12 @@ files.
 [^q4-m-s]: **Q4-M-S:** [`experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/`](../experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/).
 [^cross-model]: Cross-model synthesis: git commit `a5d1574`; [`docs/validation/cross_model_summary.md`](validation/cross_model_summary.md).
 [^pro-stats]: Tier 3 statistics and run mapping: git commit `cc815fc`; [`docs/validation/tier3_pro_statistics.json`](validation/tier3_pro_statistics.json).
+[^q-f100]: [`experiments/results/20260814T025440.309834Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_100/`](../experiments/results/20260814T025440.309834Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_100/).
+[^q-f200]: [`experiments/results/20260814T025910.954271Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_200/`](../experiments/results/20260814T025910.954271Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_200/).
+[^q-f300]: [`experiments/results/20260814T030339.239970Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_300/`](../experiments/results/20260814T030339.239970Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_300/).
+[^q-t0]: [`experiments/results/20260814T030804.958684Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p0/`](../experiments/results/20260814T030804.958684Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p0/).
+[^q-t04]: [`experiments/results/20260814T031248.190945Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p4/`](../experiments/results/20260814T031248.190945Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p4/).
+[^q-t08]: [`experiments/results/20260814T031755.254502Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p8/`](../experiments/results/20260814T031755.254502Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_temperature_0p8/).
 [^c-f100]: [`experiments/results/20260814T202408.473726Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_100/`](../experiments/results/20260814T202408.473726Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_100/).
 [^c-f200]: [`experiments/results/20260814T205744.788552Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_200/`](../experiments/results/20260814T205744.788552Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_200/).
 [^c-f300]: [`experiments/results/20260814T213135.886361Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_300/`](../experiments/results/20260814T213135.886361Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_300/).
