@@ -1,4 +1,4 @@
-# Dissertation results tables: Tier 1 and cross-model replication
+# Dissertation results tables: Tier 1, Tier 2, and Tier 3
 
 These tables are the citation-ready presentation of the frozen Tier 1 results
 for `Qwen/Qwen2.5-Coder-7B-Instruct` at pinned revision
@@ -135,6 +135,77 @@ ever solved in that run. All 46 exhibit the documented contradictory
 post-success prompt pattern.[^c-m-fixed-analysis] As in Table 5, model family,
 size, and precision are confounded, and each cell is one fixed-seed run.
 
+## Table 7. Tier 3 Pro benchmark matrix
+
+| Model configuration | Benchmark | Single-pass | Best-of-5 | Adaptive refinement | Fixed-*k*=5 refinement (ever solved) |
+|---|---|---:|---:|---:|---:|
+| Qwen full precision | HumanEval Pro-164 | 0.6524 (107/164) | **0.7866 (129/164)** | 0.7012 (115/164) | 0.7012 (115/164) |
+| Qwen full precision | MBPP Pro-378 | 0.6032 (228/378) | **0.7646 (289/378)** | 0.6799 (257/378) | 0.6799 (257/378) |
+| CodeLlama 8-bit | HumanEval Pro-164 | 0.2866 (47/164) | **0.4329 (71/164)** | 0.3354 (55/164) | 0.3354 (55/164) |
+| CodeLlama 8-bit | MBPP Pro-378 | 0.3783 (143/378) | **0.5450 (206/378)** | 0.4630 (175/378) | 0.4630 (175/378) |
+
+**Table note.** Tier 3 comprises 16 full-benchmark configurations: four
+methods for each model-benchmark pair. Qwen used the pinned full-precision
+`bfloat16` configuration and CodeLlama used the established bitsandbytes
+8-bit replication configuration. Best-of-5 was the highest-scoring method in
+all four Pro conditions. Adaptive refinement improved over single-pass in all
+four, but did not match compute-matched best-of-5.[^pro-stats]
+
+## Table 8. Tier 3 Pro convergence ablation
+
+| Model configuration | Benchmark | Adaptive ever solved | Fixed-*k* ever solved | Fixed-*k* final-only | Adaptive calls | Fixed calls | Regressions |
+|---|---|---:|---:|---:|---:|---:|---:|
+| Qwen full precision | HumanEval Pro-164 | 115/164 | 115/164 | 114/164 | 256 | 820 | 1 |
+| Qwen full precision | MBPP Pro-378 | 257/378 | 257/378 | 253/378 | 620 | 1,890 | 4 |
+| CodeLlama 8-bit | HumanEval Pro-164 | 55/164 | 55/164 | 54/164 | 340 | 820 | 1 |
+| CodeLlama 8-bit | MBPP Pro-378 | 175/378 | 175/378 | 164/378 | 718 | 1,890 | 11 |
+
+**Table note.** Fixed continuation produced no ever-solved gain over adaptive
+stopping in any Pro condition, while requiring the full five calls per task.
+Its final iteration lost 17 previously solved task outcomes in total. The
+regression count is the number of fixed-run tasks that passed at least once
+but failed at iteration 5; it is computed directly from the committed
+per-problem trajectories.
+
+## Table 9. Tier 3 Pro paired statistical significance
+
+| Model configuration | Benchmark | Paired comparison | First-only | Second-only | Paired difference | Exact McNemar *p* | Significant at 0.05? |
+|---|---|---|---:|---:|---:|---:|---:|
+| Qwen full precision | HumanEval Pro-164 | Adaptive − best-of-5 | 3 | 17 | −14/164 (−8.54 pp) | 0.00258 | Yes |
+| Qwen full precision | MBPP Pro-378 | Adaptive − best-of-5 | 9 | 41 | −32/378 (−8.47 pp) | 5.61×10⁻⁶ | Yes |
+| CodeLlama 8-bit | HumanEval Pro-164 | Adaptive − best-of-5 | 8 | 24 | −16/164 (−9.76 pp) | 0.00700 | Yes |
+| CodeLlama 8-bit | MBPP Pro-378 | Adaptive − best-of-5 | 19 | 50 | −31/378 (−8.20 pp) | 0.000244 | Yes |
+| Qwen full precision | HumanEval Pro-164 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/164 (0.00 pp) | 1.00000 | No |
+| Qwen full precision | MBPP Pro-378 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/378 (0.00 pp) | 1.00000 | No |
+| CodeLlama 8-bit | HumanEval Pro-164 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/164 (0.00 pp) | 1.00000 | No |
+| CodeLlama 8-bit | MBPP Pro-378 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/378 (0.00 pp) | 1.00000 | No |
+
+**Table note.** These are the pre-specified exact, two-sided conditional
+binomial McNemar tests without continuity correction. P-values are unadjusted.
+The requested Qwen headline results are *p*=0.00258 on HumanEval Pro and
+*p*=5.61×10⁻⁶ on MBPP Pro. The committed statistical artifact also preserves
+10,000-resample problem-level bootstrap confidence intervals and paired effect
+sizes for all 16 configurations.[^pro-stats]
+
+## Table 10. Tier 3 CodeLlama HumanEval-100 ablations
+
+| Ablation axis | Setting | pass@1_refined | Model calls | Prompt tokens | Completion tokens | Source |
+|---|---:|---:|---:|---:|---:|---:|
+| Feedback-length cap | 100 words | 0.5200 (52/100) | 187 | 58,162 | 15,412 | C-F100[^c-f100] |
+| Feedback-length cap | 200 words | 0.5200 (52/100) | 187 | 58,162 | 15,412 | C-F200[^c-f200] |
+| Feedback-length cap | 300 words | 0.5200 (52/100) | 187 | 58,162 | 15,412 | C-F300[^c-f300] |
+| Refinement temperature | 0.0 | 0.5000 (50/100) | 190 | 59,700 | 14,582 | C-T0[^c-t0] |
+| Refinement temperature | 0.4 | **0.5200 (52/100)** | 190 | 59,251 | 15,733 | C-T04[^c-t04] |
+| Refinement temperature | 0.8 | 0.5000 (50/100) | 198 | 62,076 | 15,542 | C-T08[^c-t08] |
+
+**Table note.** All six ablations use the same fixed, stratified 100-problem
+HumanEval subset and adaptive hybrid refinement. The three feedback caps
+produced identical task outcomes and token counts because observed feedback
+did not reach the active cap. Temperature 0.4 matched the 0.2 reference
+configuration at 52/100; temperatures 0.0 and 0.8 each solved 50/100. With one
+fixed-seed run per cell, these results describe sensitivity within this
+protocol rather than run-to-run variability.
+
 ## Artifact and commit references
 
 Every table entry above resolves to an immutable run directory. The commit is
@@ -162,3 +233,10 @@ files.
 [^c-m-fixed-analysis]: Fixed-run validation: [`docs/validation/codellama_mbpp_fixed_refinement_analysis.md`](validation/codellama_mbpp_fixed_refinement_analysis.md).
 [^q4-m-s]: **Q4-M-S:** [`experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/`](../experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/).
 [^cross-model]: Cross-model synthesis: git commit `a5d1574`; [`docs/validation/cross_model_summary.md`](validation/cross_model_summary.md).
+[^pro-stats]: Tier 3 statistics and run mapping: git commit `cc815fc`; [`docs/validation/tier3_pro_statistics.json`](validation/tier3_pro_statistics.json).
+[^c-f100]: [`experiments/results/20260814T202408.473726Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_100/`](../experiments/results/20260814T202408.473726Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_100/).
+[^c-f200]: [`experiments/results/20260814T205744.788552Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_200/`](../experiments/results/20260814T205744.788552Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_200/).
+[^c-f300]: [`experiments/results/20260814T213135.886361Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_300/`](../experiments/results/20260814T213135.886361Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_feedback_300/).
+[^c-t0]: [`experiments/results/20260814T221627.451262Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p0/`](../experiments/results/20260814T221627.451262Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p0/).
+[^c-t04]: [`experiments/results/20260814T224910.453589Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p4/`](../experiments/results/20260814T224910.453589Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p4/).
+[^c-t08]: [`experiments/results/20260814T232441.662230Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p8/`](../experiments/results/20260814T232441.662230Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_adaptive_humaneval_temperature_0p8/).
