@@ -4,8 +4,8 @@
 
 This table compares the four completed HumanEval-164 configurations for
 `Qwen/Qwen2.5-Coder-7B-Instruct` and
-`codellama/CodeLlama-13b-Instruct-hf`. Qwen was run in full precision with the
-Hugging Face CUDA backend; CodeLlama was run with bitsandbytes 8-bit
+`codellama/CodeLlama-13b-Instruct-hf`. Qwen was run in non-quantised
+`bfloat16` with the Hugging Face CUDA backend; CodeLlama was run with bitsandbytes 8-bit
 quantization. This is therefore **not a clean, precision-controlled model
 comparison**. Model family, model size, numerical precision, and the associated
 inference configuration differ. The results support cross-configuration
@@ -21,7 +21,7 @@ backend.
 
 ## Master results
 
-| Configuration | Qwen full-precision accuracy | Qwen calls | CodeLlama 8-bit accuracy | CodeLlama calls | Gap closure |
+| Configuration | Qwen non-quantised `bfloat16` accuracy | Qwen calls | CodeLlama 8-bit accuracy | CodeLlama calls | Gap closure |
 |---|---:|---:|---:|---:|---:|
 | Single-pass | 142/164 = 86.59% | 164 | 68/164 = 41.46% | 164 | — |
 | Best-of-5 | 152/164 = 92.68% | 820 | 102/164 = 62.20% | 820 | Reference |
@@ -57,19 +57,19 @@ points) behind best-of-5, compared with Qwen's remaining deficit of 4 solves
 (2.44 percentage points). Its gap closure is also lower, 55.9% versus 60.0%.
 These are descriptive end-to-end configuration differences; the comparison
 cannot attribute the difference solely to model capability because CodeLlama
-was quantized while Qwen was full precision.
+was quantized while Qwen used non-quantised `bfloat16`.
 
 Forced-iteration regression is confirmed across both model families. In the
 fixed-k runs, 9 CodeLlama problems that passed at an earlier iteration failed
 at iteration 5, compared with 5 Qwen problems. Expressed using the requested
 fixed-run reporting denominators, these are 9/87 (10.3%) for CodeLlama and
-5/143 (3.5%) for Qwen. The underlying ever-solved-to-final changes are 87 to
+5/148 (3.4%) for Qwen. The underlying ever-solved-to-final changes are 87 to
 78 and 148 to 143, respectively. This replication supports the
 model-agnostic existence of the regression phenomenon and the use of
 success-priority adaptive stopping. It does **not** establish that CodeLlama
 has a higher intrinsic regression rate: the comparison has only one run per
 configuration and is confounded by model family, model size, and precision
-(8-bit CodeLlama versus full-precision Qwen).
+(8-bit CodeLlama versus non-quantised `bfloat16` Qwen).
 
 ## MBPP-427 extension
 
@@ -95,7 +95,7 @@ fewer), 10,270.06 fewer summed wall-clock seconds (56.09% fewer), and 38,997
 fewer tokens (11.20% fewer) than best-of-5. Its seed-42, 10,000-resample
 bootstrap 95% CI was `[0.5550, 0.6487]`.
 
-The Qwen contrast is qualitative and clear: full-precision Qwen adaptive
+The Qwen contrast is qualitative and clear: non-quantised `bfloat16` Qwen adaptive
 refinement solved 352/427, 15 more than its own best-of-5, while Q4_K_M Qwen
 adaptive refinement solved 351/427, 8 more than its own best-of-5. CodeLlama
 adaptive refinement instead solved 257/427, 6 fewer than its own best-of-5.
@@ -112,7 +112,7 @@ prompts paired `All assertions passed.` with `Return a corrected complete
 solution.`, replicating the same self-contradictory post-success instruction
 in the other five fixed-run conditions. This sixth condition completes the
 executed two-model, two-benchmark fixed-run coverage, with Qwen represented at
-both full precision and Q4_K_M.
+both non-quantised `bfloat16` and Q4_K_M.
 
 On CodeLlama, MBPP single-pass exceeded its own HumanEval single-pass result by
 3.50 percentage points (44.96% versus 41.46%). This is not evidence that MBPP
@@ -120,7 +120,7 @@ is intrinsically easier: the benchmarks differ in tasks, tests, prompts, and
 denominators.
 
 On the shared MBPP-427 task set, CodeLlama solved 115 fewer problems than
-full-precision Qwen (a 26.93 percentage-point deficit) and 119 fewer than
+non-quantised `bfloat16` Qwen (a 26.93 percentage-point deficit) and 119 fewer than
 Q4_K_M Qwen (a 27.87 percentage-point deficit). These are end-to-end
 configuration differences, not isolated model-family effects. CodeLlama has
 13B parameters and used bitsandbytes 8-bit through Hugging Face; the Qwen
@@ -132,7 +132,7 @@ is also unmeasured.
 
 ## Authoritative artifacts
 
-| Configuration | Qwen full precision | CodeLlama 8-bit |
+| Configuration | Qwen non-quantised `bfloat16` | CodeLlama 8-bit |
 |---|---|---|
 | Single-pass | [`20260808...zero_shot`](../../experiments/results/20260808T204450.467851Z_cluster_qwen_hf_zero_shot_humaneval_full/) | [`20260810...zero_shot`](../../experiments/results/20260810T113106.471817Z_cluster_codellama_13b_bnb_8bit_zero_shot_humaneval_full/) |
 | Best-of-5 | [`20260808...best_of_5`](../../experiments/results/20260808T210242.687568Z_cluster_qwen_hf_best_of_5_humaneval_full/) | [`20260810...best_of_5`](../../experiments/results/20260810T121044.505386Z_cluster_codellama_13b_bnb_8bit_best_of_5_humaneval_full/) |
@@ -146,6 +146,9 @@ The authoritative CodeLlama MBPP artifacts are
 [`20260813...fixed_mbpp`](../../experiments/results/20260813T005000Z_cluster_codellama_13b_bnb_8bit_hybrid_refinement_fixed_mbpp_full/).
 The fixed-run case audit is
 [`codellama_mbpp_fixed_refinement_analysis.md`](codellama_mbpp_fixed_refinement_analysis.md).
+The complete standard-benchmark paired statistics, including aligned task IDs,
+effect sizes and exact McNemar results, are frozen in
+[`standard_benchmark_statistics.json`](standard_benchmark_statistics.json).
 Their persisted commits are `b24f31bc468c81706844aa4f01c4c376c15a9e37`,
 `20b161898692443e3aa32b5c83338841beb4753b`, and
 `20b161898692443e3aa32b5c83338841beb4753b`; the fixed artifact's commit is

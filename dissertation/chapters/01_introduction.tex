@@ -1,0 +1,115 @@
+\chapter{Introduction}
+
+\section{Background and Motivation}
+
+Large language models (LLMs) have substantially advanced automated program synthesis, enabling executable code to be generated directly from natural-language problem specifications. Code-oriented models can produce plausible solutions across established programming benchmarks such as HumanEval and Mostly Basic Programming Problems (MBPP) \citep{chen2021codex,austin2021program}, demonstrating that contemporary language models have acquired considerable capability for translating natural-language requirements into source code. However, syntactic plausibility is not equivalent to functional correctness. A generated program may compile and appear semantically appropriate while still failing because of incorrect logic, unhandled edge cases, runtime exceptions, or violations of the intended specification. Consequently, reliable code generation requires evaluation against executable behaviour rather than reliance on the apparent quality of generated code alone.
+
+Executable tests provide an unusually informative form of external feedback for this purpose. Unlike many natural-language generation tasks, for which output quality can be subjective or require human judgement, programming problems can often be evaluated against deterministic test cases. A failed execution can expose concrete evidence about the inadequacy of a candidate solution through assertion failures, exceptions, tracebacks, or timeouts. This creates an opportunity to move beyond one-shot generation: rather than discarding an incorrect program, its observed execution behaviour can be incorporated into a subsequent prompt so that the model attempts to diagnose and repair the failure.
+
+This principle aligns with a broader shift towards inference-time refinement. Self-Refine demonstrated that language-model outputs can be improved through repeated feedback and revision without additional model training \citep{madaan2023selfrefine}, while Self-Debugging showed that execution behaviour can support the correction of generated programs \citep{chen2023selfdebug}. These approaches show that the first response need not be treated as final. However, every revision incurs another model call, and the same computation could generate independent candidates. Independent sampling is thus a substantive competing strategy: additional inference can exploit evidence from an existing failure or explore a new candidate. Refinement must be judged against both sampling and one-shot generation.
+
+Refinement also requires an effective stopping policy. Repeated revision may be valuable when execution feedback exposes a repairable defect, but successive solutions can stagnate or oscillate. Continuing after functional correctness wastes computation and exposes an already-correct solution to regression. A self-refining system therefore needs both informative feedback and a policy for deciding when further model calls cease to be beneficial.
+
+Motivated by these considerations, this dissertation investigates self-refining code generation as an inference-time optimisation problem. Rather than training or fine-tuning a new model, it uses pretrained instruction-tuned code models without weight updates and revises generated Python solutions using execution-derived feedback. The central question is when refinement represents a worthwhile allocation of computation relative to independent sampling, whether adaptive stopping avoids unnecessary or destructive continuation, and how robust these behaviours are across models and benchmark difficulty.
+
+\section{Problem Statement}
+
+Although large language models can generate functionally correct programs from natural-language specifications, an incorrect initial generation presents a non-trivial inference-time decision. Additional computation may be allocated either to independent sampling, which increases candidate diversity, or to iterative refinement, which attempts to repair an existing candidate using information obtained from its execution. Execution feedback provides a potentially informative corrective signal, but refinement is advantageous only if the model can exploit that signal well enough to justify the additional calls. Improvement over single-pass generation alone is thus insufficient to establish the value of a self-refining approach; refinement must also be evaluated against a strong, generation-budget-matched independent-sampling strategy.
+
+The duration of refinement presents a second problem. Iterative correction does not imply that every available step remains beneficial. Successive generations may cease to change meaningfully, alternate between previously observed solutions, or continue after a functionally correct solution has been obtained. Such continuation consumes computation without necessarily increasing solution discovery and may regress an already-correct program. A practical system therefore requires an explicit convergence mechanism that terminates refinement when further generation is unlikely to provide useful corrective value.
+
+The research problem is to determine whether refinement based on execution feedback constitutes an effective and computationally efficient inference-time strategy for code generation, relative both to single-pass generation and to generation-budget-matched independent sampling. It further asks whether adaptive convergence detection can preserve useful corrective behaviour while avoiding unnecessary computation and destructive continuation. The problem is examined across model configurations, benchmark difficulty levels and inference settings to distinguish robust behaviour from condition-specific gains.
+
+\section{Research Gap}
+
+Prior work has established that additional inference-time computation can improve large language model outputs through several mechanisms. Self-Refine demonstrates that iterative feedback and revision can improve an initial response without additional model training \citep{madaan2023selfrefine}, while Reflexion shows that linguistic feedback obtained through interaction with an external environment can be carried forward to improve subsequent attempts \citep{shinn2023reflexion}. In code generation, Self-Debugging demonstrates that execution behaviour can guide program repair and improve sample efficiency \citep{chen2023selfdebug}. A complementary approach, LEVER, uses execution results to verify and rerank independently sampled programs instead of modifying a single candidate \citep{ni2023lever}. Together, these approaches establish the value of feedback-driven correction and execution-aware candidate selection, but allocate additional computation in fundamentally different ways.
+
+The first gap is the relative value of iterative repair and independent candidate diversity under a controlled inference budget. Improvement over single-pass generation does not show that the same computation would not be better spent generating multiple independent candidates. Although Self-Debugging indicates that feedback-guided repair can be sample-efficient \citep{chen2023selfdebug}, and LEVER demonstrates that execution information can improve selection among sampled programs \citep{ni2023lever}, the trade-off between repeatedly repairing an execution-tested candidate and allocating a matched generation budget to independent sampling remains insufficiently characterised across model and benchmark conditions. A direct generation-budget-matched comparison is required to establish when refinement is the more effective use of inference-time computation.
+
+Convergence constitutes a second gap. Existing iterative frameworks necessarily employ stopping criteria \citep{madaan2023selfrefine}, but stopping behaviour is typically treated as an implementation component rather than an experimental object in its own right. For executable code generation, this distinction matters because functional correctness can be observed during the refinement process. Continuing after success may consume unnecessary computation or modify an already-correct solution, while unsuccessful trajectories may stagnate or oscillate between previously encountered states. The effect of adaptive stopping on solution discovery, computational cost and post-solution regression requires explicit evaluation rather than being subsumed within a fixed iteration budget.
+
+The robustness of reported refinement gains presents a third gap. Improvements demonstrated under a particular model, benchmark or feedback formulation do not necessarily establish general behaviour. The comparative relationship between single-pass generation, independent sampling and execution-guided refinement may vary with underlying model capability and task difficulty; inference settings such as feedback length and sampling temperature may further influence refinement. A controlled evaluation must therefore examine functional correctness, computational cost, convergence behaviour and statistical uncertainty across multiple model configurations and both standard and harder benchmark variants.
+
+These unresolved questions have practical implications for the design of LLM-based programming systems. After a failed execution, further computation can produce independent alternatives or repair the existing candidate using information obtained from the failure. Without an effective stopping policy, repeated calls may increase latency and computational expenditure without improving correctness; continued modification of an already-correct program may also introduce regression. Establishing when to refine, resample or stop is relevant to both benchmark performance and the design of computationally efficient, reliable code-generation workflows.
+
+This dissertation addresses the intersection of these gaps by comparing single-pass generation, generation-budget-matched Best-of-5 sampling, adaptive execution-feedback refinement and fixed-iteration refinement across two code-model configurations and four benchmark settings, with additional sensitivity analysis and paired statistical evaluation. The resulting study is intended not to assume the superiority of self-refinement, but to identify the conditions under which execution-guided repair is beneficial, when independent sampling remains stronger, and whether adaptive convergence can preserve useful corrective behaviour while reducing unnecessary computation and regression risk.
+
+\section{Research Aim}
+
+The aim of this research is to design, implement and systematically evaluate a self-refining code-generation framework that uses execution feedback to iteratively improve LLM-generated Python programs, and to determine whether adaptive refinement provides reliable functional-correctness and computational-efficiency advantages over single-pass generation, generation-budget-matched Best-of-5 sampling and fixed-iteration refinement across different models and benchmark difficulty levels.
+
+\section{Research Questions}
+
+The investigation is structured around four research questions:
+
+\begin{description}
+
+\item[\textbf{RQ1.}] To what extent does execution-feedback-based adaptive refinement improve functional correctness over single-pass code generation?
+
+\item[\textbf{RQ2.}] How does adaptive execution-feedback refinement compare with Best-of-5 sampling under a matched five-generation budget in terms of functional correctness and computational efficiency?
+
+\item[\textbf{RQ3.}] To what extent can adaptive convergence detection reduce unnecessary generation calls while preserving solution discovery compared with fixed-$k$ refinement, and what risks arise from continued refinement after a correct solution has been obtained?
+
+\item[\textbf{RQ4.}] How robust are the observed refinement behaviours across model configurations, benchmark difficulty levels and inference settings?
+
+\end{description}
+
+\section{Research Objectives}
+
+To address the research questions, six measurable objectives were defined:
+
+\begin{description}
+
+\item[\textbf{O1.}] Design and implement a reproducible execution-feedback framework for generating, executing, diagnosing and iteratively refining Python solutions.
+
+\item[\textbf{O2.}] Develop template-based, trace-based and hybrid feedback together with adaptive stopping for success, stagnation, oscillation and maximum iterations.
+
+\item[\textbf{O3.}] Compare adaptive refinement with single-pass generation, generation-budget-matched Best-of-5 sampling and fixed-$k=5$ refinement.
+
+\item[\textbf{O4.}] Evaluate cross-model robustness across HumanEval, MBPP, HumanEval Pro and MBPP Pro using the Qwen2.5-Coder-7B-Instruct and CodeLlama-13B-Instruct configurations.
+
+\item[\textbf{O5.}] Quantify paired performance and uncertainty using exact McNemar testing, bootstrap confidence intervals, model calls, token usage and wall-clock time.
+
+\item[\textbf{O6.}] Analyse convergence, post-solution regression, feedback-length and temperature sensitivity, precision-related behaviour and representative failure cases.
+
+\end{description}
+
+\section{Scope and Delimitations}
+
+This study is restricted to inference-time refinement of Python function-level code generation. It does not train, fine-tune or otherwise update model parameters; instead, pretrained instruction-tuned code models are evaluated under zero-shot prompting, with additional inference computation allocated either to independent sampling or to execution-feedback-guided revision. The investigation therefore concerns the effectiveness and computational efficiency of inference-time strategies rather than improvements arising from additional model training.
+
+The empirical evaluation is bounded to two model configurations: Qwen2.5-Coder-7B-Instruct as the primary model and CodeLlama-13B-Instruct as a cross-model replication. Headline Qwen experiments use bfloat16 inference through Hugging Face/CUDA, whereas CodeLlama is evaluated using bitsandbytes 8-bit quantisation. Consequently, cross-model differences in absolute performance cannot be attributed exclusively to model family, since model architecture, parameter scale and numerical precision are not independently controlled. Cross-model evidence is therefore interpreted primarily as a test of whether qualitative refinement behaviours recur under a substantially different model configuration.
+
+Evaluation is conducted on HumanEval, the project's sanitised MBPP benchmark, HumanEval Pro and MBPP Pro. These benchmarks permit controlled execution-based assessment of functional correctness but represent predominantly self-contained Python programming problems. The findings therefore do not establish generalisation to repository-level software engineering, multi-file program repair or production code-generation environments. Moreover, functional correctness is operationalised by whether generated programs satisfy the available benchmark tests; passing those tests does not demonstrate semantic correctness for behaviours that the test suite does not exercise.
+
+Finally, the study evaluates single-pass generation, generation-budget-matched Best-of-5 sampling, adaptive hybrid-feedback refinement and fixed-$k=5$ refinement, with additional sensitivity analysis for feedback length and sampling temperature. The scope is deliberately comparative rather than exhaustive: it does not attempt to evaluate every possible prompting strategy, feedback representation, stopping policy or code-generation model. Conclusions are therefore restricted to the tested configurations and are framed in terms of observed empirical behaviour rather than universal superiority of execution-feedback refinement.
+
+\section{Research Contributions}
+
+The principal contributions of this dissertation are as follows:
+
+\begin{description}
+
+\item[\textbf{C1.}] \textbf{Reproducible execution-feedback framework.}\par The framework uses a common, configuration-driven interface across the evaluated model backends. It supports zero-shot code generation, resource-limited subprocess execution, structured failure diagnosis and iterative program refinement. It also integrates template-based and trace-based feedback through a hybrid strategy and records persistent per-problem evidence to support reproducible evaluation.
+
+\item[\textbf{C2.}] \textbf{Controlled characterisation of refinement versus independent sampling.}\par Adaptive execution-feedback refinement is evaluated against single-pass generation and generation-budget-matched Best-of-5 sampling. This provides a controlled empirical characterisation of when targeted repair or independent candidate diversity constitutes the more effective allocation of inference-time computation.
+
+\item[\textbf{C3.}] \textbf{Adaptive convergence as compute control and solution preservation.}\par Success-, stagnation- and oscillation-aware stopping is evaluated directly against forced fixed-$k=5$ continuation. This empirical validation establishes adaptive convergence as an experimental object and quantifies its relationship with solution discovery, generation cost and post-solution regression.
+
+\item[\textbf{C4.}] \textbf{Identification and analysis of a concrete post-solution regression mechanism.}\par Analysis of fixed-iteration refinement identifies a recurring contradictory-prompt pattern in which successful execution feedback is followed by an instruction requesting a corrected solution. This provides a mechanistic explanation for observed post-solution regressions and demonstrates that convergence policy affects not only computational efficiency but also the stability of generated solutions.
+
+\item[\textbf{C5.}] \textbf{Cross-model, cross-difficulty and sensitivity evidence.}\par Cross-model evidence is obtained using two configurations: Qwen2.5-Coder-7B-Instruct and CodeLlama-13B-Instruct. The evaluation spans standard HumanEval and MBPP benchmarks, their harder Pro variants, and controlled feedback-length and temperature sensitivity conditions. This broader evaluation enables the generality of refinement behaviour to be assessed across model configuration, benchmark difficulty and inference settings.
+
+\end{description}
+
+\section{Dissertation Structure}
+
+The remainder of this dissertation is organised into five further chapters. \textbf{Chapter 2} critically reviews the literature on large language models for code generation, functional evaluation and code-generation benchmarks, inference-time sampling, self-refinement and self-debugging, execution-based feedback, and convergence control. The chapter synthesises these research strands to establish the theoretical and empirical basis for the research gap addressed in this study.
+
+\textbf{Chapter 3} presents the research methodology and system design. It describes the execution-feedback refinement framework, feedback-generation strategies, adaptive convergence mechanism, evaluated models and benchmarks, experimental configurations, execution environment, evaluation metrics, statistical procedures and reproducibility safeguards.
+
+\textbf{Chapter 4} reports the empirical results. It presents the standard-benchmark and cross-model comparisons, the harder HumanEval Pro and MBPP Pro evaluations, computational-efficiency measurements, convergence and post-solution regression analysis, sensitivity experiments, and representative failure cases.
+
+\textbf{Chapter 5} critically discusses these findings in relation to the four research questions and the literature reviewed in Chapter 2. Particular attention is given to the conditions under which targeted execution-feedback refinement is preferable to independent sampling, the role of adaptive stopping, the robustness and generalisability of the observed behaviour, and the limitations of the experimental evidence.
+
+\textbf{Chapter 6} concludes the dissertation by synthesising the principal findings and contributions, assessing the extent to which the research aim and objectives have been achieved, and identifying directions for future research.

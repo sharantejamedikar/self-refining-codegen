@@ -14,7 +14,7 @@ best-of-5 call count, so lower values indicate fewer model calls.
 
 The cross-model replication in Tables 5 and 6 adds
 `codellama/CodeLlama-13b-Instruct-hf` on both benchmarks. CodeLlama used
-bitsandbytes 8-bit quantization, whereas Qwen used full-precision
+bitsandbytes 8-bit quantization, whereas Qwen used non-quantised
 `bfloat16`. Consequently, the cross-model results are an end-to-end
 configuration comparison, not a precision-controlled estimate of model-family
 effects. The complete frozen matrix contains 16 configurations: four methods
@@ -39,7 +39,7 @@ independent samples at temperature 0.8. Both refinement configurations use
 temperature 0.2 and permit at most five iterations; only the adaptive variant
 applies success, stagnation, and oscillation stopping.
 
-## Table 2. Central compute-matched comparison
+## Table 2. Central generation-budget-matched comparison
 
 | Benchmark | Best-of-5 pass@1 | Adaptive-refinement pass@1 | Refinement difference | Calls: best-of-5 → refinement | Refinement call ratio | Calls saved | Source |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -67,23 +67,30 @@ created five HumanEval and 18 MBPP final-state regressions.
 
 ## Table 4. Key paired significance tests
 
-| Benchmark | Paired comparison (first − second) | First-only | Second-only | Paired difference | Exact McNemar *p* | Significant at 0.05? | Source |
-|---|---|---:|---:|---:|---:|---:|---:|
-| HumanEval-164 | Adaptive refinement − best-of-5 | 3 | 7 | −4/164 (−2.44 pp) | 0.3438 | No | H-A + H-B[^h-a][^h-b] |
-| MBPP-427 | Adaptive refinement − best-of-5 | 33 | 18 | +15/427 (+3.51 pp) | 0.0489 | Yes | M-A + M-B[^m-a][^m-b] |
-| HumanEval-164 | Adaptive refinement − fixed-​*k* (ever solved) | 0 | 0 | 0/164 (0.00 pp) | 1.0000 | No | H-A + H-F[^h-a][^h-f] |
-| MBPP-427 | Adaptive refinement − fixed-​*k* (ever solved) | 0 | 0 | 0/427 (0.00 pp) | 1.0000 | No | M-A + M-F[^m-a][^m-f] |
+| Model configuration | Benchmark | Paired comparison (first − second) | First-only | Second-only | Paired difference | Matched OR | Exact McNemar *p* | Significant at 0.05? |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| Qwen non-quantised `bfloat16` | HumanEval-164 | Adaptive refinement − best-of-5 | 3 | 7 | −4/164 (−2.44 pp) | 0.4286 | 0.34375 | No |
+| Qwen non-quantised `bfloat16` | MBPP-427 | Adaptive refinement − best-of-5 | 33 | 18 | +15/427 (+3.51 pp) | 1.8333 | 0.0488739 | Yes |
+| Qwen non-quantised `bfloat16` | HumanEval-164 | Adaptive refinement − fixed-​*k* ever-solved | 0 | 0 | 0/164 (0.00 pp) | 1.0000 adjusted | 1.0000 | No |
+| Qwen non-quantised `bfloat16` | MBPP-427 | Adaptive refinement − fixed-​*k* ever-solved | 0 | 0 | 0/427 (0.00 pp) | 1.0000 adjusted | 1.0000 | No |
+| CodeLlama bitsandbytes 8-bit | HumanEval-164 | Adaptive refinement − best-of-5 | 6 | 21 | −15/164 (−9.15 pp) | 0.2857 | 0.00592461 | Yes |
+| CodeLlama bitsandbytes 8-bit | MBPP-427 | Adaptive refinement − best-of-5 | 29 | 35 | −6/427 (−1.41 pp) | 0.8286 | 0.532309 | No |
+| CodeLlama bitsandbytes 8-bit | HumanEval-164 | Adaptive refinement − fixed-​*k* ever-solved | 0 | 0 | 0/164 (0.00 pp) | 1.0000 adjusted | 1.0000 | No |
+| CodeLlama bitsandbytes 8-bit | MBPP-427 | Adaptive refinement − fixed-​*k* ever-solved | 0 | 0 | 0/427 (0.00 pp) | 1.0000 adjusted | 1.0000 | No |
 
 **Table note.** Values use the project’s pre-specified exact, two-sided,
 conditional-binomial McNemar test with no continuity correction. P-values are
-unadjusted. The adaptive-versus-fixed rows compare the headline ever-solved
+unadjusted. The matched odds ratios marked ``adjusted'' use the pre-specified
+Haldane--Anscombe handling because both discordant cells are zero. The
+adaptive-versus-fixed rows compare the headline ever-solved
 outcome, for which the paired task outcomes are identical; final-only scores
 are diagnostics and are not substituted for the pre-specified headline
-metric.
+metric. The complete paired task IDs, bootstrap intervals and immutable run
+references are frozen in the standard-benchmark statistical artifact.[^standard-stats]
 
 ## Table 5. Cross-model HumanEval-164 replication
 
-| Configuration | Qwen full-precision pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
+| Configuration | Qwen non-quantised `bfloat16` pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
 |---|---:|---:|---:|---:|---:|
 | Single-pass | 0.8659 (142/164) | 164 | 0.4146 (68/164) | 164 | H-S + C-S[^h-s][^c-s] |
 | Best-of-5 | **0.9268 (152/164)** | 820 | **0.6220 (102/164)** | 820 | H-B + C-B[^h-b][^c-b] |
@@ -105,12 +112,12 @@ gap closure was weaker for the less capable CodeLlama configuration, and its
 remaining best-of-5 deficit was larger: 15 problems (9.15 percentage points),
 versus 4 problems (2.44 percentage points) for Qwen. This difference must not
 be attributed solely to capability or model family because CodeLlama was
-8-bit quantized while Qwen was full precision.
+8-bit quantized while Qwen used non-quantised `bfloat16`.
 
 Forced-iteration regression also replicated across model families. Nine
 CodeLlama tasks that passed before iteration 5 failed at the final iteration,
 compared with five Qwen tasks. Using the fixed-run reporting denominators,
-these are 9/87 (10.3%) and 5/143 (3.5%), respectively; the corresponding
+these are 9/87 (10.3%) and 5/148 (3.4%), respectively; the corresponding
 ever-solved-to-final score changes are 87 to 78 and 148 to 143. This confirms
 the existence of the phenomenon across the two model configurations and
 supports success-priority stopping. It does not establish a model-specific
@@ -119,7 +126,7 @@ model size, and precision are confounded.[^cross-model]
 
 ## Table 6. Cross-model MBPP-427 replication
 
-| Configuration | Qwen full-precision pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
+| Configuration | Qwen non-quantised `bfloat16` pass@1 | Qwen calls | CodeLlama 8-bit pass@1 | CodeLlama calls | Source |
 |---|---:|---:|---:|---:|---:|
 | Single-pass | 0.7190 (307/427) | 427 | 0.4496 (192/427) | 427 | M-S + C-M-S[^m-s][^c-m-s] |
 | Best-of-5 | 0.7892 (337/427) | 2,135 | **0.6159 (263/427)** | 2,135 | M-B + C-M-B[^m-b][^c-m-b] |
@@ -139,24 +146,24 @@ size, and precision are confounded, and each cell is one fixed-seed run.
 
 | Model configuration | Benchmark | Single-pass | Best-of-5 | Adaptive refinement | Fixed-*k*=5 refinement (ever solved) |
 |---|---|---:|---:|---:|---:|
-| Qwen full precision | HumanEval Pro-164 | 0.6524 (107/164) | **0.7866 (129/164)** | 0.7012 (115/164) | 0.7012 (115/164) |
-| Qwen full precision | MBPP Pro-378 | 0.6032 (228/378) | **0.7646 (289/378)** | 0.6799 (257/378) | 0.6799 (257/378) |
+| Qwen non-quantised `bfloat16` | HumanEval Pro-164 | 0.6524 (107/164) | **0.7866 (129/164)** | 0.7012 (115/164) | 0.7012 (115/164) |
+| Qwen non-quantised `bfloat16` | MBPP Pro-378 | 0.6032 (228/378) | **0.7646 (289/378)** | 0.6799 (257/378) | 0.6799 (257/378) |
 | CodeLlama 8-bit | HumanEval Pro-164 | 0.2866 (47/164) | **0.4329 (71/164)** | 0.3354 (55/164) | 0.3354 (55/164) |
 | CodeLlama 8-bit | MBPP Pro-378 | 0.3783 (143/378) | **0.5450 (206/378)** | 0.4630 (175/378) | 0.4630 (175/378) |
 
 **Table note.** Tier 3 comprises 16 full-benchmark configurations: four
-methods for each model-benchmark pair. Qwen used the pinned full-precision
+methods for each model-benchmark pair. Qwen used the pinned non-quantised
 `bfloat16` configuration and CodeLlama used the established bitsandbytes
 8-bit replication configuration. Best-of-5 was the highest-scoring method in
 all four Pro conditions. Adaptive refinement improved over single-pass in all
-four, but did not match compute-matched best-of-5.[^pro-stats]
+four, but did not match generation-budget-matched best-of-5.[^pro-stats]
 
 ## Table 8. Tier 3 Pro convergence ablation
 
 | Model configuration | Benchmark | Adaptive ever solved | Fixed-*k* ever solved | Fixed-*k* final-only | Adaptive calls | Fixed calls | Regressions |
 |---|---|---:|---:|---:|---:|---:|---:|
-| Qwen full precision | HumanEval Pro-164 | 115/164 | 115/164 | 114/164 | 256 | 820 | 1 |
-| Qwen full precision | MBPP Pro-378 | 257/378 | 257/378 | 253/378 | 620 | 1,890 | 4 |
+| Qwen non-quantised `bfloat16` | HumanEval Pro-164 | 115/164 | 115/164 | 114/164 | 256 | 820 | 1 |
+| Qwen non-quantised `bfloat16` | MBPP Pro-378 | 257/378 | 257/378 | 253/378 | 620 | 1,890 | 4 |
 | CodeLlama 8-bit | HumanEval Pro-164 | 55/164 | 55/164 | 54/164 | 340 | 820 | 1 |
 | CodeLlama 8-bit | MBPP Pro-378 | 175/378 | 175/378 | 164/378 | 718 | 1,890 | 11 |
 
@@ -171,12 +178,12 @@ per-problem trajectories.
 
 | Model configuration | Benchmark | Paired comparison | First-only | Second-only | Paired difference | Exact McNemar *p* | Significant at 0.05? |
 |---|---|---|---:|---:|---:|---:|---:|
-| Qwen full precision | HumanEval Pro-164 | Adaptive − best-of-5 | 3 | 17 | −14/164 (−8.54 pp) | 0.00258 | Yes |
-| Qwen full precision | MBPP Pro-378 | Adaptive − best-of-5 | 9 | 41 | −32/378 (−8.47 pp) | 5.61×10⁻⁶ | Yes |
+| Qwen non-quantised `bfloat16` | HumanEval Pro-164 | Adaptive − best-of-5 | 3 | 17 | −14/164 (−8.54 pp) | 0.00258 | Yes |
+| Qwen non-quantised `bfloat16` | MBPP Pro-378 | Adaptive − best-of-5 | 9 | 41 | −32/378 (−8.47 pp) | 5.61×10⁻⁶ | Yes |
 | CodeLlama 8-bit | HumanEval Pro-164 | Adaptive − best-of-5 | 8 | 24 | −16/164 (−9.76 pp) | 0.00700 | Yes |
 | CodeLlama 8-bit | MBPP Pro-378 | Adaptive − best-of-5 | 19 | 50 | −31/378 (−8.20 pp) | 0.000244 | Yes |
-| Qwen full precision | HumanEval Pro-164 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/164 (0.00 pp) | 1.00000 | No |
-| Qwen full precision | MBPP Pro-378 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/378 (0.00 pp) | 1.00000 | No |
+| Qwen non-quantised `bfloat16` | HumanEval Pro-164 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/164 (0.00 pp) | 1.00000 | No |
+| Qwen non-quantised `bfloat16` | MBPP Pro-378 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/378 (0.00 pp) | 1.00000 | No |
 | CodeLlama 8-bit | HumanEval Pro-164 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/164 (0.00 pp) | 1.00000 | No |
 | CodeLlama 8-bit | MBPP Pro-378 | Adaptive − fixed-*k* ever solved | 0 | 0 | 0/378 (0.00 pp) | 1.00000 | No |
 
@@ -255,6 +262,7 @@ files.
 [^q4-m-s]: **Q4-M-S:** [`experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/`](../experiments/results/20260716T171911.599683Z_m7_quantized_local_development_single_mbpp_full/).
 [^cross-model]: Cross-model synthesis: git commit `a5d1574`; [`docs/validation/cross_model_summary.md`](validation/cross_model_summary.md).
 [^pro-stats]: Tier 3 statistics and run mapping: git commit `cc815fc`; [`docs/validation/tier3_pro_statistics.json`](validation/tier3_pro_statistics.json).
+[^standard-stats]: Standard-benchmark statistics and immutable run mapping: [`docs/validation/standard_benchmark_statistics.json`](validation/standard_benchmark_statistics.json), generated from [`configs/standard_benchmark_statistics.yaml`](../configs/standard_benchmark_statistics.yaml) with the repository's existing statistical implementation.
 [^q-f100]: [`experiments/results/20260814T025440.309834Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_100/`](../experiments/results/20260814T025440.309834Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_100/).
 [^q-f200]: [`experiments/results/20260814T025910.954271Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_200/`](../experiments/results/20260814T025910.954271Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_200/).
 [^q-f300]: [`experiments/results/20260814T030339.239970Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_300/`](../experiments/results/20260814T030339.239970Z_cluster_qwen_hf_hybrid_refinement_adaptive_humaneval_feedback_300/).
