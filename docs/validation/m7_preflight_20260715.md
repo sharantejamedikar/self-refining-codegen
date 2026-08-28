@@ -40,11 +40,11 @@ blocking mismatches between the request and the committed execution surface.
    experimental interpretation and needs an explicit decision.
 
 4. **The available execution profile is quantized local development, not
-   full-precision reporting.** `AGENTS.md` requires dissertation-reported numbers to
-   come from full-precision GPU runs. The current committed Qwen configs select the
-   local Ollama `Q4_K_M` artifact. Direction is needed on whether this overnight run is
-   an explicitly labeled quantized contingency/development full-set run or must wait
-   for a full-precision GPU environment.
+   full-precision reporting.** The project protocol requires reported numbers to come
+   from full-precision GPU runs. The current committed Qwen configs select the local
+   Ollama `Q4_K_M` artifact. Direction is needed on whether this overnight run is an
+   explicitly labeled quantized contingency/development full-set run or must wait for
+   a full-precision GPU environment.
 
 5. **All three current runners persist per-problem records only after the entire run
    finishes.** `SinglePassRunner`, `BestOfKRunner`, and `RefinementRunner` each first
