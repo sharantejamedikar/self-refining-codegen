@@ -161,3 +161,9 @@ Development, validation, invalid, incomplete, duplicate, and superseded runs are
 retained for auditability but must not be promoted to authoritative evidence.
 Correctness remains bounded by the committed function-level tests, and the model
 comparison does not isolate architecture, scale, precision, or quantisation.
+
+The public-release history was sanitized to remove private dissertation drafting
+and operational workflow files. Consequently, commit identifiers recorded inside
+frozen artefacts refer to the pre-sanitization lineage. See
+[`HISTORY_REWRITE.md`](HISTORY_REWRITE.md) and the accompanying commit map when
+tracing those identifiers; result contents were not changed.
